@@ -33,7 +33,7 @@ export async function onRequestPost(context) {
     }
 
     const FROM = env.RESEND_FROM || 'Flexi House <onboarding@resend.dev>';
-    const TO_US = env.LEAD_TO_EMAIL || 'dandaprokes@gmail.com';
+    const TO_US = (env.LEAD_TO_EMAIL || 'dandaprokes@gmail.com').split(',').map(e => e.trim()).filter(Boolean);
 
     if (!env.RESEND_API_KEY) {
       return json({ ok: false, error: 'Server není nakonfigurován (RESEND_API_KEY).' }, 500);
