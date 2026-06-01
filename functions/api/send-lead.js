@@ -52,7 +52,7 @@ export async function onRequestPost(context) {
     // --- e-mail NÁM ---
     const r1 = await sendResend(env.RESEND_API_KEY, {
       from: FROM,
-      to: [TO_US],
+      to: TO_US,
       reply_to: lead.email,
       subject: `Nová poptávka z webu: ${lead.name} — ${lead.model}`,
       html: emailInternal(lead)
