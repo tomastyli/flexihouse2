@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#07172e" />
+
+<title>Stránka nenalezena (404) | Flexi House</title>
+<meta name="description" content="Tuto stránku se nepodařilo najít. Prohlédněte si katalog modulárních domů Flexi House nebo se vraťte na úvod." />
+<meta name="robots" content="noindex, follow" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+<link rel="mask-icon" href="favicon.svg" color="#8dc63f" />
+<link rel="manifest" href="site.webmanifest" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .nf { min-height: 100vh; display: flex; flex-direction: column; }
+  .nf__main { flex: 1; display: grid; place-items: center; text-align: center; padding: calc(var(--nav-h) + 40px) var(--pad-x) 64px; position: relative; overflow: hidden; }
+  .nf__main::before { content: ''; position: absolute; inset: 0; background: radial-gradient(900px 500px at 50% 0%, rgba(141,198,63,.1), transparent 60%), radial-gradient(700px 400px at 80% 100%, rgba(42,115,199,.12), transparent 60%); z-index: 0; }
+  .nf__inner { position: relative; z-index: 1; max-width: 620px; }
+  .nf__code { font-family: var(--font-display); font-weight: 800; font-size: clamp(5rem, 22vw, 11rem); line-height: 1; letter-spacing: -0.04em; background: linear-gradient(135deg, #b4dd6a, #5aa9e6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nf__house { width: clamp(120px, 30vw, 180px); margin: 0 auto 8px; }
+  .nf h1 { margin: 14px 0 14px; }
+  .nf p { font-size: 1.06rem; max-width: 480px; margin: 0 auto 30px; }
+  .nf__ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .nf__links { margin-top: 36px; display: flex; gap: 8px 22px; justify-content: center; flex-wrap: wrap; font-size: 0.92rem; }
+  .nf__links a { color: var(--c-ink-2); transition: color .25s ease; }
+  .nf__links a:hover { color: var(--c-green); }
+</style>
+</head>
+<body>
+<div class="nf">
+  <!-- jednoduchá hlavička -->
+  <header class="nav scrolled" id="nav" style="position:absolute">
+    <div class="wrap nav__inner">
+      <a href="index.html" class="logo" aria-label="Flexi House — domů">
+        <span class="logo__mark">
+          <svg width="36" height="36" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M30 8 L52 28 L52 52 L8 52 L8 28 Z" fill="url(#lg1)" stroke="#b4dd6a" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M30 8 L52 28 L40 28 L30 18 Z" fill="url(#lg2)"/>
+            <rect x="24" y="32" width="12" height="14" fill="#07172e" rx="1"/>
+            <rect x="25.5" y="33.5" width="4" height="5" fill="#8dc63f"/><rect x="30.5" y="33.5" width="4" height="5" fill="#5aa9e6"/><rect x="25.5" y="39" width="4" height="5" fill="#5aa9e6"/><rect x="30.5" y="39" width="4" height="5" fill="#2a73c7"/>
+            <defs>
+              <linearGradient id="lg1" x1="8" y1="8" x2="52" y2="52"><stop offset="0" stop-color="#5aa9e6"/><stop offset="1" stop-color="#103563"/></linearGradient>
+              <linearGradient id="lg2" x1="30" y1="8" x2="52" y2="28"><stop offset="0" stop-color="#b4dd6a"/><stop offset="1" stop-color="#4d7c1a"/></linearGradient>
+            </defs>
+          </svg>
+        </span>
+        Flexi House
+      </a>
+      <a href="index.html" class="btn btn--ghost">← Zpět na web</a>
+    </div>
+  </header>
+
+  <main class="nf__main">
+    <div class="nf__inner">
+      <svg class="nf__house" viewBox="0 0 200 130" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <ellipse cx="100" cy="120" rx="80" ry="8" fill="rgba(0,0,0,.25)"/>
+        <rect x="45" y="60" width="110" height="55" rx="3" fill="#0b2545" stroke="#1a4885" stroke-width="1.5"/>
+        <polygon points="36,64 100,26 164,64" fill="#07172e" stroke="#1a4885" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="62" y="76" width="26" height="39" fill="#b4dd6a"/>
+        <rect x="108" y="76" width="34" height="22" fill="#5aa9e6" opacity=".8"/>
+        <circle cx="100" cy="50" r="2.5" fill="#8dc63f"/>
+      </svg>
+      <div class="nf__code">404</div>
+      <h1>Tady nic nestojí.</h1>
+      <p>Tuto stránku se nepodařilo najít — možná byla přesunutá nebo odkaz není správný. Zkuste to z některého z míst níže.</p>
+      <div class="nf__ctas">
+        <a href="index.html" class="btn btn--green">Zpět na úvod <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="katalog.html" class="btn btn--ghost">Prohlédnout katalog</a>
+      </div>
+      <nav class="nf__links" aria-label="Rychlé odkazy">
+        <a href="mini-house.html">Mini House</a>
+        <a href="flexi-family.html">Flexi Family</a>
+        <a href="flexi-office.html">Flexi Office</a>
+        <a href="konfigurator.html">Konfigurátor</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<script src="assets/cookies.js"></script>
+</body>
+</html>

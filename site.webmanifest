@@ -1,0 +1,14 @@
+{
+  "name": "Flexi House — Modulární domy na míru",
+  "short_name": "Flexi House",
+  "description": "Modulární kontejnerové domy. Hotový dům za 21 dní. Glamping, bydlení i kanceláře.",
+  "lang": "cs",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07172e",
+  "theme_color": "#07172e",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

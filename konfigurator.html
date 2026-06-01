@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#07172e" />
+
+<title>Konfigurátor Mini House — sestavte si dům na míru | Flexi House</title>
+<meta name="description" content="Sestavte si Mini House krok za krokem: velikost, exteriér, technologie i doplňky. Orientační cena hned, nezávazná poptávka a PDF s konfigurací." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://flexihouse.cz/konfigurator.html" />
+
+<!-- FAVICONS / PWA -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%2307172e'/%3E%3Cpath d='M30 11 L50 29 L50 50 L10 50 L10 29 Z' fill='%235aa9e6'/%3E%3Cpath d='M30 11 L50 29 L39 29 L30 20 Z' fill='%23b4dd6a'/%3E%3Crect x='24' y='33' width='12' height='15' rx='1' fill='%2307172e'/%3E%3C/svg%3E" sizes="any" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+<link rel="mask-icon" href="favicon.svg" color="#8dc63f" />
+<link rel="manifest" href="site.webmanifest" />
+<meta property="og:image" content="https://flexihouse.cz/og-image.png" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Konfigurátor Mini House — Flexi House" />
+<meta property="og:description" content="Sestavte si dům krok za krokem. Orientační cena, PDF a nezávazná poptávka." />
+<meta property="og:locale" content="cs_CZ" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- html2pdf.js (jsPDF + html2canvas bundle) přes CDN — pro export konfigurace do PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+
+<style>
+/* ============================================
+   TOKENS — sdíleno s index.html (Flexi House)
+============================================ */
+:root {
+  --c-bg: #07172e;
+  --c-bg-2: #0b2545;
+  --c-surface: #102e58;
+  --c-surface-2: #133466;
+  --c-line: rgba(255,255,255,0.08);
+  --c-line-2: rgba(255,255,255,0.16);
+  --c-ink: #ffffff;
+  --c-ink-2: rgba(255,255,255,0.75);
+  --c-ink-3: rgba(255,255,255,0.5);
+  --c-navy: #0b2545;
+  --c-navy-deep: #07172e;
+  --c-navy-3: #1a4885;
+  --c-blue: #2a73c7;
+  --c-blue-soft: #5aa9e6;
+  --c-green: #8dc63f;
+  --c-green-2: #b4dd6a;
+  --c-green-deep: #4d7c1a;
+  --shadow-md: 0 10px 30px -12px rgba(0,0,0,.45);
+  --shadow-lg: 0 30px 60px -20px rgba(0,0,0,.55);
+  --shadow-green: 0 20px 40px -16px rgba(141,198,63,.4);
+  --r-md: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --max-w: 1240px;
+  --pad-x: clamp(20px, 4vw, 56px);
+  --nav-h: 76px;
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--c-bg); }
+body {
+  margin: 0; font-family: var(--font-body); color: var(--c-ink);
+  background:
+    radial-gradient(1000px 600px at 85% -5%, rgba(141,198,63,.10), transparent 60%),
+    radial-gradient(900px 500px at -5% 10%, rgba(42,115,199,.14), transparent 60%),
+    var(--c-bg);
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, select, textarea { font: inherit; }
+::selection { background: var(--c-green); color: var(--c-navy); }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad-x); }
+h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.05; margin: 0; color: var(--c-ink); }
+h1 { font-size: clamp(1.9rem, 3.8vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); }
+h3 { font-size: clamp(1.1rem, 1.6vw, 1.35rem); letter-spacing: -0.015em; }
+p { margin: 0; color: var(--c-ink-2); }
+.eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.2em; color:var(--c-green-2); }
+.eyebrow::before { content:''; width:28px; height:1px; background:currentColor; }
+
+/* BUTTONS (sdíleno) */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:15px 28px; border-radius:999px; font-weight:600; font-size:0.95rem; line-height:1; transition:transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease; white-space:nowrap; }
+.btn--green { background:var(--c-green); color:var(--c-navy); box-shadow:var(--shadow-green); }
+.btn--green:hover { transform:translateY(-2px); background:var(--c-green-2); }
+.btn--light { background:#fff; color:var(--c-navy); box-shadow:0 10px 24px -10px rgba(0,0,0,.6); }
+.btn--light:hover { transform:translateY(-2px); }
+.btn--ghost { background:rgba(255,255,255,.05); color:var(--c-ink); border:1.5px solid rgba(255,255,255,.25); }
+.btn--ghost:hover { border-color:rgba(255,255,255,.55); background:rgba(255,255,255,.08); }
+.btn[disabled] { opacity:.55; pointer-events:none; }
+.btn__arrow { transition:transform .25s ease; }
+.btn:hover .btn__arrow { transform:translateX(4px); }
+
+/* NAV (zjednodušená verze) */
+.nav { position:fixed; top:0; left:0; right:0; z-index:100; height:var(--nav-h); display:flex; align-items:center; background:rgba(7,23,46,.82); backdrop-filter:saturate(180%) blur(18px); -webkit-backdrop-filter:saturate(180%) blur(18px); border-bottom:1px solid var(--c-line); }
+.nav__inner { width:100%; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.logo { display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+.logo__mark { width:36px; height:36px; display:grid; place-items:center; }
+.nav__back { display:inline-flex; align-items:center; gap:8px; font-weight:500; font-size:0.92rem; color:var(--c-ink-2); padding:10px 14px; border-radius:999px; transition:color .25s ease, background .25s ease; }
+.nav__back:hover { color:var(--c-ink); background:rgba(255,255,255,.06); }
+.nav__right { display:flex; align-items:center; gap:16px; }
+.nav__phone { font-weight:600; font-size:0.92rem; color:var(--c-ink-2); display:inline-flex; align-items:center; gap:8px; transition:color .25s ease; }
+.nav__phone:hover { color:var(--c-green); }
+.nav__phone svg { color:var(--c-green); }
+
+/* ============================================
+   KONFIGURÁTOR
+============================================ */
+.kf { padding: calc(var(--nav-h) + 36px) 0 90px; }
+.kf__head { max-width: 760px; margin: 0 auto 30px; text-align: center; }
+.kf__head .eyebrow { justify-content:center; margin-bottom:14px; }
+.kf__head h1 { margin-bottom: 12px; }
+.kf__head h1 .accent { color: var(--c-green); font-style: italic; font-weight: 600; }
+.kf__head p { font-size: 1.02rem; }
+
+/* progress pills */
+.kf-progress { max-width: 880px; margin: 0 auto 40px; }
+.kf-steps { display:flex; align-items:flex-start; justify-content:space-between; position:relative; gap:6px; }
+.kf-steps::before { content:''; position:absolute; top:22px; left:8%; right:8%; height:2px; background:var(--c-line-2); z-index:0; }
+.kf-steps__fill { position:absolute; top:22px; left:8%; height:2px; background:var(--c-green); z-index:1; width:0; transition:width .45s cubic-bezier(.2,.8,.2,1); box-shadow:0 0 12px rgba(141,198,63,.6); }
+.kf-step-pill { position:relative; z-index:2; flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; cursor:pointer; }
+.kf-step-pill__dot { width:44px; height:44px; border-radius:999px; display:grid; place-items:center; background:var(--c-surface); border:2px solid var(--c-line-2); font-family:var(--font-display); font-weight:700; font-size:1.05rem; color:var(--c-ink-3); transition:all .35s ease; }
+.kf-step-pill__lbl { font-size:0.74rem; font-weight:600; color:var(--c-ink-3); letter-spacing:.01em; transition:color .3s ease; max-width:120px; }
+.kf-step-pill.done .kf-step-pill__dot { background:rgba(141,198,63,.16); border-color:var(--c-green); color:var(--c-green-2); }
+.kf-step-pill.active .kf-step-pill__dot { background:var(--c-green); border-color:var(--c-green); color:var(--c-navy); box-shadow:0 0 0 6px rgba(141,198,63,.18); transform:scale(1.06); }
+.kf-step-pill.active .kf-step-pill__lbl { color:var(--c-ink); }
+.kf-step-pill.done .kf-step-pill__lbl { color:var(--c-ink-2); }
+
+/* layout: main + aside */
+.kf__layout { display:grid; grid-template-columns: 1fr 340px; gap:32px; align-items:start; }
+.kf__main { min-width:0; }
+
+/* a single step panel */
+.kf-panel { display:none; animation: kfIn .45s cubic-bezier(.2,.8,.2,1); }
+.kf-panel.active { display:block; }
+@keyframes kfIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.kf-panel__head { margin-bottom:24px; }
+.kf-panel__step { font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:.18em; color:var(--c-green-2); margin-bottom:8px; }
+.kf-panel__head h2 { margin-bottom:8px; }
+.kf-panel__head p { font-size:0.96rem; }
+
+.kf-group { margin-bottom:30px; }
+.kf-group__head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; }
+.kf-group__title { font-family:var(--font-display); font-weight:600; font-size:1.08rem; }
+.kf-group__hint { font-size:0.78rem; color:var(--c-ink-3); }
+.kf-group.invalid .kf-group__title { color:#f08a8a; }
+.kf-group__err { display:none; font-size:0.8rem; color:#f08a8a; margin-top:10px; }
+.kf-group.invalid .kf-group__err { display:block; }
+
+/* option cards */
+.kf-cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px; }
+.opt {
+  position:relative; display:flex; flex-direction:column; gap:10px;
+  padding:20px; border-radius:var(--r-md); text-align:left;
+  background:var(--c-surface); border:1.5px solid var(--c-line-2);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+.opt:hover { transform:translateY(-3px); border-color:rgba(141,198,63,.45); background:var(--c-surface-2); }
+.opt.selected { border-color:var(--c-green); background:linear-gradient(180deg, rgba(141,198,63,.12), rgba(141,198,63,.03)); box-shadow:0 0 0 1px var(--c-green) inset, var(--shadow-md); }
+.opt__top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.opt__icon { width:46px; height:46px; border-radius:12px; flex-shrink:0; display:grid; place-items:center; background:linear-gradient(135deg, rgba(141,198,63,.18), rgba(141,198,63,.04)); border:1px solid rgba(141,198,63,.3); color:var(--c-green); transition:transform .25s ease; }
+.opt:hover .opt__icon, .opt.selected .opt__icon { transform:scale(1.06); }
+.opt__check { width:24px; height:24px; border-radius:999px; border:2px solid var(--c-line-2); display:grid; place-items:center; color:transparent; transition:all .25s ease; flex-shrink:0; }
+.opt.selected .opt__check { background:var(--c-green); border-color:var(--c-green); color:var(--c-navy); }
+.opt__body { flex:1; }
+.opt__t { font-family:var(--font-display); font-weight:600; font-size:1.02rem; color:var(--c-ink); }
+.opt__d { font-size:0.84rem; color:var(--c-ink-2); margin-top:3px; line-height:1.5; }
+.opt__meta { font-size:0.74rem; color:var(--c-ink-3); margin-top:6px; display:flex; align-items:center; gap:6px; }
+.opt__price { margin-top:4px; font-family:var(--font-display); font-weight:700; font-size:0.92rem; color:var(--c-green-2); }
+.opt__price.is-incl { color:var(--c-ink-3); font-weight:600; }
+.opt__badge { position:absolute; top:-9px; left:18px; background:var(--c-green); color:var(--c-navy); font-size:0.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:4px 10px; border-radius:999px; }
+
+/* step nav buttons */
+.kf-nav { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:36px; padding-top:24px; border-top:1px solid var(--c-line); }
+.kf-nav__back { display:inline-flex; align-items:center; gap:8px; padding:14px 22px; border-radius:999px; font-weight:600; font-size:0.92rem; color:var(--c-ink-2); border:1.5px solid var(--c-line-2); transition:all .25s ease; }
+.kf-nav__back:hover { color:var(--c-ink); border-color:var(--c-line-2); background:rgba(255,255,255,.05); }
+.kf-nav__back[disabled] { opacity:.4; pointer-events:none; }
+
+/* ASIDE summary */
+.kf-aside { position:sticky; top:calc(var(--nav-h) + 20px); }
+.kf-summary { background:var(--c-bg-2); border:1px solid var(--c-line-2); border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow-md); }
+.kf-summary__head { padding:20px 22px; background:linear-gradient(135deg, var(--c-navy), var(--c-navy-3)); border-bottom:1px solid var(--c-line-2); }
+.kf-summary__model { font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+.kf-summary__sub { font-size:0.8rem; color:var(--c-ink-3); margin-top:3px; }
+.kf-summary__body { padding:18px 22px; max-height:min(46vh, 420px); overflow-y:auto; }
+.kf-sum-row { display:flex; align-items:baseline; justify-content:space-between; gap:14px; padding:9px 0; border-bottom:1px dashed var(--c-line); font-size:0.86rem; }
+.kf-sum-row:last-child { border-bottom:none; }
+.kf-sum-row__k { color:var(--c-ink-3); }
+.kf-sum-row__v { color:var(--c-ink); font-weight:600; text-align:right; }
+.kf-sum-row__v small { display:block; font-weight:600; color:var(--c-green-2); font-size:0.78rem; margin-top:2px; }
+.kf-sum-empty { font-size:0.86rem; color:var(--c-ink-3); padding:8px 0; }
+.kf-summary__total { padding:18px 22px; border-top:1px solid var(--c-line-2); background:rgba(255,255,255,.02); }
+.kf-total-row { display:flex; align-items:baseline; justify-content:space-between; }
+.kf-total-row__lbl { font-size:0.82rem; color:var(--c-ink-2); }
+.kf-total-row__val { font-family:var(--font-display); font-weight:800; font-size:1.7rem; color:var(--c-green); line-height:1; }
+.kf-summary__note { font-size:0.72rem; color:var(--c-ink-3); margin-top:10px; line-height:1.5; }
+
+/* recap / form */
+.kf-recap-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.kf-recap-card { background:var(--c-surface); border:1px solid var(--c-line-2); border-radius:var(--r-md); padding:18px 20px; }
+.kf-recap-card h4 { font-family:var(--font-display); font-size:0.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--c-green-2); margin-bottom:12px; font-weight:700; }
+.kf-recap-line { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:7px 0; font-size:0.88rem; border-bottom:1px dashed var(--c-line); }
+.kf-recap-line:last-child { border-bottom:none; }
+.kf-recap-line__k { color:var(--c-ink-3); }
+.kf-recap-line__v { color:var(--c-ink); font-weight:600; text-align:right; }
+
+.field { margin-bottom:14px; }
+.field label { display:block; font-size:0.8rem; font-weight:600; color:var(--c-ink-2); margin-bottom:7px; }
+.field label .req { color:var(--c-green); }
+.field input, .field textarea, .field select { width:100%; padding:13px 15px; background:rgba(255,255,255,.05); border:1px solid var(--c-line-2); border-radius:11px; color:var(--c-ink); transition:border-color .25s ease, background .25s ease; }
+.field input::placeholder, .field textarea::placeholder { color:var(--c-ink-3); }
+.field input:focus, .field textarea:focus, .field select:focus { outline:none; border-color:var(--c-green); background:rgba(255,255,255,.08); }
+.field textarea { resize:vertical; min-height:84px; }
+.field.invalid input, .field.invalid textarea { border-color:#e05252; }
+.field__err { display:none; font-size:0.76rem; color:#f08a8a; margin-top:5px; }
+.field.invalid .field__err { display:block; }
+.form__row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.form__status { display:none; padding:14px 16px; border-radius:12px; font-size:0.9rem; font-weight:500; margin-bottom:16px; }
+.form__status.ok { display:block; background:rgba(141,198,63,.14); border:1px solid rgba(141,198,63,.4); color:var(--c-green-2); }
+.form__status.err { display:block; background:rgba(224,82,82,.12); border:1px solid rgba(224,82,82,.4); color:#f08a8a; }
+.kf-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+.kf-actions .btn { flex:1; min-width:200px; }
+.form__note { font-size:0.76rem; color:var(--c-ink-3); margin-top:14px; }
+
+/* recap two-col on desktop */
+.kf-recap-layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+
+/* FOOTER (minimal) */
+.footer { background:#050f1f; color:var(--c-ink-2); padding:48px 0 30px; border-top:1px solid var(--c-line); margin-top:40px; }
+.footer__bottom { display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; flex-wrap:wrap; gap:14px; }
+.footer__bottom a:hover { color:var(--c-green); }
+.footer__credit { margin-top:20px; padding-top:18px; border-top:1px solid var(--c-line); text-align:center; font-size:0.85rem; color:var(--c-ink-3); }
+.footer__credit a { display:inline-flex; align-items:center; gap:6px; color:var(--c-ink); font-family:var(--font-display); font-weight:700; transition:color .25s ease; }
+.footer__credit a:hover { color:var(--c-green); }
+.footer__credit svg { color:var(--c-green); }
+
+/* off-screen node used to render the PDF */
+.pdf-render { position:fixed; left:-9999px; top:0; width:794px; }
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .kf__layout { grid-template-columns:1fr; }
+  .kf-recap-layout { grid-template-columns:1fr; }
+  .kf-recap-grid { grid-template-columns:1fr; }
+  .kf-aside { position:static; order:-1; }
+  .kf-summary__body { max-height:none; }
+  .kf-step-pill__lbl { display:none; }
+}
+@media (max-width: 560px) {
+  .nav__phone span { display:none; }
+  .form__row { grid-template-columns:1fr; }
+  .kf-cards { grid-template-columns:1fr; }
+  .kf-actions .btn { min-width:100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a href="index.html" class="logo" aria-label="Flexi House — domů">
+      <span class="logo__mark">
+        <svg width="36" height="36" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M30 8 L52 28 L52 52 L8 52 L8 28 Z" fill="url(#lg1)" stroke="#b4dd6a" stroke-width="1" stroke-linejoin="round"/>
+          <path d="M30 8 L52 28 L40 28 L30 18 Z" fill="url(#lg2)"/>
+          <rect x="24" y="32" width="12" height="14" fill="#07172e" rx="1"/>
+          <rect x="25.5" y="33.5" width="4" height="5" fill="#8dc63f"/>
+          <rect x="30.5" y="33.5" width="4" height="5" fill="#5aa9e6"/>
+          <rect x="25.5" y="39" width="4" height="5" fill="#5aa9e6"/>
+          <rect x="30.5" y="39" width="4" height="5" fill="#2a73c7"/>
+          <defs>
+            <linearGradient id="lg1" x1="8" y1="8" x2="52" y2="52"><stop offset="0" stop-color="#5aa9e6"/><stop offset="1" stop-color="#103563"/></linearGradient>
+            <linearGradient id="lg2" x1="30" y1="8" x2="52" y2="28"><stop offset="0" stop-color="#b4dd6a"/><stop offset="1" stop-color="#4d7c1a"/></linearGradient>
+          </defs>
+        </svg>
+      </span>
+      Flexi House
+    </a>
+    <div class="nav__right">
+      <a href="index.html" class="nav__back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        Zpět na web
+      </a>
+      <a class="nav__phone" href="tel:+420607321532">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>607 321 532</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============== KONFIGURÁTOR ============== -->
+<main class="kf">
+  <div class="wrap">
+    <div class="kf__head">
+      <span class="eyebrow">Konfigurátor</span>
+      <h1 id="kfTitle">Sestavte si <span class="accent">Mini House</span></h1>
+      <p id="kfTagline">Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace.</p>
+    </div>
+
+    <!-- progress -->
+    <div class="kf-progress">
+      <div class="kf-steps" id="kfSteps">
+        <div class="kf-steps__fill" id="kfStepsFill"></div>
+        <!-- pills injected by JS -->
+      </div>
+    </div>
+
+    <div class="kf__layout">
+      <!-- MAIN: step panels injected by JS -->
+      <div class="kf__main" id="kfMain"></div>
+
+      <!-- ASIDE: live summary -->
+      <aside class="kf-aside">
+        <div class="kf-summary">
+          <div class="kf-summary__head">
+            <div class="kf-summary__model" id="sumModel">Mini House</div>
+            <div class="kf-summary__sub" id="sumSub">Vaše konfigurace</div>
+          </div>
+          <div class="kf-summary__body" id="sumBody">
+            <div class="kf-sum-empty">Zatím nic nevybráno — začněte krokem 1.</div>
+          </div>
+          <div class="kf-summary__total">
+            <div class="kf-total-row">
+              <span class="kf-total-row__lbl">Orientační cena</span>
+              <span class="kf-total-row__val" id="sumTotal">—</span>
+            </div>
+            <p class="kf-summary__note" id="sumNote">Orientační ceny vč. konstrukce a opláštění, bez DPH a bez dopravy. Finální cenu potvrdíme v nabídce.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__bottom">
+      <div>© 2026 WINstores, s.r.o. — IČO 07836929</div>
+      <div style="display:flex;gap:24px">
+        <a href="index.html">Domů</a>
+        <a href="katalog.html">Katalog</a>
+        <a href="index.html#kontakt">Kontakt</a>
+        <a href="zasady-ochrany-soukromi.html">Soukromí</a>
+        <a href="#" data-cookie-settings onclick="if(window.openCookieSettings){openCookieSettings();}return false;" style="cursor:pointer">Cookies</a>
+      </div>
+    </div>
+    <div class="footer__credit">
+      Web vytvořil
+      <a href="https://statly.cz" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg>
+        Statly
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- off-screen container for PDF rendering -->
+<div class="pdf-render" id="pdfRender" aria-hidden="true"></div>
+
+<script>
+/* ============================================================
+   KONFIGURÁTOR — data + engine
+   ------------------------------------------------------------
+   ► VŠECHNA produktová data a CENY jsou v objektu MODELS níže.
+     Ceny jsou ORIENTAČNÍ (k doladění z ceníku). Stačí upravit
+     čísla u "price". "price: 0" = "v základní ceně".
+   ► Model se vybírá přes ?model=mini | family | office
+   ============================================================ */
+
+/* --- malá knihovna ikon (inline SVG) --- */
+const I = {
+  home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+  ruler:   '<path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0l-4.6-4.6a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/><path d="m7.5 10.5 2 2M11 7l2 2M14.5 3.5l2 2"/>',
+  roof:    '<path d="M2 12l10-8 10 8"/><path d="M5 10v10h14V10"/>',
+  layers:  '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+  window:  '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/>',
+  thermo:  '<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',
+  plug:    '<path d="M12 2v6M8 8V4M16 8V4"/><path d="M6 8h12v4a6 6 0 0 1-12 0z"/><path d="M12 18v4"/>',
+  flame:   '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  bath:    '<path d="M4 12V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/><path d="M2 12h20v3a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 19v2M18 19v2"/>',
+  deck:    '<path d="M2 20h20M4 20V9M20 20V9M2 9h20l-3-4H5L2 9z"/>',
+  truck:   '<rect x="1" y="6" width="13" height="11" rx="1"/><path d="M14 9h4l3 3v5h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  tool:    '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  doc:     '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
+  kitchen: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M8 3v6M8 14v3"/>',
+  sun:     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
+  sparkle: '<path d="M12 2l1.9 5.8L20 9l-5.8 1.9L12 17l-1.9-6.1L4 9l6.1-1.2z"/>',
+  check:   '<polyline points="20 6 9 17 4 12"/>'
+};
+function svg(name, w) {
+  w = w || 22;
+  return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(I[name]||I.home)+'</svg>';
+}
+
+/* --- znovupoužitelné skupiny (stejná logika pro každý "barák") --- */
+function exteriorGroups(prefix) {
+  return [
+    { key:'roof', title:'Střecha', type:'single', required:true, options:[
+      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled, ideální pro fotovoltaiku.', icon:'roof', price:0 },
+      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:25000 },
+      { id:'green', label:'Zelená střecha', desc:'Extenzivní osázení — izolace, retence vody, splývá s krajinou.', icon:'roof', price:45000 }
+    ]},
+    { key:'facade', title:'Fasáda', type:'single', required:true, options:[
+      { id:'board', label:'Cementotřísková deska', desc:'Antracit / šedá. Bezúdržbová a odolná.', icon:'layers', price:0 },
+      { id:'wood',  label:'Dřevěný obklad', desc:'Přírodní modřín, teplý vzhled do přírody.', icon:'layers', price:30000, badge:'Oblíbené' },
+      { id:'metal', label:'Vlnitý plech', desc:'Industriální look, extrémně odolný.', icon:'layers', price:18000 }
+    ]},
+    { key:'windows', title:'Okna a dveře', type:'single', required:true, options:[
+      { id:'std',    label:'Plastová okna', desc:'Trojsklo, bílá nebo antracit. Skvělý poměr cena/výkon.', icon:'window', price:0 },
+      { id:'alu',    label:'Hliníková okna', desc:'Tenké rámy, prémiový vzhled, dlouhá životnost.', icon:'window', price:22000 },
+      { id:'french', label:'Francouzské posuvné', desc:'Prosklená stěna s výstupem na terasu.', icon:'window', price:38000 }
+    ]}
+  ];
+}
+function interiorGroups() {
+  return [
+    { key:'insulation', title:'Zateplení', type:'single', required:true, options:[
+      { id:'std',  label:'Standard 80 mm', desc:'Celoroční komfort pro mírné klima.', icon:'thermo', price:0 },
+      { id:'winter', label:'Zimní 120 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:24000 }
+    ]},
+    { key:'utilities', title:'Rozvody', type:'single', required:true, options:[
+      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění — připraveno k zapojení.', icon:'plug', price:0 },
+      { id:'full', label:'Elektro + voda a odpad', desc:'Kompletní rozvody vč. přípravy na kuchyň a koupelnu.', icon:'plug', price:35000 }
+    ]},
+    { key:'heating', title:'Vytápění', type:'single', required:true, options:[
+      { id:'direct', label:'Elektrický přímotop', desc:'Nejnižší pořizovací cena, rychlý nástup tepla.', icon:'flame', price:0 },
+      { id:'ac',     label:'Klimatizace s tep. čerpadlem', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:39000, badge:'Doporučeno' },
+      { id:'floor',  label:'Elektrické podlahové', desc:'Příjemné sálavé teplo, neviditelné řešení.', icon:'flame', price:29000 }
+    ]},
+    { key:'bathroom', title:'Koupelna', type:'single', required:true, options:[
+      { id:'none',   label:'Bez koupelny', desc:'Otevřený prostor, koupelnu doděláte později.', icon:'bath', price:0 },
+      { id:'shower', label:'Sprcha + WC', desc:'Kompaktní koupelnový blok, plně vybavený.', icon:'bath', price:59000 },
+      { id:'full',   label:'Plná koupelna', desc:'Sprcha/vana, WC, umyvadlo, obklady.', icon:'bath', price:89000 }
+    ]}
+  ];
+}
+function addonGroup() {
+  return [
+    { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', options:[
+      { id:'terrace', label:'Dřevěná terasa 8 m²', desc:'Prostor pro posezení venku.', icon:'deck', price:45000 },
+      { id:'transport', label:'Doprava a usazení', desc:'Dovezeme a usadíme na váš pozemek.', icon:'truck', price:18000, badge:'Doporučeno' },
+      { id:'assembly', label:'Montáž na místě', desc:'Kompletní instalace a zprovoznění.', icon:'tool', price:24000 },
+      { id:'permit', label:'Vyřízení povolení', desc:'Postaráme se o ohlášení / stavební povolení.', icon:'doc', price:15000 },
+      { id:'kitchen', label:'Kuchyňská linka', desc:'Vč. dřezu a základních spotřebičů.', icon:'kitchen', price:39000 },
+      { id:'solar', label:'Solární panel 2 kWp', desc:'Snižte účty za elektřinu, energie z vlastní střechy.', icon:'sun', price:69000 }
+    ]}
+  ];
+}
+
+const MODELS = {
+  mini: {
+    name: 'Mini House',
+    accent: 'Mini House',
+    tagline: 'Náš nejmenší modulární dům. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace.',
+    steps: [
+      { title:'Velikost a půdorys', micro:'Vyberte velikost svého Mini Housu. Cenu doplňků uvidíte hned vpravo.', groups:[
+        { key:'size', title:'Půdorys', type:'single', required:true, options:[
+          { id:'m15', label:'Mini 15', desc:'1 obytná místnost. Ideální jako zázemí, kancelář v zahradě nebo glamping.', icon:'home', meta:'cca 4,8 × 3,1 m', price:99000 },
+          { id:'m20', label:'Mini 20', desc:'Obytná část s místem na koupelnu. Nejprodávanější varianta.', icon:'home', meta:'cca 6,0 × 3,3 m', price:149000, badge:'Bestseller' },
+          { id:'m24', label:'Mini 24 Duo', desc:'Dvě zóny — oddělená ložnice a obývací část.', icon:'home', meta:'cca 7,2 × 3,3 m', price:189000 }
+        ]}
+      ]},
+      { title:'Exteriér', micro:'Vzhled a opláštění domu — střecha, fasáda a okna.', groups: exteriorGroups('mini') },
+      { title:'Interiér a technologie', micro:'Vnitřní vybavení, izolace a technika.', groups: interiorGroups() },
+      { title:'Doplňky a služby', micro:'Volitelné — vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
+    ]
+  },
+
+  family: {
+    name: 'Flexi Family',
+    accent: 'Flexi Family',
+    tagline: 'Plnohodnotné rodinné bydlení. Sestavte si dispozici i vybavení a my připravíme nabídku.',
+    steps: [
+      { title:'Velikost a půdorys', micro:'Vyberte velikost rodinného domu.', groups:[
+        { key:'size', title:'Půdorys', type:'single', required:true, options:[
+          { id:'f40', label:'Family 40', desc:'2 místnosti + koupelna. Pro páry a malé rodiny.', icon:'home', meta:'cca 8,0 × 5,0 m', price:1890000 },
+          { id:'f50', label:'Family 50', desc:'2 ložnice, obývák s kuchyní, koupelna.', icon:'home', meta:'cca 10,0 × 5,0 m', price:2190000, badge:'Bestseller' },
+          { id:'f60', label:'Family 60', desc:'3 ložnice, prostorný obývací prostor.', icon:'home', meta:'cca 12,0 × 5,0 m', price:2490000 }
+        ]}
+      ]},
+      { title:'Exteriér', micro:'Vzhled a opláštění domu.', groups: exteriorGroups('family') },
+      { title:'Interiér a technologie', micro:'Vnitřní vybavení a technika.', groups: interiorGroups() },
+      { title:'Doplňky a služby', micro:'Volitelné doplňky a služby.', groups: addonGroup() }
+    ]
+  },
+
+  office: {
+    name: 'Flexi Office',
+    accent: 'Flexi Office',
+    tagline: 'Kancelář, showroom nebo studio. Sestavte si prostor, který roste s firmou.',
+    steps: [
+      { title:'Velikost a půdorys', micro:'Vyberte velikost kanceláře.', groups:[
+        { key:'size', title:'Půdorys', type:'single', required:true, options:[
+          { id:'o30', label:'Office 30', desc:'Open-space pro 3–4 lidi nebo recepce.', icon:'home', meta:'cca 6,0 × 5,0 m', price:590000 },
+          { id:'o50', label:'Office 50', desc:'Kanceláře + zasedačka + kuchyňka.', icon:'home', meta:'cca 10,0 × 5,0 m', price:890000, badge:'Bestseller' },
+          { id:'o80', label:'Office 80', desc:'Showroom nebo větší tým, variabilní příčky.', icon:'home', meta:'cca 16,0 × 5,0 m', price:1290000 }
+        ]}
+      ]},
+      { title:'Exteriér', micro:'Vzhled a opláštění.', groups: exteriorGroups('office') },
+      { title:'Interiér a technologie', micro:'Vnitřní vybavení a technika.', groups: interiorGroups() },
+      { title:'Doplňky a služby', micro:'Volitelné doplňky a služby.', groups: addonGroup() }
+    ]
+  }
+};
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const params = new URLSearchParams(location.search);
+const modelKey = MODELS[params.get('model')] ? params.get('model') : 'mini';
+const MODEL = MODELS[modelKey];
+
+const STEP_LABELS = ['Velikost', 'Exteriér', 'Interiér', 'Doplňky', 'Rekapitulace'];
+const TOTAL_STEPS = MODEL.steps.length + 1; // + rekapitulace
+const RECAP_INDEX = MODEL.steps.length;
+
+const state = { step: 0, sel: {} }; // sel[groupKey] = optionId | [ids]
+const czk = new Intl.NumberFormat('cs-CZ');
+const fmtPrice = (n) => czk.format(n) + ' Kč';
+
+/* lookup: groupKey -> group def (napříč všemi kroky) */
+const GROUPS = {};
+MODEL.steps.forEach(s => s.groups.forEach(g => { GROUPS[g.key] = g; }));
+
+/* ---- DOM ---- */
+const elMain = document.getElementById('kfMain');
+const elSteps = document.getElementById('kfSteps');
+const elFill = document.getElementById('kfStepsFill');
+const elSumBody = document.getElementById('sumBody');
+const elSumTotal = document.getElementById('sumTotal');
+
+/* ---- init titulky ---- */
+document.getElementById('kfTitle').innerHTML = 'Sestavte si <span class="accent">' + MODEL.accent + '</span>';
+document.getElementById('kfTagline').textContent = MODEL.tagline;
+document.getElementById('sumModel').textContent = MODEL.name;
+document.title = 'Konfigurátor ' + MODEL.name + ' — Flexi House';
+
+/* ---- build progress pills ---- */
+STEP_LABELS.slice(0, TOTAL_STEPS).forEach((lbl, i) => {
+  const pill = document.createElement('div');
+  pill.className = 'kf-step-pill';
+  pill.dataset.idx = i;
+  pill.innerHTML = '<div class="kf-step-pill__dot">'+(i+1)+'</div><div class="kf-step-pill__lbl">'+lbl+'</div>';
+  pill.addEventListener('click', () => { if (i <= maxReached()) goTo(i); });
+  elSteps.appendChild(pill);
+});
+
+/* ---- build step panels ---- */
+MODEL.steps.forEach((step, si) => {
+  const panel = document.createElement('section');
+  panel.className = 'kf-panel';
+  panel.dataset.idx = si;
+  let html = '<div class="kf-panel__head">'
+    + '<div class="kf-panel__step">Krok '+(si+1)+' z '+TOTAL_STEPS+'</div>'
+    + '<h2>'+step.title+'</h2>'
+    + '<p>'+step.micro+'</p></div>';
+
+  step.groups.forEach(g => {
+    html += '<div class="kf-group" data-group="'+g.key+'">'
+      + '<div class="kf-group__head"><span class="kf-group__title">'+g.title+'</span>'
+      + (g.hint ? '<span class="kf-group__hint">'+g.hint+'</span>' : (g.type==='multi'?'<span class="kf-group__hint">volitelné</span>':''))
+      + '</div><div class="kf-cards">';
+    g.options.forEach(o => {
+      const priceTxt = o.price > 0 ? '+ '+fmtPrice(o.price) : 'V základní ceně';
+      const priceCls = o.price > 0 ? 'opt__price' : 'opt__price is-incl';
+      html += '<button type="button" class="opt" data-group="'+g.key+'" data-opt="'+o.id+'">'
+        + (o.badge ? '<span class="opt__badge">'+o.badge+'</span>' : '')
+        + '<div class="opt__top"><span class="opt__icon">'+svg(o.icon)+'</span>'
+        + '<span class="opt__check">'+svg('check',14)+'</span></div>'
+        + '<div class="opt__body"><div class="opt__t">'+o.label+'</div>'
+        + '<div class="opt__d">'+o.desc+'</div>'
+        + (o.meta ? '<div class="opt__meta">'+svg('ruler',13)+o.meta+'</div>' : '')
+        + '</div><div class="'+priceCls+'">'+priceTxt+'</div></button>';
+    });
+    html += '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
+  });
+
+  html += navHtml(si);
+  panel.innerHTML = html;
+  elMain.appendChild(panel);
+});
+
+/* ---- build recap panel ---- */
+(function buildRecap() {
+  const panel = document.createElement('section');
+  panel.className = 'kf-panel';
+  panel.dataset.idx = RECAP_INDEX;
+  panel.innerHTML =
+    '<div class="kf-panel__head">'
+    + '<div class="kf-panel__step">Krok '+TOTAL_STEPS+' z '+TOTAL_STEPS+'</div>'
+    + '<h2>Rekapitulace a poptávka</h2>'
+    + '<p>Zkontrolujte konfiguraci, stáhněte si ji v PDF a pošlete nezávaznou poptávku.</p></div>'
+    + '<div class="kf-recap-layout">'
+    + '  <div>'
+    + '    <div class="kf-recap-grid" id="recapGrid"></div>'
+    + '    <div class="kf-recap-card" style="margin-top:14px">'
+    + '      <div class="kf-recap-line"><span class="kf-recap-line__k">Orientační cena celkem</span>'
+    + '      <span class="kf-recap-line__v" style="font-size:1.15rem;color:var(--c-green)" id="recapTotal">—</span></div>'
+    + '    </div>'
+    + '  </div>'
+    + '  <div>'
+    + '    <form class="kf-recap-card" id="leadForm" novalidate style="padding:24px">'
+    + '      <h4 style="margin-bottom:16px">Kontaktní údaje</h4>'
+    + '      <div class="form__status" id="formStatus" role="status"></div>'
+    + '      <div class="form__row">'
+    + '        <div class="field"><label for="f-name">Jméno <span class="req">*</span></label>'
+    + '          <input type="text" id="f-name" name="name" placeholder="Jan Novák" required>'
+    + '          <span class="field__err">Doplňte prosím jméno.</span></div>'
+    + '        <div class="field"><label for="f-phone">Telefon <span class="req">*</span></label>'
+    + '          <input type="tel" id="f-phone" name="phone" placeholder="+420 ..." required>'
+    + '          <span class="field__err">Doplňte prosím telefon.</span></div>'
+    + '      </div>'
+    + '      <div class="field"><label for="f-email">E-mail <span class="req">*</span></label>'
+    + '        <input type="email" id="f-email" name="email" placeholder="jan@email.cz" required>'
+    + '        <span class="field__err">Zadejte platný e-mail.</span></div>'
+    + '      <div class="field"><label for="f-loc">Lokalita pozemku</label>'
+    + '        <input type="text" id="f-loc" name="location" placeholder="Obec / okres"></div>'
+    + '      <div class="field"><label for="f-msg">Poznámka</label>'
+    + '        <textarea id="f-msg" name="message" placeholder="Termín, dotazy, specifické přání..."></textarea></div>'
+    + '      <div class="kf-actions">'
+    + '        <button type="button" class="btn btn--ghost" id="pdfBtn">'
+    + '          '+svg('doc',16)+' Stáhnout PDF</button>'
+    + '        <button type="submit" class="btn btn--green" id="formSubmit">Odeslat nezávaznou poptávku '
+    + '          <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>'
+    + '      </div>'
+    + '      <p class="form__note">Odesláním souhlasíte se zpracováním údajů za účelem vyřízení poptávky. Poptávka je nezávazná.</p>'
+    + '    </form>'
+    + '  </div>'
+    + '</div>'
+    + navHtml(RECAP_INDEX, true);
+  elMain.appendChild(panel);
+})();
+
+function navHtml(si, isRecap) {
+  const backDis = si === 0 ? ' disabled' : '';
+  const nextLbl = (si === RECAP_INDEX - 1) ? 'Pokračovat na rekapitulaci' : 'Další krok';
+  const nextBtn = isRecap ? '' :
+    '<button type="button" class="btn btn--green kf-next" data-idx="'+si+'">'+nextLbl
+    + ' <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>';
+  return '<div class="kf-nav">'
+    + '<button type="button" class="kf-nav__back"'+backDis+' data-idx="'+si+'">'
+    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zpět</button>'
+    + nextBtn + '</div>';
+}
+
+/* ---- event delegation: option select ---- */
+elMain.addEventListener('click', (e) => {
+  const opt = e.target.closest('.opt');
+  if (opt) { selectOption(opt); return; }
+  const next = e.target.closest('.kf-next');
+  if (next) { if (validateStep(state.step)) goTo(state.step + 1); return; }
+  const back = e.target.closest('.kf-nav__back');
+  if (back && !back.hasAttribute('disabled')) { goTo(state.step - 1); return; }
+});
+
+function selectOption(btn) {
+  const gKey = btn.dataset.group, oId = btn.dataset.opt;
+  const g = GROUPS[gKey];
+  const cards = btn.closest('.kf-cards');
+  if (g.type === 'multi') {
+    let arr = Array.isArray(state.sel[gKey]) ? state.sel[gKey] : [];
+    if (arr.includes(oId)) { arr = arr.filter(x => x !== oId); btn.classList.remove('selected'); }
+    else { arr.push(oId); btn.classList.add('selected'); }
+    state.sel[gKey] = arr;
+  } else {
+    cards.querySelectorAll('.opt').forEach(c => c.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.sel[gKey] = oId;
+    btn.closest('.kf-group').classList.remove('invalid');
+  }
+  renderSummary();
+}
+
+/* ---- navigation ---- */
+function maxReached() {
+  // nejvyšší krok, na který smí uživatel skočit = první nevyplněný + už navštívené
+  let i = 0;
+  for (; i < MODEL.steps.length; i++) { if (!stepComplete(i)) break; }
+  return Math.min(Math.max(i, state.step), RECAP_INDEX);
+}
+function stepComplete(si) {
+  return MODEL.steps[si].groups.every(g => !g.required || (g.type==='multi' ? true : !!state.sel[g.key]));
+}
+function validateStep(si) {
+  if (si >= MODEL.steps.length) return true;
+  let ok = true;
+  MODEL.steps[si].groups.forEach(g => {
+    if (g.required && g.type !== 'multi' && !state.sel[g.key]) {
+      ok = false;
+      document.querySelector('.kf-panel[data-idx="'+si+'"] .kf-group[data-group="'+g.key+'"]').classList.add('invalid');
+    }
+  });
+  if (!ok) {
+    const firstInv = document.querySelector('.kf-panel[data-idx="'+si+'"] .kf-group.invalid');
+    if (firstInv) firstInv.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+  return ok;
+}
+function goTo(idx) {
+  idx = Math.max(0, Math.min(RECAP_INDEX, idx));
+  state.step = idx;
+  document.querySelectorAll('.kf-panel').forEach(p => p.classList.toggle('active', +p.dataset.idx === idx));
+  // pills
+  document.querySelectorAll('.kf-step-pill').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+    p.classList.toggle('done', i < idx);
+  });
+  elFill.style.width = (idx / (TOTAL_STEPS - 1)) * 84 + '%';
+  if (idx === RECAP_INDEX) buildRecapContent();
+  window.scrollTo({ top: 0, behavior:'smooth' });
+}
+
+/* ---- live summary ---- */
+function selectedItems() {
+  // vrací pole {group, label, value, price}
+  const items = [];
+  MODEL.steps.forEach(step => step.groups.forEach(g => {
+    const v = state.sel[g.key];
+    if (g.type === 'multi') {
+      (v || []).forEach(id => { const o = g.options.find(x=>x.id===id); if (o) items.push({ group:g.title, label:o.label, price:o.price, key:g.key }); });
+    } else if (v) {
+      const o = g.options.find(x=>x.id===v); if (o) items.push({ group:g.title, label:o.label, price:o.price, key:g.key });
+    }
+  }));
+  return items;
+}
+function total() { return selectedItems().reduce((s,i)=>s+i.price, 0); }
+
+function renderSummary() {
+  const items = selectedItems();
+  if (!items.length) {
+    elSumBody.innerHTML = '<div class="kf-sum-empty">Zatím nic nevybráno — začněte krokem 1.</div>';
+  } else {
+    elSumBody.innerHTML = items.map(i =>
+      '<div class="kf-sum-row"><span class="kf-sum-row__k">'+i.group+'</span>'
+      + '<span class="kf-sum-row__v">'+i.label
+      + (i.price>0 ? '<small>+ '+fmtPrice(i.price)+'</small>' : '')
+      + '</span></div>'
+    ).join('');
+  }
+  const t = total();
+  elSumTotal.textContent = t > 0 ? fmtPrice(t) : '—';
+}
+
+/* ---- recap content ---- */
+function buildRecapContent() {
+  const grid = document.getElementById('recapGrid');
+  const stepCards = MODEL.steps.map(step => {
+    const lines = [];
+    step.groups.forEach(g => {
+      const v = state.sel[g.key];
+      if (g.type === 'multi') {
+        (v||[]).forEach(id => { const o=g.options.find(x=>x.id===id); if(o) lines.push([o.label, o.price]); });
+        if (!(v&&v.length)) lines.push(['—', null]);
+      } else {
+        const o = v && g.options.find(x=>x.id===v);
+        lines.push([o ? o.label : '—', o ? o.price : null]);
+      }
+    });
+    return '<div class="kf-recap-card"><h4>'+step.title+'</h4>'
+      + lines.map(l => '<div class="kf-recap-line"><span class="kf-recap-line__k">'+l[0]+'</span>'
+        + '<span class="kf-recap-line__v">'+(l[1]>0?'+ '+fmtPrice(l[1]):(l[1]===0?'v ceně':''))+'</span></div>').join('')
+      + '</div>';
+  }).join('');
+  grid.innerHTML = stepCards;
+  document.getElementById('recapTotal').textContent = fmtPrice(total());
+}
+
+/* ============================================================
+   PAYLOAD pro Resend (odeslání na backend)
+   ============================================================ */
+function buildPayload() {
+  const f = document.getElementById('leadForm');
+  const items = selectedItems();
+  return {
+    model: modelKey,
+    modelName: MODEL.name,
+    total: total(),
+    totalFormatted: fmtPrice(total()),
+    // strukturovaný výběr po krocích (pro e-mail)
+    configuration: MODEL.steps.map(step => ({
+      step: step.title,
+      items: step.groups.flatMap(g => {
+        const v = state.sel[g.key];
+        if (g.type === 'multi') return (v||[]).map(id => { const o=g.options.find(x=>x.id===id); return { group:g.title, value:o.label, price:o.price }; });
+        const o = v && g.options.find(x=>x.id===v);
+        return o ? [{ group:g.title, value:o.label, price:o.price }] : [];
+      })
+    })),
+    // plochý seznam (snadné vykreslení)
+    summary: items.map(i => ({ group:i.group, value:i.label, price:i.price })),
+    contact: {
+      name: f.name.value.trim(),
+      email: f.email.value.trim(),
+      phone: f.phone.value.trim(),
+      location: f.location.value.trim(),
+      message: f.message.value.trim()
+    },
+    meta: { source:'konfigurator', url: location.href, ts: new Date().toISOString() }
+  };
+}
+
+/* ============================================================
+   PDF export (html2pdf.js)
+   ============================================================ */
+function buildPdfHtml() {
+  const items = selectedItems();
+  const rows = items.map(i =>
+    '<tr><td style="padding:9px 0;border-bottom:1px solid #e6ebf2;color:#5b6b80;font-size:13px">'+i.group+'</td>'
+    + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;font-weight:600;color:#0b2545;font-size:13px">'+i.label+'</td>'
+    + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;text-align:right;color:#4d7c1a;font-weight:600;font-size:13px;white-space:nowrap">'
+    + (i.price>0 ? '+ '+fmtPrice(i.price) : 'v ceně')+'</td></tr>'
+  ).join('');
+  const f = document.getElementById('leadForm');
+  const c = f ? {
+    name:f.name.value.trim(), email:f.email.value.trim(), phone:f.phone.value.trim(), location:f.location.value.trim()
+  } : { name:'', email:'', phone:'', location:'' };
+  const contactBlock = (c.name||c.email||c.phone)
+    ? '<div style="margin-top:18px;padding:14px 16px;background:#f4f7fb;border-radius:10px;font-size:12px;color:#5b6b80">'
+      + '<strong style="color:#0b2545">Kontakt:</strong> '
+      + [c.name, c.phone, c.email, c.location].filter(Boolean).join(' · ') + '</div>'
+    : '';
+  return ''
+    + '<div style="font-family:Helvetica,Arial,sans-serif;color:#0b2545;padding:40px 44px;background:#fff;width:794px;box-sizing:border-box">'
+    + '  <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #8dc63f;padding-bottom:18px;margin-bottom:24px">'
+    + '    <div><div style="font-size:22px;font-weight:800;letter-spacing:-.5px">Flexi House</div>'
+    + '      <div style="font-size:12px;color:#5b6b80;margin-top:2px">Konfigurace — '+MODEL.name+'</div></div>'
+    + '    <div style="text-align:right;font-size:11px;color:#5b6b80">'
+    + '      WINstores, s.r.o. · IČO 07836929<br>+420 607 321 532<br>'+new Date().toLocaleDateString('cs-CZ')+'</div>'
+    + '  </div>'
+    + '  <h1 style="font-size:18px;margin:0 0 4px">Souhrn vaší konfigurace</h1>'
+    + '  <p style="font-size:12px;color:#5b6b80;margin:0 0 18px">Orientační kalkulace. Finální cenu potvrdíme v závazné nabídce.</p>'
+    + '  <table style="width:100%;border-collapse:collapse"><thead><tr>'
+    + '    <th style="text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;padding-bottom:6px">Položka</th>'
+    + '    <th style="text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;padding-bottom:6px">Volba</th>'
+    + '    <th style="text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;padding-bottom:6px">Cena</th>'
+    + '  </tr></thead><tbody>'+rows+'</tbody></table>'
+    + '  <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;background:#0b2545;color:#fff;border-radius:12px;padding:18px 22px">'
+    + '    <span style="font-size:13px;opacity:.8">Orientační cena celkem (bez DPH)</span>'
+    + '    <span style="font-size:24px;font-weight:800;color:#b4dd6a">'+fmtPrice(total())+'</span></div>'
+    + contactBlock
+    + '  <p style="margin-top:26px;font-size:10px;color:#94a3b8;line-height:1.6">Tento dokument je orientační a nezávazný. Ceny jsou uvedeny bez DPH, nezahrnují individuální dopravu mimo standardní oblast ani přípravu pozemku, pokud není uvedeno jinak. Vygenerováno konfigurátorem na flexihouse.cz.</p>'
+    + '</div>';
+}
+
+function downloadPdf() {
+  if (typeof html2pdf === 'undefined') { alert('Generátor PDF se ještě načítá, zkuste to prosím za okamžik.'); return; }
+  const holder = document.getElementById('pdfRender');
+  holder.innerHTML = buildPdfHtml();
+  const opt = {
+    margin: 0,
+    filename: 'Flexi-House-'+MODEL.name.replace(/\s+/g,'-')+'-konfigurace.pdf',
+    image: { type:'jpeg', quality:0.98 },
+    html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff' },
+    jsPDF: { unit:'pt', format:'a4', orientation:'portrait' }
+  };
+  html2pdf().set(opt).from(holder.firstElementChild).save().then(() => { holder.innerHTML = ''; });
+}
+
+/* ============================================================
+   FORM submit (Resend přes backend endpoint)
+   ============================================================ */
+function bindForm() {
+  const form = document.getElementById('leadForm');
+  const status = document.getElementById('formStatus');
+  const submitBtn = document.getElementById('formSubmit');
+  const pdfBtn = document.getElementById('pdfBtn');
+  if (pdfBtn) pdfBtn.addEventListener('click', downloadPdf);
+
+  const setErr = (field, on) => field.closest('.field').classList.toggle('invalid', on);
+  const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.className = 'form__status'; status.textContent = '';
+    const name=form.name, phone=form.phone, email=form.email;
+    let ok = true;
+    if (!name.value.trim()) { setErr(name,true); ok=false; } else setErr(name,false);
+    if (!phone.value.trim()) { setErr(phone,true); ok=false; } else setErr(phone,false);
+    if (!validEmail(email.value.trim())) { setErr(email,true); ok=false; } else setErr(email,false);
+    if (!ok) return;
+
+    const payload = buildPayload();
+    submitBtn.setAttribute('disabled',''); submitBtn.textContent = 'Odesílám...';
+    try {
+      const res = await fetch('/api/send-konfigurace', {
+        method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('bad response');
+      status.className = 'form__status ok';
+      status.textContent = 'Děkujeme! Poptávku i konfiguraci jsme přijali. Ozveme se do 24 hodin. Kopii jsme poslali na váš e-mail.';
+      form.querySelector('.kf-actions').scrollIntoView({ behavior:'smooth', block:'center' });
+    } catch (err) {
+      status.className = 'form__status err';
+      status.textContent = 'Odeslání se nezdařilo. Zkuste to prosím znovu, nebo zavolejte na +420 607 321 532. Tip: konfiguraci si můžete stáhnout v PDF.';
+    } finally {
+      submitBtn.removeAttribute('disabled');
+      submitBtn.innerHTML = 'Odeslat nezávaznou poptávku <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
+    }
+  });
+}
+
+/* ---- boot ---- */
+renderSummary();
+goTo(0);
+bindForm();
+</script>
+
+<script src="assets/cookies.js"></script>
+</body>
+</html>

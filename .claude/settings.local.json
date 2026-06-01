@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la '/Users/tomastylich/Desktop/flexi hoouse 2' && echo \"---PLOCHA---\" && ls -la '/Users/tomastylich/Desktop' | grep -i -E \"mini|house|flexi|dokument|spec|doc\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(cd \"/Users/tomastylich/Desktop/flexi hoouse 2\" && sed -i '' -e 's#=\"/favicon.svg\"#=\"favicon.svg\"#g' -e 's#=\"/site.webmanifest\"#=\"site.webmanifest\"#g' -e 's#=\"/assets/#=\"assets/#g' *.html && echo \"=== Po opravě \\(mělo by být prázdné\\): ===\" && grep -rn 'href=\"/\\\\|src=\"/' *.html | grep -v 'http' | grep -v 'data:image' || echo \"✓ Žádné absolutní cesty nezůstaly\")",
+      "Read(//Applications/Google Chrome.app/Contents/MacOS/**)",
+      "Read(//Applications/Chromium.app/Contents/MacOS/**)",
+      "Bash(command -v python3)",
+      "Bash(python3 -c \"import cairosvg\")",
+      "Bash(pip3 list *)",
+      "Bash(cd \"/Users/tomastylich/Desktop/flexi hoouse 2\" && sed -i '' 's#og-image\\\\.svg#og-image.png#g' *.html && echo \"=== kontrola og:image ===\" && grep -rn \"og-image\" *.html | grep -o \"og-image\\\\.[a-z]*\" | sort | uniq -c)",
+      "Bash(awk '/<style>/{f=1} f{print NR\": \"$0} /<\\\\/style>/{f=0}' homepage.html)",
+      "Bash(mv homepage.html index.html)",
+      "Bash(sed -i '' 's/homepage\\\\.html/index.html/g' *.html *.md functions/api/send-lead.js)",
+      "Bash(sed -i '' \"s#p = '/konfigurator.html'#p = '/index.html'#\" .claude/serve.js)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)"
+    ]
+  }
+}

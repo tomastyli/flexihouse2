@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Náhled e-mailových šablon — Flexi House konfigurátor</title>
+<style>
+  body { margin:0; background:#0b1726; color:#e8eef6; font-family:Inter,system-ui,sans-serif; padding:28px 16px; }
+  .head { max-width:1240px; margin:0 auto 24px; }
+  .head h1 { font-size:1.5rem; margin:0 0 6px; }
+  .head p { margin:0; color:#9fb3cc; font-size:.95rem; max-width:760px; line-height:1.6; }
+  .toggle { display:inline-flex; gap:6px; margin-top:18px; background:#13243a; padding:6px; border-radius:999px; }
+  .toggle button { border:none; background:none; color:#9fb3cc; font:inherit; font-weight:600; padding:9px 20px; border-radius:999px; cursor:pointer; }
+  .toggle button.active { background:#8dc63f; color:#0b2545; }
+  .frame-wrap { max-width:680px; margin:0 auto; }
+  iframe { width:100%; height:1100px; border:none; border-radius:14px; background:#eef2f7; box-shadow:0 20px 60px rgba(0,0,0,.4); }
+  .note { max-width:680px; margin:18px auto 0; font-size:.82rem; color:#7d93ad; line-height:1.6; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>📧 Náhled e-mailových šablon</h1>
+    <p>Takto vypadají e-maily, které <strong>Resend</strong> odešle po odeslání poptávky z konfigurátoru. Stejný HTML kód generuje <code>functions/api/send-konfigurace.js</code>. Přepni si mezi interní (pro vás) a zákaznickou verzí.</p>
+    <div class="toggle">
+      <button id="btnInternal" class="active" onclick="show('internal')">Interní (nám)</button>
+      <button id="btnCustomer" onclick="show('customer')">Zákaznický (potvrzení)</button>
+    </div>
+  </div>
+  <div class="frame-wrap"><iframe id="frame"></iframe></div>
+  <p class="note">Náhled používá ukázková data (Mini 20 + sedlová střecha + dřevěná fasáda + klimatizace + sprcha&nbsp;+&nbsp;WC + terasa + doprava). V ostrém provozu se vyplní reálnou konfigurací zákazníka.</p>
+
+<script>
+/* ===== ukázková data (stejný tvar jako payload z konfigurátoru) ===== */
+const sample = {
+  modelName: 'Mini House',
+  total: 354000,
+  totalFormatted: '354 000 Kč',
+  configuration: [
+    { step:'Velikost a půdorys', items:[ {group:'Půdorys', value:'Mini 20', price:149000} ] },
+    { step:'Exteriér', items:[ {group:'Střecha', value:'Sedlová střecha', price:25000}, {group:'Fasáda', value:'Dřevěný obklad', price:30000}, {group:'Okna a dveře', value:'Plastová okna', price:0} ] },
+    { step:'Interiér a technologie', items:[ {group:'Zateplení', value:'Zimní 120 mm', price:24000}, {group:'Rozvody', value:'Elektro + voda a odpad', price:35000}, {group:'Vytápění', value:'Klimatizace s tep. čerpadlem', price:39000}, {group:'Koupelna', value:'Sprcha + WC', price:59000} ] },
+    { step:'Doplňky a služby', items:[ {group:'Doplňky a služby', value:'Dřevěná terasa 8 m²', price:45000}, {group:'Doplňky a služby', value:'Doprava a usazení', price:18000} ] }
+  ],
+  contact: { name:'Jan Novák', email:'jan.novak@email.cz', phone:'+420 777 123 456', location:'Litomyšl', message:'Pozemek máme, zajímá nás termín dodání na jaro.' }
+};
+
+const esc = (s) => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const czk = (n) => new Intl.NumberFormat('cs-CZ').format(Number(n)||0)+' Kč';
+
+function configRows(data){
+  let html=''; (data.configuration||[]).forEach(step=>{
+    if(!step.items||!step.items.length) return;
+    html+=`<tr><td colspan="2" style="padding:16px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700">${esc(step.step)}</td></tr>`;
+    step.items.forEach(it=>{ html+=`<tr><td style="padding:7px 0;border-bottom:1px solid #eef2f7;color:#0b2545;font-size:14px"><span style="color:#5b6b80">${esc(it.group)}:</span> <strong>${esc(it.value)}</strong></td><td style="padding:7px 0;border-bottom:1px solid #eef2f7;text-align:right;color:#4d7c1a;font-weight:600;font-size:14px;white-space:nowrap">${Number(it.price)>0?'+ '+czk(it.price):'<span style="color:#94a3b8;font-weight:500">v ceně</span>'}</td></tr>`; });
+  });
+  return html;
+}
+function shell(inner){
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef2f7;padding:28px 12px;font-family:Helvetica,Arial,sans-serif"><tr><td align="center"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(11,37,69,.08)"><tr><td style="background:#0b2545;padding:26px 32px"><table role="presentation" width="100%"><tr><td style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px">Flexi House</td><td style="text-align:right;font-size:12px;color:#9fb3cc">Modulární domy</td></tr></table></td></tr>${inner}<tr><td style="background:#f4f7fb;padding:22px 32px;border-top:1px solid #e6ebf2"><p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6">WINstores, s.r.o. · IČO 07836929 · Korunní 2569/108, Praha 10<br>+420 607 321 532 · dandaprokes@gmail.com · flexihouse.cz</p></td></tr></table><p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House — orientační kalkulace, nezávazná poptávka.</p></td></tr></table>`;
+}
+function emailInternal(data){ const c=data.contact;
+  return shell(`<tr><td style="padding:30px 32px 8px"><p style="margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8dc63f;font-weight:700">Nová poptávka z konfigurátoru</p><h1 style="margin:0;font-size:22px;color:#0b2545">${esc(data.modelName)}</h1></td></tr><tr><td style="padding:14px 32px"><table role="presentation" width="100%" style="background:#f4f7fb;border-radius:12px;padding:16px 18px"><tr><td style="font-size:14px;color:#0b2545;line-height:1.9"><strong>Jméno:</strong> ${esc(c.name)}<br><strong>Telefon:</strong> <a href="tel:${esc(c.phone)}" style="color:#2a73c7;text-decoration:none">${esc(c.phone)}</a><br><strong>E-mail:</strong> <a href="mailto:${esc(c.email)}" style="color:#2a73c7;text-decoration:none">${esc(c.email)}</a><br><strong>Lokalita:</strong> ${esc(c.location)}<br><strong>Poznámka:</strong> ${esc(c.message)}</td></tr></table></td></tr><tr><td style="padding:8px 32px 0"><h2 style="font-size:15px;color:#0b2545;margin:12px 0 4px">Konfigurace</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}</table></td></tr><tr><td style="padding:18px 32px 30px"><table role="presentation" width="100%" style="background:#0b2545;border-radius:12px"><tr><td style="padding:18px 22px;font-size:13px;color:#9fb3cc">Orientační cena celkem (bez DPH)</td><td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#b4dd6a">${esc(data.totalFormatted)}</td></tr></table></td></tr>`);
+}
+function emailCustomer(data){ const c=data.contact;
+  return shell(`<tr><td style="padding:30px 32px 8px"><h1 style="margin:0 0 8px;font-size:22px;color:#0b2545">Děkujeme, ${esc(c.name.split(' ')[0])}!</h1><p style="margin:0;font-size:15px;color:#5b6b80;line-height:1.6">Přijali jsme vaši konfiguraci modelu <strong>${esc(data.modelName)}</strong>. Náš tým se vám ozve <strong>do 24 hodin</strong> s nezávaznou nabídkou. Níže máte přehled toho, co jste si sestavili.</p></td></tr><tr><td style="padding:14px 32px 0"><h2 style="font-size:15px;color:#0b2545;margin:8px 0 4px">Vaše konfigurace</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}</table></td></tr><tr><td style="padding:18px 32px 6px"><table role="presentation" width="100%" style="background:#eef7da;border:1px solid #cfe6a3;border-radius:12px"><tr><td style="padding:18px 22px;font-size:13px;color:#4d7c1a;font-weight:600">Orientační cena</td><td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#4d7c1a">${esc(data.totalFormatted)}</td></tr></table><p style="margin:10px 2px 0;font-size:12px;color:#94a3b8;line-height:1.6">Cena je orientační (bez DPH) a slouží jako vodítko. Finální nabídku připravíme na míru vašemu pozemku a požadavkům.</p></td></tr><tr><td style="padding:18px 32px 32px" align="center"><a href="tel:+420607321532" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:15px;text-decoration:none;padding:14px 30px;border-radius:999px">Máte dotaz? Zavolejte 607 321 532</a></td></tr>`);
+}
+
+function show(which){
+  document.getElementById('btnInternal').classList.toggle('active', which==='internal');
+  document.getElementById('btnCustomer').classList.toggle('active', which==='customer');
+  const html = which==='internal' ? emailInternal(sample) : emailCustomer(sample);
+  document.getElementById('frame').srcdoc = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0">'+html+'</body></html>';
+}
+show('internal');
+</script>
+</body>
+</html>
