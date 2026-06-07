@@ -200,9 +200,14 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .footer__bottom a:hover { color: var(--c-green); }
 .linklike { cursor: pointer; }
 .footer__credit { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--c-line); text-align: center; font-size: 0.85rem; color: var(--c-ink-3); }
-.footer__credit a { display: inline-flex; align-items: center; gap: 6px; color: var(--c-ink); font-family: var(--font-display); font-weight: 700; transition: color .25s ease; }
-.footer__credit a:hover { color: var(--c-green); }
-.footer__credit svg { color: var(--c-green); }
+/* Statly kredit s hover efektem */
+.statly { display: inline-flex; align-items: center; gap: 9px; color: #888280; font-size: 0.85rem; font-weight: 500; padding: 6px 10px; border-radius: 10px; text-decoration: none; transition: background 0.25s cubic-bezier(0.22,1,0.36,1); }
+.statly img { width: 24px; height: 24px; border-radius: 7px; display: block; filter: grayscale(0.15); transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), filter 0.3s cubic-bezier(0.22,1,0.36,1); }
+.statly .statly-pre { color: #888280; }
+.statly .statly-name { color: #fff; font-weight: 700; transition: color 0.25s cubic-bezier(0.22,1,0.36,1); }
+.statly:hover { background: rgba(27, 127, 95, 0.1); }
+.statly:hover img { transform: scale(1.15) rotate(-4deg); box-shadow: 0 8px 22px rgba(27, 127, 95, 0.5); filter: grayscale(0); }
+.statly:hover .statly-name { color: #27a37a; }
 
 /* ---------- Reveal ---------- */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
