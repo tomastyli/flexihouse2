@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#07172e" />
 
-<title>Konfigurátor Mini House — sestavte si dům na míru | Flexi House</title>
-<meta name="description" content="Sestavte si Mini House krok za krokem: velikost, exteriér, technologie i doplňky. Orientační cena hned, nezávazná poptávka a PDF s konfigurací." />
+<title>Konfigurátor — sestavte si dům na míru | Flexi House</title>
+<meta name="description" content="Sestavte si Flexi House na míru krok za krokem: dispozice (1–4 ložnice), exteriér, technologie i doplňky. Orientační cena, nezávazná poptávka a PDF." />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://flexihouse.cz/konfigurator.html" />
 
@@ -18,7 +18,7 @@
 <link rel="manifest" href="site.webmanifest" />
 <meta property="og:image" content="https://flexihouse.cz/og-image.png" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Konfigurátor Mini House — Flexi House" />
+<meta property="og:title" content="Konfigurátor — Flexi House na míru" />
 <meta property="og:description" content="Sestavte si dům krok za krokem. Orientační cena, PDF a nezávazná poptávka." />
 <meta property="og:locale" content="cs_CZ" />
 
@@ -271,21 +271,7 @@ p { margin: 0; color: var(--c-ink-2); }
 <header class="nav">
   <div class="wrap nav__inner">
     <a href="index.html" class="logo" aria-label="Flexi House — domů">
-      <span class="logo__mark">
-        <svg width="36" height="36" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M30 8 L52 28 L52 52 L8 52 L8 28 Z" fill="url(#lg1)" stroke="#b4dd6a" stroke-width="1" stroke-linejoin="round"/>
-          <path d="M30 8 L52 28 L40 28 L30 18 Z" fill="url(#lg2)"/>
-          <rect x="24" y="32" width="12" height="14" fill="#07172e" rx="1"/>
-          <rect x="25.5" y="33.5" width="4" height="5" fill="#8dc63f"/>
-          <rect x="30.5" y="33.5" width="4" height="5" fill="#5aa9e6"/>
-          <rect x="25.5" y="39" width="4" height="5" fill="#5aa9e6"/>
-          <rect x="30.5" y="39" width="4" height="5" fill="#2a73c7"/>
-          <defs>
-            <linearGradient id="lg1" x1="8" y1="8" x2="52" y2="52"><stop offset="0" stop-color="#5aa9e6"/><stop offset="1" stop-color="#103563"/></linearGradient>
-            <linearGradient id="lg2" x1="30" y1="8" x2="52" y2="28"><stop offset="0" stop-color="#b4dd6a"/><stop offset="1" stop-color="#4d7c1a"/></linearGradient>
-          </defs>
-        </svg>
-      </span>
+      <span class="logo__mark"><img src="assets/flexi-icon.svg" width="40" height="36" alt="" decoding="async" /></span>
       Flexi House
     </a>
     <div class="nav__right">
@@ -306,8 +292,8 @@ p { margin: 0; color: var(--c-ink-2); }
   <div class="wrap">
     <div class="kf__head">
       <span class="eyebrow">Konfigurátor</span>
-      <h1 id="kfTitle">Sestavte si <span class="accent">Mini House</span></h1>
-      <p id="kfTagline">Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace.</p>
+      <h1 id="kfTitle">Sestavte si <span class="accent">dům na míru</span></h1>
+      <p id="kfTagline">Rozkládací dům s terasou. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace. Ceny jsou orientační — finální nabídku připravíme na míru.</p>
     </div>
 
     <!-- progress -->
@@ -326,7 +312,7 @@ p { margin: 0; color: var(--c-ink-2); }
       <aside class="kf-aside">
         <div class="kf-summary">
           <div class="kf-summary__head">
-            <div class="kf-summary__model" id="sumModel">Mini House</div>
+            <div class="kf-summary__model" id="sumModel">Flexi House</div>
             <div class="kf-summary__sub" id="sumSub">Vaše konfigurace</div>
           </div>
           <div class="kf-summary__body" id="sumBody">
@@ -378,7 +364,7 @@ p { margin: 0; color: var(--c-ink-2); }
    ► VŠECHNA produktová data a CENY jsou v objektu MODELS níže.
      Ceny jsou ORIENTAČNÍ (k doladění z ceníku). Stačí upravit
      čísla u "price". "price: 0" = "v základní ceně".
-   ► Model se vybírá přes ?model=mini | family | office
+   ► Konfigurátor řeší Flexi House (dům na míru), dispozice 1–4 ložnice.
    ============================================================ */
 
 /* --- malá knihovna ikon (inline SVG) --- */
@@ -462,57 +448,22 @@ function addonGroup() {
 }
 
 const MODELS = {
-  mini: {
-    name: 'Mini House',
-    accent: 'Mini House',
-    tagline: 'Náš nejmenší modulární dům. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace.',
+  flexihouse: {
+    name: 'Flexi House',
+    accent: 'dům na míru',
+    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků — vyberte dispozici i vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační — finální nabídku připravíme na míru.',
     steps: [
-      { title:'Velikost a půdorys', micro:'Vyberte velikost svého Mini Housu. Cenu doplňků uvidíte hned vpravo.', groups:[
-        { key:'size', title:'Půdorys', type:'single', required:true, options:[
-          { id:'m15', label:'Mini 15', desc:'1 obytná místnost. Ideální jako zázemí, kancelář v zahradě nebo glamping.', icon:'home', meta:'cca 4,8 × 3,1 m', price:99000 },
-          { id:'m20', label:'Mini 20', desc:'Obytná část s místem na koupelnu. Nejprodávanější varianta.', icon:'home', meta:'cca 6,0 × 3,3 m', price:149000, badge:'Bestseller' },
-          { id:'m24', label:'Mini 24 Duo', desc:'Dvě zóny — oddělená ložnice a obývací část.', icon:'home', meta:'cca 7,2 × 3,3 m', price:189000 }
+      { title:'Dispozice a velikost', micro:'Vyberte počet ložnic. Rozložený dům má vnější rozměr cca 6,3 × 5,9 m (~30 m²) a krytou terasu.', groups:[
+        { key:'size', title:'Dispozice', type:'single', required:true, options:[
+          { id:'b1', label:'1 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 1 ložnice. Ideální pro páry a glamping.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:70000, badge:'Bestseller' },
+          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 2 ložnice', price:99000 },
+          { id:'b3', label:'3 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 3 ložnice.', icon:'home', meta:'~30 m² · 3 ložnice', price:129000 },
+          { id:'b4', label:'4 ložnice', desc:'Maximální využití prostoru — koupelna a 4 ložnice.', icon:'home', meta:'~30 m² · 4 ložnice', price:159000 }
         ]}
       ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění domu — střecha, fasáda a okna.', groups: exteriorGroups('mini') },
+      { title:'Exteriér', micro:'Vzhled a opláštění domu — střecha, fasáda a okna.', groups: exteriorGroups('flexihouse') },
       { title:'Interiér a technologie', micro:'Vnitřní vybavení, izolace a technika.', groups: interiorGroups() },
       { title:'Doplňky a služby', micro:'Volitelné — vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
-    ]
-  },
-
-  family: {
-    name: 'Flexi Family',
-    accent: 'Flexi Family',
-    tagline: 'Plnohodnotné rodinné bydlení. Sestavte si dispozici i vybavení a my připravíme nabídku.',
-    steps: [
-      { title:'Velikost a půdorys', micro:'Vyberte velikost rodinného domu.', groups:[
-        { key:'size', title:'Půdorys', type:'single', required:true, options:[
-          { id:'f40', label:'Family 40', desc:'2 místnosti + koupelna. Pro páry a malé rodiny.', icon:'home', meta:'cca 8,0 × 5,0 m', price:1890000 },
-          { id:'f50', label:'Family 50', desc:'2 ložnice, obývák s kuchyní, koupelna.', icon:'home', meta:'cca 10,0 × 5,0 m', price:2190000, badge:'Bestseller' },
-          { id:'f60', label:'Family 60', desc:'3 ložnice, prostorný obývací prostor.', icon:'home', meta:'cca 12,0 × 5,0 m', price:2490000 }
-        ]}
-      ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění domu.', groups: exteriorGroups('family') },
-      { title:'Interiér a technologie', micro:'Vnitřní vybavení a technika.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné doplňky a služby.', groups: addonGroup() }
-    ]
-  },
-
-  office: {
-    name: 'Flexi Office',
-    accent: 'Flexi Office',
-    tagline: 'Kancelář, showroom nebo studio. Sestavte si prostor, který roste s firmou.',
-    steps: [
-      { title:'Velikost a půdorys', micro:'Vyberte velikost kanceláře.', groups:[
-        { key:'size', title:'Půdorys', type:'single', required:true, options:[
-          { id:'o30', label:'Office 30', desc:'Open-space pro 3–4 lidi nebo recepce.', icon:'home', meta:'cca 6,0 × 5,0 m', price:590000 },
-          { id:'o50', label:'Office 50', desc:'Kanceláře + zasedačka + kuchyňka.', icon:'home', meta:'cca 10,0 × 5,0 m', price:890000, badge:'Bestseller' },
-          { id:'o80', label:'Office 80', desc:'Showroom nebo větší tým, variabilní příčky.', icon:'home', meta:'cca 16,0 × 5,0 m', price:1290000 }
-        ]}
-      ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění.', groups: exteriorGroups('office') },
-      { title:'Interiér a technologie', micro:'Vnitřní vybavení a technika.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné doplňky a služby.', groups: addonGroup() }
     ]
   }
 };
@@ -521,7 +472,7 @@ const MODELS = {
    ENGINE
    ============================================================ */
 const params = new URLSearchParams(location.search);
-const modelKey = MODELS[params.get('model')] ? params.get('model') : 'mini';
+const modelKey = MODELS[params.get('model')] ? params.get('model') : 'flexihouse';
 const MODEL = MODELS[modelKey];
 
 const STEP_LABELS = ['Velikost', 'Exteriér', 'Interiér', 'Doplňky', 'Rekapitulace'];

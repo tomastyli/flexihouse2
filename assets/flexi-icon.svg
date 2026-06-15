@@ -1,5 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 922 922" role="img" aria-label="Flexi House">
-<g transform="translate(49,93)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 824 735" fill="none" role="img" aria-label="Flexi House">
 <polygon points="26,578 26,706 29,709 321,709 324,706 324,578 321,575 29,575" fill="#0c3558"/>
 <polygon points="168,385 27,468 26,543 29,546 166,546 169,543" fill="#082749"/>
 <polygon points="684,639 685,690 689,705 734,707 739,683 725,680 719,673 692,677 688,639" fill="#308db9"/>
@@ -21,4 +20,4 @@
 <polygon points="458,531 455,534 456,581 506,582 508,534 505,531" fill="#5bbad9"/>
 <polygon points="532,459 529,462 530,509 578,510 581,507 580,462" fill="#58b9d8"/>
 <polygon points="456,461 455,508 458,511 507,509 506,460" fill="#5ab8d7"/>
-</g></svg>
+</svg>

@@ -11,14 +11,9 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://flexihouse.cz/mini-house.html</loc>
+    <loc>https://flexihouse.cz/flexi-house.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://flexihouse.cz/flexi-family.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://flexihouse.cz/flexi-office.html</loc>

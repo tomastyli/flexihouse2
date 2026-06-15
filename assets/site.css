@@ -252,3 +252,22 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ── Skrýt placeholder a dekorativní SVG, když je vložená reálná fotka ── */
+.hslide__media:has(.hslide__photo) .photo-ph,
+.hslide__media:has(.hslide__photo) .hslide__scene,
+.detail__hero-media:has(.pcard__photo) .photo-ph,
+.detail__hero-media:has(.pcard__photo) .detail__hero-svg,
+.pcard__media:has(.pcard__photo) .photo-ph,
+.pcard__media:has(.pcard__photo) .pcard__svg { display: none !important; }
+.ref-shot:has(.ref-shot__photo) .photo-ph,
+.ref-shot:has(.ref-shot__photo) > svg:not(.ref-shot__photo) { display: none !important; }
+
+/* ── Galerie fotek ── */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.gallery figure{margin:0;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;background:#0b1d36}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}
+.gallery figure:hover img{transform:scale(1.05)}
+.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 11px;font-size:.84rem;font-weight:600;color:#fff;background:linear-gradient(to top,rgba(7,23,46,.85),transparent)}
+@media(max-width:760px){.gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.gallery{grid-template-columns:1fr}}
