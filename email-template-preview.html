@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Náhled e-mailových šablon — Flexi House konfigurátor</title>
+<title>Náhled e-mailových šablon: Flexi House konfigurátor</title>
 <style>
   body { margin:0; background:#0b1726; color:#e8eef6; font-family:Inter,system-ui,sans-serif; padding:28px 16px; }
   .head { max-width:1240px; margin:0 auto 24px; }
@@ -19,7 +19,7 @@
 </head>
 <body>
   <div class="head">
-    <h1>📧 Náhled e-mailových šablon</h1>
+    <h1>Náhled e-mailových šablon</h1>
     <p>Takto vypadají e-maily, které <strong>Resend</strong> odešle po odeslání poptávky z konfigurátoru. Stejný HTML kód generuje <code>functions/api/send-konfigurace.js</code>. Přepni si mezi interní (pro vás) a zákaznickou verzí.</p>
     <div class="toggle">
       <button id="btnInternal" class="active" onclick="show('internal')">Interní (nám)</button>
@@ -30,7 +30,6 @@
   <p class="note">Náhled používá ukázková data (Mini 20 + sedlová střecha + dřevěná fasáda + klimatizace + sprcha&nbsp;+&nbsp;WC + terasa + doprava). V ostrém provozu se vyplní reálnou konfigurací zákazníka.</p>
 
 <script>
-/* ===== ukázková data (stejný tvar jako payload z konfigurátoru) ===== */
 const sample = {
   modelName: 'Flexi House',
   total: 325000,
@@ -56,7 +55,7 @@ function configRows(data){
   return html;
 }
 function shell(inner){
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef2f7;padding:28px 12px;font-family:Helvetica,Arial,sans-serif"><tr><td align="center"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(11,37,69,.08)"><tr><td style="background:#0b2545;padding:26px 32px"><table role="presentation" width="100%"><tr><td style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px">Flexi House</td><td style="text-align:right;font-size:12px;color:#9fb3cc">Modulární domy</td></tr></table></td></tr>${inner}<tr><td style="background:#f4f7fb;padding:22px 32px;border-top:1px solid #e6ebf2"><p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6">WINstores, s.r.o. · IČO 07836929 · Korunní 2569/108, Praha 10<br>+420 607 321 532 · dandaprokes@gmail.com · flexihouse.cz</p></td></tr></table><p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House — orientační kalkulace, nezávazná poptávka.</p></td></tr></table>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef2f7;padding:28px 12px;font-family:Helvetica,Arial,sans-serif"><tr><td align="center"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(11,37,69,.08)"><tr><td style="background:#0b2545;padding:26px 32px"><table role="presentation" width="100%"><tr><td style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px">Flexi House</td><td style="text-align:right;font-size:12px;color:#9fb3cc">Modulární domy</td></tr></table></td></tr>${inner}<tr><td style="background:#f4f7fb;padding:22px 32px;border-top:1px solid #e6ebf2"><p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6">WINstores, s.r.o. · IČO 07836929 · Korunní 2569/108, Praha 10<br>+420 607 321 532 · dandaprokes@gmail.com · flexihouse.cz</p></td></tr></table><p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House. Orientační kalkulace, nezávazná poptávka.</p></td></tr></table>`;
 }
 function emailInternal(data){ const c=data.contact;
   return shell(`<tr><td style="padding:30px 32px 8px"><p style="margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#8dc63f;font-weight:700">Nová poptávka z konfigurátoru</p><h1 style="margin:0;font-size:22px;color:#0b2545">${esc(data.modelName)}</h1></td></tr><tr><td style="padding:14px 32px"><table role="presentation" width="100%" style="background:#f4f7fb;border-radius:12px;padding:16px 18px"><tr><td style="font-size:14px;color:#0b2545;line-height:1.9"><strong>Jméno:</strong> ${esc(c.name)}<br><strong>Telefon:</strong> <a href="tel:${esc(c.phone)}" style="color:#2a73c7;text-decoration:none">${esc(c.phone)}</a><br><strong>E-mail:</strong> <a href="mailto:${esc(c.email)}" style="color:#2a73c7;text-decoration:none">${esc(c.email)}</a><br><strong>Lokalita:</strong> ${esc(c.location)}<br><strong>Poznámka:</strong> ${esc(c.message)}</td></tr></table></td></tr><tr><td style="padding:8px 32px 0"><h2 style="font-size:15px;color:#0b2545;margin:12px 0 4px">Konfigurace</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}</table></td></tr><tr><td style="padding:18px 32px 30px"><table role="presentation" width="100%" style="background:#0b2545;border-radius:12px"><tr><td style="padding:18px 22px;font-size:13px;color:#9fb3cc">Orientační cena celkem (bez DPH)</td><td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#b4dd6a">${esc(data.totalFormatted)}</td></tr></table></td></tr>`);

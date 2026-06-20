@@ -1,29 +1,9 @@
-/**
- * Cloudflare Pages Function — /api/send-lead
- * ------------------------------------------------------------------
- * Přijme JSON z kontaktního formuláře (index.html → #leadForm),
- * sestaví dva HTML e-maily a odešle je přes Resend.com:
- *   1) NÁM (interní) — kontaktní údaje + zpráva
- *   2) ZÁKAZNÍKOVI — potvrzení, že jsme poptávku přijali
- *
- * API klíč Resend NIKDY není na frontendu — žije jen zde, v env proměnné.
- *
- * Nastavení (Cloudflare Pages → Settings → Environment variables):
- *   RESEND_API_KEY = re_xxxxxxxxxxxx        (povinné)
- *   LEAD_TO_EMAIL  = dandaprokes@gmail.com  (kam chodí poptávky)
- *   RESEND_FROM    = "Flexi House <poptavky@flexihouse.cz>"  (ověřená doména v Resend)
- *
- * Pozn.: Doména v RESEND_FROM musí být ve vašem Resend účtu ověřená,
- * jinak Resend e-mail odmítne. Pro test lze použít "onboarding@resend.dev".
- */
-
 export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
     const data = await request.json();
 
-    // --- základní validace ---
     const name = (data.name || '').trim();
     const email = (data.email || '').trim();
     const phone = (data.phone || '').trim();
@@ -49,20 +29,18 @@ export async function onRequestPost(context) {
       return json({ ok: false, error: 'Server není nakonfigurován (RESEND_API_KEY).' }, 500);
     }
 
-    // --- e-mail NÁM ---
     const r1 = await sendResend(env.RESEND_API_KEY, {
       from: FROM,
       to: TO_US,
       reply_to: lead.email,
-      subject: `Nová poptávka z webu: ${lead.name} — ${lead.model}`,
+      subject: `Nová poptávka z webu: ${lead.name}, ${lead.model}`,
       html: emailInternal(lead)
     });
 
-    // --- e-mail ZÁKAZNÍKOVI (potvrzení) ---
     const r2 = await sendResend(env.RESEND_API_KEY, {
       from: FROM,
       to: [lead.email],
-      subject: 'Děkujeme za poptávku — Flexi House',
+      subject: 'Děkujeme za poptávku, Flexi House',
       html: emailCustomer(lead)
     });
 
@@ -76,7 +54,6 @@ export async function onRequestPost(context) {
   }
 }
 
-/* ---- Resend API volání ---- */
 async function sendResend(apiKey, body) {
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -101,11 +78,9 @@ function json(obj, status = 200) {
   });
 }
 
-/* ================= helpers ================= */
 const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-/* společný wrapper (responzivní, table-based pro e-mail klienty) */
 function shell(inner, preheader) {
   return `<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;background:#eef2f7;font-family:Helvetica,Arial,sans-serif;color:#0b2545">
@@ -127,13 +102,12 @@ function shell(inner, preheader) {
         </p>
       </td></tr>
     </table>
-    <p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House — nezávazná poptávka.</p>
+    <p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House. Nezávazná poptávka.</p>
   </td></tr>
 </table>
 </body></html>`;
 }
 
-/* ---- 1) interní e-mail (NÁM) ---- */
 function emailInternal(lead) {
   const inner = `
     <tr><td style="padding:30px 32px 8px">
@@ -153,10 +127,9 @@ function emailInternal(lead) {
     <tr><td style="padding:8px 32px 32px">
       <a href="mailto:${esc(lead.email)}" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:14px;text-decoration:none;padding:12px 24px;border-radius:999px">Odpovědět zákazníkovi</a>
     </td></tr>`;
-  return shell(inner, `Nová poptávka od ${lead.name} — zájem o ${lead.model}`);
+  return shell(inner, `Nová poptávka od ${lead.name}, zájem o ${lead.model}`);
 }
 
-/* ---- 2) zákaznický e-mail (POTVRZENÍ) ---- */
 function emailCustomer(lead) {
   const inner = `
     <tr><td style="padding:30px 32px 8px">
@@ -177,5 +150,5 @@ function emailCustomer(lead) {
     <tr><td style="padding:18px 32px 32px" align="center">
       <a href="tel:+420607321532" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:15px;text-decoration:none;padding:14px 30px;border-radius:999px">Máte dotaz? Zavolejte 607 321 532</a>
     </td></tr>`;
-  return shell(inner, 'Přijali jsme vaši poptávku — ozveme se do 24 hodin.');
+  return shell(inner, 'Přijali jsme vaši poptávku, ozveme se do 24 hodin.');
 }

@@ -1,29 +1,9 @@
-/**
- * Cloudflare Pages Function — /api/send-konfigurace
- * ------------------------------------------------------------------
- * Přijme JSON z konfigurátoru (konfigurator.html → buildPayload()),
- * sestaví dva HTML e-maily a odešle je přes Resend.com:
- *   1) NÁM (interní) — kompletní přehled poptávky + konfigurace
- *   2) ZÁKAZNÍKOVI — hezké potvrzení s rekapitulací
- *
- * API klíč Resend NIKDY není na frontendu — žije jen zde, v env proměnné.
- *
- * Nastavení (Cloudflare Pages → Settings → Environment variables):
- *   RESEND_API_KEY = re_xxxxxxxxxxxx        (povinné)
- *   LEAD_TO_EMAIL  = dandaprokes@gmail.com  (kam chodí poptávky)
- *   RESEND_FROM    = "Flexi House <poptavky@flexihouse.cz>"  (ověřená doména v Resend)
- *
- * Pozn.: Doména v RESEND_FROM musí být ve vašem Resend účtu ověřená,
- * jinak Resend e-mail odmítne. Pro test lze použít "onboarding@resend.dev".
- */
-
 export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
     const data = await request.json();
 
-    // --- základní validace ---
     const c = data.contact || {};
     if (!c.name || !c.email || !c.phone) {
       return json({ ok: false, error: 'Chybí povinné kontaktní údaje.' }, 400);
@@ -42,25 +22,22 @@ export async function onRequestPost(context) {
     const internalHtml = emailInternal(data);
     const customerHtml = emailCustomer(data);
 
-    // --- e-mail NÁM ---
     const r1 = await sendResend(env.RESEND_API_KEY, {
       from: FROM,
       to: TO_US,
       reply_to: c.email,
-      subject: `Nová poptávka: ${data.modelName} — ${c.name} (${data.totalFormatted || ''})`,
+      subject: `Nová poptávka: ${data.modelName}, ${c.name} (${data.totalFormatted || ''})`,
       html: internalHtml
     });
 
-    // --- e-mail ZÁKAZNÍKOVI (kopie/potvrzení) ---
     const r2 = await sendResend(env.RESEND_API_KEY, {
       from: FROM,
       to: [c.email],
-      subject: `Vaše konfigurace ${data.modelName} — Flexi House`,
+      subject: `Vaše konfigurace ${data.modelName}, Flexi House`,
       html: customerHtml
     });
 
     if (!r1.ok) {
-      // interní e-mail je důležitější — když selže, hlásíme chybu
       return json({ ok: false, error: 'E-mail se nepodařilo odeslat.', detail: r1.detail }, 502);
     }
 
@@ -70,7 +47,6 @@ export async function onRequestPost(context) {
   }
 }
 
-/* ---- Resend API volání ---- */
 async function sendResend(apiKey, body) {
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -95,12 +71,10 @@ function json(obj, status = 200) {
   });
 }
 
-/* ================= helpers ================= */
 const esc = (s) => String(s == null ? '' : s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const czk = (n) => new Intl.NumberFormat('cs-CZ').format(Number(n) || 0) + ' Kč';
 
-/* řádky konfigurace jako HTML <tr> */
 function configRows(data) {
   const steps = data.configuration || [];
   let html = '';
@@ -120,7 +94,6 @@ function configRows(data) {
   return html;
 }
 
-/* společný wrapper (responzivní, table-based pro e-mail klienty) */
 function shell(inner, preheader) {
   return `<!DOCTYPE html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;background:#eef2f7;font-family:Helvetica,Arial,sans-serif;color:#0b2545">
@@ -142,13 +115,12 @@ function shell(inner, preheader) {
         </p>
       </td></tr>
     </table>
-    <p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House — orientační kalkulace, nezávazná poptávka.</p>
+    <p style="font-size:11px;color:#94a3b8;margin:16px 0 0">© 2026 Flexi House. Orientační kalkulace, nezávazná poptávka.</p>
   </td></tr>
 </table>
 </body></html>`;
 }
 
-/* ---- 1) interní e-mail (NÁM) ---- */
 function emailInternal(data) {
   const c = data.contact || {};
   const inner = `
@@ -180,10 +152,9 @@ function emailInternal(data) {
         <td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#b4dd6a">${esc(data.totalFormatted || czk(data.total))}</td>
       </tr></table>
     </td></tr>`;
-  return shell(inner, `Nová poptávka ${data.modelName} od ${c.name} — ${data.totalFormatted || ''}`);
+  return shell(inner, `Nová poptávka ${data.modelName} od ${c.name}, ${data.totalFormatted || ''}`);
 }
 
-/* ---- 2) zákaznický e-mail (POTVRZENÍ) ---- */
 function emailCustomer(data) {
   const c = data.contact || {};
   const inner = `
@@ -213,5 +184,5 @@ function emailCustomer(data) {
     <tr><td style="padding:18px 32px 32px" align="center">
       <a href="tel:+420607321532" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:15px;text-decoration:none;padding:14px 30px;border-radius:999px">Máte dotaz? Zavolejte 607 321 532</a>
     </td></tr>`;
-  return shell(inner, `Vaše konfigurace ${data.modelName} — ozveme se do 24 hodin.`);
+  return shell(inner, `Vaše konfigurace ${data.modelName}. Ozveme se do 24 hodin.`);
 }

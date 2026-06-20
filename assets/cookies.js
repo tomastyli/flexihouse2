@@ -1,28 +1,14 @@
-/* ============================================================
-   Flexi House — Cookie consent + analytics bootstrap
-   ------------------------------------------------------------
-   Připraveno pro propojení s:
-     • Google Analytics 4 (gtag.js, Consent Mode v2)
-     • Google Search Console (ověření meta tagem v <head> — viz CONFIG)
-     • Meta (Facebook) Pixel
-   Stačí doplnit reálná ID do CONFIG níže. Dokud jsou v ID
-   placeholdery (XXXX), žádné externí skripty se nenačtou — UI
-   souhlasu ale plně funguje.
-   ============================================================ */
 (function () {
   'use strict';
 
-  // ►► DOPLŇ REÁLNÁ ID — pak se napojení aktivuje automaticky
   var CONFIG = {
-    gaId: 'G-B9WNLFF5FR',          // Google Analytics 4 Measurement ID
-    metaPixelId: 'XXXXXXXXXXXXXXX' // Meta Pixel ID (doplň, až budeš mít)
-    // Google Search Console: vlož ověřovací <meta name="google-site-verification" content="..."> do <head>
+    gaId: 'G-B9WNLFF5FR',
+    metaPixelId: 'XXXXXXXXXXXXXXX'
   };
 
   var STORAGE_KEY = 'fh_cookie_consent';
   var isPlaceholder = function (v) { return !v || /X{4,}/.test(v); };
 
-  /* ---------- Consent Mode v2: výchozí stav = odmítnuto ---------- */
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = window.gtag || gtag;
@@ -36,7 +22,6 @@
     wait_for_update: 500
   });
 
-  /* ---------- Načítání skriptů dle souhlasu ---------- */
   var loaded = { ga: false, meta: false };
 
   function loadGA() {
@@ -84,7 +69,6 @@
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) { return null; }
   }
 
-  /* ---------- Styly banner#u ---------- */
   function injectStyle() {
     if (document.getElementById('fh-cookie-style')) return;
     var css = '' +
@@ -123,7 +107,6 @@
     document.head.appendChild(st);
   }
 
-  /* ---------- Banner ---------- */
   var root;
   function build() {
     injectStyle();
@@ -135,18 +118,18 @@
     root.innerHTML =
       '<div class="fh-cc__panel">' +
         '<p class="fh-cc__t">Respektujeme vaše soukromí</p>' +
-        '<p class="fh-cc__p">Používáme cookies pro fungování webu a — s vaším souhlasem — pro měření návštěvnosti (Google Analytics) a marketing (Meta Pixel). Více v <a href="zasady-ochrany-soukromi.html">zásadách ochrany soukromí</a>.</p>' +
+        '<p class="fh-cc__p">Používáme cookies pro fungování webu a s vaším souhlasem také pro měření návštěvnosti (Google Analytics) a marketing (Meta Pixel). Více v <a href="zasady-ochrany-soukromi.html">zásadách ochrany soukromí</a>.</p>' +
         '<div class="fh-cc__settings" id="fhccSettings">' +
           '<div class="fh-cc__row">' +
             '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Nezbytné</div><div class="fh-cc__row-d">Potřebné pro základní fungování webu. Vždy aktivní.</div></div>' +
             '<label class="fh-cc__sw"><input type="checkbox" checked disabled><span></span></label>' +
           '</div>' +
           '<div class="fh-cc__row">' +
-            '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Analytické</div><div class="fh-cc__row-d">Google Analytics 4 — anonymní měření návštěvnosti.</div></div>' +
+            '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Analytické</div><div class="fh-cc__row-d">Google Analytics 4: anonymní měření návštěvnosti.</div></div>' +
             '<label class="fh-cc__sw"><input type="checkbox" id="fhccAnalytics"><span></span></label>' +
           '</div>' +
           '<div class="fh-cc__row">' +
-            '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Marketingové</div><div class="fh-cc__row-d">Meta Pixel — měření reklam a remarketing.</div></div>' +
+            '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Marketingové</div><div class="fh-cc__row-d">Meta Pixel: měření reklam a remarketing.</div></div>' +
             '<label class="fh-cc__sw"><input type="checkbox" id="fhccMarketing"><span></span></label>' +
           '</div>' +
         '</div>' +
@@ -173,8 +156,6 @@
     root.querySelector('#fhccReject').addEventListener('click', function () {
       save({ analytics: false, marketing: false }); hide();
     });
-    // pokud je otevřené detailní nastavení, „Přijmout vše" respektuje přepínače? Ne — Přijmout = vše.
-    // Přidáme uložení vlastního výběru přes dvojí klik na Nastavení → uložit. Zjednodušeně:
     root.addEventListener('change', function (e) {
       if (e.target === elA || e.target === elM) {
         save({ analytics: elA.checked, marketing: elM.checked });
@@ -194,14 +175,12 @@
   }
   function hide() { if (root) { root.classList.remove('show'); root.classList.remove('open'); var t = root.querySelector('#fhccToggle'); if (t) t.textContent = 'Nastavení'; } }
 
-  // veřejné API pro odkaz „Nastavení cookies" v patičce
   window.openCookieSettings = function () { show(); if (root) root.classList.add('open'); var t = root.querySelector('#fhccToggle'); if (t) t.textContent = 'Skrýt nastavení'; };
 
-  /* ---------- Start ---------- */
   function init() {
     var existing = read();
-    if (existing) { applyConsent(existing); }     // souhlas už máme → rovnou aplikuj
-    else { build(); }                             // jinak zobraz banner
+    if (existing) { applyConsent(existing); }
+    else { build(); }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

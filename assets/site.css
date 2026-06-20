@@ -1,8 +1,3 @@
-/* ============================================================
-   Flexi House — sdílený design systém
-   Používají: katalog.html, mini-house.html, flexi-family.html,
-   flexi-office.html
-============================================================ */
 :root {
   --c-bg: #07172e;
   --c-bg-2: #0b2545;
@@ -51,7 +46,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
 section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 
-/* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 28px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; line-height: 1; transition: transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease; white-space: nowrap; }
 .btn--green { background: var(--c-green); color: var(--c-navy); box-shadow: var(--shadow-green); }
 .btn--green:hover { transform: translateY(-2px); background: var(--c-green-2); }
@@ -62,7 +56,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .btn__arrow { transition: transform .25s ease; }
 .btn:hover .btn__arrow { transform: translateX(4px); }
 
-/* ---------- Nav + mega ---------- */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 106; height: var(--nav-h); display: flex; align-items: center; transition: background .35s ease, backdrop-filter .35s ease, border-color .35s ease; border-bottom: 1px solid transparent; }
 .nav.scrolled { background: rgba(7,23,46,.82); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); border-bottom-color: var(--c-line); }
 .nav__inner { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -102,7 +95,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .burger.is-open span::before { top: 0; transform: rotate(45deg); }
 .burger.is-open span::after { top: 0; transform: rotate(-45deg); }
 
-/* ---------- Mobile menu ---------- */
 .mobile-menu { position: fixed; inset: 0; background: var(--c-navy-deep); z-index: 105; padding: calc(var(--nav-h) + 20px) 24px calc(40px + env(safe-area-inset-bottom)); opacity: 0; pointer-events: none; transition: opacity .3s ease, transform .35s cubic-bezier(.2,.8,.2,1); transform: translateY(-12px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .mobile-menu.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .mobile-menu__hint { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--c-ink-3); }
@@ -122,13 +114,11 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .m-phone svg { color: var(--c-green); }
 .m-phone:active { background: rgba(255,255,255,.06); }
 
-/* ---------- Page hero (subpages) ---------- */
 .page-hero { padding: calc(var(--nav-h) + 56px) 0 0; background: radial-gradient(1000px 500px at 80% -10%, rgba(141,198,63,.1), transparent 60%), radial-gradient(800px 400px at 0% 0%, rgba(42,115,199,.12), transparent 60%); }
 .crumbs { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--c-ink-3); margin-bottom: 18px; flex-wrap: wrap; }
 .crumbs a:hover { color: var(--c-green); }
 .crumbs span { color: var(--c-ink-2); }
 
-/* ---------- Catalog grid ---------- */
 .cat__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .pcard { background: var(--c-surface); border: 1px solid var(--c-line-2); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, border-color .3s ease; }
 .pcard:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: rgba(141,198,63,.4); }
@@ -154,11 +144,9 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .pcard__cta svg { transition: transform .3s ease; }
 .pcard__cta:hover svg { transform: translateX(4px); }
 
-/* ---------- Photo placeholder ---------- */
 .photo-ph { position: absolute; bottom: 12px; left: 12px; z-index: 4; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border-radius: 999px; background: rgba(7,23,46,.72); border: 1px solid var(--c-line-2); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em; color: var(--c-ink-2); pointer-events: none; }
 .photo-ph svg { width: 14px; height: 14px; color: var(--c-green); flex-shrink: 0; }
 
-/* ---------- Detail page ---------- */
 .detail__hero-media { position: relative; aspect-ratio: 16/8; border-radius: var(--r-xl); overflow: hidden; border: 1px solid var(--c-line-2); margin-top: 28px; }
 .detail__hero-media .pcard__photo { z-index: 2; }
 .detail__hero-svg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: min(60%, 560px); z-index: 1; }
@@ -186,7 +174,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .detail__cta-band p { max-width: 540px; margin: 0 auto 24px; }
 .detail__cta-band .btn { margin: 0 6px 10px; }
 
-/* ---------- Footer ---------- */
 .footer { background: #050f1f; color: var(--c-ink-2); padding: 72px 0 32px; border-top: 1px solid var(--c-line); }
 .footer__top { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 44px; padding-bottom: 44px; border-bottom: 1px solid var(--c-line); }
 .footer__brand h4 { font-family: var(--font-display); color: var(--c-ink); font-size: 1.3rem; margin-bottom: 14px; }
@@ -200,7 +187,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .footer__bottom a:hover { color: var(--c-green); }
 .linklike { cursor: pointer; }
 .footer__credit { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--c-line); text-align: center; font-size: 0.85rem; color: var(--c-ink-3); }
-/* Statly kredit s hover efektem */
 .statly { display: inline-flex; align-items: center; gap: 9px; color: #888280; font-size: 0.85rem; font-weight: 500; padding: 6px 10px; border-radius: 10px; text-decoration: none; transition: background 0.25s cubic-bezier(0.22,1,0.36,1); }
 .statly img { width: 24px; height: 24px; border-radius: 7px; display: block; filter: grayscale(0.15); transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s cubic-bezier(0.22,1,0.36,1), filter 0.3s cubic-bezier(0.22,1,0.36,1); }
 .statly .statly-pre { color: #888280; }
@@ -209,29 +195,24 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .statly:hover img { transform: scale(1.15) rotate(-4deg); box-shadow: 0 8px 22px rgba(27, 127, 95, 0.5); filter: grayscale(0); }
 .statly:hover .statly-name { color: #27a37a; }
 
-/* ---------- Reveal ---------- */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 .reveal-d1 { transition-delay: .08s; }
 .reveal-d2 { transition-delay: .16s; }
 .reveal-d3 { transition-delay: .24s; }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .cat__grid { grid-template-columns: repeat(2, 1fr); }
   .detail__lead { grid-template-columns: 1fr; }
   .detail__price-card { position: static; }
   .footer__top { grid-template-columns: 1fr 1fr; gap: 32px; }
 }
-/* tighten the bar on smaller desktops: drop the (secondary) phone number and
-   compress menu spacing so the full menu fits without overflowing */
 @media (max-width: 1280px) {
   .nav__cta .nav__phone { display: none; }
   .nav__inner { gap: 18px; }
   .nav__menu { gap: 2px; }
   .nav__link { padding: 10px 12px; }
 }
-/* below this the menu would get cramped → switch to the burger */
 @media (max-width: 1080px) {
   .nav__menu { display: none; }
   .nav__cta .btn { display: none; }
@@ -253,7 +234,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-/* ── Skrýt placeholder a dekorativní SVG, když je vložená reálná fotka ── */
 .hslide__media:has(.hslide__photo) .photo-ph,
 .hslide__media:has(.hslide__photo) .hslide__scene,
 .detail__hero-media:has(.pcard__photo) .photo-ph,
@@ -263,7 +243,6 @@ section { padding: clamp(56px, 8vw, 110px) 0; position: relative; }
 .ref-shot:has(.ref-shot__photo) .photo-ph,
 .ref-shot:has(.ref-shot__photo) > svg:not(.ref-shot__photo) { display: none !important; }
 
-/* ── Galerie fotek ── */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
 .gallery figure{margin:0;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;background:#0b1d36}
 .gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .55s ease}

@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#07172e" />
 
-<title>Konfigurátor — sestavte si dům na míru | Flexi House</title>
+<title>Konfigurátor: sestavte si dům na míru | Flexi House</title>
 <meta name="description" content="Sestavte si Flexi House na míru krok za krokem: dispozice (1–4 ložnice), exteriér, technologie i doplňky. Orientační cena, nezávazná poptávka a PDF." />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://flexihouse.cz/konfigurator.html" />
 
-<!-- FAVICONS / PWA -->
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%2307172e'/%3E%3Cpath d='M30 11 L50 29 L50 50 L10 50 L10 29 Z' fill='%235aa9e6'/%3E%3Cpath d='M30 11 L50 29 L39 29 L30 20 Z' fill='%23b4dd6a'/%3E%3Crect x='24' y='33' width='12' height='15' rx='1' fill='%2307172e'/%3E%3C/svg%3E" sizes="any" />
 <link rel="apple-touch-icon" href="favicon.svg" />
@@ -18,7 +17,7 @@
 <link rel="manifest" href="site.webmanifest" />
 <meta property="og:image" content="https://flexihouse.cz/og-image.png" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Konfigurátor — Flexi House na míru" />
+<meta property="og:title" content="Konfigurátor: Flexi House na míru" />
 <meta property="og:description" content="Sestavte si dům krok za krokem. Orientační cena, PDF a nezávazná poptávka." />
 <meta property="og:locale" content="cs_CZ" />
 
@@ -26,13 +25,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- html2pdf.js (jsPDF + html2canvas bundle) přes CDN — pro export konfigurace do PDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 
 <style>
-/* ============================================
-   TOKENS — sdíleno s index.html (Flexi House)
-============================================ */
 :root {
   --c-bg: #07172e;
   --c-bg-2: #0b2545;
@@ -87,7 +82,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .eyebrow { display:inline-flex; align-items:center; gap:10px; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.2em; color:var(--c-green-2); }
 .eyebrow::before { content:''; width:28px; height:1px; background:currentColor; }
 
-/* BUTTONS (sdíleno) */
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:15px 28px; border-radius:999px; font-weight:600; font-size:0.95rem; line-height:1; transition:transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease; white-space:nowrap; }
 .btn--green { background:var(--c-green); color:var(--c-navy); box-shadow:var(--shadow-green); }
 .btn--green:hover { transform:translateY(-2px); background:var(--c-green-2); }
@@ -99,7 +93,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .btn__arrow { transition:transform .25s ease; }
 .btn:hover .btn__arrow { transform:translateX(4px); }
 
-/* NAV (zjednodušená verze) */
 .nav { position:fixed; top:0; left:0; right:0; z-index:100; height:var(--nav-h); display:flex; align-items:center; background:rgba(7,23,46,.82); backdrop-filter:saturate(180%) blur(18px); -webkit-backdrop-filter:saturate(180%) blur(18px); border-bottom:1px solid var(--c-line); }
 .nav__inner { width:100%; display:flex; align-items:center; justify-content:space-between; gap:24px; }
 .logo { display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
@@ -111,9 +104,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .nav__phone:hover { color:var(--c-green); }
 .nav__phone svg { color:var(--c-green); }
 
-/* ============================================
-   KONFIGURÁTOR
-============================================ */
 .kf { padding: calc(var(--nav-h) + 36px) 0 90px; }
 .kf__head { max-width: 760px; margin: 0 auto 30px; text-align: center; }
 .kf__head .eyebrow { justify-content:center; margin-bottom:14px; }
@@ -121,7 +111,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf__head h1 .accent { color: var(--c-green); font-style: italic; font-weight: 600; }
 .kf__head p { font-size: 1.02rem; }
 
-/* progress pills */
 .kf-progress { max-width: 880px; margin: 0 auto 40px; }
 .kf-steps { display:flex; align-items:flex-start; justify-content:space-between; position:relative; gap:6px; }
 .kf-steps::before { content:''; position:absolute; top:22px; left:8%; right:8%; height:2px; background:var(--c-line-2); z-index:0; }
@@ -134,11 +123,9 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf-step-pill.active .kf-step-pill__lbl { color:var(--c-ink); }
 .kf-step-pill.done .kf-step-pill__lbl { color:var(--c-ink-2); }
 
-/* layout: main + aside */
 .kf__layout { display:grid; grid-template-columns: 1fr 340px; gap:32px; align-items:start; }
 .kf__main { min-width:0; }
 
-/* a single step panel */
 .kf-panel { display:none; animation: kfIn .45s cubic-bezier(.2,.8,.2,1); }
 .kf-panel.active { display:block; }
 @keyframes kfIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -155,7 +142,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf-group__err { display:none; font-size:0.8rem; color:#f08a8a; margin-top:10px; }
 .kf-group.invalid .kf-group__err { display:block; }
 
-/* option cards */
 .kf-cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:14px; }
 .opt {
   position:relative; display:flex; flex-direction:column; gap:10px;
@@ -178,13 +164,11 @@ p { margin: 0; color: var(--c-ink-2); }
 .opt__price.is-incl { color:var(--c-ink-3); font-weight:600; }
 .opt__badge { position:absolute; top:-9px; left:18px; background:var(--c-green); color:var(--c-navy); font-size:0.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:4px 10px; border-radius:999px; }
 
-/* step nav buttons */
 .kf-nav { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:36px; padding-top:24px; border-top:1px solid var(--c-line); }
 .kf-nav__back { display:inline-flex; align-items:center; gap:8px; padding:14px 22px; border-radius:999px; font-weight:600; font-size:0.92rem; color:var(--c-ink-2); border:1.5px solid var(--c-line-2); transition:all .25s ease; }
 .kf-nav__back:hover { color:var(--c-ink); border-color:var(--c-line-2); background:rgba(255,255,255,.05); }
 .kf-nav__back[disabled] { opacity:.4; pointer-events:none; }
 
-/* ASIDE summary */
 .kf-aside { position:sticky; top:calc(var(--nav-h) + 20px); }
 .kf-summary { background:var(--c-bg-2); border:1px solid var(--c-line-2); border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--shadow-md); }
 .kf-summary__head { padding:20px 22px; background:linear-gradient(135deg, var(--c-navy), var(--c-navy-3)); border-bottom:1px solid var(--c-line-2); }
@@ -203,7 +187,6 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf-total-row__val { font-family:var(--font-display); font-weight:800; font-size:1.7rem; color:var(--c-green); line-height:1; }
 .kf-summary__note { font-size:0.72rem; color:var(--c-ink-3); margin-top:10px; line-height:1.5; }
 
-/* recap / form */
 .kf-recap-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .kf-recap-card { background:var(--c-surface); border:1px solid var(--c-line-2); border-radius:var(--r-md); padding:18px 20px; }
 .kf-recap-card h4 { font-family:var(--font-display); font-size:0.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--c-green-2); margin-bottom:12px; font-weight:700; }
@@ -230,10 +213,8 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf-actions .btn { flex:1; min-width:200px; }
 .form__note { font-size:0.76rem; color:var(--c-ink-3); margin-top:14px; }
 
-/* recap two-col on desktop */
 .kf-recap-layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
 
-/* FOOTER (minimal) */
 .footer { background:#050f1f; color:var(--c-ink-2); padding:48px 0 30px; border-top:1px solid var(--c-line); margin-top:40px; }
 .footer__bottom { display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; flex-wrap:wrap; gap:14px; }
 .footer__bottom a:hover { color:var(--c-green); }
@@ -242,10 +223,8 @@ p { margin: 0; color: var(--c-ink-2); }
 .footer__credit a:hover { color:var(--c-green); }
 .footer__credit svg { color:var(--c-green); }
 
-/* off-screen node used to render the PDF */
 .pdf-render { position:fixed; left:-9999px; top:0; width:794px; }
 
-/* RESPONSIVE */
 @media (max-width: 980px) {
   .kf__layout { grid-template-columns:1fr; }
   .kf-recap-layout { grid-template-columns:1fr; }
@@ -267,10 +246,9 @@ p { margin: 0; color: var(--c-ink-2); }
 </head>
 <body>
 
-<!-- ============== NAV ============== -->
 <header class="nav">
   <div class="wrap nav__inner">
-    <a href="index.html" class="logo" aria-label="Flexi House — domů">
+    <a href="index.html" class="logo" aria-label="Flexi House, domů">
       <span class="logo__mark"><img src="assets/flexi-icon.svg" width="40" height="36" alt="" decoding="async" /></span>
       Flexi House
     </a>
@@ -287,28 +265,23 @@ p { margin: 0; color: var(--c-ink-2); }
   </div>
 </header>
 
-<!-- ============== KONFIGURÁTOR ============== -->
 <main class="kf">
   <div class="wrap">
     <div class="kf__head">
       <span class="eyebrow">Konfigurátor</span>
       <h1 id="kfTitle">Sestavte si <span class="accent">dům na míru</span></h1>
-      <p id="kfTagline">Rozkládací dům s terasou. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace. Ceny jsou orientační — finální nabídku připravíme na míru.</p>
+      <p id="kfTagline">Rozkládací dům s terasou. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace. Ceny jsou orientační, finální nabídku připravíme na míru.</p>
     </div>
 
-    <!-- progress -->
     <div class="kf-progress">
       <div class="kf-steps" id="kfSteps">
         <div class="kf-steps__fill" id="kfStepsFill"></div>
-        <!-- pills injected by JS -->
       </div>
     </div>
 
     <div class="kf__layout">
-      <!-- MAIN: step panels injected by JS -->
       <div class="kf__main" id="kfMain"></div>
 
-      <!-- ASIDE: live summary -->
       <aside class="kf-aside">
         <div class="kf-summary">
           <div class="kf-summary__head">
@@ -316,7 +289,7 @@ p { margin: 0; color: var(--c-ink-2); }
             <div class="kf-summary__sub" id="sumSub">Vaše konfigurace</div>
           </div>
           <div class="kf-summary__body" id="sumBody">
-            <div class="kf-sum-empty">Zatím nic nevybráno — začněte krokem 1.</div>
+            <div class="kf-sum-empty">Zatím nic nevybráno. Začněte krokem 1.</div>
           </div>
           <div class="kf-summary__total">
             <div class="kf-total-row">
@@ -331,11 +304,10 @@ p { margin: 0; color: var(--c-ink-2); }
   </div>
 </main>
 
-<!-- ============== FOOTER ============== -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer__bottom">
-      <div>© 2026 WINstores, s.r.o. — IČO 07836929</div>
+      <div>© 2026 WINstores, s.r.o., IČO 07836929</div>
       <div style="display:flex;gap:24px">
         <a href="index.html">Domů</a>
         <a href="katalog.html">Katalog</a>
@@ -354,20 +326,9 @@ p { margin: 0; color: var(--c-ink-2); }
   </div>
 </footer>
 
-<!-- off-screen container for PDF rendering -->
 <div class="pdf-render" id="pdfRender" aria-hidden="true"></div>
 
 <script>
-/* ============================================================
-   KONFIGURÁTOR — data + engine
-   ------------------------------------------------------------
-   ► VŠECHNA produktová data a CENY jsou v objektu MODELS níže.
-     Ceny jsou ORIENTAČNÍ (k doladění z ceníku). Stačí upravit
-     čísla u "price". "price: 0" = "v základní ceně".
-   ► Konfigurátor řeší Flexi House (dům na míru), dispozice 1–4 ložnice.
-   ============================================================ */
-
-/* --- malá knihovna ikon (inline SVG) --- */
 const I = {
   home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
   ruler:   '<path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0l-4.6-4.6a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/><path d="m7.5 10.5 2 2M11 7l2 2M14.5 3.5l2 2"/>',
@@ -392,13 +353,12 @@ function svg(name, w) {
   return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(I[name]||I.home)+'</svg>';
 }
 
-/* --- znovupoužitelné skupiny (stejná logika pro každý "barák") --- */
 function exteriorGroups(prefix) {
   return [
     { key:'roof', title:'Střecha', type:'single', required:true, options:[
       { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled, ideální pro fotovoltaiku.', icon:'roof', price:0 },
       { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:25000 },
-      { id:'green', label:'Zelená střecha', desc:'Extenzivní osázení — izolace, retence vody, splývá s krajinou.', icon:'roof', price:45000 }
+      { id:'green', label:'Zelená střecha', desc:'Extenzivní osázení: izolace, retence vody, splývá s krajinou.', icon:'roof', price:45000 }
     ]},
     { key:'facade', title:'Fasáda', type:'single', required:true, options:[
       { id:'board', label:'Cementotřísková deska', desc:'Antracit / šedá. Bezúdržbová a odolná.', icon:'layers', price:0 },
@@ -419,7 +379,7 @@ function interiorGroups() {
       { id:'winter', label:'Zimní 120 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:24000 }
     ]},
     { key:'utilities', title:'Rozvody', type:'single', required:true, options:[
-      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění — připraveno k zapojení.', icon:'plug', price:0 },
+      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:0 },
       { id:'full', label:'Elektro + voda a odpad', desc:'Kompletní rozvody vč. přípravy na kuchyň a koupelnu.', icon:'plug', price:35000 }
     ]},
     { key:'heating', title:'Vytápění', type:'single', required:true, options:[
@@ -451,56 +411,49 @@ const MODELS = {
   flexihouse: {
     name: 'Flexi House',
     accent: 'dům na míru',
-    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků — vyberte dispozici i vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační — finální nabídku připravíme na míru.',
+    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte dispozici i vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
     steps: [
       { title:'Dispozice a velikost', micro:'Vyberte počet ložnic. Rozložený dům má vnější rozměr cca 6,3 × 5,9 m (~30 m²) a krytou terasu.', groups:[
         { key:'size', title:'Dispozice', type:'single', required:true, options:[
           { id:'b1', label:'1 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 1 ložnice. Ideální pro páry a glamping.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:70000, badge:'Bestseller' },
           { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 2 ložnice', price:99000 },
           { id:'b3', label:'3 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 3 ložnice.', icon:'home', meta:'~30 m² · 3 ložnice', price:129000 },
-          { id:'b4', label:'4 ložnice', desc:'Maximální využití prostoru — koupelna a 4 ložnice.', icon:'home', meta:'~30 m² · 4 ložnice', price:159000 }
+          { id:'b4', label:'4 ložnice', desc:'Maximální využití prostoru: koupelna a 4 ložnice.', icon:'home', meta:'~30 m² · 4 ložnice', price:159000 }
         ]}
       ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění domu — střecha, fasáda a okna.', groups: exteriorGroups('flexihouse') },
+      { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha, fasáda a okna.', groups: exteriorGroups('flexihouse') },
       { title:'Interiér a technologie', micro:'Vnitřní vybavení, izolace a technika.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné — vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
+      { title:'Doplňky a služby', micro:'Volitelné. Vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
     ]
   }
 };
 
-/* ============================================================
-   ENGINE
-   ============================================================ */
 const params = new URLSearchParams(location.search);
 const modelKey = MODELS[params.get('model')] ? params.get('model') : 'flexihouse';
 const MODEL = MODELS[modelKey];
 
 const STEP_LABELS = ['Velikost', 'Exteriér', 'Interiér', 'Doplňky', 'Rekapitulace'];
-const TOTAL_STEPS = MODEL.steps.length + 1; // + rekapitulace
+const TOTAL_STEPS = MODEL.steps.length + 1;
 const RECAP_INDEX = MODEL.steps.length;
 
-const state = { step: 0, sel: {} }; // sel[groupKey] = optionId | [ids]
+const state = { step: 0, sel: {} };
 const czk = new Intl.NumberFormat('cs-CZ');
 const fmtPrice = (n) => czk.format(n) + ' Kč';
 
-/* lookup: groupKey -> group def (napříč všemi kroky) */
 const GROUPS = {};
 MODEL.steps.forEach(s => s.groups.forEach(g => { GROUPS[g.key] = g; }));
 
-/* ---- DOM ---- */
 const elMain = document.getElementById('kfMain');
 const elSteps = document.getElementById('kfSteps');
 const elFill = document.getElementById('kfStepsFill');
 const elSumBody = document.getElementById('sumBody');
 const elSumTotal = document.getElementById('sumTotal');
 
-/* ---- init titulky ---- */
 document.getElementById('kfTitle').innerHTML = 'Sestavte si <span class="accent">' + MODEL.accent + '</span>';
 document.getElementById('kfTagline').textContent = MODEL.tagline;
 document.getElementById('sumModel').textContent = MODEL.name;
-document.title = 'Konfigurátor ' + MODEL.name + ' — Flexi House';
+document.title = 'Konfigurátor ' + MODEL.name + ' | Flexi House';
 
-/* ---- build progress pills ---- */
 STEP_LABELS.slice(0, TOTAL_STEPS).forEach((lbl, i) => {
   const pill = document.createElement('div');
   pill.className = 'kf-step-pill';
@@ -510,7 +463,6 @@ STEP_LABELS.slice(0, TOTAL_STEPS).forEach((lbl, i) => {
   elSteps.appendChild(pill);
 });
 
-/* ---- build step panels ---- */
 MODEL.steps.forEach((step, si) => {
   const panel = document.createElement('section');
   panel.className = 'kf-panel';
@@ -545,7 +497,6 @@ MODEL.steps.forEach((step, si) => {
   elMain.appendChild(panel);
 });
 
-/* ---- build recap panel ---- */
 (function buildRecap() {
   const panel = document.createElement('section');
   panel.className = 'kf-panel';
@@ -608,7 +559,6 @@ function navHtml(si, isRecap) {
     + nextBtn + '</div>';
 }
 
-/* ---- event delegation: option select ---- */
 elMain.addEventListener('click', (e) => {
   const opt = e.target.closest('.opt');
   if (opt) { selectOption(opt); return; }
@@ -636,9 +586,7 @@ function selectOption(btn) {
   renderSummary();
 }
 
-/* ---- navigation ---- */
 function maxReached() {
-  // nejvyšší krok, na který smí uživatel skočit = první nevyplněný + už navštívené
   let i = 0;
   for (; i < MODEL.steps.length; i++) { if (!stepComplete(i)) break; }
   return Math.min(Math.max(i, state.step), RECAP_INDEX);
@@ -665,7 +613,6 @@ function goTo(idx) {
   idx = Math.max(0, Math.min(RECAP_INDEX, idx));
   state.step = idx;
   document.querySelectorAll('.kf-panel').forEach(p => p.classList.toggle('active', +p.dataset.idx === idx));
-  // pills
   document.querySelectorAll('.kf-step-pill').forEach((p, i) => {
     p.classList.toggle('active', i === idx);
     p.classList.toggle('done', i < idx);
@@ -675,9 +622,7 @@ function goTo(idx) {
   window.scrollTo({ top: 0, behavior:'smooth' });
 }
 
-/* ---- live summary ---- */
 function selectedItems() {
-  // vrací pole {group, label, value, price}
   const items = [];
   MODEL.steps.forEach(step => step.groups.forEach(g => {
     const v = state.sel[g.key];
@@ -694,7 +639,7 @@ function total() { return selectedItems().reduce((s,i)=>s+i.price, 0); }
 function renderSummary() {
   const items = selectedItems();
   if (!items.length) {
-    elSumBody.innerHTML = '<div class="kf-sum-empty">Zatím nic nevybráno — začněte krokem 1.</div>';
+    elSumBody.innerHTML = '<div class="kf-sum-empty">Zatím nic nevybráno. Začněte krokem 1.</div>';
   } else {
     elSumBody.innerHTML = items.map(i =>
       '<div class="kf-sum-row"><span class="kf-sum-row__k">'+i.group+'</span>'
@@ -707,7 +652,6 @@ function renderSummary() {
   elSumTotal.textContent = t > 0 ? fmtPrice(t) : '—';
 }
 
-/* ---- recap content ---- */
 function buildRecapContent() {
   const grid = document.getElementById('recapGrid');
   const stepCards = MODEL.steps.map(step => {
@@ -731,9 +675,6 @@ function buildRecapContent() {
   document.getElementById('recapTotal').textContent = fmtPrice(total());
 }
 
-/* ============================================================
-   PAYLOAD pro Resend (odeslání na backend)
-   ============================================================ */
 function buildPayload() {
   const f = document.getElementById('leadForm');
   const items = selectedItems();
@@ -742,7 +683,6 @@ function buildPayload() {
     modelName: MODEL.name,
     total: total(),
     totalFormatted: fmtPrice(total()),
-    // strukturovaný výběr po krocích (pro e-mail)
     configuration: MODEL.steps.map(step => ({
       step: step.title,
       items: step.groups.flatMap(g => {
@@ -752,7 +692,6 @@ function buildPayload() {
         return o ? [{ group:g.title, value:o.label, price:o.price }] : [];
       })
     })),
-    // plochý seznam (snadné vykreslení)
     summary: items.map(i => ({ group:i.group, value:i.label, price:i.price })),
     contact: {
       name: f.name.value.trim(),
@@ -765,9 +704,6 @@ function buildPayload() {
   };
 }
 
-/* ============================================================
-   PDF export (html2pdf.js)
-   ============================================================ */
 function buildPdfHtml() {
   const items = selectedItems();
   const rows = items.map(i =>
@@ -789,7 +725,7 @@ function buildPdfHtml() {
     + '<div style="font-family:Helvetica,Arial,sans-serif;color:#0b2545;padding:40px 44px;background:#fff;width:794px;box-sizing:border-box">'
     + '  <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #8dc63f;padding-bottom:18px;margin-bottom:24px">'
     + '    <div><div style="font-size:22px;font-weight:800;letter-spacing:-.5px">Flexi House</div>'
-    + '      <div style="font-size:12px;color:#5b6b80;margin-top:2px">Konfigurace — '+MODEL.name+'</div></div>'
+    + '      <div style="font-size:12px;color:#5b6b80;margin-top:2px">Konfigurace: '+MODEL.name+'</div></div>'
     + '    <div style="text-align:right;font-size:11px;color:#5b6b80">'
     + '      WINstores, s.r.o. · IČO 07836929<br>+420 607 321 532<br>'+new Date().toLocaleDateString('cs-CZ')+'</div>'
     + '  </div>'
@@ -822,9 +758,6 @@ function downloadPdf() {
   html2pdf().set(opt).from(holder.firstElementChild).save().then(() => { holder.innerHTML = ''; });
 }
 
-/* ============================================================
-   FORM submit (Resend přes backend endpoint)
-   ============================================================ */
 function bindForm() {
   const form = document.getElementById('leadForm');
   const status = document.getElementById('formStatus');
@@ -865,7 +798,6 @@ function bindForm() {
   });
 }
 
-/* ---- boot ---- */
 renderSummary();
 goTo(0);
 bindForm();
