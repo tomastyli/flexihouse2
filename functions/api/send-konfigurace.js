@@ -111,7 +111,7 @@ function shell(inner, preheader) {
       <tr><td style="background:#f4f7fb;padding:22px 32px;border-top:1px solid #e6ebf2">
         <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6">
           WINstores, s.r.o. · IČO 07836929 · Korunní 2569/108, Praha 10<br>
-          +420 607 321 532 · dandaprokes@gmail.com · flexihouse.cz
+          +420 607 321 543 · dandaprokes@gmail.com · flexihouse.cz
         </p>
       </td></tr>
     </table>
@@ -182,7 +182,7 @@ function emailCustomer(data) {
     </td></tr>
 
     <tr><td style="padding:18px 32px 32px" align="center">
-      <a href="tel:+420607321532" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:15px;text-decoration:none;padding:14px 30px;border-radius:999px">Máte dotaz? Zavolejte 607 321 532</a>
+      <a href="tel:+420607321543" style="display:inline-block;background:#8dc63f;color:#0b2545;font-weight:700;font-size:15px;text-decoration:none;padding:14px 30px;border-radius:999px">Máte dotaz? Zavolejte 607 321 543</a>
     </td></tr>`;
   return shell(inner, `Vaše konfigurace ${data.modelName}. Ozveme se do 24 hodin.`);
 }
