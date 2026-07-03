@@ -516,6 +516,7 @@
       </div>
 
       <form class="form" id="leadForm" novalidate>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
         <div class="form__status" id="formStatus" role="status"></div>
         <div class="form__row">
           <div class="field">
@@ -771,7 +772,8 @@
       phone: phone.value.trim(),
       email: email.value.trim(),
       model: form.model.value,
-      message: form.message.value.trim()
+      message: form.message.value.trim(),
+      website: form.website ? form.website.value : ''
     };
 
     submitBtn.setAttribute('disabled', '');

@@ -4,6 +4,10 @@ export async function onRequestPost(context) {
   try {
     const data = await request.json();
 
+    if (data.website && String(data.website).trim() !== '') {
+      return json({ ok: true });
+    }
+
     const name = (data.name || '').trim();
     const email = (data.email || '').trim();
     const phone = (data.phone || '').trim();

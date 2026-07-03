@@ -4,6 +4,10 @@ export async function onRequestPost(context) {
   try {
     const data = await request.json();
 
+    if (data.website && String(data.website).trim() !== '') {
+      return json({ ok: true });
+    }
+
     const c = data.contact || {};
     if (!c.name || !c.email || !c.phone) {
       return json({ ok: false, error: 'Chybí povinné kontaktní údaje.' }, 400);
