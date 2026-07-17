@@ -58,8 +58,8 @@
   --dev-h: 34px;
 }
 *,*::before,*::after { box-sizing: border-box; }
-.dev-banner { position:fixed; top:0; left:0; right:0; height:var(--dev-h); z-index:108; display:flex; align-items:center; justify-content:center; gap:9px; padding:0 16px; background:linear-gradient(90deg,#8dc63f,#b4dd6a); color:#0b2545; font-family:var(--font-body); font-weight:600; font-size:0.8rem; line-height:1; text-align:center; }
-.dev-banner__dot { width:8px; height:8px; border-radius:50%; background:#0b2545; flex:none; animation:devpulse 1.6s ease-in-out infinite; }
+.dev-banner { position:fixed; top:0; left:0; right:0; height:var(--dev-h); z-index:108; display:flex; align-items:center; justify-content:center; gap:9px; padding:0 16px; background:linear-gradient(90deg,#c8202e,#e04250); color:#fff; font-family:var(--font-body); font-weight:600; font-size:0.8rem; line-height:1; text-align:center; }
+.dev-banner__dot { width:8px; height:8px; border-radius:50%; background:#fff; flex:none; animation:devpulse 1.6s ease-in-out infinite; }
 @keyframes devpulse { 0%,100% { opacity:.3 } 50% { opacity:1 } }
 @media (max-width:560px) { .dev-banner { font-size:0.7rem; } }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--c-bg); }
@@ -367,7 +367,7 @@ function svg(name, w) {
 function exteriorGroups(prefix) {
   return [
     { key:'roof', title:'Střecha', type:'single', required:true, options:[
-      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled, ideální pro fotovoltaiku.', icon:'roof', price:0 },
+      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled.', icon:'roof', price:0 },
       { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:25000 },
       { id:'green', label:'Zelená střecha', desc:'Extenzivní osázení: izolace, retence vody, splývá s krajinou.', icon:'roof', price:45000 }
     ]},
@@ -412,8 +412,7 @@ function addonGroup() {
       { id:'transport', label:'Doprava a usazení', desc:'Dovezeme a usadíme na váš pozemek.', icon:'truck', price:18000, badge:'Doporučeno' },
       { id:'assembly', label:'Montáž na místě', desc:'Kompletní instalace a zprovoznění.', icon:'tool', price:24000 },
       { id:'permit', label:'Vyřízení povolení', desc:'Postaráme se o ohlášení / stavební povolení.', icon:'doc', price:15000 },
-      { id:'kitchen', label:'Kuchyňská linka', desc:'Vč. dřezu a základních spotřebičů.', icon:'kitchen', price:39000 },
-      { id:'solar', label:'Solární panel 2 kWp', desc:'Snižte účty za elektřinu, energie z vlastní střechy.', icon:'sun', price:69000 }
+      { id:'kitchen', label:'Kuchyňská linka', desc:'Vč. dřezu a základních spotřebičů.', icon:'kitchen', price:39000 }
     ]}
   ];
 }
