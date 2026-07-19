@@ -118,6 +118,7 @@
 }
 </script>
 
+<link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" fetchpriority="high">
 <link rel="stylesheet" href="fonts/fonts.css">
 
 <link rel="stylesheet" href="assets/site.css?v=2">
@@ -220,7 +221,7 @@
     <article class="hslide" data-dur="4500">
       <div class="hslide__media">
         <div class="hslide__bg hslide__bg--o"></div>
-        <div class="hslide__photo" style="background-image:url('img/flexi-office.webp')"></div>
+        <div class="hslide__photo" data-bg="img/flexi-office.webp"></div>
         <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
         <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
@@ -255,7 +256,7 @@
     <article class="hslide" data-dur="4500">
       <div class="hslide__media">
         <div class="hslide__bg hslide__bg--c"></div>
-        <div class="hslide__photo" style="background-image:url('img/dum-na-miru.webp')"></div>
+        <div class="hslide__photo" data-bg="img/dum-na-miru.webp"></div>
         <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
         <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
@@ -656,6 +657,18 @@
   const mGroupHead = document.getElementById('mGroupHead');
   const mGroupDomy = document.getElementById('mGroupDomy');
   if (mGroupHead) mGroupHead.addEventListener('click', () => mGroupDomy.classList.toggle('open'));
+
+  (function () {
+    const deferred = document.querySelectorAll('.hslide__photo[data-bg]');
+    const applyBg = function () {
+      deferred.forEach(function (el) {
+        el.style.backgroundImage = "url('" + el.dataset.bg + "')";
+        el.removeAttribute('data-bg');
+      });
+    };
+    if (document.readyState === 'complete') applyBg();
+    else window.addEventListener('load', applyBg, { once: true });
+  })();
 
   (function () {
     const track = document.getElementById('heroTrack');

@@ -6,6 +6,42 @@
       "runtimeExecutable": "node",
       "runtimeArgs": [".claude/serve.js"],
       "port": 4599
+    },
+    {
+      "name": "kralovstvi-zahrad",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/kralovstvi zahrad/.claude/serve.js"],
+      "port": 4600
+    },
+    {
+      "name": "lifefinance",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/lifefinance/.claude/serve.cjs"],
+      "port": 4321
+    },
+    {
+      "name": "statly1",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/statly1/.claude/serve.js"],
+      "port": 4602
+    },
+    {
+      "name": "stehovanileo",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/stehovanileo/.claude/serve.js"],
+      "port": 4603
+    },
+    {
+      "name": "kosmetika",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/kosmetika-klejchova/.claude/serve.js"],
+      "port": 4604
+    },
+    {
+      "name": "zlincityfirm",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/Users/tomastylich/Desktop/ZlinCityFirm/.claude/serve.js"],
+      "port": 4605
     }
   ]
 }
