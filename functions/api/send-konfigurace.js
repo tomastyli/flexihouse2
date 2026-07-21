@@ -82,6 +82,17 @@ const czk = (n) => new Intl.NumberFormat('cs-CZ').format(Number(n) || 0) + ' Kč
 function configRows(data) {
   const steps = data.configuration || [];
   let html = '';
+  if (Number(data.base) > 0) {
+    const incl = (data.baseIncludes || []).map(esc).join(' · ');
+    html += `<tr><td colspan="2" style="padding:16px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700">Základní cena</td></tr>
+      <tr>
+        <td style="padding:7px 0;border-bottom:1px solid #eef2f7;color:#0b2545;font-size:14px">
+          <strong>${esc(data.modelName)}</strong>${incl ? `<br><span style="color:#5b6b80;font-size:12px">Obsahuje: ${incl}</span>` : ''}
+        </td>
+        <td style="padding:7px 0;border-bottom:1px solid #eef2f7;text-align:right;color:#0b2545;font-weight:700;font-size:14px;white-space:nowrap">
+          ${esc(data.baseFormatted || czk(data.base))}
+        </td></tr>`;
+  }
   steps.forEach(step => {
     if (!step.items || !step.items.length) return;
     html += `<tr><td colspan="2" style="padding:16px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700">${esc(step.step)}</td></tr>`;

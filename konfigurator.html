@@ -196,7 +196,8 @@ p { margin: 0; color: var(--c-ink-2); }
 .kf-recap-line { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:7px 0; font-size:0.88rem; border-bottom:1px dashed var(--c-line); }
 .kf-recap-line:last-child { border-bottom:none; }
 .kf-recap-line__k { color:var(--c-ink-3); }
-.kf-recap-line__v { color:var(--c-ink); font-weight:600; text-align:right; }
+.kf-recap-line__v { color:var(--c-ink); font-weight:600; text-align:right; white-space:nowrap; }
+.kf-recap-card--base { grid-column:1 / -1; }
 
 .field { margin-bottom:14px; }
 .field label { display:block; font-size:0.8rem; font-weight:600; color:var(--c-ink-2); margin-bottom:7px; }
@@ -304,7 +305,7 @@ p { margin: 0; color: var(--c-ink-2); }
               <span class="kf-total-row__lbl">Orientační cena</span>
               <span class="kf-total-row__val" id="sumTotal">–</span>
             </div>
-            <p class="kf-summary__note" id="sumNote">Orientační ceny vč. konstrukce a opláštění, bez DPH a bez dopravy. Finální cenu potvrdíme v nabídce.</p>
+            <p class="kf-summary__note" id="sumNote">Orientační ceny bez DPH. Doprava a montáž se účtují zvlášť, najdete je mezi doplňky. Finální cenu potvrdíme v nabídce.</p>
           </div>
         </div>
       </aside>
@@ -364,55 +365,43 @@ function svg(name, w) {
   return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(I[name]||I.home)+'</svg>';
 }
 
-function exteriorGroups(prefix) {
+function exteriorGroups() {
   return [
     { key:'roof', title:'Střecha', type:'single', required:true, options:[
-      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled.', icon:'roof', price:0 },
-      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:25000 },
-      { id:'green', label:'Zelená střecha', desc:'Extenzivní osázení: izolace, retence vody, splývá s krajinou.', icon:'roof', price:45000 }
+      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled. Součást základní ceny.', icon:'roof', price:0 },
+      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:40000 }
     ]},
-    { key:'facade', title:'Fasáda', type:'single', required:true, options:[
-      { id:'board', label:'Cementotřísková deska', desc:'Antracit / šedá. Bezúdržbová a odolná.', icon:'layers', price:0 },
-      { id:'wood',  label:'Dřevěný obklad', desc:'Přírodní modřín, teplý vzhled do přírody.', icon:'layers', price:30000, badge:'Oblíbené' },
-      { id:'metal', label:'Vlnitý plech', desc:'Industriální look, extrémně odolný.', icon:'layers', price:18000 }
-    ]},
-    { key:'windows', title:'Okna a dveře', type:'single', required:true, options:[
-      { id:'std',    label:'Plastová okna', desc:'Trojsklo, bílá nebo antracit. Skvělý poměr cena/výkon.', icon:'window', price:0 },
-      { id:'alu',    label:'Hliníková okna', desc:'Tenké rámy, prémiový vzhled, dlouhá životnost.', icon:'window', price:22000 },
-      { id:'french', label:'Francouzské posuvné', desc:'Prosklená stěna s výstupem na terasu.', icon:'window', price:38000 }
+    { key:'facade', title:'Fasáda', type:'single', required:true, hint:'všechny varianty bez příplatku', options:[
+      { id:'wood',  label:'Dřevěný obklad', desc:'Přírodní odstín dřeva, teplý vzhled do přírody.', icon:'layers', price:0, badge:'Oblíbené' },
+      { id:'grey',  label:'Šedý obklad', desc:'Tlumená šedá, nenápadná v zástavbě i v terénu.', icon:'layers', price:0 },
+      { id:'black', label:'Černý obklad', desc:'Výrazná tmavá fasáda, ostrý moderní kontrast.', icon:'layers', price:0 }
     ]}
   ];
 }
 function interiorGroups() {
   return [
     { key:'insulation', title:'Zateplení', type:'single', required:true, options:[
-      { id:'std',  label:'Standard 80 mm', desc:'Celoroční komfort pro mírné klima.', icon:'thermo', price:0 },
-      { id:'winter', label:'Zimní 120 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:24000 }
+      { id:'std',    label:'Standard 75 mm', desc:'Celoroční komfort pro mírné klima.', icon:'thermo', price:0 },
+      { id:'winter', label:'Zimní 100 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:30000 }
     ]},
     { key:'utilities', title:'Rozvody', type:'single', required:true, options:[
       { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:0 },
-      { id:'full', label:'Elektro + voda a odpad', desc:'Kompletní rozvody vč. přípravy na kuchyň a koupelnu.', icon:'plug', price:35000 }
+      { id:'full', label:'Elektro + voda a odpad', desc:'Kompletní rozvody vč. přípravy na kuchyň a koupelnu.', icon:'plug', price:50000 }
     ]},
     { key:'heating', title:'Vytápění', type:'single', required:true, options:[
-      { id:'direct', label:'Elektrický přímotop', desc:'Nejnižší pořizovací cena, rychlý nástup tepla.', icon:'flame', price:0 },
-      { id:'ac',     label:'Klimatizace s tep. čerpadlem', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:39000, badge:'Doporučeno' },
-      { id:'floor',  label:'Elektrické podlahové', desc:'Příjemné sálavé teplo, neviditelné řešení.', icon:'flame', price:29000 }
-    ]},
-    { key:'bathroom', title:'Koupelna', type:'single', required:true, options:[
-      { id:'none',   label:'Bez koupelny', desc:'Otevřený prostor, koupelnu doděláte později.', icon:'bath', price:0 },
-      { id:'shower', label:'Sprcha + WC', desc:'Kompaktní koupelnový blok, plně vybavený.', icon:'bath', price:59000 },
-      { id:'full',   label:'Plná koupelna', desc:'Sprcha/vana, WC, umyvadlo, obklady.', icon:'bath', price:89000 }
+      { id:'none',  label:'Bez vytápění', desc:'Dům dodáme bez topného zdroje, doplníte ho sami.', icon:'flame', price:0 },
+      { id:'ac',    label:'Klimatizace s tep. čerpadlem', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:25000, badge:'Doporučeno' },
+      { id:'stove', label:'Kamna', desc:'Sálavé teplo a atmosféra živého ohně.', icon:'flame', price:30000 }
     ]}
   ];
 }
 function addonGroup() {
   return [
     { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', options:[
-      { id:'terrace', label:'Dřevěná terasa 8 m²', desc:'Prostor pro posezení venku.', icon:'deck', price:45000 },
-      { id:'transport', label:'Doprava a usazení', desc:'Dovezeme a usadíme na váš pozemek.', icon:'truck', price:18000, badge:'Doporučeno' },
-      { id:'assembly', label:'Montáž na místě', desc:'Kompletní instalace a zprovoznění.', icon:'tool', price:24000 },
-      { id:'permit', label:'Vyřízení povolení', desc:'Postaráme se o ohlášení / stavební povolení.', icon:'doc', price:15000 },
-      { id:'kitchen', label:'Kuchyňská linka', desc:'Vč. dřezu a základních spotřebičů.', icon:'kitchen', price:39000 }
+      { id:'terrace',   label:'Terasa', desc:'Prostor pro posezení venku.', icon:'deck', price:20000 },
+      { id:'transport', label:'Doprava a usazení', desc:'Dovezeme a usadíme na váš pozemek.', icon:'truck', price:15000, badge:'Doporučeno' },
+      { id:'assembly',  label:'Montáž na místě', desc:'Kompletní instalace a zprovoznění.', icon:'tool', price:40000 },
+      { id:'permit',    label:'Vyřízení povolení', desc:'Postaráme se o ohlášení / stavební povolení.', icon:'doc', price:15000 }
     ]}
   ];
 }
@@ -421,18 +410,17 @@ const MODELS = {
   flexihouse: {
     name: 'Flexi House',
     accent: 'dům na míru',
-    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte dispozici i vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
+    base: 480000,
+    baseIncludes: ['Plná koupelna', 'Kuchyňská linka', 'Okna a dveře'],
+    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
     steps: [
-      { title:'Dispozice a velikost', micro:'Vyberte počet ložnic. Rozložený dům má vnější rozměr cca 6,3 × 5,9 m (~30 m²) a krytou terasu.', groups:[
+      { title:'Dispozice a velikost', micro:'Rozložený dům má vnější rozměr cca 6,3 × 5,9 m (~30 m²) a krytou terasu.', groups:[
         { key:'size', title:'Dispozice', type:'single', required:true, options:[
-          { id:'b1', label:'1 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 1 ložnice. Ideální pro páry a glamping.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:70000, badge:'Bestseller' },
-          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 2 ložnice', price:99000 },
-          { id:'b3', label:'3 ložnice', desc:'Obývací prostor s kuchyní, koupelna a 3 ložnice.', icon:'home', meta:'~30 m² · 3 ložnice', price:129000 },
-          { id:'b4', label:'4 ložnice', desc:'Maximální využití prostoru: koupelna a 4 ložnice.', icon:'home', meta:'~30 m² · 4 ložnice', price:159000 }
+          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyní, plná koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:0 }
         ]}
       ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha, fasáda a okna.', groups: exteriorGroups('flexihouse') },
-      { title:'Interiér a technologie', micro:'Vnitřní vybavení, izolace a technika.', groups: interiorGroups() },
+      { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha a fasáda. Okna a dveře jsou v základní ceně.', groups: exteriorGroups() },
+      { title:'Interiér a technologie', micro:'Izolace, rozvody a vytápění. Plná koupelna i kuchyňská linka jsou v základní ceně.', groups: interiorGroups() },
       { title:'Doplňky a služby', micro:'Volitelné. Vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
     ]
   }
@@ -645,22 +633,19 @@ function selectedItems() {
   }));
   return items;
 }
-function total() { return selectedItems().reduce((s,i)=>s+i.price, 0); }
+const BASE = MODEL.base || 0;
+function total() { return BASE + selectedItems().reduce((s,i)=>s+i.price, 0); }
 
 function renderSummary() {
-  const items = selectedItems();
-  if (!items.length) {
-    elSumBody.innerHTML = '<div class="kf-sum-empty">Zatím nic nevybráno. Začněte krokem 1.</div>';
-  } else {
-    elSumBody.innerHTML = items.map(i =>
-      '<div class="kf-sum-row"><span class="kf-sum-row__k">'+i.group+'</span>'
-      + '<span class="kf-sum-row__v">'+i.label
-      + (i.price>0 ? '<small>+ '+fmtPrice(i.price)+'</small>' : '')
-      + '</span></div>'
-    ).join('');
-  }
-  const t = total();
-  elSumTotal.textContent = t > 0 ? fmtPrice(t) : '–';
+  const baseRow = '<div class="kf-sum-row"><span class="kf-sum-row__k">Základní cena</span>'
+    + '<span class="kf-sum-row__v">'+MODEL.name+'<small>'+fmtPrice(BASE)+'</small></span></div>';
+  elSumBody.innerHTML = baseRow + selectedItems().map(i =>
+    '<div class="kf-sum-row"><span class="kf-sum-row__k">'+i.group+'</span>'
+    + '<span class="kf-sum-row__v">'+i.label
+    + (i.price>0 ? '<small>+ '+fmtPrice(i.price)+'</small>' : '')
+    + '</span></div>'
+  ).join('');
+  elSumTotal.textContent = fmtPrice(total());
 }
 
 function buildRecapContent() {
@@ -682,7 +667,13 @@ function buildRecapContent() {
         + '<span class="kf-recap-line__v">'+(l[1]>0?'+ '+fmtPrice(l[1]):(l[1]===0?'v ceně':''))+'</span></div>').join('')
       + '</div>';
   }).join('');
-  grid.innerHTML = stepCards;
+  const baseCard = '<div class="kf-recap-card kf-recap-card--base"><h4>Základní cena</h4>'
+    + '<div class="kf-recap-line"><span class="kf-recap-line__k">'+MODEL.name+'</span>'
+    + '<span class="kf-recap-line__v">'+fmtPrice(BASE)+'</span></div>'
+    + (MODEL.baseIncludes||[]).map(x => '<div class="kf-recap-line"><span class="kf-recap-line__k">'+x+'</span>'
+      + '<span class="kf-recap-line__v">v ceně</span></div>').join('')
+    + '</div>';
+  grid.innerHTML = baseCard + stepCards;
   document.getElementById('recapTotal').textContent = fmtPrice(total());
 }
 
@@ -693,6 +684,9 @@ function buildPayload() {
     website: f.website ? f.website.value : '',
     model: modelKey,
     modelName: MODEL.name,
+    base: BASE,
+    baseFormatted: fmtPrice(BASE),
+    baseIncludes: MODEL.baseIncludes || [],
     total: total(),
     totalFormatted: fmtPrice(total()),
     configuration: MODEL.steps.map(step => ({
@@ -718,7 +712,12 @@ function buildPayload() {
 
 function buildPdfHtml() {
   const items = selectedItems();
-  const rows = items.map(i =>
+  const baseRow = '<tr><td style="padding:9px 0;border-bottom:1px solid #e6ebf2;color:#5b6b80;font-size:13px">Základní cena</td>'
+    + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;font-weight:600;color:#0b2545;font-size:13px">'+MODEL.name
+    + ((MODEL.baseIncludes||[]).length ? '<br><span style="font-weight:400;color:#5b6b80;font-size:11px">Obsahuje: '+MODEL.baseIncludes.join(' · ')+'</span>' : '')
+    + '</td>'
+    + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;text-align:right;color:#0b2545;font-weight:700;font-size:13px;white-space:nowrap">'+fmtPrice(BASE)+'</td></tr>';
+  const rows = baseRow + items.map(i =>
     '<tr><td style="padding:9px 0;border-bottom:1px solid #e6ebf2;color:#5b6b80;font-size:13px">'+i.group+'</td>'
     + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;font-weight:600;color:#0b2545;font-size:13px">'+i.label+'</td>'
     + '<td style="padding:9px 0;border-bottom:1px solid #e6ebf2;text-align:right;color:#4d7c1a;font-weight:600;font-size:13px;white-space:nowrap">'
@@ -809,6 +808,13 @@ function bindForm() {
     }
   });
 }
+
+Object.values(GROUPS).forEach(g => {
+  if (g.type !== 'multi' && g.options.length === 1) {
+    const btn = elMain.querySelector('.opt[data-group="'+g.key+'"][data-opt="'+g.options[0].id+'"]');
+    if (btn) selectOption(btn);
+  }
+});
 
 renderSummary();
 goTo(0);
