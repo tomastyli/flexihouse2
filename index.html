@@ -121,8 +121,8 @@
 <link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" fetchpriority="high">
 <link rel="stylesheet" href="fonts/fonts.css">
 
-<link rel="stylesheet" href="assets/site.css?v=9">
-<link rel="stylesheet" href="assets/home.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=10">
+<link rel="stylesheet" href="assets/home.css?v=11">
 </head>
 <body>
 
@@ -184,19 +184,108 @@
   </a>
 </nav>
 
-<section class="hero" id="hero">
-  <div class="hero__bgs" aria-hidden="true">
-    <div class="hero__bg is-on" style="background-image:url('img/flexi-house-rozkladaci.webp')"></div>
-    <div class="hero__bg" data-bg="img/glamping.webp"></div>
-    <div class="hero__bg" data-bg="img/dum-na-miru.webp"></div>
+<section class="hero" id="hero" aria-roledescription="carousel" aria-label="Modely Flexi House">
+  <div class="hero__track" id="heroTrack">
+
+    <article class="hslide active" data-dur="4500">
+      <div class="hslide__media">
+        <div class="hslide__bg hslide__bg--g"></div>
+        <div class="hslide__photo" style="background-image:url('img/flexi-house-rozkladaci.webp')"></div>
+        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
+        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="200" cy="232" rx="150" ry="14" fill="rgba(0,0,0,.25)"/>
+          <rect x="90" y="120" width="220" height="105" rx="4" fill="#0b2545"/>
+          <polygon points="78,124 200,66 322,124" fill="#07172e"/>
+          <rect x="120" y="142" width="70" height="78" fill="#b4dd6a"/>
+          <line x1="155" y1="142" x2="155" y2="220" stroke="#0b2545" stroke-width="2"/>
+          <rect x="210" y="142" width="80" height="48" fill="#8dc63f" opacity=".85"/>
+          <rect x="40" y="208" width="320" height="6" fill="#3a4148"/>
+        </svg>
+      </div>
+      <div class="wrap" style="height:100%">
+        <div class="hslide__content">
+          <span class="hslide__eyebrow">Flexi House</span>
+          <h1>Rozkládací dům s terasou, <span class="accent">hotový za pár dní.</span></h1>
+          <p class="hslide__claim">Přijede složený v kontejneru, na místě se rozloží na plnohodnotných ~30 m² s koupelnou, kuchyní i terasou. Bydlení, glamping nebo chata připravené k nastěhování.</p>
+          <div class="hslide__ctas">
+            <a href="flexi-house.html" class="btn btn--green">Prohlédnout Flexi House <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="hslide" data-dur="4500">
+      <div class="hslide__media">
+        <div class="hslide__bg hslide__bg--o"></div>
+        <div class="hslide__photo" data-bg="img/flexi-office.webp"></div>
+        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
+        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
+          <rect x="60" y="100" width="280" height="125" fill="rgba(90,169,230,.12)" stroke="#5aa9e6" stroke-width="2"/>
+          <g fill="#5aa9e6">
+            <rect x="78" y="118" width="56" height="40" opacity=".85"/>
+            <rect x="144" y="118" width="56" height="40"/>
+            <rect x="210" y="118" width="56" height="40" opacity=".85"/>
+            <rect x="276" y="118" width="46" height="40"/>
+            <rect x="78" y="168" width="56" height="40"/>
+            <rect x="144" y="168" width="56" height="40" opacity=".85"/>
+            <rect x="210" y="168" width="56" height="40"/>
+            <rect x="276" y="168" width="46" height="40" opacity=".85"/>
+          </g>
+          <rect x="180" y="190" width="40" height="35" fill="#b4dd6a"/>
+        </svg>
+      </div>
+      <div class="wrap" style="height:100%">
+        <div class="hslide__content">
+          <span class="hslide__eyebrow">Flexi Office</span>
+          <h1>Kancelář, která <span class="accent">je hned k mání.</span></h1>
+          <p class="hslide__claim">Hotová bílá modulární kancelář, studio nebo showroom. Máme 10 kusů skladem, takže bez čekání na výrobu. Postavíme za pár dní a kdykoli přemístíte.</p>
+          <div class="hslide__ctas">
+            <a href="flexi-office.html" class="btn btn--green">Prohlédnout Flexi Office <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="hslide" data-dur="4500">
+      <div class="hslide__media">
+        <div class="hslide__bg hslide__bg--c"></div>
+        <div class="hslide__photo" data-bg="img/dum-na-miru.webp"></div>
+        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
+        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
+          <rect x="70" y="140" width="120" height="85" fill="#0b2545"/>
+          <rect x="190" y="115" width="140" height="110" fill="#103563"/>
+          <polygon points="60,144 130,104 200,144" fill="#07172e"/>
+          <polygon points="180,118 260,78 340,118" fill="#07172e"/>
+          <rect x="95" y="160" width="36" height="44" fill="#8dc63f" opacity=".8"/>
+          <rect x="225" y="138" width="70" height="44" fill="#5aa9e6" opacity=".75"/>
+          <rect x="232" y="190" width="34" height="35" fill="#2a73c7"/>
+        </svg>
+      </div>
+      <div class="wrap" style="height:100%">
+        <div class="hslide__content">
+          <span class="hslide__eyebrow">Dům na míru</span>
+          <h1>Postavíme dům <span class="accent">přesně podle vás.</span></h1>
+          <p class="hslide__claim">Vyberete si rozložení, počet ložnic, fasádu, okna i vybavení. Sestavte si dispozici v konfigurátoru, nebo nám pošlete poptávku a navrhneme řešení na míru.</p>
+          <div class="hslide__ctas">
+            <a href="konfigurator.html" class="btn btn--green">Spustit konfigurátor <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
   </div>
-  <div class="wrap hero__inner">
-    <div class="hero__content">
-      <h1>Rozkládací dům, který přijede <span class="accent">složený na váš pozemek.</span></h1>
-      <p class="hero__claim">Na místě se rozloží na plnohodnotných ~30 m² s koupelnou, kuchyní a krytou terasou. Vyrábíme v hale, dodáváme po celé ČR.</p>
-      <div class="hero__ctas">
-        <a href="konfigurator.html" class="btn btn--green">Sestavit dům a zjistit cenu <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-        <a href="#katalog" class="btn btn--ghost">Prohlédnout domy</a>
+
+  <div class="hero__controls">
+    <div class="wrap">
+      <div class="hero__dots" id="heroDots" role="tablist" aria-label="Přepínání modelů"></div>
+      <div class="hero__arrows">
+        <button class="hero__arrow" id="heroPrev" aria-label="Předchozí model"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="hero__arrow" id="heroNext" aria-label="Další model"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
   </div>
@@ -226,52 +315,71 @@
 <section id="katalog">
   <div class="wrap">
     <div class="section-head reveal">
-      <h2>Vyberte si základ. <span class="accent">Zbytek doladíme.</span></h2>
-      <p>Tři varianty podle využití. Od hotového kusu skladem po dům sestavený přesně podle vás.</p>
+      <h2>Vyberte si základ. <em style="font-style:italic;font-weight:500;color:var(--c-green)">Zbytek doladíme.</em></h2>
+      <p>Tři varianty podle využití. Od hotového domu skladem po dům sestavený přesně podle vás.</p>
     </div>
 
     <div class="cat__grid">
 
       <article class="pcard reveal">
-        <p class="pcard__kind">Rozkládací dům</p>
-        <h3>Flexi House</h3>
-        <p class="pcard__desc">Vlajková loď. Přijede složený v kontejneru a na místě se rozloží na plnohodnotné bydlení s koupelnou, kuchyní a krytou terasou.</p>
-        <div class="pcard__stage"><img src="img/cut-house.webp" alt="Flexi House s terasou" width="900" height="593" loading="lazy"></div>
-        <dl class="pcard__spec">
-          <div><dt>Rozměr</dt><dd>6,32 × 5,90 m</dd></div>
-          <div><dt>Plocha</dt><dd>~30 m² s terasou</dd></div>
-          <div><dt>Kapacita</dt><dd>2 až 4 osoby</dd></div>
-        </dl>
-        <p class="pcard__price"><span>Cena od</span>480 000 Kč</p>
-        <a href="flexi-house.html" class="btn btn--green pcard__btn">Prohlédnout Flexi House</a>
+        <div class="pcard__media pcard__media--f">
+          <span class="pcard__price">Cena na vyžádání</span>
+          <div class="pcard__photo" style="background-image:url('img/flexi-house-foto.webp')"></div>
+          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
+          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="30" y="50" width="140" height="55" fill="#0b2545" opacity=".9"/>
+            <polygon points="22,55 100,18 178,55" fill="#07172e"/>
+            <rect x="50" y="64" width="34" height="41" fill="#5aa9e6"/>
+            <rect x="96" y="64" width="34" height="22" fill="#5aa9e6" opacity=".85"/>
+            <rect x="138" y="64" width="24" height="41" fill="#103563"/>
+            <rect x="20" y="105" width="160" height="6" fill="#b4dd6a"/>
+          </svg>
+        </div>
+        <div class="pcard__body">
+          <div class="pcard__title-row"><h3>Flexi House</h3><span class="pcard__size">~30 m² + terasa</span></div>
+          <p class="pcard__desc">Vlajková loď. Rozkládací dům s terasou. Přijede složený v kontejneru a na místě se rozloží na plnohodnotné bydlení s koupelnou a kuchyní.</p>
+          <a href="flexi-house.html" class="pcard__cta">Prohlédnout Flexi House <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </div>
       </article>
 
       <article class="pcard reveal reveal-d1">
-        <p class="pcard__kind">Skladem 10 ks</p>
-        <h3>Flexi Office</h3>
-        <p class="pcard__desc">Hotová bílá modulární kancelář, studio nebo showroom. Nečeká se na výrobu a kdykoliv ji přemístíte jinam.</p>
-        <div class="pcard__stage"><img src="img/cut-office.webp" alt="Flexi Office" width="812" height="583" loading="lazy"></div>
-        <dl class="pcard__spec">
-          <div><dt>Provedení</dt><dd>bílé, hotové</dd></div>
-          <div><dt>Dostupnost</dt><dd>ihned ze skladu</dd></div>
-          <div><dt>Využití</dt><dd>kancelář, studio</dd></div>
-        </dl>
-        <p class="pcard__price"><span>Cena od</span>70 000 Kč</p>
-        <a href="flexi-office.html" class="btn btn--green pcard__btn">Prohlédnout Flexi Office</a>
+        <div class="pcard__media pcard__media--o">
+          <span class="pcard__price">od 70 000 Kč</span>
+          <div class="pcard__photo" style="background-image:url('img/flexi-office.webp')"></div>
+          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
+          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="20" y="40" width="160" height="65" fill="#5aa9e6" opacity=".18"/>
+            <rect x="20" y="40" width="160" height="65" fill="none" stroke="#5aa9e6" stroke-width="1.5"/>
+            <g fill="#5aa9e6"><rect x="30" y="50" width="30" height="22"/><rect x="70" y="50" width="30" height="22" opacity=".85"/><rect x="110" y="50" width="30" height="22"/><rect x="150" y="50" width="22" height="22" opacity=".85"/><rect x="30" y="80" width="30" height="22" opacity=".85"/><rect x="70" y="80" width="30" height="22"/><rect x="110" y="80" width="30" height="22" opacity=".85"/><rect x="150" y="80" width="22" height="22"/></g>
+            <rect x="92" y="92" width="16" height="13" fill="#b4dd6a"/>
+          </svg>
+        </div>
+        <div class="pcard__body">
+          <div class="pcard__title-row"><h3>Flexi Office</h3><span class="pcard__size">bílé · hotové</span></div>
+          <p class="pcard__desc">Hotová bílá modulární kancelář, studio nebo showroom. Máme 10 kusů skladem, takže bez čekání na výrobu. Postavíme za pár dní a kdykoli přemístíte.</p>
+          <a href="flexi-office.html" class="pcard__cta">Prohlédnout Flexi Office <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </div>
       </article>
 
       <article class="pcard reveal reveal-d2">
-        <p class="pcard__kind">Konfigurátor</p>
-        <h3>Dům na míru</h3>
-        <p class="pcard__desc">Sestavíte si vlastní. Střecha, fasáda, zateplení, rozvody i vytápění podle vás. Konfigurátor spočítá orientační cenu.</p>
-        <div class="pcard__stage"><img src="img/cut-namiru.webp" alt="Dům na míru" width="900" height="370" loading="lazy"></div>
-        <dl class="pcard__spec">
-          <div><dt>Střecha</dt><dd>plochá nebo sedlová</dd></div>
-          <div><dt>Fasáda</dt><dd>dřevo, šedá, černá</dd></div>
-          <div><dt>Zateplení</dt><dd>75 nebo 100 mm</dd></div>
-        </dl>
-        <p class="pcard__price"><span>Podle konfigurace</span>od 480 000 Kč</p>
-        <a href="konfigurator.html" class="btn btn--green pcard__btn">Spustit konfigurátor</a>
+        <div class="pcard__media pcard__media--g">
+          <span class="pcard__price">Konfigurátor</span>
+          <div class="pcard__photo" style="background-image:url('img/dum-na-miru.webp')"></div>
+          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
+          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="30" y="55" width="80" height="50" fill="#0b2545"/>
+            <rect x="110" y="42" width="70" height="63" fill="#103563"/>
+            <polygon points="24,58 70,30 116,58" fill="#07172e"/>
+            <polygon points="104,46 145,22 186,46" fill="#07172e"/>
+            <rect x="46" y="68" width="24" height="30" fill="#b4dd6a" opacity=".85"/>
+            <rect x="128" y="58" width="40" height="26" fill="#5aa9e6" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="pcard__body">
+          <div class="pcard__title-row"><h3>Dům na míru</h3><span class="pcard__size">1–4 ložnice</span></div>
+          <p class="pcard__desc">Sestavte si vlastní. Vyberete rozložení, počet ložnic, fasádu, okna i vybavení. Nebo nám pošlete poptávku a navrhneme dům přesně na vaše potřeby.</p>
+          <a href="konfigurator.html" class="pcard__cta">Spustit konfigurátor <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </div>
       </article>
 
     </div>
@@ -289,7 +397,7 @@
         <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <h3>Výroba v hale</h3>
         <p>Dům vzniká v hale, kde se nečeká na počasí. Na pozemek přijede hotový a rozloží se.</p>
-        <div class="rcard__metric"><span class="rcard__val">6,32 × 5,90 m</span><span class="rcard__lab">rozloženo</span></div>
+        <div class="rcard__metric"><span class="rcard__val">6,32 m</span><span class="rcard__lab">šířka rozloženo</span></div>
       </article>
       <article class="rcard reveal reveal-d1">
         <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6.5.9-4.7 4.6 1.1 6.5L12 17l-5.9 3 1.1-6.5L2.5 8.9 9 8z"/></svg></div>
@@ -317,7 +425,7 @@
   <div class="wrap" style="position:relative;z-index:1">
     <div class="section-head reveal">
       <h2>Od první zprávy k&nbsp;hotovému&nbsp;domu.</h2>
-      <p>Čtyři kroky od první zprávy po předání klíčů. Termín potvrdíme v nabídce podle modelu a ročního období.</p>
+      <p>Čtyři kroky od první zprávy po předání klíčů. Termín potvrdíme v nabídce.</p>
     </div>
     <div class="process__grid">
       <div class="process__line"></div>
@@ -417,7 +525,6 @@
         <ul>
           <li><a href="#proc">Proč Flexi</a></li>
           <li><a href="#jak">Jak to probíhá</a></li>
-          
           <li><a href="#kontakt">Kontakt</a></li>
         </ul>
       </div>
@@ -497,28 +604,83 @@
   if (mGroupHead) mGroupHead.addEventListener('click', () => mGroupDomy.classList.toggle('open'));
 
   (function () {
-    const bgs = Array.from(document.querySelectorAll('.hero__bg'));
+    const deferred = document.querySelectorAll('.hslide__photo[data-bg]');
     const applyBg = function () {
-      bgs.forEach(function (el) {
-        if (!el.dataset.bg) return;
+      deferred.forEach(function (el) {
         el.style.backgroundImage = "url('" + el.dataset.bg + "')";
         el.removeAttribute('data-bg');
       });
     };
     if (document.readyState === 'complete') applyBg();
     else window.addEventListener('load', applyBg, { once: true });
+  })();
 
-    if (bgs.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let i = 0, timer = null;
-    const tick = function () {
-      i = (i + 1) % bgs.length;
-      bgs.forEach(function (b, j) { b.classList.toggle('is-on', j === i); });
-    };
-    const start = function () { clearInterval(timer); timer = setInterval(tick, 6000); };
-    start();
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) clearInterval(timer); else start();
+  (function () {
+    const track = document.getElementById('heroTrack');
+    const slides = Array.from(track.querySelectorAll('.hslide'));
+    const dotsWrap = document.getElementById('heroDots');
+    const prevBtn = document.getElementById('heroPrev');
+    const nextBtn = document.getElementById('heroNext');
+    let idx = 0, timer = null, paused = false;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    slides.forEach((s, i) => {
+      const d = document.createElement('button');
+      d.className = 'hero__dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'Model ' + (i + 1));
+      d.addEventListener('click', () => go(i, true));
+      dotsWrap.appendChild(d);
     });
+    const dots = Array.from(dotsWrap.children);
+
+    function setDots(active) {
+      dots.forEach((d, i) => {
+        d.classList.remove('active', 'seen');
+        if (i < active) d.classList.add('seen');
+        if (i === active) {
+          const dur = slides[active].dataset.dur || 4500;
+          d.style.setProperty('--dur', (dur / 1000) + 's');
+          d.classList.add('active');
+        }
+      });
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (reduce || paused) return;
+      const dur = parseInt(slides[idx].dataset.dur || 4500, 10);
+      timer = setTimeout(() => go(idx + 1), dur);
+    }
+
+    function go(n, manual) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      setDots(idx);
+      schedule();
+    }
+
+    prevBtn.addEventListener('click', () => go(idx - 1, true));
+    nextBtn.addEventListener('click', () => go(idx + 1, true));
+
+    const hero = document.getElementById('hero');
+    hero.addEventListener('mouseenter', () => { paused = true; clearTimeout(timer); });
+    hero.addEventListener('mouseleave', () => { paused = false; schedule(); });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { clearTimeout(timer); } else { schedule(); }
+    });
+
+    let startX = 0, dx = 0;
+    hero.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; dx = 0; paused = true; clearTimeout(timer); }, { passive: true });
+    hero.addEventListener('touchmove', (e) => { dx = e.touches[0].clientX - startX; }, { passive: true });
+    hero.addEventListener('touchend', () => {
+      if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1), true);
+      paused = false; schedule();
+    });
+
+    setDots(0);
+    schedule();
   })();
 
   const io = new IntersectionObserver((entries) => {
