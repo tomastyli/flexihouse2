@@ -1,760 +1,245 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#07172e" />
-
-<title>Flexi House: modulární domy na míru | Glamping, bydlení, kanceláře</title>
-<meta name="description" content="Modulární kontejnerové domy Flexi House. Rozkládací dům ~30 m² s koupelnou a kuchyní, záruka 5 let. Glamping, rodinné bydlení i kanceláře. Praha · Litomyšl · Brno." />
-<meta name="keywords" content="modulární domy, kontejnerové domy, glamping, mobilní dům, tiny house, modulární bydlení, rozkládací dům, Praha, Litomyšl, Brno" />
-<meta name="author" content="WINstores, s.r.o." />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-<meta name="googlebot" content="index, follow" />
-<meta name="format-detection" content="telephone=yes" />
-<meta name="geo.region" content="CZ" />
-<meta name="geo.placename" content="Praha, Litomyšl, Brno" />
-<meta name="rating" content="general" />
-<link rel="canonical" href="https://flexihouse.cz/" />
-
-<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='14' fill='%2307172e'/%3E%3Cpath d='M30 11 L50 29 L50 50 L10 50 L10 29 Z' fill='%235aa9e6'/%3E%3Cpath d='M30 11 L50 29 L39 29 L30 20 Z' fill='%23b4dd6a'/%3E%3Crect x='24' y='33' width='12' height='15' rx='1' fill='%2307172e'/%3E%3C/svg%3E" sizes="any" />
-<link rel="apple-touch-icon" href="favicon.svg?v=2" />
-<link rel="mask-icon" href="favicon.svg?v=2" color="#8dc63f" />
-<link rel="manifest" href="site.webmanifest" />
-<meta name="apple-mobile-web-app-title" content="Flexi House" />
-<meta name="application-name" content="Flexi House" />
-<meta name="mobile-web-app-capable" content="yes" />
-
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Flexi House: modulární domy na míru" />
-<meta property="og:description" content="Rozkládací modulární domy ~30 m². Glamping, bydlení i kanceláře. Praha · Litomyšl · Brno." />
-<meta property="og:locale" content="cs_CZ" />
-<meta property="og:site_name" content="Flexi House" />
-<meta property="og:url" content="https://flexihouse.cz/" />
-<meta property="og:image" content="https://flexihouse.cz/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Flexi House, rozkládací modulární dům s terasou" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Flexi House: modulární domy na míru" />
-<meta name="twitter:description" content="Rozkládací modulární domy ~30 m². Glamping, bydlení i kanceláře. Praha · Litomyšl · Brno." />
-<meta name="twitter:image" content="https://flexihouse.cz/og-image.png" />
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="icon" href="assets/flexi-mark.svg?v=8" type="image/svg+xml">
+<link rel="canonical" href="https://flexihouse.cz/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flexi House">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="Modulární domy Flexi House">
+<meta property="og:description" content="Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Rozkládací dům od 480 000 Kč, kancelář skladem od 70 000 Kč.">
+<meta property="og:url" content="https://flexihouse.cz/">
+<meta property="og:image" content="https://flexihouse.cz/img/glamping.webp">
+<title>Modulární domy Flexi House | Vyrobené v hale, dodané na váš pozemek</title>
+<meta name="description" content="Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Rozkládací dům, kancelář skladem nebo dům na míru z konfigurátoru. Dodáváme po celé ČR.">
+<link rel="preload" href="fonts/bricolage-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" imagesrcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w" imagesizes="(max-width:1280px) 100vw, 1280px" fetchpriority="high">
+<link rel="stylesheet" href="assets/flexi.css?v=8">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
-      "@id": "https://flexihouse.cz/#business",
-      "name": "Flexi House",
-      "legalName": "WINstores, s.r.o.",
-      "description": "Modulární kontejnerové domy pro glamping, rodiny i trvalé bydlení.",
-      "url": "https://flexihouse.cz",
-      "logo": "https://flexihouse.cz/favicon.svg",
-      "image": "https://flexihouse.cz/og-image.png",
-      "telephone": "+420607321543",
-      "email": "dandaprokes@gmail.com",
-      "taxID": "CZ07836929",
-      "vatID": "CZ07836929",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Korunní 2569/108",
-        "addressLocality": "Praha 10",
-        "postalCode": "10000",
-        "addressCountry": "CZ"
-      },
-      "areaServed": ["Praha", "Litomyšl", "Brno", "Česká republika"],
-      "priceRange": "od 70000 CZK",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "17:00"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://flexihouse.cz/#website",
-      "url": "https://flexihouse.cz",
-      "name": "Flexi House",
-      "inLanguage": "cs-CZ",
-      "publisher": { "@id": "https://flexihouse.cz/#business" }
-    },
-    {
-      "@type": "Product",
-      "name": "Flexi House",
-      "description": "Rozkládací modulární dům s terasou, ~30 m². Přijede složený v kontejneru, na místě se rozloží na plnohodnotné bydlení s koupelnou a kuchyní.",
-      "brand": { "@type": "Brand", "name": "Flexi House" },
-      "category": "Modulární dům",
-      "offers": { "@type": "Offer", "priceCurrency": "CZK", "availability": "https://schema.org/InStock", "url": "https://flexihouse.cz/flexi-house.html" }
-    },
-    {
-      "@type": "Product",
-      "name": "Flexi Office",
-      "description": "Hotová bílá modulární kancelář, studio nebo showroom. 10 kusů skladem, k dodání ihned. Od 70 000 Kč.",
-      "brand": { "@type": "Brand", "name": "Flexi House" },
-      "category": "Modulární kancelář",
-      "offers": { "@type": "Offer", "price": "70000", "priceCurrency": "CZK", "availability": "https://schema.org/InStock", "url": "https://flexihouse.cz/flexi-office.html" }
-    },
-    {
-      "@type": "Product",
-      "name": "Dům na míru",
-      "description": "Modulární dům sestavený přesně podle vás. 1–4 ložnice, fasáda, okna i vybavení na výběr v konfigurátoru.",
-      "brand": { "@type": "Brand", "name": "Flexi House" },
-      "category": "Modulární dům",
-      "offers": { "@type": "Offer", "priceCurrency": "CZK", "availability": "https://schema.org/InStock", "url": "https://flexihouse.cz/konfigurator.html" }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Domů", "item": "https://flexihouse.cz/" },
-        { "@type": "ListItem", "position": 2, "name": "Domy", "item": "https://flexihouse.cz/#katalog" },
-        { "@type": "ListItem", "position": 3, "name": "Konfigurátor", "item": "https://flexihouse.cz/konfigurator.html" }
-      ]
-    }
-  ]
-}
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://flexihouse.cz/#org","name":"Flexi House","legalName":"WINstores, s.r.o.","url":"https://flexihouse.cz/","logo":"https://flexihouse.cz/assets/social/pfp-a.png","email":"dandaprokes@gmail.com","telephone":"+420607321543","vatID":"CZ07836929","taxID":"07836929","address":{"@type":"PostalAddress","streetAddress":"Korunní 2569/108","addressLocality":"Praha","postalCode":"10100","addressCountry":"CZ"},"areaServed":{"@type":"Country","name":"Česká republika"}},
+ {"@type":"WebSite","@id":"https://flexihouse.cz/#web","url":"https://flexihouse.cz/","name":"Flexi House","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}},
+ {"@type":"LocalBusiness","name":"Flexi House","image":"https://flexihouse.cz/img/glamping.webp","url":"https://flexihouse.cz/","telephone":"+420607321543","priceRange":"od 70 000 Kč","address":{"@type":"PostalAddress","streetAddress":"Korunní 2569/108","addressLocality":"Praha","postalCode":"10100","addressCountry":"CZ"}}]}
 </script>
-
-<link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" fetchpriority="high">
-<link rel="stylesheet" href="fonts/fonts.css">
-
-<link rel="stylesheet" href="assets/site.css?v=10">
-<link rel="stylesheet" href="assets/home.css?v=11">
 </head>
 <body>
 
-<div class="dev-banner" role="status"><span class="dev-banner__dot"></span>Web je ve vývoji. Ceny a obrázky jsou pouze orientační.</div>
-
-<header class="nav" id="nav">
-  <div class="wrap nav__inner">
-    <a href="#" class="logo" aria-label="Flexi House, domů">
-      <span class="logo__mark"><img src="assets/flexi-icon.png?v=4" width="40" height="36" alt="" decoding="async" /></span>
+<header class="top">
+  <div class="wrap top__in">
+    <a class="brand" href="/">
+      <svg viewBox="9 16 46 33" aria-hidden="true">
+        <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
+      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
+      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
+      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
+      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
+      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
+      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
+      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
+      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
+      </svg>
       Flexi House
     </a>
-
-    <nav class="nav__menu" aria-label="Hlavní navigace">
-      <div class="nav__item" data-mega>
-        <button class="nav__link" aria-haspopup="true" aria-expanded="false">
-          Domy
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="mega" role="menu"><a class="mega-card" href="flexi-house.html" role="menuitem"><span class="mega-card__icon mega-card__icon--f"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span><span><span class="mega-card__t">Flexi House</span><span class="mega-card__d">Rozkládací dům s terasou, 30 m²</span><span class="mega-card__p">Bydlení i glamping</span></span></a><a class="mega-card" href="flexi-office.html" role="menuitem"><span class="mega-card__icon mega-card__icon--o"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v6M15 4v6"/></svg></span><span><span class="mega-card__t">Flexi Office</span><span class="mega-card__d">Kancelář, studio i showroom</span><span class="mega-card__p">10 ks skladem</span></span></a><a class="mega-card" href="konfigurator.html" role="menuitem"><span class="mega-card__icon mega-card__icon--c"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span><span class="mega-card__t">Dům na míru</span><span class="mega-card__d">Sestavte si vlastní v konfigurátoru</span><span class="mega-card__p">Konfigurátor</span></span></a></div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="katalog.html">Katalog</a></div>
-      <div class="nav__item"><a class="nav__link" href="#proc">Proč Flexi</a></div>
-      <div class="nav__item"><a class="nav__link" href="#jak">Jak to probíhá</a></div>
-      <div class="nav__item"><a class="nav__link" href="#kontakt">Kontakt</a></div>
+    <nav class="nav" aria-label="Hlavní">
+      <a href="/katalog">Domy</a>
+      <a href="/konfigurator">Konfigurátor</a>
+      <a href="#kontakt">Kontakt</a>
     </nav>
-
-    <div class="nav__cta">
-      <a class="nav__phone" href="tel:+420607321543">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        607 321 543
-      </a>
-      <a href="#kontakt" class="btn btn--green">Nezávazná nabídka</a>
+    <div class="top__end">
+      <a class="tel" href="tel:+420607321543">607 321 543</a>
+      <a class="btn btn--sm" href="#kontakt">Chci nabídku</a>
+      <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
     </div>
-
-    <button class="burger" id="burger" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
   </div>
 </header>
 
-<nav class="mobile-menu" id="mobileMenu" aria-label="Mobilní navigace">
-  <div class="mobile-menu__hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    Zavřít křížkem nahoře
-  </div>
-  <div class="m-group" id="mGroupDomy">
-    <button class="m-group__head" id="mGroupHead">
-      Domy
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="m-group__body"><a href="flexi-house.html">Flexi House · dům s terasou</a><a href="flexi-office.html">Flexi Office · skladem</a><a href="konfigurator.html">Dům na míru · konfigurátor</a></div>
-  </div>
-  <a class="m-link" href="katalog.html">Katalog</a>
-  <a class="m-link" href="#proc">Proč Flexi</a>
-  <a class="m-link" href="#jak">Jak to probíhá</a>
-  <a class="m-link" href="#kontakt">Kontakt</a>
-  <a href="#kontakt" class="btn btn--green mobile-menu__cta">Chci nezávaznou nabídku</a>
-  <a href="tel:+420607321543" class="m-phone">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    +420 607 321 543
-  </a>
-</nav>
-
-<section class="hero" id="hero" aria-roledescription="carousel" aria-label="Modely Flexi House">
-  <div class="hero__track" id="heroTrack">
-
-    <article class="hslide active" data-dur="4500">
-      <div class="hslide__media">
-        <div class="hslide__bg hslide__bg--g"></div>
-        <div class="hslide__photo" style="background-image:url('img/flexi-house-rozkladaci.webp')"></div>
-        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
-        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <ellipse cx="200" cy="232" rx="150" ry="14" fill="rgba(0,0,0,.25)"/>
-          <rect x="90" y="120" width="220" height="105" rx="4" fill="#0b2545"/>
-          <polygon points="78,124 200,66 322,124" fill="#07172e"/>
-          <rect x="120" y="142" width="70" height="78" fill="#b4dd6a"/>
-          <line x1="155" y1="142" x2="155" y2="220" stroke="#0b2545" stroke-width="2"/>
-          <rect x="210" y="142" width="80" height="48" fill="#8dc63f" opacity=".85"/>
-          <rect x="40" y="208" width="320" height="6" fill="#3a4148"/>
-        </svg>
-      </div>
-      <div class="wrap" style="height:100%">
-        <div class="hslide__content">
-          <span class="hslide__eyebrow">Flexi House</span>
-          <h1>Rozkládací dům s terasou, <span class="accent">hotový za pár dní.</span></h1>
-          <p class="hslide__claim">Přijede složený v kontejneru, na místě se rozloží na plnohodnotných ~30 m² s koupelnou, kuchyní i terasou. Bydlení, glamping nebo chata připravené k nastěhování.</p>
-          <div class="hslide__ctas">
-            <a href="flexi-house.html" class="btn btn--green">Prohlédnout Flexi House <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="hslide" data-dur="4500">
-      <div class="hslide__media">
-        <div class="hslide__bg hslide__bg--o"></div>
-        <div class="hslide__photo" data-bg="img/flexi-office.webp"></div>
-        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
-        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
-          <rect x="60" y="100" width="280" height="125" fill="rgba(90,169,230,.12)" stroke="#5aa9e6" stroke-width="2"/>
-          <g fill="#5aa9e6">
-            <rect x="78" y="118" width="56" height="40" opacity=".85"/>
-            <rect x="144" y="118" width="56" height="40"/>
-            <rect x="210" y="118" width="56" height="40" opacity=".85"/>
-            <rect x="276" y="118" width="46" height="40"/>
-            <rect x="78" y="168" width="56" height="40"/>
-            <rect x="144" y="168" width="56" height="40" opacity=".85"/>
-            <rect x="210" y="168" width="56" height="40"/>
-            <rect x="276" y="168" width="46" height="40" opacity=".85"/>
-          </g>
-          <rect x="180" y="190" width="40" height="35" fill="#b4dd6a"/>
-        </svg>
-      </div>
-      <div class="wrap" style="height:100%">
-        <div class="hslide__content">
-          <span class="hslide__eyebrow">Flexi Office</span>
-          <h1>Kancelář, která <span class="accent">je hned k mání.</span></h1>
-          <p class="hslide__claim">Hotová bílá modulární kancelář, studio nebo showroom. Máme 10 kusů skladem, takže bez čekání na výrobu. Postavíme za pár dní a kdykoli přemístíte.</p>
-          <div class="hslide__ctas">
-            <a href="flexi-office.html" class="btn btn--green">Prohlédnout Flexi Office <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <article class="hslide" data-dur="4500">
-      <div class="hslide__media">
-        <div class="hslide__bg hslide__bg--c"></div>
-        <div class="hslide__photo" data-bg="img/dum-na-miru.webp"></div>
-        <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Vizualizace · foto připravujeme</span>
-        <svg class="hslide__scene" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <ellipse cx="200" cy="232" rx="160" ry="14" fill="rgba(0,0,0,.25)"/>
-          <rect x="70" y="140" width="120" height="85" fill="#0b2545"/>
-          <rect x="190" y="115" width="140" height="110" fill="#103563"/>
-          <polygon points="60,144 130,104 200,144" fill="#07172e"/>
-          <polygon points="180,118 260,78 340,118" fill="#07172e"/>
-          <rect x="95" y="160" width="36" height="44" fill="#8dc63f" opacity=".8"/>
-          <rect x="225" y="138" width="70" height="44" fill="#5aa9e6" opacity=".75"/>
-          <rect x="232" y="190" width="34" height="35" fill="#2a73c7"/>
-        </svg>
-      </div>
-      <div class="wrap" style="height:100%">
-        <div class="hslide__content">
-          <span class="hslide__eyebrow">Dům na míru</span>
-          <h1>Postavíme dům <span class="accent">přesně podle vás.</span></h1>
-          <p class="hslide__claim">Vyberete si rozložení, počet ložnic, fasádu, okna i vybavení. Sestavte si dispozici v konfigurátoru, nebo nám pošlete poptávku a navrhneme řešení na míru.</p>
-          <div class="hslide__ctas">
-            <a href="konfigurator.html" class="btn btn--green">Spustit konfigurátor <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-            <a href="#kontakt" class="btn btn--ghost">Chci nabídku</a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-  </div>
-
-  <div class="hero__controls">
-    <div class="wrap">
-      <div class="hero__dots" id="heroDots" role="tablist" aria-label="Přepínání modelů"></div>
-      <div class="hero__arrows">
-        <button class="hero__arrow" id="heroPrev" aria-label="Předchozí model"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="hero__arrow" id="heroNext" aria-label="Další model"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="trust">
-  <div class="wrap trust__grid">
-    <div class="trust__item">
-      <span class="trust__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-      <div><div class="trust__num">~30 m²</div><div class="trust__label">Obytná plocha s terasou</div></div>
-    </div>
-    <div class="trust__item">
-      <span class="trust__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></span>
-      <div><div class="trust__num">5 let</div><div class="trust__label">Záruka na dům</div></div>
-    </div>
-    <div class="trust__item">
-      <span class="trust__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
-      <div><div class="trust__num">10 ks</div><div class="trust__label">Flexi Office skladem</div></div>
-    </div>
-    <div class="trust__item">
-      <span class="trust__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
-      <div><div class="trust__num">Bez vícenákladů</div><div class="trust__label">Cena ve smlouvě</div></div>
-    </div>
+<div class="menu" id="menu" hidden>
+  <a class="menu__link" href="/katalog">Domy</a>
+  <a class="menu__link" href="/konfigurator">Konfigurátor</a>
+  <a class="menu__link" href="/poptavka">Poptávka</a>
+  <div class="menu__end">
+    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, voláme zpátky</small></a>
+    <a class="btn" href="/poptavka">Chci nabídku</a>
   </div>
 </div>
 
-<section id="katalog">
+
+<main>
+<section class="hero">
   <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Vyberte si základ. <em style="font-style:italic;font-weight:500;color:var(--c-green)">Zbytek doladíme.</em></h2>
-      <p>Tři varianty podle využití. Od hotového domu skladem po dům sestavený přesně podle vás.</p>
-    </div>
-
-    <div class="cat__grid">
-
-      <article class="pcard reveal">
-        <div class="pcard__media pcard__media--f">
-          <span class="pcard__price">Cena na vyžádání</span>
-          <div class="pcard__photo" style="background-image:url('img/flexi-house-foto.webp')"></div>
-          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
-          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="30" y="50" width="140" height="55" fill="#0b2545" opacity=".9"/>
-            <polygon points="22,55 100,18 178,55" fill="#07172e"/>
-            <rect x="50" y="64" width="34" height="41" fill="#5aa9e6"/>
-            <rect x="96" y="64" width="34" height="22" fill="#5aa9e6" opacity=".85"/>
-            <rect x="138" y="64" width="24" height="41" fill="#103563"/>
-            <rect x="20" y="105" width="160" height="6" fill="#b4dd6a"/>
-          </svg>
-        </div>
-        <div class="pcard__body">
-          <div class="pcard__title-row"><h3>Flexi House</h3><span class="pcard__size">~30 m² + terasa</span></div>
-          <p class="pcard__desc">Vlajková loď. Rozkládací dům s terasou. Přijede složený v kontejneru a na místě se rozloží na plnohodnotné bydlení s koupelnou a kuchyní.</p>
-          <a href="flexi-house.html" class="pcard__cta">Prohlédnout Flexi House <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-        </div>
-      </article>
-
-      <article class="pcard reveal reveal-d1">
-        <div class="pcard__media pcard__media--o">
-          <span class="pcard__price">od 70 000 Kč</span>
-          <div class="pcard__photo" style="background-image:url('img/flexi-office.webp')"></div>
-          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
-          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="20" y="40" width="160" height="65" fill="#5aa9e6" opacity=".18"/>
-            <rect x="20" y="40" width="160" height="65" fill="none" stroke="#5aa9e6" stroke-width="1.5"/>
-            <g fill="#5aa9e6"><rect x="30" y="50" width="30" height="22"/><rect x="70" y="50" width="30" height="22" opacity=".85"/><rect x="110" y="50" width="30" height="22"/><rect x="150" y="50" width="22" height="22" opacity=".85"/><rect x="30" y="80" width="30" height="22" opacity=".85"/><rect x="70" y="80" width="30" height="22"/><rect x="110" y="80" width="30" height="22" opacity=".85"/><rect x="150" y="80" width="22" height="22"/></g>
-            <rect x="92" y="92" width="16" height="13" fill="#b4dd6a"/>
-          </svg>
-        </div>
-        <div class="pcard__body">
-          <div class="pcard__title-row"><h3>Flexi Office</h3><span class="pcard__size">bílé · hotové</span></div>
-          <p class="pcard__desc">Hotová bílá modulární kancelář, studio nebo showroom. Máme 10 kusů skladem, takže bez čekání na výrobu. Postavíme za pár dní a kdykoli přemístíte.</p>
-          <a href="flexi-office.html" class="pcard__cta">Prohlédnout Flexi Office <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-        </div>
-      </article>
-
-      <article class="pcard reveal reveal-d2">
-        <div class="pcard__media pcard__media--g">
-          <span class="pcard__price">Konfigurátor</span>
-          <div class="pcard__photo" style="background-image:url('img/dum-na-miru.webp')"></div>
-          <span class="photo-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto připravujeme</span>
-          <svg class="pcard__svg" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect x="30" y="55" width="80" height="50" fill="#0b2545"/>
-            <rect x="110" y="42" width="70" height="63" fill="#103563"/>
-            <polygon points="24,58 70,30 116,58" fill="#07172e"/>
-            <polygon points="104,46 145,22 186,46" fill="#07172e"/>
-            <rect x="46" y="68" width="24" height="30" fill="#b4dd6a" opacity=".85"/>
-            <rect x="128" y="58" width="40" height="26" fill="#5aa9e6" opacity=".8"/>
-          </svg>
-        </div>
-        <div class="pcard__body">
-          <div class="pcard__title-row"><h3>Dům na míru</h3><span class="pcard__size">1–4 ložnice</span></div>
-          <p class="pcard__desc">Sestavte si vlastní. Vyberete rozložení, počet ložnic, fasádu, okna i vybavení. Nebo nám pošlete poptávku a navrhneme dům přesně na vaše potřeby.</p>
-          <a href="konfigurator.html" class="pcard__cta">Spustit konfigurátor <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section id="proc" class="why">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2>Jak to u nás funguje.</h2>
-      <p>Čtyři věci, na kterých u nás stojí celý proces.</p>
-    </div>
-    <div class="why__grid">
-      <article class="rcard reveal">
-        <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-        <h3>Výroba v hale</h3>
-        <p>Dům vzniká v hale, kde se nečeká na počasí. Na pozemek přijede hotový a rozloží se.</p>
-        <div class="rcard__metric"><span class="rcard__val">6,32 m</span><span class="rcard__lab">šířka rozloženo</span></div>
-      </article>
-      <article class="rcard reveal reveal-d1">
-        <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6.5.9-4.7 4.6 1.1 6.5L12 17l-5.9 3 1.1-6.5L2.5 8.9 9 8z"/></svg></div>
-        <h3>Kvalita</h3>
-        <p>Pět vrstev opláštění, pozinkovaný ocelový rám, izolace 80 mm. Každý modul prochází kontrolou.</p>
-        <div class="rcard__metric"><span class="rcard__val">5 let</span><span class="rcard__lab">záruka</span></div>
-      </article>
-      <article class="rcard reveal reveal-d2">
-        <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <h3>Férová cena</h3>
-        <p>Cenu máte ve smlouvě, včetně dopravy a montáže. Platíte přesně to, co je podepsané.</p>
-        <div class="rcard__metric"><span class="rcard__val">od 70 tis.</span><span class="rcard__lab">bez vícenákladů</span></div>
-      </article>
-      <article class="rcard reveal reveal-d3">
-        <div class="rcard__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <h3>Na míru</h3>
-        <p>Vyberete střechu, fasádu, zateplení, rozvody i vytápění. Cenu vidíte průběžně v konfigurátoru.</p>
-        <div class="rcard__metric"><span class="rcard__val">72</span><span class="rcard__lab">kombinací výbavy</span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="jak" class="process">
-  <div class="wrap" style="position:relative;z-index:1">
-    <div class="section-head reveal">
-      <h2>Od první zprávy k&nbsp;hotovému&nbsp;domu.</h2>
-      <p>Čtyři kroky od první zprávy po předání klíčů. Termín potvrdíme v nabídce.</p>
-    </div>
-    <div class="process__grid">
-      <div class="process__line"></div>
-      <div class="pstep reveal"><div class="pstep__num">1</div><h3>Sestavíte si dům</h3><p>V konfigurátoru vyberete střechu, fasádu, zateplení, rozvody i vytápění. Cenu vidíte průběžně.</p></div>
-      <div class="pstep reveal reveal-d1"><div class="pstep__num">2</div><h3>Projdeme detaily</h3><p>Ozveme se do 24 hodin. Probereme pozemek, přípojky, financování a potvrdíme termín.</p></div>
-      <div class="pstep reveal reveal-d2"><div class="pstep__num">3</div><h3>Vyrobíme a dovezeme</h3><p>Dům vzniká v hale. Dopravu na pozemek i usazení zajišťujeme my.</p></div>
-      <div class="pstep reveal reveal-d3"><div class="pstep__num">4</div><h3>Rozložíme a předáme</h3><p>Na místě dům rozložíme, napojíme energie a předáme klíče.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="kontakt" class="lead">
-  <div class="wrap">
-    <div class="lead-card reveal">
-      <div class="lead-intro">
-        <h2>Pošleme vám nabídku <span class="green">do 24 hodin.</span></h2>
-        <p>Napište nám pár řádků o tom, co potřebujete. Ozveme se a probereme detaily.</p>
-        <div class="lead-perks">
-          <div class="lead-perk"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Odpověď do 24 hodin</div>
-          <div class="lead-perk"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Cenová kalkulace zdarma</div>
-          <div class="lead-perk"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Poradíme s povolením i financováním</div>
-        </div>
-        <div class="lead-contacts">
-          <a class="lead-phone" href="tel:+420607321543">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span><span class="lead-phone__name">Dan Prokeš</span>+420 607 321 543</span>
-          </a>
-          <a class="lead-phone" href="tel:+420730171909">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <span><span class="lead-phone__name">Jan Prokeš</span>+420 730 171 909</span>
-          </a>
-        </div>
+    <h1>Modulární domy<br>vyrobené v hale<br><span>a dodané k vám.</span></h1>
+    <div class="hero__row">
+      <p>Dům vzniká pod střechou, na pozemek přijede složený v kontejneru a na místě se rozevře na hotové bydlení.</p>
+      <div class="hero__actions">
+        <a class="btn" href="#kontakt">Chci nezávaznou nabídku</a>
+        <a class="link" href="/konfigurator">Sestavit v konfigurátoru</a>
       </div>
-
-      <form class="form" id="leadForm" novalidate>
-        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">
-        <div class="form__status" id="formStatus" role="status"></div>
-        <div class="form__row">
-          <div class="field">
-            <label for="f-name">Jméno <span class="req">*</span></label>
-            <input type="text" id="f-name" name="name" placeholder="Jan Novák" required>
-            <span class="field__err">Doplňte prosím jméno.</span>
-          </div>
-          <div class="field">
-            <label for="f-phone">Telefon <span class="req">*</span></label>
-            <input type="tel" id="f-phone" name="phone" placeholder="+420 ..." required>
-            <span class="field__err">Doplňte prosím telefon.</span>
-          </div>
-        </div>
-        <div class="field">
-          <label for="f-email">E-mail <span class="req">*</span></label>
-          <input type="email" id="f-email" name="email" placeholder="jan@email.cz" required>
-          <span class="field__err">Zadejte platný e-mail.</span>
-        </div>
-        <div class="field">
-          <label for="f-model">O jaký dům máte zájem?</label>
-          <select id="f-model" name="model">
-            <option value="Nevím / poradíte">Nevím, poradíte mi</option>
-            <option value="Flexi House">Flexi House (dům s terasou, ~30 m²)</option>
-            <option value="Flexi Office">Flexi Office (skladem)</option>
-            <option value="Dům na míru">Dům na míru</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="f-msg">Zpráva</label>
-          <textarea id="f-msg" name="message" placeholder="Lokalita pozemku, termín, využití..."></textarea>
-        </div>
-        <button type="submit" class="btn btn--green form__submit" id="formSubmit">
-          Odeslat poptávku
-          <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </button>
-        <p class="form__note">Odesláním formuláře berete na vědomí zpracování osobních údajů za účelem vyřízení vaší poptávky. Více v <a href="zasady-ochrany-soukromi.html">Zásadách ochrany osobních údajů</a>.</p>
-      </form>
     </div>
   </div>
 </section>
 
-<footer class="footer">
+<div class="wrap shot">
+  <img src="img/flexi-house-rozkladaci.webp" width="1400" height="800" alt="Rozkládací modulární dům Flexi House s terasou a posezením mezi stromy" fetchpriority="high" srcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w" sizes="(max-width:1280px) 100vw, 1280px">
+</div>
+
+<section class="wrap" id="domy" aria-labelledby="domy-h">
+  <div class="intro">
+    <h2 id="domy-h">Kontejnery<br>pro bydlení<br>i podnikání</h2>
+    <div>
+      <p>Připravíme řešení z modulů a kontejnerů, které pokryje vaše potřeby. Ať už hledáte celoroční bydlení, chatu, kancelář, nebo prostor pro provoz.</p>
+      <p>Základní varianty máme skladem, ostatní vznikají v hale podle vašeho zadání. Postaráme se o návrh, výrobu, dopravu i usazení na pozemek.</p>
+      <a class="link" href="/katalog">Prohlédnout katalog</a>
+    </div>
+  </div>
+
+  <div class="picks">
+    <a class="pick" href="/flexi-house">
+      <img src="img/flexi-house.webp" width="1400" height="1050" alt="Rozkládací modulární dům Flexi House s prosklenou stěnou" loading="lazy" srcset="img/flexi-house-480w.webp 480w, img/flexi-house-800w.webp 800w, img/flexi-house-1200w.webp 1200w, img/flexi-house.webp 2000w" sizes="(max-width:760px) 100vw, (max-width:1280px) 45vw, 560px">
+      <h3>Rozkládací dům</h3>
+      <p>Přijede složený v kontejneru a na místě se rozevře na plnohodnotné bydlení s kuchyní a koupelnou.</p>
+      <span class="link">Prozkoumat</span>
+    </a>
+    <a class="pick" href="/flexi-office">
+      <img src="img/flexi-office.webp" width="1400" height="1050" alt="Bílý modulární kontejner Flexi Office s oknem a vstupními dveřmi" loading="lazy" srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w" sizes="(max-width:1280px) 100vw, 1280px">
+      <h3>Flexi Office</h3>
+      <p>Hotová bílá kancelář, studio nebo showroom. Nečeká se na výrobu a kdykoli ji přemístíte jinam.</p>
+      <span class="link">Prozkoumat</span>
+    </a>
+    <a class="pick" href="/konfigurator">
+      <img src="img/dum-na-miru.webp" width="1400" height="1050" alt="Modulární dům na míru s velkým prosklením a dřevěným obkladem" loading="lazy" srcset="img/dum-na-miru-480w.webp 480w, img/dum-na-miru-800w.webp 800w, img/dum-na-miru-1200w.webp 1200w, img/dum-na-miru.webp 1400w" sizes="(max-width:1280px) 100vw, 1280px">
+      <h3>Dům na míru</h3>
+      <p>Dispozici, střechu, fasádu i vytápění si vyberete sami. Cenu vidíte průběžně, jak dům skládáte.</p>
+      <span class="link">Prozkoumat</span>
+    </a>
+  </div>
+</section>
+
+<section class="grid" aria-labelledby="vyhody-h">
   <div class="wrap">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <h4>Flexi House</h4>
-        <p>Modulární kontejnerové domy postavené v hale, dodané k vám. Bydlení bez starostí, od chaty po rodinný dům.</p>
-        <p class="footer__seo">Modulární domy Praha · Litomyšl · Brno · Pardubice · Hradec Králové · Plzeň · Ostrava. Dodáváme po celé&nbsp;ČR.</p>
+    <h2 id="vyhody-h" class="vh">Co dům umí</h2>
+    <div class="grid__in">
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20V10.5l4.5-3.5 4.5 3.5 4.5-3.5 4.5 3.5V20"/><path d="M2 20h20"/><path d="M9.5 20v-4.5h5V20"/></svg>
+        <h3>Vyrobeno v hale</h3>
+        <p>Dům vzniká pod střechou, kde se nečeká na počasí. Na pozemek dorazí hotový.</p>
       </div>
-      <div class="footer__col">
-        <h5>Domy</h5>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5h6v14H9z"/><path d="M6 12H2"/><path d="M4.5 9.5 2 12l2.5 2.5"/><path d="M18 12h4"/><path d="M19.5 9.5 22 12l-2.5 2.5"/></svg>
+        <h3>Rozevře se na místě</h3>
+        <p>Přijede složený v kontejneru. Rozložení a napojení energií zajistíme.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2c3.3 3.9 5.6 6.8 5.6 9.6a5.6 5.6 0 0 1-11.2 0c0-2.8 2.3-5.7 5.6-9.6z"/><path d="M9.4 13.4a2.6 2.6 0 0 0 2.6 2.6"/></svg>
+        <h3>Kuchyň a koupelna</h3>
+        <p>Kuchyňská linka i plná koupelna se sprchou jsou součástí základní ceny.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V5.5a2.5 2.5 0 0 0-5 0v9.3a4.5 4.5 0 1 0 5 0z"/><path d="M11.5 9.5v6"/></svg>
+        <h3>Celoroční bydlení</h3>
+        <p>Se silnějším zateplením a tepelným čerpadlem obstojí i v zimě.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h9v10H3z"/><path d="M3 12.5h9"/><path d="M15 14h6"/><path d="M18.5 11.5 21 14l-2.5 2.5"/></svg>
+        <h3>Přemístitelný</h3>
+        <p>Není to zabetonovaná stavba. Když se změní plány, dá se odvézt jinam.</p>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h12v9H2z"/><path d="M14 9h4l3.5 3.5V15H14z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>
+        <h3>Doprava po celé ČR</h3>
+        <p>Vozíme z Prahy, Litomyšle a Brna kamkoli po republice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="kontakt" aria-labelledby="kontakt-h">
+  <div class="wrap cta__in">
+    <h2 id="kontakt-h">Chcete znát cenu?</h2>
+    <div>
+      <p>Využijte náš konfigurátor. U každé volby vidíte, o kolik se cena hne, a nabídku pošleme do 24 hodin.</p>
+      <div class="cta__actions">
+        <a class="btn" href="/konfigurator">Spustit konfigurátor</a>
+        <a class="btn btn--out" href="/poptavka">Chci nezávaznou nabídku</a>
+      </div>
+      <div class="cta__contact">
+        <a href="tel:+420607321543">607 321 543</a>
+        <a href="mailto:dandaprokes@gmail.com">dandaprokes@gmail.com</a>
+      </div>
+      <span class="cta__note">Nezávazně, bez placení předem.</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__in">
+      <div>
+        <span class="brand">
+          <svg viewBox="9 16 46 33" aria-hidden="true">
+            <path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/>
+      <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
+      <path d="M 44.6 30.700000000000003 L 50.120000000000005 27.939999999999998 L 50.120000000000005 23.74 L 44.6 26.500000000000004 Z" fill="#eef2f4"/>
+      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
+      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
+      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
+      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
+      <path d="M 36.365 36.2175 L 36.635 36.082499999999996 L 36.635 25.482499999999998 L 36.365 25.617500000000003 Z" fill="#16202a"/>
+      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
+      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
+      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
+      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.239999999999995 Z" fill="#eef2f4"/>
+          </svg>
+          Flexi House
+        </span>
+        <p class="foot__note">Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Praha, Litomyšl, Brno a odtud po celé ČR.</p>
+      </div>
+      <div>
+        <h3>Domy</h3>
         <ul>
-          <li><a href="flexi-house.html">Flexi House</a></li>
-          <li><a href="flexi-office.html">Flexi Office</a></li>
-          <li><a href="katalog.html">Katalog</a></li>
-          <li><a href="konfigurator.html">Konfigurátor</a></li>
+          <li><a href="/flexi-house">Rozkládací dům</a></li>
+          <li><a href="/flexi-office">Flexi Office</a></li>
+          <li><a href="/katalog">Katalog</a></li>
+          <li><a href="/konfigurator">Konfigurátor</a></li>
         </ul>
       </div>
-      <div class="footer__col">
-        <h5>Společnost</h5>
+      <div>
+        <h3>Společnost</h3>
         <ul>
-          <li><a href="#proc">Proč Flexi</a></li>
-          <li><a href="#jak">Jak to probíhá</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
+          <li><a href="/podminky">Podmínky použití</a></li>
         </ul>
       </div>
-      <div class="footer__col">
-        <h5>Kontakt</h5>
+      <div>
+        <h3>Kontakt</h3>
         <ul>
+          <li><a class="foot__person" href="tel:+420607321543">Dan Prokeš<span>607 321 543</span></a></li>
+          <li><a class="foot__person" href="tel:+420730171909">Jan Prokeš<span>730 171 909</span></a></li>
           <li><a href="mailto:dandaprokes@gmail.com">dandaprokes@gmail.com</a></li>
-          <li>Dan Prokeš · <a href="tel:+420607321543">+420 607 321 543</a></li>
-          <li>Jan Prokeš · <a href="tel:+420730171909">+420 730 171 909</a></li>
-          <li><a href="#kontakt">Praha · Litomyšl · Brno</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer__bottom">
-      <div>© 2026 WINstores, s.r.o. Všechna práva vyhrazena. IČO 07836929</div>
-      <div style="display:flex;gap:24px">
-        <a href="zasady-ochrany-soukromi.html">Ochrana soukromí</a>
-        <a href="podminky.html">Podmínky použití</a>
-        <a href="#" data-cookie-settings onclick="if(window.openCookieSettings){openCookieSettings();}return false;" style="cursor:pointer">Nastavení cookies</a>
-      </div>
-    </div>
-    <div class="footer__legal">
-      WINstores, s.r.o., IČO 07836929, DIČ CZ07836929, sídlo Korunní 2569/108, Vinohrady, 101 00 Praha 10. Společnost zapsaná v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 308049.
-    </div>
-    <div class="footer__credit">
-      <a href="https://statly.cz" target="_blank" rel="noopener" class="statly" aria-label="Web vytvořil Statly">
-        <span class="statly-pre">Vytvořil</span>
-        <img src="assets/statly-logo.svg" alt="Statly logo" width="24" height="24" loading="lazy" />
-        <span class="statly-name">statly.cz</span>
-      </a>
+    <div class="foot__legal">
+      <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10</span>
+      <span>Vytvořil statly.cz</span>
     </div>
   </div>
 </footer>
 
-<div class="sticky-cta" id="stickyCta">
-  <a href="tel:+420607321543" class="btn btn--ghost">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-    Zavolat
-  </a>
-  <a href="#kontakt" class="btn btn--green">Nezávazná nabídka</a>
-</div>
-
-<script>
-  const nav = document.getElementById('nav');
-  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 20);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  const megaItem = document.querySelector('.nav__item[data-mega]');
-  if (megaItem) {
-    const btn = megaItem.querySelector('.nav__link');
-    let timer;
-    const open = () => { clearTimeout(timer); megaItem.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); };
-    const close = () => { timer = setTimeout(() => { megaItem.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }, 120); };
-    megaItem.addEventListener('mouseenter', open);
-    megaItem.addEventListener('mouseleave', close);
-    btn.addEventListener('click', (e) => { e.preventDefault(); megaItem.classList.toggle('open'); btn.setAttribute('aria-expanded', megaItem.classList.contains('open')); });
-    document.addEventListener('click', (e) => { if (!megaItem.contains(e.target)) { megaItem.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); } });
-  }
-
-  const burger = document.getElementById('burger');
-  const mm = document.getElementById('mobileMenu');
-  const setBurger = (isOpen) => {
-    burger.classList.toggle('is-open', isOpen);
-    mm.classList.toggle('is-open', isOpen);
-    burger.setAttribute('aria-expanded', isOpen);
-    burger.setAttribute('aria-label', isOpen ? 'Zavřít menu' : 'Otevřít menu');
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  };
-  burger.addEventListener('click', () => setBurger(!burger.classList.contains('is-open')));
-  const closeMobile = () => setBurger(false);
-  mm.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && burger.classList.contains('is-open')) closeMobile(); });
-  window.addEventListener('resize', () => { if (window.innerWidth > 860 && burger.classList.contains('is-open')) closeMobile(); });
-  const mGroupHead = document.getElementById('mGroupHead');
-  const mGroupDomy = document.getElementById('mGroupDomy');
-  if (mGroupHead) mGroupHead.addEventListener('click', () => mGroupDomy.classList.toggle('open'));
-
-  (function () {
-    const deferred = document.querySelectorAll('.hslide__photo[data-bg]');
-    const applyBg = function () {
-      deferred.forEach(function (el) {
-        el.style.backgroundImage = "url('" + el.dataset.bg + "')";
-        el.removeAttribute('data-bg');
-      });
-    };
-    if (document.readyState === 'complete') applyBg();
-    else window.addEventListener('load', applyBg, { once: true });
-  })();
-
-  (function () {
-    const track = document.getElementById('heroTrack');
-    const slides = Array.from(track.querySelectorAll('.hslide'));
-    const dotsWrap = document.getElementById('heroDots');
-    const prevBtn = document.getElementById('heroPrev');
-    const nextBtn = document.getElementById('heroNext');
-    let idx = 0, timer = null, paused = false;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    slides.forEach((s, i) => {
-      const d = document.createElement('button');
-      d.className = 'hero__dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('role', 'tab');
-      d.setAttribute('aria-label', 'Model ' + (i + 1));
-      d.addEventListener('click', () => go(i, true));
-      dotsWrap.appendChild(d);
-    });
-    const dots = Array.from(dotsWrap.children);
-
-    function setDots(active) {
-      dots.forEach((d, i) => {
-        d.classList.remove('active', 'seen');
-        if (i < active) d.classList.add('seen');
-        if (i === active) {
-          const dur = slides[active].dataset.dur || 4500;
-          d.style.setProperty('--dur', (dur / 1000) + 's');
-          d.classList.add('active');
-        }
-      });
-    }
-
-    function schedule() {
-      clearTimeout(timer);
-      if (reduce || paused) return;
-      const dur = parseInt(slides[idx].dataset.dur || 4500, 10);
-      timer = setTimeout(() => go(idx + 1), dur);
-    }
-
-    function go(n, manual) {
-      idx = (n + slides.length) % slides.length;
-      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-      setDots(idx);
-      schedule();
-    }
-
-    prevBtn.addEventListener('click', () => go(idx - 1, true));
-    nextBtn.addEventListener('click', () => go(idx + 1, true));
-
-    const hero = document.getElementById('hero');
-    hero.addEventListener('mouseenter', () => { paused = true; clearTimeout(timer); });
-    hero.addEventListener('mouseleave', () => { paused = false; schedule(); });
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { clearTimeout(timer); } else { schedule(); }
-    });
-
-    let startX = 0, dx = 0;
-    hero.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; dx = 0; paused = true; clearTimeout(timer); }, { passive: true });
-    hero.addEventListener('touchmove', (e) => { dx = e.touches[0].clientX - startX; }, { passive: true });
-    hero.addEventListener('touchend', () => {
-      if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1), true);
-      paused = false; schedule();
-    });
-
-    setDots(0);
-    schedule();
-  })();
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href === '#') return;
-      const t = document.querySelector(href);
-      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
-  });
-
-  const stickyCta = document.getElementById('stickyCta');
-  const heroEl = document.getElementById('hero');
-  const ctaIo = new IntersectionObserver((entries) => {
-    entries.forEach(e => stickyCta.classList.toggle('show', !e.isIntersecting));
-  }, { threshold: 0 });
-  ctaIo.observe(heroEl);
-
-  const form = document.getElementById('leadForm');
-  const status = document.getElementById('formStatus');
-  const submitBtn = document.getElementById('formSubmit');
-
-  function setErr(field, on) { field.closest('.field').classList.toggle('invalid', on); }
-  function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    status.className = 'form__status';
-    status.textContent = '';
-
-    const name = form.name, phone = form.phone, email = form.email;
-    let ok = true;
-    if (!name.value.trim()) { setErr(name, true); ok = false; } else setErr(name, false);
-    if (!phone.value.trim()) { setErr(phone, true); ok = false; } else setErr(phone, false);
-    if (!validEmail(email.value.trim())) { setErr(email, true); ok = false; } else setErr(email, false);
-    if (!ok) return;
-
-    const payload = {
-      name: name.value.trim(),
-      phone: phone.value.trim(),
-      email: email.value.trim(),
-      model: form.model.value,
-      message: form.message.value.trim(),
-      website: form.website ? form.website.value : ''
-    };
-
-    submitBtn.setAttribute('disabled', '');
-    submitBtn.textContent = 'Odesílám...';
-
-    try {
-      const res = await fetch('/api/send-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error('bad response');
-      status.className = 'form__status ok';
-      status.textContent = 'Děkujeme! Poptávku jsme přijali, ozveme se do 24 hodin.';
-      form.reset();
-    } catch (err) {
-      status.className = 'form__status err';
-      status.textContent = 'Něco se nepovedlo. Zkuste to prosím znovu, nebo zavolejte na +420 607 321 543.';
-    } finally {
-      submitBtn.removeAttribute('disabled');
-      submitBtn.innerHTML = 'Odeslat poptávku <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-    }
-  });
-</script>
-
-<script src="assets/cookies.js"></script>
+<script src="assets/flexi.js?v=8" defer></script>
 </body>
 </html>
