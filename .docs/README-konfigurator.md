@@ -36,5 +36,5 @@ node .claude/serve.js   # http://localhost:4599/konfigurator.html?model=mini
 - 5 kroků s progress barem, validace (nelze dál bez výběru u povinných skupin).
 - Živý souhrn + orientační cena vpravo (přepočet při každé volbě).
 - Rekapitulace + kontaktní formulář.
-- **Stáhnout PDF** (html2pdf.js přes CDN) — čistý světlý layout konfigurace.
+- **Stáhnout PDF** (jsPDF, kreslené přímo — bez rasterizace) — sazba v brandu webu: Bricolage 800 verzálkami na nadpisy, Instrument na text, paleta ink/blue, ostré hrany. Vektorový text, běžná konfigurace se vejde na jednu stranu.
 - **Odeslat poptávku** → JSON na `/api/send-konfigurace` → Resend pošle e-mail nám i zákazníkovi.

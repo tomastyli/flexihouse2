@@ -61,7 +61,7 @@ Zbývá: `assets/site.css` a `assets/home.css` smazat, až na nich nebude viset 
 | `flexi-house.html` | **HOTOVO** | detail s fotkou, texty, tabulkou parametrů, galerií šesti fotek, Product JSON-LD s cenou 480 000 |
 | `flexi-office.html` | **HOTOVO** | kratší varianta téhož, skladovost 10 ks a cena 70 000 Kč zachovány, Product JSON-LD s inventoryLevel |
 | `katalog.html` | **HOTOVO** | tři produkty jako široké řádky, parametry v tabulce, ceny z konfigurátoru, JSON-LD ItemList a BreadcrumbList |
-| `konfigurator.html` | **HOTOVO** | nový vzhled ve `assets/flexi-konfigurator.css`, logika a ceny nedotčené, ověřeno proklikáním všech pěti kroků (480 000 → 500 000 Kč, rekapitulace se generuje). html2pdf stažen lokálně a načítá se až na kliknutí. |
+| `konfigurator.html` | **HOTOVO** | nový vzhled ve `assets/flexi-konfigurator.css`, logika a ceny nedotčené, ověřeno proklikáním všech pěti kroků (480 000 → 500 000 Kč, rekapitulace se generuje). PDF se kreslí přímo přes jsPDF v brandové sazbě (Bricolage 800 + Instrument, paleta ink/blue), knihovna se načítá až na kliknutí. |
 | `poptavka.html` | **HOTOVO** | formulář napojený na `/api/send-lead`, honeypot, klientská validace, stavové hlášky, kontaktní blok. Úspěšná cesta se dá ověřit až na Pages, lokálně přes `file://` API neběží. |
 | `podminky.html` | **HOTOVO** | převlečeno, právní text doslova zachován |
 | `zasady-ochrany-soukromi.html` | **HOTOVO** | totéž |
@@ -116,7 +116,7 @@ SEO kategorie hlásí jedinou chybu, `is-crawlable`, což je záměrný `noindex
 - Responzivní obrázky: ke každé fotce varianty 480, 800 a 1200 px a `srcset` se `sizes`. Mobil stahoval 140 kB hero fotku, teď 78 kB. Výkon mobilu skočil z 84 na 97 a výš.
 - Písma instancovaná a subsetovaná: Bricolage ze 181 kB na 38 kB, Archivo z 66 na 19 kB, Instrument ze 40 na 35 kB. Zafixovaly se osy, které web reálně používá (Bricolage wght 800, wdth 84 až 90). Celkem z 287 kB na 92 kB.
 - Preload LCP obrázku i obou řezů písma včetně latin-ext, protože české nadpisy potřebují ext soubor hned.
-- `html2pdf` (888 kB) se načítá až po kliknutí na Stáhnout PDF.
+- `jspdf` (412 kB) + fonty pro PDF, tj. Bricolage 800 a Instrument 400/600 (117 kB), se načítají až po kliknutí na Stáhnout PDF.
 
 **Kontrast:** tlumený text ztmaven z 60 na 70 procent krytí (4,40 na 6,09), text v modrém pruhu na plnou bílou, popisky na světlém podkladu z `--blue` na `#3f5c69`, cookie lišta přebarvena. Všechny stránky mají přístupnost 100.
 
