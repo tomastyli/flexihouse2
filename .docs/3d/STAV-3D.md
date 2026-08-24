@@ -128,6 +128,16 @@ betonové patky pod rohy.
    parametr `fold` v modelu pořád funguje.
 5. Rozhodnout, jestli 3D půjde na produkci, a pak commitnout.
 
+## Cache na produkci
+
+`_headers` dává `/assets/*` `max-age=31536000, immutable`, ale soubory
+nemají hash v názvu. **Při každé změně CSS nebo JS je nutné zvednout
+`?v=` v odkazech ve všech HTML**, jinak vrácený návštěvník dostane nové
+HTML se starou CSS. Přesně to se stalo při prvním nasazení 3D: stará CSS
+neznala `.kf-viz__stage`, plátno se roztáhlo do 2^24 px a WebGL spadl.
+Renderer teď velikost počítá z rodičovského prvku a zastropuje ji,
+takže i s rozbitou CSS jen vykreslí menší náhled.
+
 ## Na co si dát pozor (draze zaplacené)
 
 - Kvádr vedený přes celou hloubku domu na `x = ±half` zakryje bočnici
