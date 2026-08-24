@@ -112,6 +112,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   body{overflow-x:hidden}
   .nav,.tel{display:none}
   .burger{display:flex}
+  .top__end{margin-left:auto}
   .top__end .btn{display:none}
   .picks,.grid__in,.foot__in{grid-template-columns:1fr}
 }

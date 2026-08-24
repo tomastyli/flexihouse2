@@ -88,9 +88,19 @@
     </div>
 
     <div class="kf__layout">
-      <div class="kf__main" id="kfMain"></div>
+      <aside class="kf-stage">
+        <div class="kf-viz" id="kfViz">
+          <div class="kf-viz__stage">
+            <canvas class="kf-viz__canvas" id="kfCanvas" data-vyska="ramec" width="900" height="620"></canvas>
+            <div class="kf-viz__hint">tažením otočíte</div>
+          </div>
+          <p class="kf-viz__note">Náhled je orientační. Rozměry a rozmístění oken zpřesňujeme podle výrobní dokumentace.</p>
+        </div>
+      </aside>
 
-      <aside class="kf-aside">
+      <div class="kf-choices">
+        <div class="kf__main" id="kfMain"></div>
+
         <div class="kf-summary">
           <div class="kf-summary__head">
             <div class="kf-summary__model" id="sumModel">Flexi House</div>
@@ -107,7 +117,7 @@
             <p class="kf-summary__note" id="sumNote">Orientační ceny bez DPH. Doprava a montáž se účtují zvlášť, najdete je mezi doplňky. Finální cenu potvrdíme v nabídce.</p>
           </div>
         </div>
-      </aside>
+      </div>
     </div>
   </div>
 </main>
@@ -115,6 +125,7 @@
 
 
 
+<script src="assets/flexi-3d.js?v=1"></script>
 <script>
 const I = {
   home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
@@ -358,6 +369,7 @@ function selectOption(btn) {
     btn.closest('.kf-group').classList.remove('invalid');
   }
   renderSummary();
+  vizObnov();
 }
 
 function maxReached() {
@@ -683,6 +695,24 @@ async function downloadPdf() {
   }
 }
 
+var VIZ = null;
+function vizStav() {
+  var addons = state.sel.addons || [];
+  return {
+    roof: state.sel.roof === 'gable' ? 'gable' : 'flat',
+    facade: (state.sel.facade === 'grey' || state.sel.facade === 'black') ? state.sel.facade : 'wood',
+    terrace: addons.indexOf('terrace') !== -1,
+    heat: state.sel.heating === 'ac' ? 'ac' : (state.sel.heating === 'stove' ? 'stove' : 'none')
+  };
+}
+function vizObnov() { if (VIZ) VIZ.nastav(vizStav()); }
+function vizStart() {
+  var cv = document.getElementById('kfCanvas');
+  if (!cv || !window.Flexi3D) return;
+  VIZ = window.Flexi3D.vytvor(cv, { pomer: 0.66 });
+  VIZ.nastav(vizStav());
+}
+
 function bindForm() {
   const form = document.getElementById('leadForm');
   const status = document.getElementById('formStatus');
@@ -733,6 +763,7 @@ Object.values(GROUPS).forEach(g => {
 renderSummary();
 goTo(0);
 bindForm();
+vizStart();
 </script>
 
 <script src="assets/cookies.js?v=8"></script>
