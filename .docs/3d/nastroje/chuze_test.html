@@ -1,0 +1,38 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>Test chůze</title>
+<style>body{margin:0;font:13px monospace}.s{position:relative;width:900px;height:640px}canvas{position:absolute;inset:0;width:100%;height:100%}</style>
+</head><body>
+<div class="s"><canvas id="c" data-vyska="ramec"></canvas></div>
+<pre id="out"></pre>
+<script>
+window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()); }, 16); };
+</script>
+<script>document.write('<scr'+'ipt src="../../../assets/flexi-3d.js?v='+Date.now()+'"><\/scr'+'ipt>');</script>
+<script>
+var V = Flexi3D.vytvor(document.getElementById('c'), {pomer:0.71, zaklad:'../../../'});
+V.nastav({roof:'gable', terrace:true, pohled:'dovnitr', misto:2});
+var log=[];
+function klik(px,py){
+  var c=document.getElementById('c'), r=c.getBoundingClientRect();
+  var x=r.left+px, y=r.top+py;
+  ['pointerdown','pointermove','pointerup'].forEach(function(t){
+    c.dispatchEvent(new PointerEvent(t,{clientX:x,clientY:y,bubbles:true,pointerId:1}));
+  });
+}
+function stav(){ var s=V.stav(); return s.pozice? s.pozice.join(',') : 'nic'; }
+setTimeout(function(){
+  log.push('start '+stav());
+  klik(450, 560); log.push('klik dolu-stred -> ' + stav() + ' LAD=' + JSON.stringify(window.__LAD));
+  setTimeout(function(){
+    log.push('po animaci '+stav()+' jdi='+window.__JDI+' kroku='+window.__KROK+' stop='+window.__KROKSTOP);
+    klik(450, 430); log.push('klik dal -> '+stav());
+    setTimeout(function(){
+      log.push('po animaci '+stav());
+      klik(60, 620); log.push('klik do rohu/zdi -> '+stav());
+      setTimeout(function(){
+        log.push('konec '+stav());
+        document.getElementById('out').textContent='VYSLEDEK '+log.join(' | ');
+      },900);
+    },900);
+  },900);
+},2200);
+</script></body></html>

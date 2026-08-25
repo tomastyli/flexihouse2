@@ -1,0 +1,36 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8">
+<title>Test interiéru</title>
+<style>
+ body{margin:0;background:#eef0ee;font:14px system-ui}
+ .w{display:flex;gap:10px;padding:10px}
+ .s{position:relative;width:1180px;height:820px;background:#fff}
+ canvas{position:absolute;inset:0;width:100%;height:100%}
+ .p{width:230px}
+ button{display:block;width:100%;margin:3px 0;padding:7px}
+</style></head><body>
+<div class="w">
+  <div class="s"><canvas id="c" data-vyska="ramec"></canvas></div>
+  <div class="p" id="p"></div><pre id="out" style="width:520px;white-space:pre-wrap;font-size:11px"></pre>
+</div>
+<script>
+document.write('<scr'+'ipt src="../../../assets/flexi-3d.js?v=' + Date.now() + '"><\/scr'+'ipt>');
+</script>
+<script>
+var V = Flexi3D.vytvor(document.getElementById('c'), {pomer:0.70, zaklad:'../../../'});
+V.nastav({roof:'gable', terrace:true, facade:'wood'});
+var p = document.getElementById('p');
+function b(t, f){ var e=document.createElement('button'); e.textContent=t; e.onclick=f; p.appendChild(e); }
+b('Zvenku', function(){ V.nastav({pohled:'ven'}); });
+(V.mista?V.mista():[]).forEach(function(m,i){ b(m.nazev, function(){ V.nastav({pohled:'dovnitr', misto:i}); }); });
+b('Kuchyň vyp/zap', function(){ V.nastav({kuchyn:!V.stav().kuchyn}); });
+b('Koupelna vyp/zap', function(){ V.nastav({koupelna:!V.stav().koupelna}); });
+var q=new URLSearchParams(location.search);
+if(q.has('m')) V.nastav({pohled:'dovnitr', misto:parseInt(q.get('m'),10)||0});
+if(q.has('bez')) V.nastav({kuchyn:false, koupelna:false});
+if(q.has('cist')){ p.style.display='none'; var o=document.getElementById('out'); if(o) o.style.display='none';
+  document.querySelector('.s').style.width='1200px'; document.querySelector('.s').style.height='840px';
+  document.body.style.background='#fff'; setTimeout(function(){ V.prizpusob(); }, 60); }
+if(q.has('yaw')) { }
+window.V=V;
+setTimeout(function(){ document.getElementById("out").textContent = "DAVKY " + (window.__DAVKY||"nic"); }, 2500);
+</script></body></html>

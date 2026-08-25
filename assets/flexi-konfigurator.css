@@ -110,6 +110,13 @@
 .kf-viz__canvas:active{cursor:grabbing}
 .kf-viz__hint{position:absolute;left:14px;bottom:12px;font-size:0.68rem;color:var(--muted);opacity:.7;pointer-events:none}
 .kf-viz__note{padding:9px 14px;border-top:1px solid var(--hair);font-size:0.7rem;color:var(--muted);line-height:1.45}
+.kf-viz__vstup{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:2;
+  font-family:'Bricolage',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;text-transform:uppercase;
+  letter-spacing:0.07em;font-size:0.72rem;color:var(--paper);background:var(--ink);border:2px solid var(--ink);
+  padding:11px 20px;cursor:pointer;box-shadow:0 6px 22px rgba(22,32,42,.22);transition:background .18s,color .18s}
+.kf-viz__vstup:hover{background:transparent;color:var(--ink)}
+.kf-viz__vstup[hidden]{display:none}
+@media(max-width:640px){.kf-viz__vstup{font-size:0.66rem;padding:9px 15px;bottom:12px}}
 .kf-viz__bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--hair)}
 .kf-viz__prep,.kf-viz__mista{display:flex;flex-wrap:wrap;gap:-1px}
 .kf-viz__mista[hidden]{display:none}

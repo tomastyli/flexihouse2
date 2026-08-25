@@ -234,6 +234,279 @@ model nekreslí, Tomáš je zamítl — dům sedí na terénu.
 5. Zvednout `TEX_VERZE` a `?v=` u JS a CSS při každém dalším zásahu do textur.
 6. **3D interiér** — další krok, viz níže.
 
+## 3D interiér (postaveno 25. 8. 2026, NENASAZENO)
+
+Interiér se staví jen v režimu `pohled: 'dovnitr'`, aby exteriérový náhled
+nenesl jeho trojúhelníky ani textury. Kód je v `assets/flexi-3d.js`
+(`postavInterier`, `kuchynIn`, `koupelnaIn` a pomocné funkce nad nimi),
+textury generuje `.docs/3d/nastroje/textury_interier.py`, zkušební stránka
+je `.docs/3d/nastroje/test-interier.html` (parametry `?m=0..4`, `&bez=1`
+vypne vybavení, `&cist=1` schová ovládání kvůli snímkům).
+
+### Půdorys je odečtený z vektorů výkresu, ne z obrázku
+
+PDF výkresu je vektorové. Úsečky se vytáhnou přes `page.get_drawings()` a
+měřítko drží kótovací řetězec pod půdorysem: **178,02 bodu = 6276 mm**, tedy
+35,255 mm na bod. Kontrola: úseky řetězce 57,12 / 63,78 / 57,12 bodu dávají
+2013 / 2249 / 2013 mm. Odtud jsou všechny polohy příček přesně, bez odhadování
+z rastru.
+
+### ZRCADLENÍ, nejdražší chyba tohoto kola
+
+**Půdorys výkresu má opačnou orientaci x než renderer.** Průčelí je na
+výkresu dole, tedy +z míří dolů po stránce, a proto x na výkresu roste
+doprava, kdežto v rendereru je při pohledu shora obráceně. Kuchyň je na
+výkresu vlevo, ale v rendereru patří na **-x**.
+
+Poznat se to dá jen z fotky: na IMG_2351 stojí fotograf u vstupu a dívá se na
+zadní stěnu, tedy podél -z. Při pohledu podél -z je vpravo +x (`right =
+forward x up`), a na fotce je kuchyň VLEVO. První verze modelu to měla
+obráceně a odhalil to až render vedle fotky, ne úvaha.
+
+Řešení je obal `zrcadli(sit)`: layout se píše v souřadnicích výkresu a při
+stavbě se překlápí (negace x a obrácené pořadí vrcholů kvůli normálám).
+Kdo bude sahat na `IN`, píše čísla podle VÝKRESU, ne podle rendereru.
+
+### Rozměry interiéru
+
+| co | hodnota | odkud |
+|---|---|---|
+| podlaha (horní líc) | `LIFT + SOKL + 0,001` = 0,221 | sedí na základovém rámu |
+| strop | `LIFT + H - 0,010` = 2,397 | pod horním rámem |
+| světlá výška | **2,176** | dopočet; ověřovatel z fotek dal 2,15 až 2,23 |
+| černý pás pod stropem | 0,090 | specifikace, dvě měření 85 a 89 mm |
+| rohový sloupek, viditelná plocha | 0,150 | změřeno, rozptyl 0,13 až 0,17 |
+| příčka | 0,060 | z výkresu, rozptyl 0,05 až 0,075 |
+| vnitřní dveře | 0,800 x 2,050 | výkres |
+
+Příčky v souřadnicích VÝKRESU (v modelu se zrcadlí):
+koupelna x od -0,721 do +0,710, přední stěna koupelny z = -0,573,
+stěna ložnic x = -0,746, příčka mezi ložnicemi z = +0,529 až +0,579
+(zadní ložnice 3,179 m hluboká, přední 2,076 m, sedí na kóty 3180 a 2070).
+Otvory: D3 x od -0,652 do +0,087, D2 zadní z od -0,420 do +0,380,
+D2 přední z od +0,653 do +1,413.
+
+**Kóta 2318 na výkresu není příčka, je to kótovací čára.** První odečet ji
+vzal jako stěnu a vyšly z toho prohozené hloubky ložnic.
+
+### Past: plné kvádry rámu z exteriéru
+
+Exteriér kreslí sokl i horní pás jako **plné kvádry přes celý půdorys modulu**.
+Podlaha ve výšce 0,203 i strop ve 2,407 se do nich schovaly a nebylo je vidět,
+přestože v síti byly (`podlaha:16`, `stropIn:14` trojúhelníků). Poznalo se to
+až tak, že se podlaha zvedla o 0,90 m a najednou byla vidět. V režimu interiéru
+se proto oba pásy kreslí jako **prstenec o tloušťce 0,050 m**, ne jako kvádr.
+
+### Další pasti z tohoto kola
+
+- **Zevnitř se nesmí kreslit sklo ani zadní panel rámu okna.** Renderer nemá
+  průhlednost, takže `sklo` i `ramecek` udělaly z okna černý obdélník. Obojí
+  se v režimu interiéru přeskakuje a otvor je skutečně otevřený, takže jím
+  prochází i slunce ze stínové mapy a na podlaze je vidět světelná stopa.
+- **Vlastní rám okna zevnitř je zvlášť** (`ramOknaIn`), plochý černý lem
+  0,042 m se svislou příčkou. Ostění samo je při čelním pohledu neviditelné.
+- **Dvě stěny ve stejné rovině se prokreslují.** Přední stěna koupelny se
+  proto kreslí dvakrát s odsazením o půl tloušťky příčky.
+- **Prosklené křídlo nesmí být plný kvádr se sklem uvnitř**, sklo se schová.
+  Kreslí se jako rám ze čtyř prutů a tabule mezi nimi.
+- **Dveře do koupelny se kreslí OTEVŘENÉ**, jinak z chodby ani ze dveří není
+  do koupelny vidět a záběr je k ničemu. Výkres je taky kreslí otevřené.
+- Kamera uvnitř je pohled z místa, ne oběžnice: `ramuj()` v režimu interiéru
+  jen dopočítá `cam.cil` z `cam.yaw` a `cam.pitch`, kolečko myši nedělá nic.
+  Zorný úhel je 1,16 rad, venku zůstává 0,44.
+
+### Oprava podle závěrečné specifikace
+
+Závěrečná syntéza rozboru doběhla až po tom, co byl model postavený, a několik
+čísel opravila. Celá je v repu v `.docs/3d/SPECIFIKACE-INTERIER.md`, do modelu
+se z ní promítlo:
+
+- černý pás pod stropem **0,090** místo 0,110 a **jen v křídlových modulech**;
+  v chodbě a koupelně panel dobíhá přímo k lamelovému podhledu
+- **dveře D3 mají ČIRÉ sklo**, matné patří sprchové zástěně
+- kuchyňská deska **0,750** místo 0,900 (sokl 0,125, čela 0,585, deska 0,040)
+- členění čel ramene A **0,397 / 0,397 / 0,597 / 0,297**, zásuvky tři po 0,240;
+  původní 0,393 / 0,386 / 0,555 / 0,333 měřilo přes špatnou hloubkovou rovinu
+- sprchový kout hluboký **0,65**, vanička 0,06 vysoká s nerezovým lemem a žlabem
+- WC a skříňka s umyvadlem přesazené podle výkresu (WC z -2,197 až -1,680 a
+  vysunuté 0,72 od stěny, umyvadlo z -1,389 až -0,589, hloubka 0,50, deska 0,82)
+- ventilátor přesunutý **východně od okna W2**, rámeček 0,19
+- prkna podlahy v obou **ložnicích napříč**, jinde podél hloubky
+- stínová spára 0,015 v patě stěn místo soklu
+- otvory D2 se musí vyříznout **v obou lících** příčky, jinak nejsou dveře
+  z chodby vidět
+
+**Výška desky 0,750 vyřešila i spor s oknem.** Při 0,900 deska křížila spodní
+třetinu okna nad linkou, což fotky vylučují. Ale parapet zůstává otevřený:
+výkres dává 0,80 nad spodkem boxu (asi 0,65 nad podlahou), fotky 0,83 až 0,92
+nad podlahou. Dokud se to nezměří, je vztah linky a okna jen pravděpodobný.
+
+### Proč interiér nejdřív vypadal jako z Robloxu
+
+Tomášova reakce na první verzi. Příčina nebyla v texturách, ale v tom, že
+podlaha, strop i stěny byly **jeden velký polygon na místnost**. AO se počítá
+na vrchol, takže na čtyřech rozích velké plochy nemá kde vzniknout stín v koutě
+a všechno je nasvícené úplně stejně.
+
+Co to spravilo:
+
+- `stenaSOtvory` umí volitelné `deleni` (interiér 0,30 m), takže stěna má síť
+  vrcholů a AO na ní může ztmavit kouty, patu, podhled i okolí otvorů
+- `plocha()` kreslí podlahu a strop po dlaždicích 0,34 m s AO funkcí
+- `aoRoviny()` počítá zastínění ze vzdálenosti ke stěnám místnosti a od
+  půdorysů překážek, takže pod kuchyňskou linkou, pod WC a pod umyvadlem je
+  kontaktní stín
+- černá ocel a křídla dveří dostaly texturu `ram` s tmavým nádechem; plochá
+  barva bez struktury byla druhá polovina toho dojmu
+- okolní světlo v interiéru je víc směrové (větší rozdíl mezi zenitem a zemí)
+
+**Podlaha vypadala jako flekaté parkety**, dokud se nezpřísnilo vyrovnání
+osvitu ve zdrojovém výřezu (sigma 200 na 70) a nesnížilo kolísání jasu mezi
+prkny na 0,008. Dlaždice je teď 6 prken na šířku a 2 na délku.
+
+**Nad příčkou zůstával nezakrytý proužek** a byla jím vidět cedrová fasáda jako
+oranžový průsvit u stropu. Strop středního modulu se proto kreslí až na vnější
+líce obou příček, ne jen mezi jejich vnitřní líce.
+
+### Zárubeň nesmí procházet skrz líc stěny
+
+Na tmavých prvcích byly vidět jemné přerušované čáry. Vypadaly na stínovou
+mapu i na prokreslování rohových sloupků, ale ani jedno to nebylo. Rozhodl až
+render, kde měl každý materiál křiklavou barvu: na modré zárubni byly ZELENÉ
+čárky, tedy stěna.
+
+Příčina: kvádr zárubně byl širší než tloušťka stěny, takže jí procházel skrz.
+V ostrém úhlu se pak jeho líc a líc stěny perou o hloubku. Zárubeň se proto
+kreslí ve dvou částech: ostění sedí MEZI líci stěny (odsazené o 2 mm) a
+obložka je samostatná lišta 8 mm PŘEDSAZENÁ před líc. Stejně je opravená
+i zárubeň prosklených dveří do koupelny.
+
+Obecně: dva viditelné líce nikdy nenechávat blíž než pár centimetrů, pokud
+jeden druhý spolehlivě nezakrývá.
+
+### Dveře do ložnic se kreslí otevřené
+
+Stejně jako u koupelny. Zavřená křídla dělala z chodby slepou stěnu a z ložnic
+nebylo nic vidět. Podle výkresu se D2 otevírají dovnitř ložnice a panty jsou
+u příčky mezi nimi, takže křídla nestojí v cestě ani jednomu stanovišti.
+
+### Chůze po domě (jako Street View)
+
+Klikání na tlačítka místností Tomášovi nestačilo, chtěl se pohybovat sám.
+Uvnitř se proto **tažením rozhlížíš a kliknutím na podlahu se přesuneš**.
+Tlačítka místností zůstala jako rychlé skoky, po ručním pohybu se odznačí
+(renderer posílá na plátně událost `flexipohyb`).
+
+Jak to funguje: `smerZBodu` udělá z bodu na plátně směr paprsku přes inverzní
+matici, kterou si stejně počítá obloha (`pickInv`), `podlahaZBodu` ho protne
+s rovinou podlahy a `jdiNa` po ní dojde.
+
+**Kolize je seznam pochozích obdélníků, ne fyzika.** `plochyChuze` vrací
+místnosti zmenšené o 0,30 m (poloměr člověka) plus samostatné spojky ve
+dveřních otvorech, `prekazkyChuze` vrací půdorysy linky a zařizovacích
+předmětů. Cesta se navzorkuje po 3,5 cm a jde se, dokud jsou vzorky platné.
+Když je cíl mimo, nejde se nikam; když cesta narazí, kamera se zastaví u zdi.
+
+Dvě pasti, na kterých to nejdřív nefungovalo:
+
+- **Přednastavená stanoviště ležela mimo pochozí plochy** (o pár centimetrů),
+  takže první vzorek byl neplatný a chůze se nikdy nerozjela. `dojdi` proto
+  neplatný začátek přeskočí a začne měřit, až vstoupí do platné plochy.
+- **V headless Chromu neběží `requestAnimationFrame`**, když stránka nic
+  nekreslí, takže se animace v testu netvářila, že běží. Není to chyba kódu.
+  Testovací stránky `.docs/3d/nastroje/chuze_test.html` a `chuze_snim.html`
+  si proto rAF nahrazují časovačem.
+
+### Vstup dovnitř musí být vidět
+
+Samotný přepínač ZVENKU/UVNITŘ pod plátnem si nikdo nevšiml. Nad exteriérovým
+náhledem je proto tlačítko **PROJÍT SI DŮM ZEVNITŘ** a konfigurátor přepíná sám:
+
+- při vstupu do kroku Interiér se náhled přepne dovnitř
+- při návratu do kroku Exteriér zase ven
+- kliknutí na volbu **Koupelna** skočí rovnou do koupelny, na **Kuchyňskou
+  linku** do kuchyně
+
+**Past:** přednastavené volby se při načtení stránky aplikují voláním
+`selectOption`, takže se náhled přepínal dovnitř hned po otevření stránky.
+`selectOption` proto bere druhý parametr `odUzivatele` a přepíná jen na
+skutečné kliknutí.
+
+### Drobnosti se nedají dělat z kvádrů
+
+Tomášova připomínka, že kliky, dřez a umyvadlo vypadají pixelovaně. Byly to
+tenké kvádry, takže měly ostré hrany a v malém se rozpadaly. Přibyly proto
+`trubka()` (válec mezi dvěma body) a `oblouk()` (výseč prstence z trubek) a
+z nich jsou udělané kliky s rozetou, kuchyňská i umyvadlová baterie s obloukovým
+výtokem, sprchová tyč, madla skříněk a panty. Umyvadlo je skutečná prohlubeň:
+deska se kreslí jako čtyři pásy kolem otvoru a mísa má šikmé stěny a výpust.
+
+Vykreslovací měřítko má teď spodní hranici 1,6 (`DPR`), takže i na displeji
+bez retiny se kreslí s přesahem a hrany nejsou zubaté.
+
+**Sprcha nebyla vidět,** protože obě křídla zástěny byla zavřená a matné sklo
+ji schovalo. Pravé křídlo je teď odsunuté za levé, takže je do sprchy vidět
+hlavice, tyč i baterie. Odpovídá to i fotkám, kde je matné jen jedno křídlo.
+
+### Materiály a textury interiéru
+
+Textury se dotahují až při prvním přepnutí dovnitř (jsou v `ODLOZIT`), takže
+exteriérový náhled se nezpomalil. `TEX_VERZE` je 4.
+
+| textura | jak vznikla |
+|---|---|
+| `podlaha` | procedurální prkna 0,190 x 1,285 m, kresba vzorkovaná z IMG_2332, základ #91714F změřený jako medián podlahy na IMG_2336 |
+| `stena-in` | procedurální, panel je ve skutečnosti skoro bez kresby; jen zvlnění plechu a šev |
+| `lamely` | procedurální drážky po 0,118 m, barva z IMG_2349 |
+| `mramor` | procedurální žilky, barva z IMG_2347; **výřez z fotky se nepoužil schválně**, zapekl by do textury odlesky, rohy a skříňku |
+| `deska` | výřez z IMG_2353, což je plochý snímek desky shora |
+
+### Co interiér záměrně NEMÁ
+
+Dům se dodává holý. Modeluje se jen kuchyňská linka a koupelna, obojí navázané
+na volby `equipment` v konfigurátoru (`kuchyn`, `koupelna`). Když se koupelna
+odebere, zmizí i mramorový obklad, protože ho ceník uvádí jako její součást.
+Žádný nábytek, postele, dekorace ani kávovar. **Varná deska se nekreslí**:
+výkres ji sice má, ale na žádné fotce nainstalovaná není a deska linky je
+celistvá, a volba se jmenuje „linka s dřezem a místem pro spotřebiče".
+
+### Co v interiéru zbývá doměřit metrem
+
+1. **Světlá výška** od podlahy ke stropu. Model má 2,176 m jako dopočet.
+2. **Šířka podlahového prkna**, model má 0,190 m jako odhad.
+3. **Výška kuchyňské desky.** Model má 0,900 m, ale poměry na fotkách vůči
+   parapetu dávají 0,72 až 0,84, takže si to odporuje.
+4. Rozteč drážek lamelového podhledu (0,118 m je odhad v rozsahu 0,09 až 0,15).
+5. Hloubka sprchy 0,60 m je z výkresu, na fotce se dá číst i 0,70.
+
+## Nálezy k EXTERIÉRU z nové sady fotek, ZATÍM NEPROVEDENO
+
+Ve složce z 25. 8. přišly i snímky terasy a štítu. Rozbor z nich vytáhl tři
+věci, které si odporují s modelem. **Nic z toho jsem nezměnil**, protože dvě
+z nich jdou proti číslům, která zadal Tomáš, a tvar střechy se v tomto projektu
+už jednou překreslil špatně. Rozhodnout musí on.
+
+1. **Rozteč prken terasy 0,143 m, model má 0,148.** Tohle je nejlíp doložené:
+   měřeno na dronovém snímku DJI_0170 rektifikací půdorysné roviny přes známou
+   šířku domu 6,276 m, jedenáct po sobě jdoucích spár vyšlo 0,1405 až 0,1461 m.
+   Prkno 0,135, spára 0,008. Změna je 3,5 procenta a je na ni potřeba
+   přegenerovat `prkna.webp` a zvednout `TEX_VERZE`.
+2. **Sklon střechy vychází asi 8 stupňů, model má 15.** Číslo 15 je od Tomáše.
+   Vyfotografované jednotky navíc podle starších poznámek mají plochou nebo
+   velmi mírnou střechu, takže se může měřit něco jiného, než se nabízí.
+3. **Štít vypadá na černý plechový lem, ne na fasádní plech v dekoru cedru.**
+   Cedr na štítu není na žádné fotce. Model kreslí cedr.
+
+Dál: hloubka terasy vychází 2,04 m (model má 2,15), příčné černé profily jsou
+dva v osách spár mezi moduly a sloupky pod střechou nad terasou jsou čtyři,
+ne dva. Kulatý otvor v tmavé desce na IMG_2355 a IMG_2356 jsou technologické
+díry ve sloupku u vstupu, do modelu nepatří.
+
+Ověřovací kolo u zóny terasy a štítu doběhlo až po zbytku, takže tyhle body
+prošly jen jedním párem očí. Před zásahem do modelu je přeměřit.
+
+## Podklady pro 3D interiér
+
 ## Podklady pro 3D interiér
 
 Výkres dispozici řeší, takže se nemusí odhadovat z fotek:

@@ -1,3 +1,21 @@
+  function dojdi(x0, z0, x1, z1) {
+    var plochy = plochyChuze(), prekazky = prekazkyChuze();
+    if (!lzeStat(x1, z1, plochy, prekazky)) return null;
+    var dx = x1 - x0, dz = z1 - z0;
+    var d = Math.sqrt(dx * dx + dz * dz);
+    if (d < 1e-4) return null;
+    var n = Math.max(2, Math.ceil(d / 0.035));
+    var dobra = null, vstoupil = false;
+    for (var i = 1; i <= n; i++) {
+      var t = i / n;
+      var nx = x0 + dx * t, nz = z0 + dz * t;
+      var ok = lzeStat(nx, nz, plochy, prekazky);
+      if (ok) { vstoupil = true; dobra = [nx, nz]; }
+      else if (vstoupil) break;
+    }
+    return dobra;
+  }
+
 (function (global) {
 'use strict';
 
@@ -40,9 +58,9 @@ var MAT = {
   lamely:  { tex: 'lamelyIn', rough: 0.30, metal: 0.03 },
   podlaha: { tex: 'podlahaIn', rough: 0.34, metal: 0.02 },
   mramor:  { tex: 'mramorIn', rough: 0.10, metal: 0.03 },
-  ocelIn:  { tex: null, tint: [0.026, 0.026, 0.025], rough: 0.52, metal: 0.38 },
-  kridlo:  { tex: null, tint: [0.062, 0.064, 0.070], rough: 0.46, metal: 0.10 },
-  linka:   { tex: null, tint: [0.800, 0.788, 0.752], rough: 0.42, metal: 0.03 },
+  ocelIn:  { tex: 'frame', tint: [0.115, 0.115, 0.112], rough: 0.52, metal: 0.30 },
+  kridlo:  { tex: 'frame', tint: [0.235, 0.238, 0.243], rough: 0.46, metal: 0.10 },
+  linka:   { tex: null, tint: [0.812, 0.800, 0.766], rough: 0.44, metal: 0.03 },
   deska:   { tex: 'deskaIn', rough: 0.26, metal: 0.04 },
   chrom:   { tex: null, tint: [0.560, 0.568, 0.578], rough: 0.09, metal: 0.94 },
   nerez:   { tex: null, tint: [0.470, 0.474, 0.480], rough: 0.22, metal: 0.90 },
@@ -53,7 +71,7 @@ var MAT = {
   skloMat: { tex: null, tint: [0.62, 0.645, 0.655], rough: 0.42, metal: 0.00 }
 };
 
-var PAS_H = 0.110;
+var PAS_H = 0.090;
 var SLOUP_W = 0.150;
 var PRICKA_TL = 0.060;
 var DVERE_IN_W = 0.800, DVERE_IN_H = 2.050;
@@ -390,7 +408,7 @@ function Scena(canvas, opt) {
   var S = { roof: 'flat', facade: 'wood', terrace: false, heat: 'none', fold: 1,
     pohled: 'ven', misto: 0, kuchyn: true, koupelna: true };
   var cam = { yaw: 0.66, pitch: 0.245, dist: 15, cil: [0, 1.25, 0] };
-  var rucniZoom = false, drag = null;
+  var rucniZoom = false, drag = null, pickInv = null, chuze = null;
   var potrebaSit = true, potrebaStin = true, snimekCeka = false;
 
   var prog = program(gl, VS, FS);
@@ -517,6 +535,19 @@ function Scena(canvas, opt) {
       return out;
     }
     cu = uklid(cu, sirka); cvv = uklid(cvv, vyska);
+    if (o.deleni) {
+      function zhusti(a, krok) {
+        var out = [];
+        for (var i = 0; i < a.length - 1; i++) {
+          out.push(a[i]);
+          var d = a[i + 1] - a[i], n = Math.ceil(d / krok);
+          for (var j = 1; j < n; j++) out.push(a[i] + d * j / n);
+        }
+        out.push(a[a.length - 1]);
+        return out;
+      }
+      cu = zhusti(cu, o.deleni); cvv = zhusti(cvv, o.deleni);
+    }
     function bod(u, v) {
       return [rohBL[0] + dirU[0] * u + dirV[0] * v,
         rohBL[1] + dirU[1] * u + dirV[1] * v,
@@ -641,11 +672,19 @@ function Scena(canvas, opt) {
     var w = Math.abs(b - a);
     var ao = function (u, vv) {
       var kraj = Math.min(u, w - u);
-      return Math.min(1, 0.62 + Math.min(kraj, 0.45) / 0.45 * 0.38) *
-        Math.min(1, 0.70 + Math.min(vv, vys - vv) / 0.55 * 0.30);
+      var a = Math.min(1, 0.40 + Math.min(kraj, 0.55) / 0.55 * 0.60);
+      a *= Math.min(1, 0.46 + Math.min(vv, 0.32) / 0.32 * 0.54);
+      a *= Math.min(1, 0.52 + Math.min(vys - vv, 0.40) / 0.40 * 0.48);
+      (otvory || []).forEach(function (t) {
+        var du = Math.max(t.u - u, u - (t.u + t.w), 0);
+        var dv = Math.max(t.v - vv, vv - (t.v + t.h), 0);
+        var d = Math.sqrt(du * du + dv * dv);
+        if (d < 0.26) a *= 0.70 + 0.30 * (d / 0.26);
+      });
+      return a;
     };
     stenaSOtvory(sit, mat, rohBL, dirU, v3(0, 1, 0), w, vys, otvory || [],
-      { tileU: o.tileU || 1.15, tileV: o.tileV || 1.15, aoFn: ao });
+      { tileU: o.tileU || 1.00, tileV: o.tileV || 1.00, aoFn: ao, deleni: 0.30 });
     return { rohBL: rohBL, dirU: dirU, w: w, vys: vys };
   }
 
@@ -693,16 +732,62 @@ function Scena(canvas, opt) {
     }
   }
 
-  function podlahaIn(sit, x0, x1, z0, z1) {
-    var y = PODLAHA_Y;
-    sit.quad('podlaha', v3(x0, y, z1), v3(x1, y, z1), v3(x1, y, z0), v3(x0, y, z0),
-      { tileU: 0.760, tileV: 2.570, ao: [1, 1, 1, 1] });
+  function plocha(sit, mat, x0, x1, z0, z1, y, dolu, tileU, tileV, aoFn, krok) {
+    krok = krok || 0.34;
+    var nx = Math.max(1, Math.round((x1 - x0) / krok));
+    var nz = Math.max(1, Math.round((z1 - z0) / krok));
+    var f = aoFn || function () { return 1; };
+    for (var i = 0; i < nx; i++) {
+      var a0 = x0 + (x1 - x0) * i / nx, a1 = x0 + (x1 - x0) * (i + 1) / nx;
+      for (var j = 0; j < nz; j++) {
+        var b0 = z0 + (z1 - z0) * j / nz, b1 = z0 + (z1 - z0) * (j + 1) / nz;
+        var ou = (a0 - x0) / tileU;
+        if (dolu) {
+          sit.quad(mat, v3(a0, y, b1), v3(a1, y, b1), v3(a1, y, b0), v3(a0, y, b0),
+            { tileU: tileU, tileV: tileV, offU: ou, offV: (z1 - b1) / tileV,
+              ao: [f(a0, b1), f(a1, b1), f(a1, b0), f(a0, b0)] });
+        } else {
+          sit.quad(mat, v3(a0, y, b0), v3(a1, y, b0), v3(a1, y, b1), v3(a0, y, b1),
+            { tileU: tileU, tileV: tileV, offU: ou, offV: (b0 - z0) / tileV,
+              ao: [f(a0, b0), f(a1, b0), f(a1, b1), f(a0, b1)] });
+        }
+      }
+    }
+  }
+
+  function aoRoviny(rect, prekazky, kraj, silaKraje, dosah, silaPrekazky) {
+    return function (x, z) {
+      var d = Math.min(x - rect[0], rect[1] - x, z - rect[2], rect[3] - z);
+      var a = Math.min(1, silaKraje + Math.min(Math.max(d, 0), kraj) / kraj * (1 - silaKraje));
+      if (prekazky) {
+        for (var i = 0; i < prekazky.length; i++) {
+          var p = prekazky[i];
+          var dx = Math.max(p[0] - x, x - p[1], 0), dz = Math.max(p[2] - z, z - p[3], 0);
+          var dd = Math.sqrt(dx * dx + dz * dz);
+          if (dd < dosah) a *= silaPrekazky + (1 - silaPrekazky) * (dd / dosah);
+        }
+      }
+      return a;
+    };
+  }
+
+  function podlahaIn(sit, x0, x1, z0, z1, napric, aoFn) {
+    plocha(sit, 'podlaha', x0, x1, z0, z1, PODLAHA_Y, true,
+      napric ? 2.570 : 1.140, napric ? 1.140 : 2.570, aoFn);
+  }
+
+  function sparaUPodlahy(sit, x0, x1, z0, z1) {
+    var y0 = PODLAHA_Y, y1 = PODLAHA_Y + 0.015, t = 0.010;
+    sit.kvadr('ocelIn', x0, x1, y0, y1, z0, z0 + t, { tileU: 1.0, tileV: 0.1 });
+    sit.kvadr('ocelIn', x0, x1, y0, y1, z1 - t, z1, { tileU: 1.0, tileV: 0.1 });
+    sit.kvadr('ocelIn', x0, x0 + t, y0, y1, z0, z1, { tileU: 1.0, tileV: 0.1 });
+    sit.kvadr('ocelIn', x1 - t, x1, y0, y1, z0, z1, { tileU: 1.0, tileV: 0.1 });
   }
 
   function stropIn(sit, mat, x0, x1, z0, z1, tile) {
-    var y = STROP_Y;
-    sit.quad(mat, v3(x0, y, z0), v3(x1, y, z0), v3(x1, y, z1), v3(x0, y, z1),
-      { tileU: tile || 1.0, tileV: tile || 1.0, ao: [0.88, 0.88, 0.88, 0.88] });
+    var t = tile || 1.0;
+    plocha(sit, mat, x0, x1, z0, z1, STROP_Y, false, t, t,
+      aoRoviny([x0, x1, z0, z1], null, 0.60, 0.58), 0.40);
   }
 
   function pasStropni(sit, x0, x1, z0, z1) {
@@ -722,43 +807,64 @@ function Scena(canvas, opt) {
       box('ocelIn', xa, xb, yP, yP + h, z1 - r, z1);
       box('ocelIn', xa, xb, yP, yP + 0.075, z0, z1);
       box('ocelIn', xa, xb, yP + h - r, yP + h, z0, z1);
-      box('skloMat', xa + 0.008, xb - 0.008, yP + 0.075, yP + h - r, z0 + r, z1 - r);
+      box('sklo', xa + 0.008, xb - 0.008, yP + 0.075, yP + h - r, z0 + r, z1 - r);
       box('ocelIn', xa + 0.005, xb - 0.005, yP + 0.075, yP + h - r, (z0 + z1) / 2 - 0.013, (z0 + z1) / 2 + 0.013);
       box('ocelIn', xa + 0.005, xb - 0.005, yP + 0.700, yP + 0.726, z0 + r, z1 - r);
     } else {
       box('kridlo', xa, xb, yP, yP + h, z0, z1);
     }
-    var ky = yP + 1.045;
-    var kx = smer > 0 ? xb + 0.008 : xa - 0.030;
-    box('ocelIn', kx, kx + 0.022, ky - 0.017, ky + 0.017, z0 + 0.055, z0 + 0.155);
+    var ky = yP + 0.985;
+    var kz = z0 + 0.085;
+    [[xa, -1], [xb, 1]].forEach(function (o) {
+      var xf = o[0], sg = o[1];
+      trubka(sit, 'ocelIn', v3(xf, ky, kz), v3(xf + sg * 0.013, ky, kz), 0.025, 12);
+      trubka(sit, 'ocelIn', v3(xf + sg * 0.011, ky, kz), v3(xf + sg * 0.034, ky, kz), 0.010, 10);
+      trubka(sit, 'ocelIn', v3(xf + sg * 0.032, ky, kz), v3(xf + sg * 0.032, ky - 0.008, kz + 0.100), 0.010, 10);
+    });
   }
 
-  function kridloIn(sit, rovina, hodnota, u0, u1, sklo) {
-    var yP = PODLAHA_Y, h = DVERE_IN_H, t = 0.022;
-    var zar = 0.030;
-    var os = (u0 + u1) / 2;
-    function box(mat, a0, a1, y0, y1, d0, d1) {
-      if (rovina === 'x') sit.kvadr(mat, hodnota + d0, hodnota + d1, y0, y1, a0, a1, { tileU: 0.5, tileV: 0.6 });
-      else sit.kvadr(mat, a0, a1, y0, y1, hodnota + d0, hodnota + d1, { tileU: 0.5, tileV: 0.6 });
+  // Zarubeň nesmí procházet skrz líce stěny. Když je kvádr rámu širší než
+  // tloušťka stěny, obě plochy se v ostrém úhlu perou a na rámu jsou vidět
+  // přerušované čáry. Ostění proto sedí MEZI líci a obložka je předsazená.
+  function zarubenIn(sit, rovina, licA, licB, u0, u1) {
+    var yP = PODLAHA_Y, h = DVERE_IN_H, zar = 0.030, e = 0.002, lip = 0.008;
+    var da = Math.min(licA, licB) + e, db = Math.max(licA, licB) - e;
+    function box(a0, a1, y0, y1, d0, d1) {
+      if (rovina === 'x') sit.kvadr('kridlo', d0, d1, y0, y1, a0, a1, { tileU: 0.5, tileV: 0.6 });
+      else sit.kvadr('kridlo', a0, a1, y0, y1, d0, d1, { tileU: 0.5, tileV: 0.6 });
     }
-    box('ocelIn', u0 - zar, u0, yP, yP + h + zar, -0.045, 0.045);
-    box('ocelIn', u1, u1 + zar, yP, yP + h + zar, -0.045, 0.045);
-    box('ocelIn', u0 - zar, u1 + zar, yP + h, yP + h + zar, -0.045, 0.045);
-    if (sklo) {
-      var r = 0.055;
-      box('ocelIn', u0, u0 + r, yP, yP + h, -t, t);
-      box('ocelIn', u1 - r, u1, yP, yP + h, -t, t);
-      box('ocelIn', u0 + r, u1 - r, yP, yP + 0.075, -t, t);
-      box('ocelIn', u0 + r, u1 - r, yP + h - r, yP + h, -t, t);
-      box('skloMat', u0 + r, u1 - r, yP + 0.075, yP + h - r, -0.005, 0.005);
-      box('ocelIn', os - 0.013, os + 0.013, yP + 0.075, yP + h - r, -0.009, 0.009);
-      box('ocelIn', u0 + r, u1 - r, yP + 0.700, yP + 0.726, -0.009, 0.009);
-    } else {
-      box('kridlo', u0, u1, yP, yP + h, -t, t);
-    }
-    var ky = yP + 1.045;
-    box('ocelIn', os + (u1 - u0) / 2 - 0.155, os + (u1 - u0) / 2 - 0.055, ky - 0.017, ky + 0.017, -t - 0.030, -t - 0.008);
-    box('ocelIn', os + (u1 - u0) / 2 - 0.100, os + (u1 - u0) / 2 - 0.055, ky - 0.032, ky + 0.032, -t - 0.012, -t);
+    box(u0 - zar, u0, yP, yP + h + zar, da, db);
+    box(u1, u1 + zar, yP, yP + h + zar, da, db);
+    box(u0 - zar, u1 + zar, yP + h, yP + h + zar, da, db);
+    [[licA, licA < licB ? -1 : 1], [licB, licB < licA ? -1 : 1]].forEach(function (o) {
+      var p0 = o[0], p1 = o[0] + o[1] * lip;
+      var q0 = Math.min(p0, p1), q1 = Math.max(p0, p1);
+      box(u0 - zar, u0, yP, yP + h + zar, q0, q1);
+      box(u1, u1 + zar, yP, yP + h + zar, q0, q1);
+      box(u0 - zar, u1 + zar, yP + h, yP + h + zar, q0, q1);
+    });
+  }
+
+  function kridloOtevreneX(sit, hodnota, zPant, sirka, smerZ, smerX) {
+    var yP = PODLAHA_Y, h = DVERE_IN_H, t = 0.021;
+    var d = 0.004;
+    var za = smerZ > 0 ? zPant + d : zPant - t - d;
+    var zb = smerZ > 0 ? zPant + t + d : zPant - d;
+    var xa = smerX > 0 ? hodnota + d : hodnota - sirka;
+    var xb = smerX > 0 ? hodnota + sirka : hodnota - d;
+    sit.kvadr('kridlo', xa, xb, yP, yP + h, za, zb, { tileU: 0.55, tileV: 0.75 });
+    var kx = smerX > 0 ? xb - 0.062 : xa + 0.062;
+    var ky = yP + 0.985;
+    [[za, -1], [zb, 1]].forEach(function (o) {
+      var zf = o[0], sg = o[1];
+      trubka(sit, 'ocelIn', v3(kx, ky, zf), v3(kx, ky, zf + sg * 0.013), 0.025, 12);
+      trubka(sit, 'ocelIn', v3(kx, ky, zf + sg * 0.011), v3(kx, ky, zf + sg * 0.034), 0.010, 10);
+      trubka(sit, 'ocelIn', v3(kx, ky, zf + sg * 0.032), v3(kx + smerX * 0.100, ky - 0.008, zf + sg * 0.032), 0.010, 10);
+    });
+    var px = smerX > 0 ? xa : xb;
+    [yP + 0.32, yP + 1.72].forEach(function (y0) {
+      trubka(sit, 'ocelIn', v3(px, y0, za - 0.004), v3(px, y0, zb + 0.004), 0.013, 8);
+    });
   }
 
   function svitidloIn(sit, x, z, r) {
@@ -805,14 +911,32 @@ function Scena(canvas, opt) {
     var obyvakZ0 = IN.zZ, obyvakZ1 = IN.zF;
     var lozZ0 = IN.zZ, lozZ1 = IN.zF;
 
-    podlahaIn(sit, IN.xKoupB, IN.xP, obyvakZ0, obyvakZ1);
-    podlahaIn(sit, IN.xKoupB, IN.xSm1, IN.zZs, IN.zZ);
-    podlahaIn(sit, IN.xKoupB, IN.xSm1, IN.zF, IN.zFs);
-    podlahaIn(sit, IN.xL, IN.xLozB, lozZ0, lozZ1);
-    podlahaIn(sit, IN.xSm0, IN.xLozB, IN.zZs, IN.zZ);
-    podlahaIn(sit, IN.xSm0, IN.xLozB, IN.zF, IN.zFs);
-    podlahaIn(sit, IN.xLozA, IN.xKoupA, IN.zKoupF, IN.zFs);
-    podlahaIn(sit, IN.xLozA, IN.xKoupA, IN.zZs, IN.zKoupF);
+    var prekazky = [];
+    if (S.kuchyn) {
+      prekazky.push([IN.linkaA.x0, IN.linkaA.x1, IN.linkaA.z0, IN.linkaA.z1]);
+      prekazky.push([IN.linkaB.x0, IN.linkaB.x1, IN.linkaB.z0, IN.linkaB.z1]);
+    }
+    var prekazkyK = [];
+    if (S.koupelna) {
+      prekazkyK.push([IN.xLozA, IN.xKoupA, IN.zZs, IN.zZs + 0.650]);
+      prekazkyK.push([IN.xKoupA - 0.720, IN.xKoupA, -2.197, -1.680]);
+      prekazkyK.push([IN.xKoupA - 0.500, IN.xKoupA, -1.389, -0.589]);
+    }
+    var aoObyvak = aoRoviny([IN.xKoupB, IN.xP, obyvakZ0, obyvakZ1], prekazky, 0.55, 0.44, 0.40, 0.44);
+    var aoLozZ = aoRoviny([IN.xL, IN.xLozB, lozZ0, IN.zLozP0], null, 0.55, 0.44);
+    var aoLozF = aoRoviny([IN.xL, IN.xLozB, IN.zLozP1, lozZ1], null, 0.55, 0.44);
+    var aoKoup = aoRoviny([IN.xLozA, IN.xKoupA, IN.zZs, IN.zKoupF], prekazkyK, 0.42, 0.44, 0.34, 0.46);
+    var aoChodba = aoRoviny([IN.xLozA, IN.xKoupA, IN.zKoupF, IN.zFs], null, 0.45, 0.46);
+
+    podlahaIn(sit, IN.xKoupB, IN.xP, obyvakZ0, obyvakZ1, false, aoObyvak);
+    podlahaIn(sit, IN.xKoupB, IN.xSm1, IN.zZs, IN.zZ, false, aoObyvak);
+    podlahaIn(sit, IN.xKoupB, IN.xSm1, IN.zF, IN.zFs, false, aoObyvak);
+    podlahaIn(sit, IN.xL, IN.xLozB, lozZ0, IN.zLozP0, true, aoLozZ);
+    podlahaIn(sit, IN.xL, IN.xLozB, IN.zLozP1, lozZ1, true, aoLozF);
+    podlahaIn(sit, IN.xSm0, IN.xLozB, IN.zZs, IN.zZ, true, aoLozZ);
+    podlahaIn(sit, IN.xSm0, IN.xLozB, IN.zF, IN.zFs, true, aoLozF);
+    podlahaIn(sit, IN.xLozA, IN.xKoupA, IN.zKoupF, IN.zFs, false, aoChodba);
+    podlahaIn(sit, IN.xLozA, IN.xKoupA, IN.zZs, IN.zKoupF, false, aoKoup);
 
     stropIn(sit, 'stropIn', IN.xKoupB, IN.xP, obyvakZ0, obyvakZ1, 1.4);
     stropIn(sit, 'stropIn', IN.xKoupB, IN.xSm1, IN.zZs, IN.zZ, 1.4);
@@ -821,8 +945,9 @@ function Scena(canvas, opt) {
     stropIn(sit, 'stropIn', IN.xL, IN.xLozB, IN.zLozP1, lozZ1, 1.4);
     stropIn(sit, 'stropIn', IN.xSm0, IN.xLozB, IN.zZs, IN.zZ, 1.4);
     stropIn(sit, 'stropIn', IN.xSm0, IN.xLozB, IN.zF, IN.zFs, 1.4);
-    stropIn(sit, 'lamely', IN.xLozA, IN.xKoupA, IN.zKoupF, IN.zFs, 0.472);
-    stropIn(sit, 'lamely', IN.xLozA, IN.xKoupA, IN.zZs, IN.zKoupF, 0.472);
+    // strop stredniho modulu jde az na vnejsi lice pricek, jinak zustane
+    // nad pricou nezakryty prouzek a je jim videt fasada
+    stropIn(sit, 'lamely', IN.xLozB, IN.xKoupB, IN.zZs, IN.zFs, 0.472);
 
     var stO1 = stenaVnitrni(sit, 'stenaIn', 'x-', IN.xP, IN.zZ, IN.zF,
       [otStred('x-', IN.zZ, IN.zF, 1.208, OKNO_W, oknoV, OKNO_H),
@@ -893,26 +1018,39 @@ function Scena(canvas, opt) {
     stenaVnitrni(sit, 'stenaIn', 'x-', IN.xLozB, IN.zZs, IN.zFs,
       [otStred('x-', IN.zZs, IN.zFs, (IN.d2f[0] + IN.d2f[1]) / 2, IN.d2f[1] - IN.d2f[0], 0.0, DVERE_IN_H),
         otStred('x-', IN.zZs, IN.zFs, (IN.d2z[0] + IN.d2z[1]) / 2, IN.d2z[1] - IN.d2z[0], 0.0, DVERE_IN_H)]);
-    stenaVnitrni(sit, 'stenaIn', 'x+', IN.xLozA, IN.zKoupF, IN.zFs, []);
+    stenaVnitrni(sit, 'stenaIn', 'x+', IN.xLozA, IN.zKoupF, IN.zFs,
+      [otStred('x+', IN.zKoupF, IN.zFs, (IN.d2f[0] + IN.d2f[1]) / 2, IN.d2f[1] - IN.d2f[0], 0.0, DVERE_IN_H),
+        otStred('x+', IN.zKoupF, IN.zFs, (IN.d2z[0] + IN.d2z[1]) / 2, IN.d2z[1] - IN.d2z[0], 0.0, DVERE_IN_H)]);
 
     stenaVnitrni(sit, 'stenaIn', 'z+', IN.zLozP1, IN.xL, IN.xLozB, []);
     stenaVnitrni(sit, 'stenaIn', 'z-', IN.zLozP0, IN.xL, IN.xLozB, []);
 
-    var zar = 0.030;
-    sit.kvadr('ocelIn', IN.d3[0] - zar, IN.d3[0], PODLAHA_Y, PODLAHA_Y + DVERE_IN_H + zar,
-      IN.zKoupF - 0.045, IN.zKoupF + 0.045, { tileU: 0.5, tileV: 0.6 });
-    sit.kvadr('ocelIn', IN.d3[1], IN.d3[1] + zar, PODLAHA_Y, PODLAHA_Y + DVERE_IN_H + zar,
-      IN.zKoupF - 0.045, IN.zKoupF + 0.045, { tileU: 0.5, tileV: 0.6 });
-    sit.kvadr('ocelIn', IN.d3[0] - zar, IN.d3[1] + zar, PODLAHA_Y + DVERE_IN_H, PODLAHA_Y + DVERE_IN_H + zar,
-      IN.zKoupF - 0.045, IN.zKoupF + 0.045, { tileU: 0.5, tileV: 0.6 });
+    var zar = 0.030, pt3 = PRICKA_TL / 2, e3 = 0.002, lip3 = 0.008;
+    var yD0 = PODLAHA_Y, yD1 = PODLAHA_Y + DVERE_IN_H + zar;
+    [[IN.zKoupF - pt3 + e3, IN.zKoupF + pt3 - e3],
+      [IN.zKoupF - pt3 - lip3, IN.zKoupF - pt3],
+      [IN.zKoupF + pt3, IN.zKoupF + pt3 + lip3]].forEach(function (r) {
+      sit.kvadr('ocelIn', IN.d3[0] - zar, IN.d3[0], yD0, yD1, r[0], r[1], { tileU: 0.5, tileV: 0.6 });
+      sit.kvadr('ocelIn', IN.d3[1], IN.d3[1] + zar, yD0, yD1, r[0], r[1], { tileU: 0.5, tileV: 0.6 });
+      sit.kvadr('ocelIn', IN.d3[0] - zar, IN.d3[1] + zar, PODLAHA_Y + DVERE_IN_H, yD1, r[0], r[1], { tileU: 0.5, tileV: 0.6 });
+    });
     kridloOtevrene(sit, IN.zKoupF - 0.048, IN.d3[0], IN.d3[1] - IN.d3[0], true, 1);
-    kridloIn(sit, 'x', IN.xLozB, IN.d2z[0], IN.d2z[1], false);
-    kridloIn(sit, 'x', IN.xLozB, IN.d2f[0], IN.d2f[1], false);
+    // D2 se podle vykresu otviraji dovnitr loznice, panty u pricky mezi nimi
+    zarubenIn(sit, 'x', IN.xLozB, IN.xLozA, IN.d2z[0], IN.d2z[1]);
+    zarubenIn(sit, 'x', IN.xLozB, IN.xLozA, IN.d2f[0], IN.d2f[1]);
+    kridloOtevreneX(sit, IN.xLozB - 0.048, IN.d2z[1], IN.d2z[1] - IN.d2z[0], -1, -1);
+    kridloOtevreneX(sit, IN.xLozB - 0.048, IN.d2f[0], IN.d2f[1] - IN.d2f[0], 1, -1);
 
+    // cerny pas je jen v kridlovych modulech; v chodbe a koupelne panel dobiha
+    // primo k lamelovemu podhledu (specifikace, oddil 3)
     var pasy = [
-      [IN.xKoupB, IN.xP, IN.zZ, IN.zF], [IN.xL, IN.xLozB, IN.zZ, IN.zF],
-      [IN.xLozA, IN.xKoupA, IN.zZs, IN.zFs]
+      [IN.xKoupB, IN.xP, IN.zZ, IN.zF], [IN.xL, IN.xLozB, IN.zZ, IN.zF]
     ];
+    [[IN.xKoupB, IN.xP, IN.zZ, IN.zF], [IN.xL, IN.xLozB, IN.zZ, IN.zF],
+      [IN.xLozA, IN.xKoupA, IN.zZs, IN.zFs]].forEach(function (r) {
+      sparaUPodlahy(sit, r[0], r[1], r[2], r[3]);
+    });
+
     pasy.forEach(function (r) {
       pasStropni(sit, r[0], r[1], r[2], r[2] + 0.030);
       pasStropni(sit, r[0], r[1], r[3] - 0.030, r[3]);
@@ -922,13 +1060,20 @@ function Scena(canvas, opt) {
 
     [[IN.xP, IN.zZ], [IN.xP, IN.zF], [IN.xKoupB, IN.zZ], [IN.xKoupB, IN.zF],
       [IN.xL, IN.zZ], [IN.xL, IN.zF], [IN.xLozB, IN.zZ], [IN.xLozB, IN.zF]].forEach(function (c) {
+      // dve ramena L se nesmi prekryvat, jinak se v rohu prokresluji
       var sx = c[0] > 0 ? -1 : 1, sz = c[1] > 0 ? -1 : 1;
-      sit.kvadr('ocelIn', Math.min(c[0], c[0] + sx * SLOUP_W), Math.max(c[0], c[0] + sx * SLOUP_W),
-        yP, yS - PAS_H, Math.min(c[1], c[1] + sz * 0.055), Math.max(c[1], c[1] + sz * 0.055),
-        { tileU: 0.3, tileV: 1.0 });
-      sit.kvadr('ocelIn', Math.min(c[0], c[0] + sx * 0.055), Math.max(c[0], c[0] + sx * 0.055),
-        yP, yS - PAS_H, Math.min(c[1], c[1] + sz * SLOUP_W), Math.max(c[1], c[1] + sz * SLOUP_W),
-        { tileU: 0.3, tileV: 1.0 });
+      var t = 0.055;
+      var x0 = c[0], x1 = c[0] + sx * SLOUP_W;
+      var z0 = c[1], z1 = c[1] + sz * t;
+      sit.kvadr('ocelIn', Math.min(x0, x1), Math.max(x0, x1), yP, yS - PAS_H,
+        Math.min(z0, z1), Math.max(z0, z1), { tileU: 0.3, tileV: 1.0 });
+      var bx0 = c[0], bx1 = c[0] + sx * t;
+      var bz0 = c[1] + sz * t, bz1 = c[1] + sz * SLOUP_W;
+      if (Math.abs(bz1 - bz0) > 0.004) {
+        sit.kvadr('ocelIn', Math.min(bx0, bx1), Math.max(bx0, bx1), yP, yS - PAS_H,
+          Math.min(bz0, bz1), Math.max(bz0, bz1),
+          { tileU: 0.3, tileV: 1.0, bez: sz > 0 ? 'z-' : 'z+' });
+      }
     });
 
     svitidloIn(sit, 2.10, -1.35, 0.175);
@@ -952,22 +1097,52 @@ function Scena(canvas, opt) {
     if (S.koupelna) koupelnaIn(sit);
   }
 
+  function trubka(sit, mat, a, b, r, N) {
+    N = N || 10;
+    var d = jednotka(odecti(b, a));
+    var pom = Math.abs(d[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0];
+    var u = jednotka(krat(pom, d));
+    var v = krat(d, u);
+    function bod(p, ang) {
+      var c = Math.cos(ang), si = Math.sin(ang);
+      return v3(p[0] + (u[0] * c + v[0] * si) * r,
+        p[1] + (u[1] * c + v[1] * si) * r,
+        p[2] + (u[2] * c + v[2] * si) * r);
+    }
+    for (var i = 0; i < N; i++) {
+      var a0 = i / N * Math.PI * 2, a1 = (i + 1) / N * Math.PI * 2;
+      sit.quad(mat, bod(a, a0), bod(a, a1), bod(b, a1), bod(b, a0),
+        { tileU: 0.25, tileV: 0.25, ao: [0.86, 0.86, 0.98, 0.98] });
+    }
+  }
+
+  function oblouk(sit, mat, stred, osaU, osaV, R, r, u0, u1, kroku, N) {
+    kroku = kroku || 8;
+    function bod(t) {
+      var a = u0 + (u1 - u0) * t, c = Math.cos(a), si = Math.sin(a);
+      return v3(stred[0] + osaU[0] * c * R + osaV[0] * si * R,
+        stred[1] + osaU[1] * c * R + osaV[1] * si * R,
+        stred[2] + osaU[2] * c * R + osaV[2] * si * R);
+    }
+    for (var i = 0; i < kroku; i++) trubka(sit, mat, bod(i / kroku), bod((i + 1) / kroku), r, N || 8);
+  }
+
   function madloIn(sit, osa, x, y, z, delka) {
-    var r = 0.008, v = 0.030;
+    var r = 0.007, v = 0.030, N = 8;
     if (osa === 'y') {
-      sit.kvadr('ocelIn', x - r, x + r, y - delka / 2, y + delka / 2, z - v, z - v + 2 * r, { tileU: 0.2, tileV: 0.2 });
-      sit.kvadr('ocelIn', x - r, x + r, y - delka / 2 - r, y - delka / 2 + r, z - v, z, { tileU: 0.2, tileV: 0.2 });
-      sit.kvadr('ocelIn', x - r, x + r, y + delka / 2 - r, y + delka / 2 + r, z - v, z, { tileU: 0.2, tileV: 0.2 });
+      trubka(sit, 'ocelIn', v3(x, y - delka / 2, z - v), v3(x, y + delka / 2, z - v), r, N);
+      trubka(sit, 'ocelIn', v3(x, y - delka / 2, z - v), v3(x, y - delka / 2 + 0.012, z), r, N);
+      trubka(sit, 'ocelIn', v3(x, y + delka / 2, z - v), v3(x, y + delka / 2 - 0.012, z), r, N);
     } else {
-      sit.kvadr('ocelIn', x - delka / 2, x + delka / 2, y - r, y + r, z - v, z - v + 2 * r, { tileU: 0.2, tileV: 0.2 });
-      sit.kvadr('ocelIn', x - delka / 2 - r, x - delka / 2 + r, y - r, y + r, z - v, z, { tileU: 0.2, tileV: 0.2 });
-      sit.kvadr('ocelIn', x + delka / 2 - r, x + delka / 2 + r, y - r, y + r, z - v, z, { tileU: 0.2, tileV: 0.2 });
+      trubka(sit, 'ocelIn', v3(x - delka / 2, y, z - v), v3(x + delka / 2, y, z - v), r, N);
+      trubka(sit, 'ocelIn', v3(x - delka / 2, y, z - v), v3(x - delka / 2 + 0.012, y, z), r, N);
+      trubka(sit, 'ocelIn', v3(x + delka / 2, y, z - v), v3(x + delka / 2 - 0.012, y, z), r, N);
     }
   }
 
   function kuchynIn(sit) {
     var yP = PODLAHA_Y;
-    var ySokl = yP + 0.140, yKorpus = yP + 0.862, yDeska = yP + 0.900;
+    var ySokl = yP + 0.125, yKorpus = yP + 0.710, yDeska = yP + 0.750;
     var A = IN.linkaA, B = IN.linkaB;
 
     sit.kvadr('linka', A.x0, A.x1, yP, ySokl, A.z0, A.z1 - 0.050, { tileU: 0.6, tileV: 0.2 });
@@ -980,12 +1155,12 @@ function Scena(canvas, opt) {
     sit.kvadr('deska', A.x0, A.x1, yDeska, yDeska + 0.058, A.z0, A.z0 + 0.020, { tileU: 0.4, tileV: 0.2 });
     sit.kvadr('deska', B.x0, B.x0 + 0.020, yDeska, yDeska + 0.058, B.z0, B.z1, { tileU: 0.4, tileV: 0.2 });
 
-    var celaA = [0.393, 0.386, 0.555, 0.333];
+    var celaA = [0.397, 0.397, 0.597, 0.297];
     var px = A.x1;
     celaA.forEach(function (w, i) {
       var x1 = px, x0 = px - w;
       if (i === 2) {
-        var vy = [0.230, 0.230, 0.260], yy = yKorpus - 0.004;
+        var vy = [0.240, 0.240, 0.240], yy = yKorpus - 0.004;
         vy.forEach(function (hv) {
           sit.kvadr('linka', x0 + 0.004, x1 - 0.004, yy - hv + 0.004, yy, A.z1, A.z1 + 0.018, { tileU: 0.5, tileV: 0.5 });
           madloIn(sit, 'x', (x0 + x1) / 2, yy - hv / 2, A.z1 + 0.018, 0.190);
@@ -993,7 +1168,7 @@ function Scena(canvas, opt) {
         });
       } else {
         sit.kvadr('linka', x0 + 0.004, x1 - 0.004, ySokl + 0.006, yKorpus - 0.004, A.z1, A.z1 + 0.018, { tileU: 0.5, tileV: 0.5 });
-        madloIn(sit, 'y', i === 1 ? x0 + 0.052 : x1 - 0.052, yP + 0.700, A.z1 + 0.018, 0.190);
+        madloIn(sit, 'y', i === 1 ? x0 + 0.052 : x1 - 0.052, yP + 0.560, A.z1 + 0.018, 0.190);
       }
       px -= w;
     });
@@ -1001,62 +1176,94 @@ function Scena(canvas, opt) {
     [[B.z0 + 0.600, B.z0 + 0.900], [B.z0 + 0.900, B.z0 + 1.200]].forEach(function (r, i) {
       sit.kvadr('linka', B.x0 - 0.018, B.x0, ySokl + 0.006, yKorpus - 0.004, r[0] + 0.004, r[1] - 0.004, { tileU: 0.5, tileV: 0.5 });
       var zc = i === 0 ? r[1] - 0.052 : r[0] + 0.052;
-      sit.kvadr('ocelIn', B.x0 - 0.048, B.x0 - 0.032, yP + 0.700 - 0.095, yP + 0.700 + 0.095, zc - 0.008, zc + 0.008, { tileU: 0.2, tileV: 0.2 });
+      sit.kvadr('ocelIn', B.x0 - 0.048, B.x0 - 0.032, yP + 0.560 - 0.095, yP + 0.560 + 0.095, zc - 0.008, zc + 0.008, { tileU: 0.2, tileV: 0.2 });
     });
     sit.kvadr('linka', B.x0 - 0.018, B.x1, ySokl, yKorpus, B.z1 - 0.018, B.z1, { tileU: 0.5, tileV: 0.5 });
 
     var d = IN.drez;
     sit.kvadr('nerez', d.x0, d.x1, yDeska - 0.200, yDeska - 0.006, d.z0, d.z1, { tileU: 0.4, tileV: 0.4, bez: 'y+' });
     sit.kvadr('nerez', d.x0 - 0.016, d.x1 + 0.016, yDeska - 0.008, yDeska + 0.004, d.z0 - 0.016, d.z1 + 0.016, { tileU: 0.4, tileV: 0.4 });
-    var bx = (d.x0 + d.x1) / 2, bz = d.z0 - 0.075;
-    sit.kvadr('chrom', bx - 0.026, bx + 0.026, yDeska, yDeska + 0.020, bz - 0.026, bz + 0.026, { tileU: 0.2, tileV: 0.2 });
-    sit.kvadr('chrom', bx - 0.018, bx + 0.018, yDeska + 0.020, yDeska + 0.300, bz - 0.018, bz + 0.018, { tileU: 0.2, tileV: 0.2 });
-    sit.kvadr('chrom', bx - 0.018, bx + 0.018, yDeska + 0.282, yDeska + 0.318, bz - 0.018, bz + 0.150, { tileU: 0.2, tileV: 0.2 });
-    sit.kvadr('chrom', bx - 0.014, bx + 0.014, yDeska + 0.230, yDeska + 0.290, bz + 0.120, bz + 0.150, { tileU: 0.2, tileV: 0.2 });
+    var bx = (d.x0 + d.x1) / 2, bz = d.z0 - 0.072;
+    trubka(sit, 'chrom', v3(bx, yDeska - 0.004, bz), v3(bx, yDeska + 0.022, bz), 0.026, 14);
+    trubka(sit, 'chrom', v3(bx, yDeska + 0.020, bz), v3(bx, yDeska + 0.245, bz), 0.017, 12);
+    oblouk(sit, 'chrom', v3(bx, yDeska + 0.245, bz + 0.085), v3(0, 0, -1), v3(0, 1, 0),
+      0.085, 0.016, 0, Math.PI * 0.92, 8, 8);
+    trubka(sit, 'chrom', v3(bx, yDeska + 0.240, bz + 0.168), v3(bx, yDeska + 0.196, bz + 0.170), 0.014, 10);
+    trubka(sit, 'chrom', v3(bx - 0.016, yDeska + 0.150, bz - 0.006), v3(bx - 0.092, yDeska + 0.176, bz - 0.010), 0.010, 8);
   }
 
   function koupelnaIn(sit) {
     var yP = PODLAHA_Y, yS = STROP_Y;
     var x0 = IN.xLozA, x1 = IN.xKoupA, zZ = IN.zZs, zF = IN.zKoupF;
-    var spZ = zZ + 0.600;
+    var spZ = zZ + 0.650;
 
-    sit.kvadr('vanicka', x0, x1, yP, yP + 0.042, zZ, spZ, { tileU: 0.5, tileV: 0.3 });
-    sit.kvadr('chrom', x0 + 0.090, x1 - 0.090, yP + 0.038, yP + 0.044, zZ + 0.055, zZ + 0.095, { tileU: 0.3, tileV: 0.1 });
+    sit.kvadr('vanicka', x0, x1, yP, yP + 0.060, zZ, spZ, { tileU: 0.5, tileV: 0.3 });
+    sit.kvadr('nerez', x0 + 0.055, x1 - 0.055, yP + 0.056, yP + 0.062, zZ + 0.040, zZ + 0.100, { tileU: 0.3, tileV: 0.1 });
+    sit.kvadr('nerez', x0, x1, yP + 0.052, yP + 0.066, spZ - 0.040, spZ, { tileU: 0.4, tileV: 0.1 });
 
     sit.kvadr('ocelIn', x0, x1, yS - 0.052, yS, spZ - 0.026, spZ + 0.026, { tileU: 0.6, tileV: 0.2 });
-    sit.kvadr('ocelIn', x0, x0 + 0.030, yP + 0.042, yS - 0.052, spZ - 0.024, spZ + 0.024, { tileU: 0.2, tileV: 0.8 });
-    sit.kvadr('ocelIn', x1 - 0.030, x1, yP + 0.042, yS - 0.052, spZ - 0.024, spZ + 0.024, { tileU: 0.2, tileV: 0.8 });
-    sit.kvadr('skloMat', x0 + 0.030, (x0 + x1) / 2 + 0.020, yP + 0.042, yS - 0.052, spZ - 0.010, spZ - 0.002, { tileU: 0.5, tileV: 0.5 });
-    sit.kvadr('sklo', (x0 + x1) / 2 - 0.020, x1 - 0.030, yP + 0.042, yS - 0.052, spZ + 0.002, spZ + 0.010, { tileU: 0.5, tileV: 0.5 });
-    [(x0 + x1) / 2 - 0.055, (x0 + x1) / 2 + 0.055].forEach(function (xx) {
-      sit.kvadr('ocelIn', xx - 0.010, xx + 0.010, yP + 1.05, yP + 1.35, spZ - 0.026, spZ + 0.026, { tileU: 0.2, tileV: 0.3 });
+    sit.kvadr('ocelIn', x0, x0 + 0.030, yP + 0.060, yS - 0.052, spZ - 0.024, spZ + 0.024, { tileU: 0.2, tileV: 0.8 });
+    sit.kvadr('ocelIn', x1 - 0.030, x1, yP + 0.060, yS - 0.052, spZ - 0.024, spZ + 0.024, { tileU: 0.2, tileV: 0.8 });
+    // pravé křídlo je odsunuté za levé, jinak je sprcha schovaná za matným sklem
+    var stred = (x0 + x1) / 2;
+    sit.kvadr('skloMat', x0 + 0.030, stred + 0.015, yP + 0.060, yS - 0.052, spZ - 0.011, spZ - 0.003, { tileU: 0.5, tileV: 0.5 });
+    sit.kvadr('sklo', x0 + 0.046, stred, yP + 0.060, yS - 0.052, spZ + 0.003, spZ + 0.011, { tileU: 0.5, tileV: 0.5 });
+    [stred - 0.012, stred + 0.003].forEach(function (xx, i) {
+      trubka(sit, 'ocelIn', v3(xx, yP + 1.16, spZ + (i ? -0.024 : 0.024)),
+        v3(xx, yP + 1.44, spZ + (i ? -0.024 : 0.024)), 0.009, 8);
     });
 
-    var sx = x1 - 0.160;
-    sit.kvadr('chrom', sx - 0.016, sx + 0.016, yP + 0.90, yP + 2.06, zZ + 0.130, zZ + 0.162, { tileU: 0.2, tileV: 0.4 });
-    sit.kvadr('chrom', sx - 0.035, sx + 0.035, yP + 0.80, yP + 0.92, zZ + 0.120, zZ + 0.185, { tileU: 0.2, tileV: 0.2 });
-    sit.kvadr('chrom', sx - 0.016, sx + 0.016, yP + 2.04, yP + 2.06, zZ + 0.130, zZ + 0.330, { tileU: 0.2, tileV: 0.2 });
-    sit.kotouc('chrom', v3(sx, yP + 2.03, zZ + 0.300), v3(1, 0, 0), v3(0, 0, 1), 0.105, { ao: [1, 1, 1, 1] });
-    sit.kvadr('porcelan', sx - 0.115, sx + 0.115, yP + 1.24, yP + 1.27, zZ + 0.128, zZ + 0.215, { tileU: 0.2, tileV: 0.2 });
+    var sx = x1 - 0.175, sz = zZ + 0.148;
+    trubka(sit, 'chrom', v3(sx, yP + 0.95, sz), v3(sx, yP + 2.03, sz), 0.015, 12);
+    trubka(sit, 'chrom', v3(sx, yP + 0.86, sz - 0.020), v3(sx, yP + 0.86, sz + 0.055), 0.032, 12);
+    trubka(sit, 'chrom', v3(sx - 0.085, yP + 0.86, sz + 0.010), v3(sx + 0.085, yP + 0.86, sz + 0.010), 0.021, 10);
+    trubka(sit, 'chrom', v3(sx, yP + 2.02, sz), v3(sx, yP + 2.02, sz + 0.215), 0.013, 10);
+    trubka(sit, 'chrom', v3(sx, yP + 2.020, sz + 0.215), v3(sx, yP + 1.996, sz + 0.215), 0.106, 18);
+    sit.kotouc('chrom', v3(sx, yP + 2.020, sz + 0.215), v3(1, 0, 0), v3(0, 0, 1), 0.106, { ao: [1, 1, 1, 1] });
+    sit.kotouc('bily', v3(sx, yP + 1.994, sz + 0.215), v3(1, 0, 0), v3(0, 0, -1), 0.100, { ao: [1, 1, 1, 1] });
+    trubka(sit, 'chrom', v3(sx, yP + 1.50, sz + 0.030), v3(sx, yP + 1.50, sz + 0.062), 0.017, 10);
+    sit.kvadr('porcelan', sx - 0.115, sx + 0.115, yP + 1.24, yP + 1.268, sz - 0.018, sz + 0.070, { tileU: 0.2, tileV: 0.2 });
 
-    var wcZ0 = spZ + 0.130, wcZ1 = wcZ0 + 0.680;
-    sit.kvadr('porcelan', x1 - 0.375, x1 - 0.020, yP, yP + 0.400, wcZ0 + 0.190, wcZ1, { tileU: 0.4, tileV: 0.4 });
-    sit.kvadr('porcelan', x1 - 0.330, x1 - 0.065, yP + 0.360, yP + 0.415, wcZ0 + 0.150, wcZ1 - 0.030, { tileU: 0.3, tileV: 0.3 });
-    sit.kvadr('porcelan', x1 - 0.360, x1 - 0.030, yP, yP + 0.760, wcZ0, wcZ0 + 0.200, { tileU: 0.4, tileV: 0.4 });
+    var wcZ0 = -2.197, wcZ1 = -1.680;
+    sit.kvadr('porcelan', x1 - 0.720, x1 - 0.180, yP, yP + 0.400, wcZ0 + 0.070, wcZ1 - 0.070, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('porcelan', x1 - 0.660, x1 - 0.230, yP + 0.360, yP + 0.418, wcZ0 + 0.030, wcZ1 - 0.030, { tileU: 0.3, tileV: 0.3 });
+    sit.kvadr('porcelan', x1 - 0.230, x1 - 0.020, yP, yP + 0.760, wcZ0, wcZ1, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('chrom', x1 - 0.150, x1 - 0.090, yP + 0.762, yP + 0.772, (wcZ0 + wcZ1) / 2 - 0.045, (wcZ0 + wcZ1) / 2 + 0.045, { tileU: 0.2, tileV: 0.2 });
 
-    var umZ0 = wcZ1 + 0.140, umZ1 = umZ0 + 0.560;
-    sit.kvadr('linka', x1 - 0.430, x1, yP, yP + 0.100, umZ0 + 0.045, umZ1 - 0.045, { tileU: 0.4, tileV: 0.2 });
-    sit.kvadr('linka', x1 - 0.430, x1, yP + 0.100, yP + 0.780, umZ0, umZ1, { tileU: 0.6, tileV: 0.6 });
-    sit.kvadr('porcelan', x1 - 0.455, x1, yP + 0.780, yP + 0.845, umZ0 - 0.012, umZ1 + 0.012, { tileU: 0.4, tileV: 0.4 });
-    sit.kvadr('chrom', x1 - 0.115, x1 - 0.075, yP + 0.845, yP + 0.985, (umZ0 + umZ1) / 2 - 0.020, (umZ0 + umZ1) / 2 + 0.020, { tileU: 0.2, tileV: 0.2 });
-    sit.kvadr('chrom', x1 - 0.230, x1 - 0.085, yP + 0.960, yP + 0.990, (umZ0 + umZ1) / 2 - 0.014, (umZ0 + umZ1) / 2 + 0.014, { tileU: 0.2, tileV: 0.2 });
+    var umZ0 = -1.389, umZ1 = -0.589;
+    sit.kvadr('linka', x1 - 0.500, x1, yP, yP + 0.100, umZ0 + 0.045, umZ1 - 0.045, { tileU: 0.4, tileV: 0.2 });
+    sit.kvadr('linka', x1 - 0.500, x1, yP + 0.100, yP + 0.790, umZ0, umZ1, { tileU: 0.6, tileV: 0.6 });
+    var dx0 = x1 - 0.520, dx1 = x1, dy0 = yP + 0.790, dy1 = yP + 0.820;
+    var mx0 = x1 - 0.455, mx1 = x1 - 0.105, mz0 = umZ0 + 0.075, mz1 = umZ0 + 0.435;
+    // deska se čtyřmi pásy kolem otvoru, aby mísa byla skutečná prohlubeň
+    sit.kvadr('porcelan', dx0, mx0, dy0, dy1, umZ0 - 0.012, umZ1 + 0.012, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('porcelan', mx1, dx1, dy0, dy1, umZ0 - 0.012, umZ1 + 0.012, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('porcelan', mx0, mx1, dy0, dy1, umZ0 - 0.012, mz0, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('porcelan', mx0, mx1, dy0, dy1, mz1, umZ1 + 0.012, { tileU: 0.4, tileV: 0.4 });
+    var dnoY = dy0 - 0.105, v = 0.042;
+    [[mx0, mz0, mx1, mz0, 0, v], [mx1, mz1, mx0, mz1, 0, -v],
+      [mx0, mz1, mx0, mz0, v, 0], [mx1, mz0, mx1, mz1, -v, 0]].forEach(function (r) {
+      sit.quad('porcelan', v3(r[0], dy0, r[1]), v3(r[2], dy0, r[3]),
+        v3(r[2] + r[4], dnoY, r[3] + r[5]), v3(r[0] + r[4], dnoY, r[1] + r[5]),
+        { tileU: 0.3, tileV: 0.3, ao: [1, 1, 0.80, 0.80] });
+    });
+    sit.quad('porcelan', v3(mx0 + v, dnoY, mz1 - v), v3(mx1 - v, dnoY, mz1 - v),
+      v3(mx1 - v, dnoY, mz0 + v), v3(mx0 + v, dnoY, mz0 + v),
+      { tileU: 0.3, tileV: 0.3, ao: [0.80, 0.80, 0.80, 0.80] });
+    trubka(sit, 'chrom', v3((mx0 + mx1) / 2, dnoY - 0.002, (mz0 + mz1) / 2),
+      v3((mx0 + mx1) / 2, dnoY + 0.006, (mz0 + mz1) / 2), 0.021, 12);
+    var ux = x1 - 0.095, uz = umZ1 - 0.130;
+    trubka(sit, 'chrom', v3(ux, yP + 0.816, uz), v3(ux, yP + 0.838, uz), 0.024, 12);
+    trubka(sit, 'chrom', v3(ux, yP + 0.832, uz), v3(ux, yP + 0.952, uz), 0.015, 10);
+    oblouk(sit, 'chrom', v3(ux - 0.062, yP + 0.952, uz), v3(1, 0, 0), v3(0, 1, 0),
+      0.062, 0.014, 0, Math.PI * 0.55, 6, 8);
+    trubka(sit, 'chrom', v3(ux + 0.010, yP + 0.966, uz + 0.010), v3(ux + 0.062, yP + 0.988, uz + 0.010), 0.009, 8);
 
-    sit.kvadr('linka', x1 - 0.175, x1, yP + 1.400, yP + 2.000, umZ0 + 0.020, umZ1 - 0.020, { tileU: 0.5, tileV: 0.5 });
-    sit.kvadr('sklo', x1 - 0.182, x1 - 0.172, yP + 1.430, yP + 1.970, umZ0 + 0.320, umZ1 - 0.045, { tileU: 0.4, tileV: 0.4 });
+    sit.kvadr('linka', x1 - 0.170, x1, yP + 1.400, yP + 2.100, umZ0 + 0.125, umZ1 - 0.125, { tileU: 0.5, tileV: 0.5 });
+    sit.kvadr('sklo', x1 - 0.178, x1 - 0.168, yP + 1.430, yP + 2.070, (umZ0 + umZ1) / 2 - 0.005, umZ1 - 0.150, { tileU: 0.4, tileV: 0.4 });
 
-    var vz = zZ + 0.030;
-    sit.kvadr('vypinac', x0 + 0.380, x0 + 0.590, yP + 1.760, yP + 1.940, zZ, zZ + 0.022, { tileU: 0.3, tileV: 0.3 });
-    sit.kotouc('vypinac', v3(x0 + 0.485, yP + 1.850, zZ + 0.023), v3(1, 0, 0), v3(0, 1, 0), 0.070, { ao: [1, 1, 1, 1] });
+    sit.kvadr('vypinac', -0.595, -0.405, yP + 1.855, yP + 2.045, zZ, zZ + 0.022, { tileU: 0.3, tileV: 0.3 });
+    sit.kotouc('vypinac', v3(-0.500, yP + 1.950, zZ + 0.023), v3(1, 0, 0), v3(0, 1, 0), 0.085, { ao: [1, 1, 1, 1] });
   }
 
   function postav() {
@@ -1404,9 +1611,9 @@ function Scena(canvas, opt) {
       return {
         slunce: slunce,
         slSvit: [3.30, 3.12, 2.82],
-        zenit: [0.492, 0.512, 0.540],
-        obzor: [0.536, 0.545, 0.556],
-        zeme: [0.398, 0.390, 0.376],
+        zenit: [0.560, 0.582, 0.615],
+        obzor: [0.545, 0.554, 0.566],
+        zeme: [0.310, 0.303, 0.291],
         teren: [0.408, 0.404, 0.392],
         expo: 1.14
       };
@@ -1450,10 +1657,70 @@ function Scena(canvas, opt) {
     { klic: 'obyvak',   nazev: 'Obývací prostor', oko: [-2.05, 1.60, 1.72], yaw: Math.PI - 0.10, pitch: -0.03 },
     { klic: 'kuchyn',   nazev: 'Kuchyň',          oko: [-1.95, 1.58, -0.35], yaw: Math.PI - 0.34, pitch: -0.11 },
     { klic: 'chodba',   nazev: 'Chodba a vstup',  oko: [-0.30, 1.60, 2.55], yaw: Math.PI + 0.16, pitch: -0.04 },
-    { klic: 'koupelna', nazev: 'Koupelna',        oko: [0.30, 1.55, -0.16], yaw: Math.PI - 0.05, pitch: -0.13 },
-    { klic: 'loznice',  nazev: 'Ložnice',         oko: [1.72, 1.58, 0.24], yaw: Math.PI - 0.22, pitch: -0.04 }
+    { klic: 'koupelna', nazev: 'Koupelna',        oko: [0.36, 1.54, -0.74], yaw: Math.PI + 0.60, pitch: -0.16 },
+    { klic: 'loznice1', nazev: 'Ložnice u vstupu', oko: [1.06, 1.58, 0.92], yaw: 0.86, pitch: -0.05 },
+    { klic: 'loznice2', nazev: 'Zadní ložnice',    oko: [1.72, 1.58, 0.24], yaw: Math.PI - 0.22, pitch: -0.04 }
   ];
   function misto() { return MISTA[Math.max(0, Math.min(MISTA.length - 1, S.misto | 0))]; }
+
+  // Chodit se dá jen tam, kde je podlaha. Plochy jsou v souřadnicích rendereru
+  // (tedy už zrcadlené) a jsou zmenšené o poloměr člověka, aby kamera
+  // nedosedla na stěnu. Dveřní otvory jsou samostatné spojky.
+  var CHUZE_R = 0.30;
+  function plochyChuze() {
+    return [
+      [-2.788, 0.421, -0.273, 2.355],
+      [-0.410, 0.421, 2.355, 2.594],
+      [-2.788, -1.071, -2.350, -0.273],
+      [-0.410, 0.421, -2.595, -0.873],
+      [1.071, 2.788, -2.350, 0.229],
+      [1.071, 2.788, 0.879, 2.355],
+      [0.030, 0.550, -0.950, -0.200],
+      [0.350, 1.150, -0.320, 0.280],
+      [0.350, 1.150, 0.753, 1.313]
+    ];
+  }
+  function prekazkyChuze() {
+    var r = CHUZE_R, out = [];
+    if (S.kuchyn) {
+      out.push([-3.039 - r, -1.372 + r, -2.650 - r, -2.050 + r]);
+      out.push([-1.372 - r, -0.771 + r, -2.650 - r, -1.450 + r]);
+    }
+    if (S.koupelna) {
+      out.push([-0.710 - r, 0.721 + r, -2.895 - r, -2.245 + r]);
+      out.push([0.721 - 0.720 - r, 0.721 + r, -2.197 - r, -1.680 + r]);
+      out.push([0.721 - 0.500 - r, 0.721 + r, -1.389 - r, -0.589 + r]);
+    }
+    return out;
+  }
+  function lzeStat(x, z, plochy, prekazky) {
+    var i, p, uvnitr = false;
+    for (i = 0; i < plochy.length; i++) {
+      p = plochy[i];
+      if (x >= p[0] && x <= p[1] && z >= p[2] && z <= p[3]) { uvnitr = true; break; }
+    }
+    if (!uvnitr) return false;
+    for (i = 0; i < prekazky.length; i++) {
+      p = prekazky[i];
+      if (x > p[0] && x < p[1] && z > p[2] && z < p[3]) return false;
+    }
+    return true;
+  }
+  function dojdi(x0, z0, x1, z1) {
+    var plochy = plochyChuze(), prekazky = prekazkyChuze();
+    var dx = x1 - x0, dz = z1 - z0;
+    var d = Math.sqrt(dx * dx + dz * dz);
+    if (d < 1e-4) return null;
+    var n = Math.max(2, Math.ceil(d / 0.035));
+    var nx = x0, nz = z0, dobra = null;
+    for (var i = 1; i <= n; i++) {
+      var t = i / n;
+      nx = x0 + dx * t; nz = z0 + dz * t;
+      if (!lzeStat(nx, nz, plochy, prekazky)) break;
+      dobra = [nx, nz];
+    }
+    return dobra;
+  }
   function fov() { return S.pohled === 'dovnitr' ? FOV_IN : FOV; }
   function blizko() { return S.pohled === 'dovnitr' ? 0.045 : 0.25; }
 
@@ -1461,7 +1728,8 @@ function Scena(canvas, opt) {
     if (S.pohled === 'dovnitr') {
       var m = misto();
       var y = PODLAHA_Y + (m.oko[1] - 0.203);
-      cam.oko = [m.oko[0], y, m.oko[2]];
+      if (!cam.pozice) cam.pozice = [m.oko[0], m.oko[2]];
+      cam.oko = [cam.pozice[0], y, cam.pozice[1]];
       var cp = Math.cos(cam.pitch);
       cam.cil = [cam.oko[0] + Math.sin(cam.yaw) * cp,
         cam.oko[1] + Math.sin(cam.pitch),
@@ -1589,6 +1857,7 @@ function Scena(canvas, opt) {
     gl.useProgram(progNebe.p);
     var Vr = V.slice(); Vr[12] = 0; Vr[13] = 0; Vr[14] = 0;
     var inv = invert(nasob(P, Vr));
+    pickInv = inv;
     gl.uniformMatrix4fv(progNebe.u.uInv, false, inv);
     gl.uniform3fv(progNebe.u.uOko, [0, 0, 0]);
     gl.uniform3fv(progNebe.u.uZenit, env.zenit);
@@ -1654,7 +1923,7 @@ function Scena(canvas, opt) {
     global.requestAnimationFrame(function () { snimekCeka = false; kresli(); });
   }
 
-  var DPR = Math.min(global.devicePixelRatio || 1, 2);
+  var DPR = Math.min(Math.max(global.devicePixelRatio || 1, 1.6), 2);
   function prizpusob() {
     var rodic = cv.parentNode && cv.parentNode.getBoundingClientRect
       ? cv.parentNode.getBoundingClientRect() : null;
@@ -1671,6 +1940,53 @@ function Scena(canvas, opt) {
     var h = Math.min(4096, Math.round(vyska * DPR));
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
     naplanuj();
+  }
+
+  function smerZBodu(px, py) {
+    if (!pickInv) return null;
+    var r = cv.getBoundingClientRect();
+    if (!r.width || !r.height) return null;
+    var nx = (px - r.left) / r.width * 2 - 1;
+    var ny = 1 - (py - r.top) / r.height * 2;
+    var M = pickInv;
+    var w = M[3] * nx + M[7] * ny + M[11] + M[15];
+    if (Math.abs(w) < 1e-6) return null;
+    return jednotka([
+      (M[0] * nx + M[4] * ny + M[8] + M[12]) / w,
+      (M[1] * nx + M[5] * ny + M[9] + M[13]) / w,
+      (M[2] * nx + M[6] * ny + M[10] + M[14]) / w
+    ]);
+  }
+
+  function podlahaZBodu(px, py) {
+    var d = smerZBodu(px, py);
+    if (!d || d[1] > -0.02) return null;
+    var e = oko();
+    var t = (PODLAHA_Y - e[1]) / d[1];
+    if (t <= 0.15 || t > 40) return null;
+    return [e[0] + d[0] * t, e[2] + d[2] * t];
+  }
+
+  function jdiNa(x, z) {
+    if (!cam.pozice) return;
+    var cil = dojdi(cam.pozice[0], cam.pozice[1], x, z);
+    if (!cil) return;
+    var zx = cam.pozice[0], zz = cam.pozice[1];
+    var dl = Math.sqrt((cil[0] - zx) * (cil[0] - zx) + (cil[1] - zz) * (cil[1] - zz));
+    if (dl < 0.05) return;
+    var doba = Math.min(700, 210 + dl * 190);
+    chuze = { zx: zx, zz: zz, cx: cil[0], cz: cil[1], doba: doba, start: null };
+    try { cv.dispatchEvent(new CustomEvent('flexipohyb', { bubbles: true })); } catch (e) {}
+    var krok = function (t) {
+      if (!chuze) return;
+      if (chuze.start === null) chuze.start = t;
+      var u = Math.min(1, (t - chuze.start) / chuze.doba);
+      var f = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      cam.pozice = [chuze.zx + (chuze.cx - chuze.zx) * f, chuze.zz + (chuze.cz - chuze.zz) * f];
+      naplanuj();
+      if (u < 1) global.requestAnimationFrame(krok); else chuze = null;
+    };
+    global.requestAnimationFrame(krok);
   }
 
   cv.style.touchAction = 'pan-y';
@@ -1691,9 +2007,14 @@ function Scena(canvas, opt) {
     }
     naplanuj();
   });
-  ['pointerup', 'pointercancel'].forEach(function (t) {
-    cv.addEventListener(t, function () { drag = null; });
+  cv.addEventListener('pointerup', function (e) {
+    var klik = drag && drag.tah < 6;
+    drag = null;
+    if (!klik || S.pohled !== 'dovnitr') return;
+    var b = podlahaZBodu(e.clientX, e.clientY);
+    if (b) jdiNa(b[0], b[1]);
   });
+  cv.addEventListener('pointercancel', function () { drag = null; });
   cv.addEventListener('wheel', function (e) {
     if (S.pohled === 'dovnitr') return;
     e.preventDefault();
@@ -1730,6 +2051,8 @@ function Scena(canvas, opt) {
         if (S.pohled === 'dovnitr') {
           var m = misto();
           cam.yaw = m.yaw; cam.pitch = m.pitch;
+          cam.pozice = [m.oko[0], m.oko[2]];
+          chuze = null;
         } else {
           cam.yaw = 0.66; cam.pitch = 0.245; rucniZoom = false;
         }
@@ -1741,7 +2064,11 @@ function Scena(canvas, opt) {
     },
     prekresli: naplanuj,
     prizpusob: prizpusob,
-    stav: function () { return Object.assign({}, S); }
+    stav: function () {
+      var v = Object.assign({}, S);
+      if (cam.pozice) v.pozice = [Math.round(cam.pozice[0] * 1000) / 1000, Math.round(cam.pozice[1] * 1000) / 1000];
+      return v;
+    }
   };
 }
 

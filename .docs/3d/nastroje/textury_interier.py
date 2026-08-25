@@ -39,71 +39,88 @@ def stred_barva(jmeno, x, y, w, h):
 
 
 def podlaha():
-    """Prkna v naměřené šířce, kresba z reálného výřezu, barva změřená z fotek."""
+    """Prkna v naměřené šířce, kresba z reálného výřezu, barva změřená z fotek.
+    Vyrovnání osvitu je záměrně tvrdé: v původní verzi zůstaly ve výřezu velké
+    světlostní přechody a podlaha pak vypadala jako flekaté parkety."""
     print('podlaha')
-    PX = 700.0
+    PX = 620.0
+    SIRKA_KS, DELKA_KS = 6, 2
     w = int(round(PRKNO_D * PX))
     h = int(round(PRKNO_S * PX))
-    rng = np.random.default_rng(7)
+    rng = np.random.default_rng(11)
 
-    # základ: medián podlahy na IMG_2336, nejméně přepálený snímek podlahy
     zaklad = np.array([0.569, 0.443, 0.324], np.float32)
 
     zdroj = T.nacti('IMG_2332.jpg')[5200:6400, 900:3400]
-    zdroj = T.srovnej_svetlo(zdroj, 200, 0.98)
+    zdroj = T.srovnej_svetlo(zdroj, 70, 0.99)
     kres = T.jas(zdroj)
     kres = (kres - kres.mean()) / max(1e-4, kres.std())
-    kres = np.clip(kres, -2.4, 2.4)
+    kres = np.clip(kres, -2.2, 2.2)
+    kres = kres - np.convolve(kres.mean(axis=1), np.ones(41) / 41, mode='same')[:, None]
 
-    dlazd = np.zeros((h * 4, w * 2, 3), np.float32)
-    for r in range(4):
-        posun = int(w * (0.37 * r % 1.0))
-        for c in range(-1, 3):
+    dlazd = np.zeros((h * SIRKA_KS, w * DELKA_KS, 3), np.float32)
+    for r in range(SIRKA_KS):
+        posun = int(w * ((0.5 * r) % 1.0))
+        for c in range(-1, DELKA_KS + 1):
             x = c * w - posun
-            if x >= w * 2 or x + w <= 0:
+            if x >= w * DELKA_KS or x + w <= 0:
                 continue
             sy = int(rng.integers(0, kres.shape[0] - h))
             sx = int(rng.integers(0, max(1, kres.shape[1] - w)))
             k = kres[sy:sy + h, sx:sx + w]
             if k.shape[1] < w:
                 k = np.pad(k, ((0, 0), (0, w - k.shape[1])), mode='reflect')
-            tep = np.array([1.0 + rng.normal(0, 0.018),
-                            1.0 + rng.normal(0, 0.016),
-                            1.0 + rng.normal(0, 0.020)], np.float32)
-            prkno = np.clip(zaklad[None, None, :] * tep[None, None, :]
-                            * (1.0 + k[..., None] * 0.105), 0, 1)
-            prkno[:3] *= 0.70
-            prkno[:, :3] *= 0.78
-            xa, xb = max(0, x), min(w * 2, x + w)
+            tep = 1.0 + rng.normal(0, 0.008)
+            prkno = np.clip(zaklad[None, None, :] * tep * (1.0 + k[..., None] * 0.070), 0, 1)
+            prkno[:2] *= 0.74
+            prkno[:, :2] *= 0.84
+            xa, xb = max(0, x), min(w * DELKA_KS, x + w)
             dlazd[r * h:(r + 1) * h, xa:xb] = prkno[:, xa - x:xb - x]
 
-    dlazd = T.dlazditelne_x(dlazd, 8)
-    dlazd = T.dlazditelne_y(dlazd, 6)
+    dlazd = T.dlazditelne_x(dlazd, 6)
+    dlazd = T.dlazditelne_y(dlazd, 5)
     # prkna beží podél hloubky domu, v textuře tedy musí být svisle
     dlazd = np.transpose(dlazd, (1, 0, 2))[::-1]
     a = T.zmensi(dlazd, 1024, 1024)
-    T.uloz(a, 'podlaha.jpg', 90)
-    v = T.vyhlad(T.jas(a), 0.8)
+    T.uloz(a, 'podlaha.jpg', 91)
+    v = T.vyhlad(T.jas(a), 0.9)
     v = (v - np.percentile(v, 2)) / max(1e-4, np.percentile(v, 98) - np.percentile(v, 2))
-    T.uloz(T.normalova(np.clip(v, 0, 1) ** 1.1, sila=1.2), 'podlaha_n.jpg', 76)
-    print('  prkno %.3f x %.3f m, dlaždice u=%.2f v=%.2f m, základ %s'
-          % (PRKNO_S, PRKNO_D, PRKNO_S * 4, PRKNO_D * 2, np.round(zaklad, 3)))
+    T.uloz(T.normalova(np.clip(v, 0, 1) ** 1.1, sila=0.9), 'podlaha_n.jpg', 76)
+    print('  prkno %.3f x %.3f m, dlaždice u=%.2f v=%.2f m'
+          % (PRKNO_S, PRKNO_D, PRKNO_S * SIRKA_KS, PRKNO_D * DELKA_KS))
 
 
 def stena():
+    """Sendvičový panel. Kresbu skoro nemá, ale úplně plochá barva vypadá
+    jako plast. Textura proto nese jen zvlnění tenkého plechu (oil canning)
+    a svislé tupé švy."""
     print('stena')
     N = 512
+    SEV = 1.00
     barva = stred_barva('IMG_2336.jpg', 2400, 4900, 700, 700)
-    barva = barva / max(1e-4, T.jas(barva[None, None, :])[0, 0]) * 0.735
-    zvln = T.sum(N, N, 90, 3) - 0.5
-    zvln += (T.sum(N, N, 26, 11) - 0.5) * 0.35
-    a = np.clip(barva[None, None, :] * (1.0 + zvln[..., None] * 0.055), 0, 1)
-    a = T.dlazditelne_x(a, 26)
-    a = T.dlazditelne_y(a, 26)
+    barva = barva / max(1e-4, T.jas(barva[None, None, :])[0, 0]) * 0.745
+
+    zvln = (T.sum(N, N, 128, 3) - 0.5) * 1.00
+    zvln += (T.sum(N, N, 44, 11) - 0.5) * 0.55
+    zvln += (T.sum(N, N, 15, 23) - 0.5) * 0.22
+    zvln = T.vyhlad(zvln, 1.2)
+
+    x = np.linspace(0, 1, N, endpoint=False).reshape(1, -1)
+    sev = np.clip(1.0 - np.abs(((x + 0.5) % 1.0) - 0.5) / (0.0016), 0, 1)
+    sev = sev * np.ones((N, 1), np.float32)
+    lem = np.clip(1.0 - np.abs(((x + 0.5) % 1.0) - 0.5) / (0.010), 0, 1) * 0.35
+
+    a = barva[None, None, :] * (1.0 + zvln[..., None] * 0.085)
+    a = a * (1.0 - sev[..., None] * 0.30) * (1.0 + lem[..., None] * 0.035)
+    a = np.clip(a, 0, 1)
+    a = T.dlazditelne_y(a, 30)
     T.uloz(a, 'stena-in.jpg', 92)
-    v = T.vyhlad(zvln - zvln.min(), 1.2)
-    T.uloz(T.normalova(v / max(1e-4, v.max()), sila=0.5), 'stena-in_n.jpg', 74)
-    print('  barva %s' % np.round(barva, 3))
+
+    v = zvln - zvln.min()
+    v = v / max(1e-4, v.max())
+    v = np.clip(v - sev * 0.45, 0, 1)
+    T.uloz(T.normalova(v, sila=1.15), 'stena-in_n.jpg', 78)
+    print('  barva %s, šev po %.2f m' % (np.round(barva, 3), SEV))
 
 
 def mramor():

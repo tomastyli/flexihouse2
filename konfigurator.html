@@ -27,7 +27,7 @@
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/flexi.css?v=16">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=11">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=12">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -100,6 +100,7 @@
           <div class="kf-viz__stage">
             <canvas class="kf-viz__canvas" id="kfCanvas" data-vyska="ramec" width="900" height="620"></canvas>
             <div class="kf-viz__hint" id="kfHint">tažením otočíte</div>
+            <button type="button" class="kf-viz__vstup" id="kfVstup">Projít si dům zevnitř</button>
           </div>
           <div class="kf-viz__bar">
             <div class="kf-viz__prep" role="group" aria-label="Pohled na dům">
@@ -139,7 +140,7 @@
 
 
 
-<script src="assets/flexi-3d.js?v=8"></script>
+<script src="assets/flexi-3d.js?v=9"></script>
 <script>
 const I = {
   home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
@@ -396,14 +397,14 @@ function navHtml(si, isRecap) {
 
 elMain.addEventListener('click', (e) => {
   const opt = e.target.closest('.opt');
-  if (opt) { selectOption(opt); return; }
+  if (opt) { selectOption(opt, true); return; }
   const next = e.target.closest('.kf-next');
   if (next) { if (validateStep(state.step)) goTo(state.step + 1); return; }
   const back = e.target.closest('.kf-nav__back');
   if (back && !back.hasAttribute('disabled')) { goTo(state.step - 1); return; }
 });
 
-function selectOption(btn) {
+function selectOption(btn, odUzivatele) {
   const gKey = btn.dataset.group, oId = btn.dataset.opt;
   const g = GROUPS[gKey];
   const cards = btn.closest('.kf-cards');
@@ -420,6 +421,10 @@ function selectOption(btn) {
   }
   syncKmField();
   renderSummary();
+  if (odUzivatele && gKey === 'equipment') {
+    vizPrepni('dovnitr', oId === 'bath' ? 3 : 1);
+    return;
+  }
   vizObnov();
 }
 
@@ -477,6 +482,8 @@ function validateStep(si) {
 }
 function goTo(idx) {
   idx = Math.max(0, Math.min(RECAP_INDEX, idx));
+  if (idx === 2 && state.step !== 2 && vizPohled !== 'dovnitr') vizPrepni('dovnitr', 0);
+  if (idx === 1 && state.step !== 1 && vizPohled === 'dovnitr') vizPrepni('ven');
   state.step = idx;
   document.querySelectorAll('.kf-panel').forEach(p => p.classList.toggle('active', +p.dataset.idx === idx));
   document.querySelectorAll('.kf-step-pill').forEach((p, i) => {
@@ -866,10 +873,14 @@ function vizPrepni(p, m) {
     b.classList.toggle('is-on', on);
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
+  var vstup = document.getElementById('kfVstup');
+  if (vstup) vstup.addEventListener('click', function () { vizPrepni('dovnitr', 0); });
   var box = document.getElementById('kfMista');
   if (box) box.hidden = p !== 'dovnitr';
   var hint = document.getElementById('kfHint');
-  if (hint) hint.textContent = p === 'dovnitr' ? 'tažením se rozhlédnete' : 'tažením otočíte';
+  if (hint) hint.textContent = p === 'dovnitr' ? 'tažením se rozhlédnete, kliknutím na podlahu popojdete' : 'tažením otočíte';
+  var vstup = document.getElementById('kfVstup');
+  if (vstup) vstup.hidden = p === 'dovnitr';
   document.querySelectorAll('.kf-viz__mbtn').forEach(function (b, i) {
     b.classList.toggle('is-on', i === vizMisto);
     b.setAttribute('aria-pressed', i === vizMisto ? 'true' : 'false');
@@ -897,6 +908,12 @@ function vizStart() {
   }
   document.querySelectorAll('.kf-viz__btn[data-pohled]').forEach(function (b) {
     b.addEventListener('click', function () { vizPrepni(b.dataset.pohled); });
+  });
+  cv.addEventListener('flexipohyb', function () {
+    document.querySelectorAll('.kf-viz__mbtn').forEach(function (b) {
+      b.classList.remove('is-on');
+      b.setAttribute('aria-pressed', 'false');
+    });
   });
 }
 
