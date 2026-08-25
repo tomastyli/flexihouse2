@@ -38,56 +38,130 @@ def stred_barva(jmeno, x, y, w, h):
     return np.median(c, axis=0)
 
 
+def prumer_y(a, r):
+    """Klouzavý průměr po sloupcích. Pracuje i se zápornými hodnotami, což
+    T.vyhlad neumí, protože jde přes 8bitový obraz."""
+    if r < 1:
+        return a
+    c = np.cumsum(np.pad(a, ((r + 1, r), (0, 0)), mode='edge'), axis=0)
+    n = np.arange(a.shape[0])
+    return (c[n + 2 * r + 1] - c[n]) / (2 * r + 1)
+
+
+def prumer(a, r):
+    return prumer_y(prumer_y(a, r).T, r).T
+
+
+def smer_kresby(a, cy, cx, okno):
+    """Úhel, ve kterém v okolí bodu běží kresba. Strukturní tenzor: vlastní
+    směr s nejmenší změnou je směr žilek."""
+    y0 = max(0, cy - okno), min(a.shape[0], cy + okno)
+    x0 = max(0, cx - okno), min(a.shape[1], cx + okno)
+    v = a[y0[0]:y0[1], x0[0]:x0[1]]
+    gy, gx = np.gradient(v)
+    Jxx, Jyy, Jxy = (gx * gx).mean(), (gy * gy).mean(), (gx * gy).mean()
+    th = 0.5 * np.arctan2(2 * Jxy, Jxx - Jyy)
+    return th + np.pi / 2
+
+
+def vzorek_podel(a, cy, cx, uhel, w, h, krok_u, krok_v):
+    """Výřez orientovaný podle kresby: sloupce jdou podél žilek, řádky napříč.
+
+    Otáčet celý výřez přes PIL nejde použít — bilineární převzorkování samo
+    zvýhodňuje některé směry a měření úhlu se po něm rozpadne."""
+    du = np.array([np.cos(uhel), np.sin(uhel)]) * krok_u
+    dv = np.array([-np.sin(uhel), np.cos(uhel)]) * krok_v
+    j = np.arange(w) - w / 2.0
+    i = np.arange(h) - h / 2.0
+    x = cx + du[0] * j[None, :] + dv[0] * i[:, None]
+    y = cy + du[1] * j[None, :] + dv[1] * i[:, None]
+    x = np.clip(x, 0, a.shape[1] - 2)
+    y = np.clip(y, 0, a.shape[0] - 2)
+    x0, y0 = x.astype(np.int64), y.astype(np.int64)
+    fx, fy = x - x0, y - y0
+    return ((a[y0, x0] * (1 - fx) + a[y0, x0 + 1] * fx) * (1 - fy)
+            + (a[y0 + 1, x0] * (1 - fx) + a[y0 + 1, x0 + 1] * fx) * fy)
+
+
 def podlaha():
     """Prkna v naměřené šířce, kresba z reálného výřezu, barva změřená z fotek.
-    Vyrovnání osvitu je záměrně tvrdé: v původní verzi zůstaly ve výřezu velké
-    světlostní přechody a podlaha pak vypadala jako flekaté parkety."""
+
+    Výřez musí být čistá podlaha. Ve verzi z 8/2026 zabíral i stěnu, sokl a
+    práh dveří a z těch tvarů vznikly v textuře šikmé šmouhy přes prkna.
+
+    Podlaha je na fotce v perspektivě a prkna na ní běží strmě, kolem 66° od
+    vodorovné. Vzorek se proto nebere jako obdélník z obrázku, ale odebírá se
+    podél naměřeného směru kresby (smer_kresby, vzorek_podel). Když se bral
+    naležato, ležely žilky napříč prknem a podlaha vypadala jako pomačkaný
+    papír.
+
+    Podél prkna se vzorkuje s krokem 0,55 px, kresba je tím podél prkna delší.
+    Skutečné měřítko fotky se neví, výřez se nerektifikuje."""
     print('podlaha')
     PX = 620.0
     SIRKA_KS, DELKA_KS = 6, 2
     w = int(round(PRKNO_D * PX))
     h = int(round(PRKNO_S * PX))
+    KROK_U, KROK_V = 0.55, 1.0
     rng = np.random.default_rng(11)
 
     zaklad = np.array([0.569, 0.443, 0.324], np.float32)
 
-    zdroj = T.nacti('IMG_2332.jpg')[5200:6400, 900:3400]
-    zdroj = T.srovnej_svetlo(zdroj, 70, 0.99)
+    zdroj = T.nacti('IMG_2332.jpg')[6350:7950, 300:4250]
+    zdroj = T.srovnej_svetlo(zdroj, 60, 0.99)
     kres = T.jas(zdroj)
     kres = (kres - kres.mean()) / max(1e-4, kres.std())
-    kres = np.clip(kres, -2.2, 2.2)
-    kres = kres - np.convolve(kres.mean(axis=1), np.ones(41) / 41, mode='same')[:, None]
+    kres = np.clip(kres, -2.4, 2.4)
+
+    okraj = int(w * KROK_U / 2 + h * KROK_V / 2) + 10
+    ymin, ymax = okraj, kres.shape[0] - okraj
+    xmin, xmax = okraj, kres.shape[1] - okraj
 
     dlazd = np.zeros((h * SIRKA_KS, w * DELKA_KS, 3), np.float32)
+    relief = np.zeros((h * SIRKA_KS, w * DELKA_KS), np.float32)
+    uhly = []
     for r in range(SIRKA_KS):
         posun = int(w * ((0.5 * r) % 1.0))
         for c in range(-1, DELKA_KS + 1):
             x = c * w - posun
             if x >= w * DELKA_KS or x + w <= 0:
                 continue
-            sy = int(rng.integers(0, kres.shape[0] - h))
-            sx = int(rng.integers(0, max(1, kres.shape[1] - w)))
-            k = kres[sy:sy + h, sx:sx + w]
-            if k.shape[1] < w:
-                k = np.pad(k, ((0, 0), (0, w - k.shape[1])), mode='reflect')
+            cy = int(rng.integers(ymin, ymax))
+            cx = int(rng.integers(xmin, xmax))
+            uhel = smer_kresby(kres, cy, cx, 190)
+            uhly.append(np.degrees(uhel))
+            k = vzorek_podel(kres, cy, cx, uhel, w, h, KROK_U, KROK_V)
+            k = k - prumer(k, h // 3)
             tep = 1.0 + rng.normal(0, 0.008)
-            prkno = np.clip(zaklad[None, None, :] * tep * (1.0 + k[..., None] * 0.070), 0, 1)
+            svit = 1.0 + rng.normal(0, 0.012)
+            prkno = np.clip(zaklad[None, None, :] * tep * svit
+                            * (1.0 + k[..., None] * 0.080), 0, 1)
             prkno[:2] *= 0.74
             prkno[:, :2] *= 0.84
+            # reliéf nese hlavně zkosení spár, kresba je ve vinylu jen naznačená
+            rel = np.clip(0.80 + k * 0.07, 0, 1)
+            rel[:3] = 0.10
+            rel[3:6] = 0.52
+            rel[:, :3] = 0.26
+            rel[:, 3:6] = 0.62
             xa, xb = max(0, x), min(w * DELKA_KS, x + w)
             dlazd[r * h:(r + 1) * h, xa:xb] = prkno[:, xa - x:xb - x]
+            relief[r * h:(r + 1) * h, xa:xb] = rel[:, xa - x:xb - x]
 
     dlazd = T.dlazditelne_x(dlazd, 6)
     dlazd = T.dlazditelne_y(dlazd, 5)
+    relief = T.dlazditelne_x(relief[..., None], 6)[..., 0]
+    relief = T.dlazditelne_y(relief[..., None], 5)[..., 0]
     # prkna beží podél hloubky domu, v textuře tedy musí být svisle
     dlazd = np.transpose(dlazd, (1, 0, 2))[::-1]
+    relief = np.transpose(relief)[::-1]
     a = T.zmensi(dlazd, 1024, 1024)
     T.uloz(a, 'podlaha.jpg', 91)
-    v = T.vyhlad(T.jas(a), 0.9)
-    v = (v - np.percentile(v, 2)) / max(1e-4, np.percentile(v, 98) - np.percentile(v, 2))
-    T.uloz(T.normalova(np.clip(v, 0, 1) ** 1.1, sila=0.9), 'podlaha_n.jpg', 76)
+    v = T.vyhlad(T.zmensi(np.repeat(relief[..., None], 3, axis=2), 1024, 1024)[..., 0], 1.1)
+    T.uloz(T.normalova(v, sila=1.35), 'podlaha_n.jpg', 78)
     print('  prkno %.3f x %.3f m, dlaždice u=%.2f v=%.2f m'
           % (PRKNO_S, PRKNO_D, PRKNO_S * SIRKA_KS, PRKNO_D * DELKA_KS))
+    print('  směr kresby ve výřezu %.0f až %.0f°' % (min(uhly), max(uhly)))
 
 
 def stena():
@@ -143,11 +217,15 @@ def mramor():
     smer = (xx * 0.72 + yy * 0.69) / N
     pole = pole * 1.7 + smer * 4.0
 
+    # Samotné tenké čáry vypadaly jako čmáranice propiskou. Žilka proto má
+    # jádro, kolem něj široký měkký lem a po délce se ztrácí a zase objevuje.
     hreben = np.abs(pole - np.round(pole))
-    v = np.clip(1.0 - hreben / 0.013, 0, 1) ** 2.2
-    jemne = np.clip(1.0 - np.abs((pole * 3.4) - np.round(pole * 3.4)) / 0.008, 0, 1) ** 2.8
-    v = np.clip(v + jemne * 0.42, 0, 1)
-    v = T.vyhlad(v, 0.8)
+    jadro = np.clip(1.0 - hreben / 0.011, 0, 1) ** 2.0
+    lem = np.clip(1.0 - hreben / 0.070, 0, 1) ** 1.7
+    jemne = np.clip(1.0 - np.abs((pole * 3.4) - np.round(pole * 3.4)) / 0.009, 0, 1) ** 2.8
+    sila = np.clip(0.25 + (T.sum(N, N, 95, 7) - 0.5) * 2.4, 0, 1)
+    v = np.clip((jadro * 0.80 + jemne * 0.30) * sila + lem * 0.30 * sila, 0, 1)
+    v = T.vyhlad(v, 1.1)
     mrak = (T.sum(N, N, 150, 5) - 0.5) * 0.030
 
     c = zaklad[None, None, :] * (1.0 + mrak[..., None])

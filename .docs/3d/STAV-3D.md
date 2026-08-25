@@ -1,4 +1,4 @@
-# 3D konfigurátor Flexi House — stav k 24. 8. 2026 (textury přeměřené večer)
+# 3D konfigurátor Flexi House — stav k 26. 8. 2026
 
 ## Kde to běží
 
@@ -13,7 +13,7 @@ Náhled je od 24. 8. 2026 živý na flexihouse.cz/konfigurator.
 | co | kde |
 |---|---|
 | renderer | `assets/flexi-3d.js` (1130 řádků, bez závislostí) |
-| textury | `assets/tex/` (~226 kB, 12 souborů WebP) |
+| textury | `assets/tex/` (20 souborů WebP) |
 | generátor textur | `.docs/3d/nastroje/textury.py` |
 | snímkovač | `.docs/3d/nastroje/snimek.sh` |
 | zdrojové fotky | `podklady-3d/fotky/` (43 ks, 447 MB) |
@@ -45,6 +45,82 @@ byl náhled tmavý uprostřed bílé stránky.
 Textury jsou znovu vyříznuté z fotek, ve WebP a s normálovými mapami.
 Šedá a černá fasáda se stahují až při první volbě (úspora 145 kB).
 Při načtení stránky se táhne 266 kB textur.
+
+## Změny 26. 8. — patky, sítě do oken a rozbor textur
+
+### Betonové patky (doplněk `footings`)
+
+Nový stav `patky`. Patky se kreslí v `postav()` pod každý modul zvlášť:
+dvě až tři v ose x, tři v ose z (čelo, střed, záda). Pod sloupky terasy
+přibudou další dvě.
+
+Tvar je dvoustupňový kvádr, spodní stupeň širší — jak vypadá patka po
+odbednění. Materiál `beton`, textura z IMG_2294, kde dům na betonovém bloku
+skutečně stojí.
+
+Patka musí o pár centimetrů **přesahovat líc rámu**. Rám je nad terénem jen
+o `LIFT` (70 mm), takže když patka končí pod soklem, není z padesátitisícového
+doplňku v náhledu vidět vůbec nic. Kamera náhledu má sklon jen 14°, svislé
+plochy u země jsou skoro neviditelné — čte se hlavně půdorys.
+
+### Sítě do oken (doplněk `nets`)
+
+Nový stav `site`. Renderer dostal **průhlednou vrstvu**: materiál s příznakem
+`sit` se přeskočí v neprůhledném průchodu a dokreslí se až po něm s `BLEND`
+a vypnutým zápisem do hloubky. Ve stínové mapě se síť vynechává úplně — je
+z většiny díra a plný stín pod ní by byl horší než žádný.
+
+Tkanina **není textura, počítá se ve fragment shaderu**. Pokrytí se odvozuje
+analyticky z `fwidth`, takže se s odstupem plynule slije do rovnoměrného
+závoje (`mira`) a nikdy nemoaruje. Textura sítě s rozteči 1,45 mm by přes
+mipmapy dávala buď šum, nebo kaši.
+
+Rámeček sítě musí vystupovat **před fasádu**, ne dovnitř ostění. V ostění je
+ve stínu a doplněk pak na modelu nepozná nikdo. Vchodové dveře síť nedostávají
+(`o.dvere`), doplněk je popsaný jako sítě do oken.
+
+Zvenku se rozdíl pozná tak, že sklo ztratí odraz oblohy a zešedne. Zevnitř
+je to zřetelnější — výhled ven ztmavne, přesně jako za skutečnou síťkou.
+
+### Textury
+
+**Podlaha byla špatně a nešlo to poznat z výřezu.** Zdrojový výřez zabíral
+kromě podlahy i stěnu, sokl a práh dveří; z těch tvarů vznikly v textuře šikmé
+šmouhy přes prkna. Nový výřez je čistá podlaha ze spodku IMG_2332.
+
+Druhá, horší chyba: na fotce běží prkna **strmě, kolem 66° od vodorovné**.
+Vzorek se bral jako obdélník z obrázku, takže žilky ležely napříč prknem
+a podlaha vypadala jako pomačkaný papír. Vzorek se teď odebírá podél
+naměřeného směru kresby (`smer_kresby`, `vzorek_podel`).
+
+**Úhel kresby se nesmí hledat otáčením obrázku.** Bilineární převzorkování
+v PIL samo zvýhodňuje některé směry: měření přes poměr gradientů dá po otočení
+symetrickou křivku s propadem přesně na nule, tedy artefakt, ne kresbu.
+Podle něj vyšel úhel 9° místo skutečných 66°. Spolehlivý je strukturní tenzor
+nebo spektrum, obojí na neotočeném výřezu.
+
+Normálová mapa podlahy se nesmí odvozovat z kresby. Vinyl je plochý, reliéf
+nese hlavně zkosení spár — proto se ke skládání dlaždice vede vlastní pole
+reliéfu.
+
+**Terasová prkna.** Výřez je z fotky za západu slunce, nesl zlaté světlo a byl
+o dost světlejší a žlutější než prkna ve dne. Odstín se stahuje na hodnotu
+změřenou z denních fotek (IMG_2278, IMG_2358). Tón jednotlivých prken se navíc
+srovnává na třetinu odchylky — tři tmavší kusy uprostřed výřezu se v dlaždici
+opakovaly a terasa vypadala flekatá. Velkoplošné kolísání kleslo z 0,035 na 0,014.
+
+**Mramor v koupelně.** Samotné tenké čáry vypadaly jako čmáranice propiskou.
+Žilka má teď jádro, kolem něj široký měkký lem a po délce se ztrácí a zase
+objevuje.
+
+Ostatní textury (fasáda, střecha, podhled, rám, stěna, lamely, deska) jsou
+podle měření velkoplošně rovné (kolísání pod 0,015) a zůstaly beze změny.
+
+### Nástroje
+
+`.docs/3d/nastroje/pohled.html` — snímkovací postroj, stav se předává
+v adrese: `roof`, `facade`, `terrace`, `heat`, `pohled`, `m`, `patky`, `site`.
+
 
 ## Změny 24. 8. večer (podle Tomáše)
 

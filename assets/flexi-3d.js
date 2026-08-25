@@ -1,25 +1,7 @@
-  function dojdi(x0, z0, x1, z1) {
-    var plochy = plochyChuze(), prekazky = prekazkyChuze();
-    if (!lzeStat(x1, z1, plochy, prekazky)) return null;
-    var dx = x1 - x0, dz = z1 - z0;
-    var d = Math.sqrt(dx * dx + dz * dz);
-    if (d < 1e-4) return null;
-    var n = Math.max(2, Math.ceil(d / 0.035));
-    var dobra = null, vstoupil = false;
-    for (var i = 1; i <= n; i++) {
-      var t = i / n;
-      var nx = x0 + dx * t, nz = z0 + dz * t;
-      var ok = lzeStat(nx, nz, plochy, prekazky);
-      if (ok) { vstoupil = true; dobra = [nx, nz]; }
-      else if (vstoupil) break;
-    }
-    return dobra;
-  }
-
 (function (global) {
 'use strict';
 
-var TEX_VERZE = '4';
+var TEX_VERZE = '5';
 
 var TEX = {
   wood:      { soubor: 'fasada.webp',       normala: 'fasada_n.webp' },
@@ -33,7 +15,8 @@ var TEX = {
   stenaIn:   { soubor: 'stena-in.webp',     normala: 'stena-in_n.webp' },
   lamelyIn:  { soubor: 'lamely.webp',       normala: 'lamely_n.webp' },
   mramorIn:  { soubor: 'mramor.webp' },
-  deskaIn:   { soubor: 'deska.webp' }
+  deskaIn:   { soubor: 'deska.webp' },
+  beton:     { soubor: 'beton.webp',        normala: 'beton_n.webp' }
 };
 
 var MAT = {
@@ -52,6 +35,8 @@ var MAT = {
   lista:   { tex: null, tint: [0.44, 0.446, 0.452], rough: 0.44, metal: 0.66 },
   sklo:    { tex: null, tint: [0.04, 0.045, 0.052], rough: 0.05, metal: 0.00, sklo: 1 },
   teren:   { tex: null, tint: [0.30, 0.30, 0.29], rough: 0.95, metal: 0.00, teren: 1 },
+  beton:   { tex: 'beton', rough: 0.88, metal: 0.02 },
+  sit:     { tex: null, tint: [0.085, 0.088, 0.092], rough: 0.58, metal: 0.06, sit: 1 },
 
   stenaIn: { tex: 'stenaIn', rough: 0.40, metal: 0.06 },
   stropIn: { tex: null, tint: [0.845, 0.850, 0.842], rough: 0.46, metal: 0.03 },
@@ -71,6 +56,7 @@ var MAT = {
   skloMat: { tex: null, tint: [0.62, 0.645, 0.655], rough: 0.42, metal: 0.00 }
 };
 
+var SIT_ROZTEC = 0.00145;
 var PAS_H = 0.090;
 var SLOUP_W = 0.150;
 var PRICKA_TL = 0.060;
@@ -162,7 +148,7 @@ var FS = [
   'out vec4 barva;',
   'uniform sampler2D uAlb, uNor;',
   'uniform sampler2DShadow uStin;',
-  'uniform float uMaTex, uMaNor, uRough, uMetal, uSklo, uTeren, uNorSila;',
+  'uniform float uMaTex, uMaNor, uRough, uMetal, uSklo, uTeren, uNorSila, uSit;',
   'uniform vec3 uTint, uSlunce, uSlSvit, uZenit, uObzor, uZeme, uOko, uDumStred;',
   'uniform vec2 uDumPul;',
   'uniform float uStinTexel, uExpo;',
@@ -220,6 +206,27 @@ var FS = [
   '  float NdL = max(dot(N, L), 0.0);',
   '  float st = stinovost(N);',
   '  float ao = vAo;',
+
+  '  if(uSit > 0.5){',
+  '    vec2 bunka = fract(vUv);',
+  '    vec2 od = abs(bunka - 0.5);',
+  '    vec2 sirka = fwidth(vUv);',
+  '    float pul = 0.112;',
+  '    vec2 ostre = clamp((pul - od) / max(sirka, vec2(1e-5)) + 0.5, 0.0, 1.0);',
+  '    vec2 mira = clamp(sirka * 2.2, 0.0, 1.0);',
+  '    vec2 podil = mix(ostre, vec2(2.0 * pul), mira);',
+  '    float kryti = 1.0 - (1.0 - podil.x) * (1.0 - podil.y);',
+  '    if(kryti < 0.004) discard;',
+  '    vec3 vlakno = pow(uTint, vec3(2.2));',
+  '    float bok = 1.0 - abs(dot(N, V));',
+  '    vec3 c = vlakno * (obloha(N) * 0.9 + uSlSvit * max(dot(N, L), 0.0) * st * 0.55);',
+  '    c += uSlSvit * st * pow(max(dot(N, normalize(L + V)), 0.0), 26.0) * 0.10;',
+  '    c *= uExpo;',
+  '    c = (c * (2.51 * c + 0.03)) / (c * (2.43 * c + 0.59) + 0.14);',
+  '    float pruhled = clamp(kryti * (0.90 + bok * 0.55), 0.0, 1.0);',
+  '    barva = vec4(pow(clamp(c, 0.0, 1.0), vec3(1.0/2.2)), pruhled);',
+  '    return;',
+  '  }',
 
   '  if(uSklo > 0.5){',
   '    vec3 odraz = oblohaOdraz(Rv);',
@@ -406,7 +413,7 @@ function Scena(canvas, opt) {
   if (!gl) return null;
 
   var S = { roof: 'flat', facade: 'wood', terrace: false, heat: 'none', fold: 1,
-    pohled: 'ven', misto: 0, kuchyn: true, koupelna: true };
+    pohled: 'ven', misto: 0, kuchyn: true, koupelna: true, patky: false, site: false };
   var cam = { yaw: 0.66, pitch: 0.245, dist: 15, cil: [0, 1.25, 0] };
   var rucniZoom = false, drag = null, pickInv = null, chuze = null;
   var potrebaSit = true, potrebaStin = true, snimekCeka = false;
@@ -447,7 +454,8 @@ function Scena(canvas, opt) {
     im.onerror = function () { OBR[klic] = null; ceka--; naplanuj(); };
     im.src = zaklad + 'assets/tex/' + soubor + '?v=' + TEX_VERZE;
   }
-  var ODLOZIT = { grey: 1, black: 1, podlahaIn: 1, stenaIn: 1, lamelyIn: 1, mramorIn: 1, deskaIn: 1 };
+  var ODLOZIT = { grey: 1, black: 1, beton: 1,
+    podlahaIn: 1, stenaIn: 1, lamelyIn: 1, mramorIn: 1, deskaIn: 1 };
   function zajisti(k) {
     if (!TEX[k] || (k in OBR)) return;
     nactiTexturu(k, TEX[k].soubor);
@@ -617,6 +625,25 @@ function Scena(canvas, opt) {
         bod(stredD - 0.055, v + 1.20, -hl + 0.032), bod(stredD - 0.10, v + 1.20, -hl + 0.032),
         { tileU: 0.2, tileV: 0.2, ao: [0.9, 0.9, 0.9, 0.9] });
     }
+    // Síť proti hmyzu: hliníkový rámeček dosedá na vnější líc okna, tkanina
+    // je hned za ním. Rámeček musí vystupovat před fasádu, jinak ho ve stínu
+    // ostění není vidět a doplněk na modelu nepozná nikdo.
+    if (S.site && !o.dvere) {
+      var sr = 0.024, sd = -0.010, sram = 0.006;
+      sit.quad('sit', bod(u + sr, v + sr, sd), bod(u + w - sr, v + sr, sd),
+        bod(u + w - sr, v + h - sr, sd), bod(u + sr, v + h - sr, sd),
+        { tileU: SIT_ROZTEC, tileV: SIT_ROZTEC, ao: [1, 1, 1, 1] });
+      [[u, v, w, sr], [u, v + h - sr, w, sr],
+        [u, v + sr, sr, h - 2 * sr], [u + w - sr, v + sr, sr, h - 2 * sr]].forEach(function (r) {
+        sit.quad('lista', bod(r[0], r[1], sram), bod(r[0] + r[2], r[1], sram),
+          bod(r[0] + r[2], r[1] + r[3], sram), bod(r[0], r[1] + r[3], sram),
+          { tileU: 0.25, tileV: 0.25, ao: [0.94, 0.94, 0.94, 0.94] });
+        sit.quad('lista', bod(r[0], r[1], sd), bod(r[0] + r[2], r[1], sd),
+          bod(r[0] + r[2], r[1], sram), bod(r[0], r[1], sram),
+          { tileU: 0.25, tileV: 0.25, ao: [0.70, 0.70, 0.88, 0.88] });
+      });
+    }
+
     var lem = 0.028;
     [[u - lem, v - lem, w + 2 * lem, lem], [u - lem, v + h, w + 2 * lem, lem],
       [u - lem, v, lem, h], [u + w, v, lem, h]].forEach(function (r) {
@@ -1593,6 +1620,32 @@ function Scena(canvas, opt) {
       });
     }
 
+    if (S.patky) {
+      // Patka je nízká: rám domu je nad terénem jen o LIFT, nad zem tedy
+      // vykoukne pár centimetrů. Spodní stupeň je širší, jak to u betonové
+      // patky vypadá po odbednění.
+      function patka(px, pz) {
+        var a1 = 0.245, a2 = 0.190, dno = -0.030, stupen = LIFT * 0.40;
+        sit.kvadr('beton', px - a1, px + a1, dno, stupen, pz - a1, pz + a1,
+          { tileU: 0.30, tileV: 0.30, bez: 'y+' });
+        sit.kvadr('beton', px - a2, px + a2, stupen, LIFT, pz - a2, pz + a2,
+          { tileU: 0.30, tileV: 0.30, bez: 'y+' });
+      }
+      moduly.forEach(function (m) {
+        // patka o pár centimetrů přesahuje líc rámu, jinak ji zvenku úplně
+        // zakryje sokl a z celého doplňku není v modelu vidět nic
+        var xs = [m.x0 + 0.16, m.x1 - 0.16];
+        if (m.x1 - m.x0 > 2.7) xs.splice(1, 0, (m.x0 + m.x1) / 2);
+        var zs = [m.zB + 0.16, (m.zB + m.zF) / 2, m.zF - 0.16];
+        xs.forEach(function (px) { zs.forEach(function (pz) { patka(px, pz); }); });
+      });
+      if (S.terrace) {
+        [-half + 0.07, half - 0.07].forEach(function (px) {
+          patka(px, zF + terasaHl - 0.048);
+        });
+      }
+    }
+
     var R = 220;
     sit.quad('teren', v3(-R, 0, R), v3(R, 0, R), v3(R, 0, -R), v3(-R, 0, -R), { tileU: 4, tileV: 4 });
 
@@ -1789,16 +1842,18 @@ function Scena(canvas, opt) {
     return nasob(P, V);
   }
 
-  function kresliDavky(pr, env, svVP, jenHloubka) {
+  function kresliDavky(pr, env, svVP, jenHloubka, jenPruhledne) {
     davky.forEach(function (d) {
       var m = MAT[d.mat];
       if (!m) return;
       if (jenHloubka) {
-        if (m.sklo || m.teren) return;
+        // síť je z většiny díra, plný stín pod ní by byl horší než žádný
+        if (m.sklo || m.teren || m.sit) return;
         gl.bindVertexArray(d.vao);
         gl.drawElements(gl.TRIANGLES, d.pocet, gl.UNSIGNED_INT, 0);
         return;
       }
+      if (!m.sit !== !jenPruhledne) return;
       var tex = m.tex ? OBR[m.tex] : null;
       var nor = m.tex && TEX[m.tex] && TEX[m.tex].normala ? OBR[m.tex + '_n'] : null;
       gl.activeTexture(gl.TEXTURE0);
@@ -1812,6 +1867,7 @@ function Scena(canvas, opt) {
       gl.uniform1f(pr.u.uMetal, m.metal);
       gl.uniform1f(pr.u.uSklo, m.sklo ? 1 : 0);
       gl.uniform1f(pr.u.uTeren, m.teren ? 1 : 0);
+      gl.uniform1f(pr.u.uSit, m.sit ? 1 : 0);
       var tint = m.teren ? env.teren : (tex ? (m.tint || [1, 1, 1]) : (m.nahradaTint || m.tint || [1, 1, 1]));
       gl.uniform3fv(pr.u.uTint, tint);
       gl.bindVertexArray(d.vao);
@@ -1890,7 +1946,13 @@ function Scena(canvas, opt) {
     gl.uniform1i(prog.u.uStin, 2);
     gl.activeTexture(gl.TEXTURE2);
     gl.bindTexture(gl.TEXTURE_2D, stinTex);
-    kresliDavky(prog, env, svVP, false);
+    kresliDavky(prog, env, svVP, false, false);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.depthMask(false);
+    kresliDavky(prog, env, svVP, false, true);
+    gl.depthMask(true);
+    gl.disable(gl.BLEND);
     gl.bindVertexArray(null);
   }
 
@@ -2044,6 +2106,7 @@ function Scena(canvas, opt) {
         }
       });
       if (novy.facade) zajisti(novy.facade);
+      if (S.patky) zajisti('beton');
       if (S.pohled === 'dovnitr') {
         ['podlahaIn', 'stenaIn', 'lamelyIn', 'mramorIn', 'deskaIn'].forEach(zajisti);
       }

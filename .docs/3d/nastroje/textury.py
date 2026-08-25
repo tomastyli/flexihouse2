@@ -414,6 +414,26 @@ def prkna():
     c = c[zacatek:zacatek + strana, x0:x0 + strana]
     print('  dlaždice %dx%d px = %.3f m (%d prken)' % (c.shape[1], c.shape[0], strana / P, DLAZDICE_PRKEN))
 
+    # Prkna se na fotce liší tónem víc, než odpovídá skutečnosti: tři tmavší
+    # kusy uprostřed se v dlaždici opakují a terasa pak vypadá flekatá.
+    # Odchylka jednotlivého prkna se proto stáhne na třetinu.
+    # Výřez je z fotky za západu slunce, takže nese zlaté světlo a je o dost
+    # světlejší a žlutější než prkna ve dne. Odstín se proto stáhne na hodnotu
+    # změřenou z denních fotek terasy (IMG_2278, IMG_2358).
+    c = na_odstin(c, [0.520, 0.400, 0.280], 1.0)
+    c = np.clip(c.mean(axis=(0, 1)) + (c - c.mean(axis=(0, 1))) * 1.25, 0, 1)
+
+    stred = np.median(jas(c))
+    for i in range(DLAZDICE_PRKEN):
+        b0 = int(round(i * strana / DLAZDICE_PRKEN))
+        b1 = int(round((i + 1) * strana / DLAZDICE_PRKEN))
+        vnitrek = c[b0 + int(0.18 * krok):b1 - int(0.12 * krok)]
+        if vnitrek.size == 0:
+            continue
+        m = np.median(jas(vnitrek))
+        c[b0:b1] = np.clip(c[b0:b1] * (1.0 + (stred / max(m, 1e-3) - 1.0) * 0.67), 0, 1)
+    print('  tón prken srovnán k mediánu %.3f' % stred)
+
     c = dlazditelne_x(c, int(0.30 * P))
     c = np.transpose(c, (1, 0, 2))[::-1]
 
@@ -495,10 +515,33 @@ def strecha():
     uloz(normalova(v, sila=1.2), 'strecha_n.jpg', 90)
 
 
+def beton():
+    """Betonová patka. Výřez z IMG_2294, kde dům stojí na betonovém bloku.
+    Kámen v betonu je hrubý, takže šedý svět stačí a barva se jen doladí na
+    změřený odstín. Dlaždice je 0,30 m, patka je v modelu 0,42 m široká."""
+    print('beton')
+    c = nacti('IMG_2294.JPG')[3200:3660, 3780:4240]
+    c = np.clip(c - lesk(c)[..., None] * 0.55, 0, 1)
+    c = srovnej_svetlo(c, 34, 0.99)
+    c = sedy_svet(c, 1.0)
+    # syrový výřez má kontrast jako škvára; beton na patce je klidnější
+    c = np.clip(c.mean() + (c - c.mean()) * 0.55, 0, 1)
+    c = na_odstin(c, [0.500, 0.503, 0.497], 1.0)
+    c = zmensi(c, 512, 512)
+    c = dlazditelne_x(c, 80)
+    c = dlazditelne_y(c, 80)
+    uloz(c, 'beton.jpg', 90)
+    v = vyhlad(jas(c), 0.8)
+    v = (v - np.percentile(v, 3)) / max(1e-4, np.percentile(v, 97) - np.percentile(v, 3))
+    uloz(normalova(np.clip(v, 0, 1), sila=1.1), 'beton_n.jpg', 80)
+    print('  dlaždice 0,300 m')
+
+
 if __name__ == '__main__':
     fasada()
     prkna()
     strecha()
     podhled()
     ram()
+    beton()
     print('hotovo →', CIL)
