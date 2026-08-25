@@ -78,6 +78,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .grid svg{width:40px;height:40px;margin-bottom:26px;color:rgba(22,32,42,.5)}
 .grid h3{font-size:1.18rem;letter-spacing:0.01em;margin-bottom:16px}
 .grid p{font-size:0.99rem;color:var(--muted);max-width:26ch}
+.faq{margin-top:clamp(64px,8vw,116px)}
+.faq__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,52px) clamp(30px,4vw,64px)}
+.faq__item{border-top:1.5px solid var(--hair);padding-top:22px}
+.faq__item h3{font-size:1.12rem;letter-spacing:0.01em;margin-bottom:12px;max-width:24ch}
+.faq__item p{font-size:0.99rem;color:var(--muted);max-width:46ch}
 
 .cta{background:var(--blue);color:#fff;padding:clamp(64px,8vw,120px) 0}
 .cta__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:center}
@@ -194,7 +199,7 @@ body.is-locked{overflow:hidden}
 .crumb{font-size:0.85rem;color:var(--muted);padding-top:26px}
 .crumb a{border-bottom:1px solid transparent}
 .crumb a:hover{color:var(--ink);border-bottom-color:var(--hair)}
-@media(max-width:760px){
+@media(max-width:760px){.faq__in{grid-template-columns:1fr;gap:26px}
   .row{grid-template-columns:1fr;gap:20px;padding:26px 0}
   .row__go .btn{width:100%}
 }

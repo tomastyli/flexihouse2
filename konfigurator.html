@@ -208,6 +208,7 @@ function addonGroup() {
 const MODELS = {
   flexihouse: {
     name: 'Flexi House',
+    title: 'Konfigurátor modulárního domu | Flexi House',
     accent: 'dům na míru',
     base: 400000,
     baseIncludes: ['Okna a dveře', 'Fasádní obklad', 'Zateplení 75 mm'],
@@ -266,7 +267,7 @@ const elSumTotal = document.getElementById('sumTotal');
 document.getElementById('kfTitle').innerHTML = 'Sestavte si <span class="accent">' + MODEL.accent + '</span>';
 document.getElementById('kfTagline').textContent = MODEL.tagline;
 document.getElementById('sumModel').textContent = MODEL.name;
-document.title = 'Konfigurátor ' + MODEL.name + ' | Flexi House';
+if (MODEL.title) document.title = MODEL.title;
 
 STEP_LABELS.slice(0, TOTAL_STEPS).forEach((lbl, i) => {
   const pill = document.createElement('div');
@@ -873,12 +874,13 @@ function bindForm() {
     if (!ok) return;
 
     const payload = buildPayload();
-    submitBtn.setAttribute('disabled',''); submitBtn.textContent = 'Odesílám...';
+    submitBtn.setAttribute('disabled',''); submitBtn.textContent = 'Odesílám…';
     try {
       const res = await fetch('/api/send-konfigurace', {
         method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('bad response');
+      if (window.gtag) gtag('event','generate_lead',{form:'konfigurator',value:1});
       status.className = 'form__status ok';
       status.textContent = 'Děkujeme! Poptávku i konfiguraci jsme přijali. Ozveme se do 24 hodin. Kopii jsme poslali na váš e-mail.';
       form.querySelector('.kf-actions').scrollIntoView({ behavior:'smooth', block:'center' });
@@ -965,6 +967,7 @@ vizStart();
         <h3>Společnost</h3>
         <ul>
           <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/#caste-dotazy">Časté dotazy</a></li>
           <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
           <li><a href="/podminky">Podmínky použití</a></li>
         </ul>

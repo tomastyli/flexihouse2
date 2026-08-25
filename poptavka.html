@@ -152,12 +152,13 @@
     var d=Object.fromEntries(new FormData(f).entries());
     if(!d.name.trim()||!d.phone.trim()||!d.email.trim()){ show('Vyplňte prosím jméno, telefon a e-mail.','err'); return; }
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){ show('Zkontrolujte prosím e-mail.','err'); return; }
-    btn.disabled=true; var label=btn.textContent; btn.textContent='Odesílám...';
+    btn.disabled=true; var label=btn.textContent; btn.textContent='Odesílám…';
     show('Odesíláme poptávku.','ok');
     try{
       var r=await fetch('/api/send-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
       var j=await r.json().catch(function(){return{}});
       if(r.ok&&j.ok){
+        if(window.gtag) gtag('event','generate_lead',{form:'poptavka',value:1});
         f.innerHTML='<div class="done"><h2>Máme to</h2><p>Poptávku jsme přijali a ozveme se do 24 hodin. Potvrzení jsme poslali i na váš e-mail.</p><a class="btn btn--out" href="/katalog">Zpět na domy</a></div>';
         return;
       }
@@ -290,6 +291,7 @@
         <h3>Společnost</h3>
         <ul>
           <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/#caste-dotazy">Časté dotazy</a></li>
           <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
           <li><a href="/podminky">Podmínky použití</a></li>
         </ul>
@@ -310,6 +312,7 @@
   </div>
 </footer>
 
+<script src="assets/cookies.js?v=8" defer></script>
 <script src="assets/flexi.js?v=8" defer></script>
 </body>
 </html>
