@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flexi House">
-<rect width="64" height="64" rx="14" fill="#0b2545"/>
-<polygon points="32,12 11.5,32 32,32" fill="#8dc63f"/>
-<polygon points="32,12 32,32 52.5,32" fill="#3f8fce"/>
-<rect x="14.5" y="32" width="35" height="19" rx="2" fill="#2f74b5"/>
-<g fill="#bfe2f2">
-<rect x="24.5" y="36.5" width="6.5" height="6.5" rx="1"/>
-<rect x="33" y="36.5" width="6.5" height="6.5" rx="1"/>
-<rect x="24.5" y="44.5" width="6.5" height="6.5" rx="1"/>
-<rect x="33" y="44.5" width="6.5" height="6.5" rx="1"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Flexi House"><rect width="64" height="64" rx="12" fill="#16202a"/><svg x="8.96" y="10.50" width="46.08" height="43.01" viewBox="11 18 30 28"><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/><path d="M 20 46 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/><path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/><path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.24 Z" fill="#eef2f4"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/><path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/><path d="M 36.365 36.2175 L 36.635 36.0825 L 36.635 25.4825 L 36.365 25.6175 Z" fill="#16202a"/></svg></svg>

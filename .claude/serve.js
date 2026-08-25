@@ -10,8 +10,9 @@ const TYPES = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; char
 http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
   if (p === '/') p = '/index.html';
-  const file = path.join(ROOT, p);
+  let file = path.join(ROOT, p);
   if (!file.startsWith(ROOT)) { res.writeHead(403); return res.end('forbidden'); }
+  if (!path.extname(file) && fs.existsSync(file + '.html')) file += '.html';
   fs.readFile(file, (err, data) => {
     if (err) { res.writeHead(404); return res.end('not found'); }
     res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream' });
