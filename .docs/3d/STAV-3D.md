@@ -232,6 +232,29 @@ model nekreslí, Tomáš je zamítl — dům sedí na terénu.
 4. **Video rozkládání** — kdyby se někdy dělala animace skládání,
    parametr `fold` v modelu pořád funguje.
 5. Zvednout `TEX_VERZE` a `?v=` u JS a CSS při každém dalším zásahu do textur.
+6. **3D interiér** — další krok, viz níže.
+
+## Podklady pro 3D interiér
+
+Výkres dispozici řeší, takže se nemusí odhadovat z fotek:
+
+- **levý modul** (2013 × 5400) obývací prostor s kuchyňskou linkou u zadní stěny,
+  varná deska a dřez; kóty linky 1667, 600, 600, 900
+- **střední modul** (2250 × 5850) koupelna se sprchou, WC a umyvadlem u zadní
+  stěny (kóty 1442, 500, 800, 2260), pod ní chodba se vstupem D1
+- **pravý modul** (2013 × 5400) dvě ložnice oddělené příčkou, každá s postelí
+  u vnější stěny; kóty 3180, 2318, 2318, 2070
+
+Vnitřní dveře: **D2 dvakrát a D3 jednou, všechny 800 × 2050**. D3 vede do
+koupelny, D2 do obou ložnic.
+
+Druhá strana výkresu je **elektro a rozvod vody** — 9 zásuvek, 6 stropních
+světel, 1 downlight, rozvaděč, chránič bojleru. Zásuvky ve výšce 1,3 m,
+klimatizace 2,1 m. Pro model interiéru to je zdroj poloh svítidel.
+
+Fotky interiéru jsou v sadě: kuchyň, obývák, obě ložnice a koupelna
+(IMG_2286 až IMG_2301). Materiály na nich jsou jiné než venku — bílé stěny,
+světlá podlaha — takže textury z fasády se použít nedají.
 
 ## Cache na produkci
 
