@@ -102,10 +102,30 @@ function configRows(data) {
           <span style="color:#5b6b80">${esc(it.group)}:</span> <strong>${esc(it.value)}</strong>
         </td>
         <td style="padding:7px 0;border-bottom:1px solid #eef2f4;text-align:right;color:#16202a;font-weight:600;font-size:14px;white-space:nowrap">
-          ${Number(it.price) > 0 ? '+ ' + czk(it.price) : '<span style="color:#94a3b8;font-weight:500">v ceně</span>'}
+          ${Number(it.price) > 0 ? '+ ' + czk(it.price) + (it.vat === 'incl' ? ' <span style="color:#94a3b8;font-weight:500;font-size:12px">vč. DPH</span>' : '') : '<span style="color:#94a3b8;font-weight:500">v ceně</span>'}
         </td></tr>`;
     });
   });
+  return html;
+}
+
+const VAT_NOTE = 'Dům a jeho vybavení uvádíme bez DPH. Sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Doprava, usazení, patky, montáž, připojení na sítě a klimatizace jsou uvedené včetně DPH.';
+
+function subtotalRows(data) {
+  const t = data.totals || {};
+  if (!t.net && !t.vatIncluded) return '';
+  let html = `<tr><td colspan="2" style="padding:16px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;font-weight:700">Rekapitulace ceny</td></tr>
+    <tr>
+      <td style="padding:7px 0;border-bottom:1px solid #eef2f4;color:#16202a;font-size:14px">Dům a vybavení <span style="color:#5b6b80">(bez DPH)</span></td>
+      <td style="padding:7px 0;border-bottom:1px solid #eef2f4;text-align:right;color:#16202a;font-weight:700;font-size:14px;white-space:nowrap">${esc(t.netFormatted || czk(t.net))}</td>
+    </tr>`;
+  if (Number(t.vatIncluded) > 0) {
+    const km = Number(data.transportKm) > 0 ? ` <span style="color:#5b6b80">· doprava ${Number(data.transportKm)} km</span>` : '';
+    html += `<tr>
+      <td style="padding:7px 0;border-bottom:1px solid #eef2f4;color:#16202a;font-size:14px">Práce na pozemku <span style="color:#5b6b80">(vč. DPH)</span>${km}</td>
+      <td style="padding:7px 0;border-bottom:1px solid #eef2f4;text-align:right;color:#16202a;font-weight:700;font-size:14px;white-space:nowrap">${esc(t.vatIncludedFormatted || czk(t.vatIncluded))}</td>
+    </tr>`;
+  }
   return html;
 }
 
@@ -158,14 +178,15 @@ function emailInternal(data) {
 
     <tr><td style="padding:8px 32px 0">
       <h2 style="font-size:15px;color:#16202a;margin:12px 0 4px">Konfigurace</h2>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}</table>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}${subtotalRows(data)}</table>
     </td></tr>
 
-    <tr><td style="padding:18px 32px 30px">
+    <tr><td style="padding:18px 32px 6px">
       <table role="presentation" width="100%" style="background:#16202a;border-radius:0"><tr>
-        <td style="padding:18px 22px;font-size:13px;color:#a9c0c9">Orientační cena celkem (bez DPH)</td>
+        <td style="padding:18px 22px;font-size:13px;color:#a9c0c9">Orientační cena celkem</td>
         <td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#b4dd6a">${esc(data.totalFormatted || czk(data.total))}</td>
       </tr></table>
+      <p style="margin:10px 2px 24px;font-size:12px;color:#94a3b8;line-height:1.6">${VAT_NOTE}</p>
     </td></tr>`;
   return shell(inner, `Nová poptávka ${data.modelName} od ${c.name}, ${data.totalFormatted || ''}`);
 }
@@ -183,16 +204,16 @@ function emailCustomer(data) {
 
     <tr><td style="padding:14px 32px 0">
       <h2 style="font-size:15px;color:#16202a;margin:8px 0 4px">Vaše konfigurace</h2>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}</table>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${configRows(data)}${subtotalRows(data)}</table>
     </td></tr>
 
     <tr><td style="padding:18px 32px 6px">
       <table role="presentation" width="100%" style="background:#eef2f4;border:1px solid #d8e2e6;border-radius:0"><tr>
-        <td style="padding:18px 22px;font-size:13px;color:#16202a;font-weight:600">Orientační cena</td>
+        <td style="padding:18px 22px;font-size:13px;color:#16202a;font-weight:600">Orientační cena celkem</td>
         <td style="padding:18px 22px;text-align:right;font-size:22px;font-weight:800;color:#16202a">${esc(data.totalFormatted || czk(data.total))}</td>
       </tr></table>
       <p style="margin:10px 2px 0;font-size:12px;color:#94a3b8;line-height:1.6">
-        Cena je orientační (bez DPH) a slouží jako vodítko. Finální nabídku připravíme na míru vašemu pozemku a požadavkům.
+        ${VAT_NOTE} Cena je orientační a slouží jako vodítko. Finální nabídku připravíme na míru vašemu pozemku a požadavkům.
       </p>
     </td></tr>
 

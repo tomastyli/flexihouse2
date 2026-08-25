@@ -120,3 +120,30 @@
 @media(max-width:640px){
   .kf-viz__stage{aspect-ratio:4/3;max-height:min(48vh,340px)}
 }
+
+.kf-km{margin-top:14px;padding:16px 17px;border:1.5px solid var(--hair);background:var(--soft);display:grid;gap:8px}
+.kf-km[hidden]{display:none}
+.kf-km label{font-family:'Bricolage',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;text-transform:uppercase;font-size:0.76rem;letter-spacing:0.09em}
+.kf-km input{font-family:'Instrument',system-ui,sans-serif;font-size:1rem;color:var(--ink);background:var(--paper);
+  border:1.5px solid var(--hair);padding:11px 13px;max-width:190px}
+.kf-km input:focus{outline:none;border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.kf-km__out{font-size:0.86rem;color:var(--muted)}
+
+.kf-sum-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:14px 0 6px;
+  font-family:'Bricolage',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;text-transform:uppercase;
+  font-size:0.72rem;letter-spacing:0.09em}
+.kf-sum-head span{font-family:'Instrument',system-ui,sans-serif;font-weight:400;letter-spacing:0;text-transform:none;font-size:0.78rem;color:var(--muted)}
+.kf-sum-row--sub{border-bottom:0;padding-bottom:4px}
+.kf-sum-row--sub .kf-sum-row__k{color:var(--ink);font-weight:600}
+.kf-recap-line--total{border-top:1.5px solid var(--ink);border-bottom:0;margin-top:6px;padding-top:12px}
+.kf-recap-line__v small{font-weight:400;color:var(--muted);font-size:0.78rem}
+
+.kf-vat{position:relative;display:inline-block;vertical-align:baseline}
+.kf-info{width:17px;height:17px;padding:0;display:inline-grid;place-items:center;border:1.5px solid var(--hair);
+  background:var(--paper);color:var(--muted);font:inherit;font-size:0.68rem;font-weight:700;line-height:1;cursor:pointer;
+  border-radius:50%;transition:border-color .18s,color .18s}
+.kf-info:hover,.kf-info:focus-visible{border-color:var(--ink);color:var(--ink);outline:none}
+.kf-tip{position:absolute;bottom:calc(100% + 9px);left:-10px;width:min(290px,78vw);padding:12px 14px;
+  background:var(--ink);color:#fff;font-size:0.78rem;line-height:1.5;text-transform:none;letter-spacing:0;font-weight:400;
+  opacity:0;visibility:hidden;transition:opacity .18s;z-index:5;pointer-events:none}
+.kf-vat:hover .kf-tip,.kf-vat.is-open .kf-tip,.kf-info:focus-visible + .kf-tip{opacity:1;visibility:visible}

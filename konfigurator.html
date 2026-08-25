@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="icon" href="assets/flexi-mark.svg?v=8" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg?v=10" type="image/svg+xml">
+<link rel="icon" href="/favicon-96.png?v=10" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=10">
+<link rel="manifest" href="/site.webmanifest?v=10">
 <title>Konfigurátor modulárního domu | Flexi House</title>
 <link rel="canonical" href="https://flexihouse.cz/konfigurator">
 <meta property="og:type" content="website">
@@ -13,14 +16,18 @@
 <meta property="og:title" content="Konfigurátor modulárního domu | Flexi House">
 <meta property="og:description" content="Sestavte si dům na míru a hned vidíte orientační cenu.">
 <meta property="og:url" content="https://flexihouse.cz/konfigurator">
-<meta property="og:image" content="https://flexihouse.cz/img/flexi-office.webp">
+<meta property="og:image" content="https://flexihouse.cz/img/og/og-konfigurator.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="description" content="Sestavte si modulární dům krok po kroku. U každé volby rovnou vidíte, o kolik se cena hne, a nabídku pošleme do 24 hodin.">
 <link rel="preload" href="fonts/bricolage-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=9">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=9">
+<link rel="stylesheet" href="assets/flexi.css?v=15">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=10">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -111,10 +118,10 @@
           </div>
           <div class="kf-summary__total">
             <div class="kf-total-row">
-              <span class="kf-total-row__lbl">Orientační cena</span>
+              <span class="kf-total-row__lbl">Orientační cena celkem <span id="sumVatSlot"></span></span>
               <span class="kf-total-row__val" id="sumTotal">–</span>
             </div>
-            <p class="kf-summary__note" id="sumNote">Orientační ceny bez DPH. Doprava a montáž se účtují zvlášť, najdete je mezi doplňky. Finální cenu potvrdíme v nabídce.</p>
+            <p class="kf-summary__note" id="sumNote">Dům a vybavení bez DPH, práce na pozemku včetně DPH. Finální cenu potvrdíme v nabídce.</p>
           </div>
         </div>
       </div>
@@ -125,7 +132,7 @@
 
 
 
-<script src="assets/flexi-3d.js?v=2"></script>
+<script src="assets/flexi-3d.js?v=6"></script>
 <script>
 const I = {
   home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
@@ -155,7 +162,7 @@ function exteriorGroups() {
   return [
     { key:'roof', title:'Střecha', type:'single', required:true, options:[
       { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled. Součást základní ceny.', icon:'roof', price:0 },
-      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:40000 }
+      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:90000 }
     ]},
     { key:'facade', title:'Fasáda', type:'single', required:true, hint:'všechny varianty bez příplatku', options:[
       { id:'wood',  label:'Dřevěný obklad', desc:'Přírodní odstín dřeva, teplý vzhled do přírody.', icon:'layers', price:0, badge:'Oblíbené' },
@@ -166,28 +173,34 @@ function exteriorGroups() {
 }
 function interiorGroups() {
   return [
+    { key:'equipment', title:'Vybavení', type:'multi', required:false, hint:'Doporučujeme obojí, kliknutím lze odebrat', options:[
+      { id:'bath',    label:'Koupelna', desc:'Sprchový kout, umyvadlo, WC a obklady.', icon:'bath', price:30000, preset:true },
+      { id:'kitchen', label:'Kuchyňská linka', desc:'Linka s dřezem a místem pro spotřebiče.', icon:'kitchen', price:10000, preset:true }
+    ]},
     { key:'insulation', title:'Zateplení', type:'single', required:true, options:[
       { id:'std',    label:'Standard 75 mm', desc:'Celoroční komfort pro mírné klima.', icon:'thermo', price:0 },
       { id:'winter', label:'Zimní 100 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:30000 }
     ]},
-    { key:'utilities', title:'Rozvody', type:'single', required:true, options:[
-      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:0 },
-      { id:'full', label:'Elektro + voda a odpad', desc:'Kompletní rozvody vč. přípravy na kuchyň a koupelnu.', icon:'plug', price:50000 }
+    { key:'utilities', title:'Elektroinstalace', type:'single', required:true, options:[
+      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:5000 }
     ]},
     { key:'heating', title:'Vytápění', type:'single', required:true, options:[
       { id:'none',  label:'Bez vytápění', desc:'Dům dodáme bez topného zdroje, doplníte ho sami.', icon:'flame', price:0 },
-      { id:'ac',    label:'Klimatizace s tep. čerpadlem', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:25000, badge:'Doporučeno' },
+      { id:'ac',    label:'Klimatizace s montáží', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:20000, vat:'incl', badge:'Doporučeno' },
       { id:'stove', label:'Kamna', desc:'Sálavé teplo a atmosféra živého ohně.', icon:'flame', price:30000 }
     ]}
   ];
 }
 function addonGroup() {
   return [
-    { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', options:[
-      { id:'terrace',   label:'Terasa', desc:'Prostor pro posezení venku.', icon:'deck', price:20000 },
-      { id:'transport', label:'Doprava a usazení', desc:'Dovezeme a usadíme na váš pozemek.', icon:'truck', price:15000, badge:'Doporučeno' },
-      { id:'assembly',  label:'Montáž na místě', desc:'Kompletní instalace a zprovoznění.', icon:'tool', price:40000 },
-      { id:'permit',    label:'Vyřízení povolení', desc:'Postaráme se o ohlášení / stavební povolení.', icon:'doc', price:15000 }
+    { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', kmFor:'transport', options:[
+      { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000 },
+      { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
+      { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení.', icon:'layers', price:50000, vat:'incl' },
+      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem.', icon:'truck', price:20000, perKm:80, vat:'incl', badge:'Doporučeno' },
+      { id:'assembly',   label:'Montáž domku', desc:'Rozložení a kompletace domu na pozemku.', icon:'tool', price:30000, vat:'incl' },
+      { id:'connection', label:'Připojení na sítě', desc:'Napojení odpadu, elektřiny a vody na přípojky na pozemku.', icon:'plug', price:30000, vat:'incl' },
+      { id:'permit',     label:'Vyřízení povolení', desc:'Postaráme se o ohlášení nebo stavební povolení.', icon:'doc', price:15000 }
     ]}
   ];
 }
@@ -196,18 +209,18 @@ const MODELS = {
   flexihouse: {
     name: 'Flexi House',
     accent: 'dům na míru',
-    base: 480000,
-    baseIncludes: ['Plná koupelna', 'Kuchyňská linka', 'Okna a dveře'],
+    base: 400000,
+    baseIncludes: ['Okna a dveře', 'Fasádní obklad', 'Zateplení 75 mm'],
     tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
     steps: [
       { title:'Dispozice a velikost', micro:'Rozložený dům má vnější rozměr cca 6,3 × 5,9 m (~30 m²) a krytou terasu.', groups:[
         { key:'size', title:'Dispozice', type:'single', required:true, options:[
-          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyní, plná koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:0 }
+          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyňským koutem, koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:0 }
         ]}
       ]},
       { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha a fasáda. Okna a dveře jsou v základní ceně.', groups: exteriorGroups() },
-      { title:'Interiér a technologie', micro:'Izolace, rozvody a vytápění. Plná koupelna i kuchyňská linka jsou v základní ceně.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné. Vyberte, co se vám hodí. Nic není povinné.', groups: addonGroup() }
+      { title:'Interiér a technologie', micro:'Vybavení, izolace, elektroinstalace a vytápění. Ceny jsou bez DPH, u klimatizace včetně DPH a montáže.', groups: interiorGroups() },
+      { title:'Doplňky a služby', micro:'Volitelné. Doprava, usazení, patky, montáž a připojení jsou práce na pozemku, u nich uvádíme ceny včetně DPH.', groups: addonGroup() }
     ]
   }
 };
@@ -220,9 +233,26 @@ const STEP_LABELS = ['Velikost', 'Exteriér', 'Interiér', 'Doplňky', 'Rekapitu
 const TOTAL_STEPS = MODEL.steps.length + 1;
 const RECAP_INDEX = MODEL.steps.length;
 
-const state = { step: 0, sel: {} };
+const state = { step: 0, sel: {}, km: 0 };
 const czk = new Intl.NumberFormat('cs-CZ');
 const fmtPrice = (n) => czk.format(n) + ' Kč';
+
+const VAT_TIP = 'Dům a jeho vybavení uvádíme bez DPH. Sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Doprava, usazení, patky, montáž, připojení a klimatizace už DPH obsahují. Konkrétní sazbu potvrdíme v nabídce.';
+
+function transportKm() { const n = Number(state.km); return isFinite(n) && n > 0 ? Math.round(n) : 0; }
+function optPrice(o) { return o.price + (o.perKm ? o.perKm * transportKm() : 0); }
+function optVat(o) { return o.vat === 'incl' ? 'incl' : 'excl'; }
+function optPriceLabel(o) {
+  if (o.perKm && transportKm() === 0) return '+ ' + fmtPrice(o.price) + ' + ' + o.perKm + ' Kč/km';
+  const p = optPrice(o);
+  if (p <= 0) return 'V základní ceně';
+  return '+ ' + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '');
+}
+function vatInfoHtml(id) {
+  return '<span class="kf-vat" data-vat-info>'
+    + '<button type="button" class="kf-info" id="'+id+'" aria-label="Jak je to s DPH" aria-expanded="false">i</button>'
+    + '<span class="kf-tip" role="note">'+VAT_TIP+'</span></span>';
+}
 
 const GROUPS = {};
 MODEL.steps.forEach(s => s.groups.forEach(g => { GROUPS[g.key] = g; }));
@@ -262,8 +292,8 @@ MODEL.steps.forEach((step, si) => {
       + (g.hint ? '<span class="kf-group__hint">'+g.hint+'</span>' : (g.type==='multi'?'<span class="kf-group__hint">volitelné</span>':''))
       + '</div><div class="kf-cards">';
     g.options.forEach(o => {
-      const priceTxt = o.price > 0 ? '+ '+fmtPrice(o.price) : 'V základní ceně';
-      const priceCls = o.price > 0 ? 'opt__price' : 'opt__price is-incl';
+      const priceTxt = optPriceLabel(o);
+      const priceCls = (o.price > 0 || o.perKm) ? 'opt__price' : 'opt__price is-incl';
       html += '<button type="button" class="opt" data-group="'+g.key+'" data-opt="'+o.id+'">'
         + (o.badge ? '<span class="opt__badge">'+o.badge+'</span>' : '')
         + '<div class="opt__top"><span class="opt__icon">'+svg(o.icon)+'</span>'
@@ -271,8 +301,16 @@ MODEL.steps.forEach((step, si) => {
         + '<div class="opt__body"><div class="opt__t">'+o.label+'</div>'
         + '<div class="opt__d">'+o.desc+'</div>'
         + (o.meta ? '<div class="opt__meta">'+svg('ruler',13)+o.meta+'</div>' : '')
-        + '</div><div class="'+priceCls+'">'+priceTxt+'</div></button>';
+        + '</div><div class="'+priceCls+'" data-price="'+g.key+':'+o.id+'">'+priceTxt+'</div></button>';
     });
+    if (g.kmFor) {
+      html += '</div><div class="kf-km" id="kfKm" hidden>'
+        + '<label for="kfKmInput">Vzdálenost z výroby na pozemek (km)</label>'
+        + '<input type="number" id="kfKmInput" min="0" max="900" step="10" inputmode="numeric" placeholder="např. 120">'
+        + '<span class="kf-km__out" id="kfKmOut">Zadejte vzdálenost a doprava se dopočítá.</span>'
+        + '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
+      return;
+    }
     html += '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
   });
 
@@ -294,8 +332,12 @@ MODEL.steps.forEach((step, si) => {
     + '  <div>'
     + '    <div class="kf-recap-grid" id="recapGrid"></div>'
     + '    <div class="kf-recap-card" style="margin-top:14px">'
-    + '      <div class="kf-recap-line"><span class="kf-recap-line__k">Orientační cena celkem</span>'
-    + '      <span class="kf-recap-line__v" style="font-size:1.15rem;color:var(--c-green)" id="recapTotal">–</span></div>'
+    + '      <div class="kf-recap-line"><span class="kf-recap-line__k">Dům a vybavení (bez DPH)</span>'
+    + '      <span class="kf-recap-line__v" id="recapNet">–</span></div>'
+    + '      <div class="kf-recap-line" id="recapGrossLine"><span class="kf-recap-line__k">Práce na pozemku (vč. DPH)</span>'
+    + '      <span class="kf-recap-line__v" id="recapGross">–</span></div>'
+    + '      <div class="kf-recap-line kf-recap-line--total"><span class="kf-recap-line__k">Orientační cena celkem <span id="recapVatSlot"></span></span>'
+    + '      <span class="kf-recap-line__v" style="font-size:1.15rem" id="recapTotal">–</span></div>'
     + '    </div>'
     + '  </div>'
     + '  <div>'
@@ -368,8 +410,38 @@ function selectOption(btn) {
     state.sel[gKey] = oId;
     btn.closest('.kf-group').classList.remove('invalid');
   }
+  syncKmField();
   renderSummary();
   vizObnov();
+}
+
+function kmOptionSelected() {
+  const g = GROUPS.addons;
+  if (!g || !g.kmFor) return false;
+  return (state.sel.addons || []).indexOf(g.kmFor) !== -1;
+}
+function syncKmField() {
+  const box = document.getElementById('kfKm');
+  if (!box) return;
+  const on = kmOptionSelected();
+  box.hidden = !on;
+  refreshDynamicPrices();
+}
+function refreshDynamicPrices() {
+  Object.keys(GROUPS).forEach(k => {
+    GROUPS[k].options.forEach(o => {
+      if (!o.perKm) return;
+      const el = elMain.querySelector('[data-price="'+k+':'+o.id+'"]');
+      if (el) el.textContent = optPriceLabel(o);
+    });
+  });
+  const out = document.getElementById('kfKmOut');
+  if (out) {
+    const km = transportKm();
+    out.textContent = km > 0
+      ? 'Doprava ' + km + ' km: ' + fmtPrice(km * 80) + ' + usazení ' + fmtPrice(20000) + ' = ' + fmtPrice(20000 + km * 80) + ' vč. DPH'
+      : 'Zadejte vzdálenost a doprava se dopočítá.';
+  }
 }
 
 function maxReached() {
@@ -413,26 +485,54 @@ function selectedItems() {
   MODEL.steps.forEach(step => step.groups.forEach(g => {
     const v = state.sel[g.key];
     if (g.type === 'multi') {
-      (v || []).forEach(id => { const o = g.options.find(x=>x.id===id); if (o) items.push({ group:g.title, label:o.label, price:o.price, key:g.key }); });
+      (v || []).forEach(id => { const o = g.options.find(x=>x.id===id); if (o) items.push({ group:g.title, label:o.label, price:optPrice(o), vat:optVat(o), key:g.key }); });
     } else if (v) {
-      const o = g.options.find(x=>x.id===v); if (o) items.push({ group:g.title, label:o.label, price:o.price, key:g.key });
+      const o = g.options.find(x=>x.id===v); if (o) items.push({ group:g.title, label:o.label, price:optPrice(o), vat:optVat(o), key:g.key });
     }
   }));
   return items;
 }
 const BASE = MODEL.base || 0;
-function total() { return BASE + selectedItems().reduce((s,i)=>s+i.price, 0); }
+function totals() {
+  const items = selectedItems();
+  const net = BASE + items.filter(i => i.vat !== 'incl').reduce((s,i)=>s+i.price, 0);
+  const gross = items.filter(i => i.vat === 'incl').reduce((s,i)=>s+i.price, 0);
+  return { net: net, gross: gross, total: net + gross, items: items };
+}
+function total() { return totals().total; }
 
+function sumRow(k, label, price) {
+  return '<div class="kf-sum-row"><span class="kf-sum-row__k">'+k+'</span>'
+    + '<span class="kf-sum-row__v">'+label
+    + (price > 0 ? '<small>+ '+fmtPrice(price)+'</small>' : '')
+    + '</span></div>';
+}
+function sumBlockHead(title, note) {
+  return '<div class="kf-sum-head">'+title+'<span>'+note+'</span></div>';
+}
+function sumSubtotal(value) {
+  return '<div class="kf-sum-row kf-sum-row--sub"><span class="kf-sum-row__k">Mezisoučet</span>'
+    + '<span class="kf-sum-row__v">'+fmtPrice(value)+'</span></div>';
+}
 function renderSummary() {
-  const baseRow = '<div class="kf-sum-row"><span class="kf-sum-row__k">Základní cena</span>'
-    + '<span class="kf-sum-row__v">'+MODEL.name+'<small>'+fmtPrice(BASE)+'</small></span></div>';
-  elSumBody.innerHTML = baseRow + selectedItems().map(i =>
-    '<div class="kf-sum-row"><span class="kf-sum-row__k">'+i.group+'</span>'
-    + '<span class="kf-sum-row__v">'+i.label
-    + (i.price>0 ? '<small>+ '+fmtPrice(i.price)+'</small>' : '')
-    + '</span></div>'
-  ).join('');
-  elSumTotal.textContent = fmtPrice(total());
+  const t = totals();
+  const net = t.items.filter(i => i.vat !== 'incl');
+  const gross = t.items.filter(i => i.vat === 'incl');
+
+  let html = sumBlockHead('Dům a vybavení', 'bez DPH')
+    + '<div class="kf-sum-row"><span class="kf-sum-row__k">Základní cena</span>'
+    + '<span class="kf-sum-row__v">'+MODEL.name+'<small>'+fmtPrice(BASE)+'</small></span></div>'
+    + net.map(i => sumRow(i.group, i.label, i.price)).join('')
+    + sumSubtotal(t.net);
+
+  if (gross.length) {
+    html += sumBlockHead('Práce na pozemku', 'vč. DPH')
+      + gross.map(i => sumRow(i.group, i.label, i.price)).join('')
+      + sumSubtotal(t.gross);
+  }
+
+  elSumBody.innerHTML = html;
+  elSumTotal.textContent = fmtPrice(t.total);
 }
 
 function buildRecapContent() {
@@ -442,16 +542,16 @@ function buildRecapContent() {
     step.groups.forEach(g => {
       const v = state.sel[g.key];
       if (g.type === 'multi') {
-        (v||[]).forEach(id => { const o=g.options.find(x=>x.id===id); if(o) lines.push([o.label, o.price]); });
+        (v||[]).forEach(id => { const o=g.options.find(x=>x.id===id); if(o) lines.push([o.label, optPrice(o), optVat(o)]); });
         if (!(v&&v.length)) lines.push(['–', null]);
       } else {
         const o = v && g.options.find(x=>x.id===v);
-        lines.push([o ? o.label : '–', o ? o.price : null]);
+        lines.push([o ? o.label : '–', o ? optPrice(o) : null, o ? optVat(o) : null]);
       }
     });
     return '<div class="kf-recap-card"><h3>'+step.title+'</h3>'
       + lines.map(l => '<div class="kf-recap-line"><span class="kf-recap-line__k">'+l[0]+'</span>'
-        + '<span class="kf-recap-line__v">'+(l[1]>0?'+ '+fmtPrice(l[1]):(l[1]===0?'v ceně':''))+'</span></div>').join('')
+        + '<span class="kf-recap-line__v">'+(l[1]>0?'+ '+fmtPrice(l[1])+(l[2]==='incl'?' <small>vč. DPH</small>':''):(l[1]===0?'v ceně':''))+'</span></div>').join('')
       + '</div>';
   }).join('');
   const baseCard = '<div class="kf-recap-card kf-recap-card--base"><h3>Základní cena</h3>'
@@ -461,8 +561,32 @@ function buildRecapContent() {
       + '<span class="kf-recap-line__v">v ceně</span></div>').join('')
     + '</div>';
   grid.innerHTML = baseCard + stepCards;
-  document.getElementById('recapTotal').textContent = fmtPrice(total());
+  const t = totals();
+  document.getElementById('recapNet').textContent = fmtPrice(t.net);
+  document.getElementById('recapGross').textContent = fmtPrice(t.gross);
+  document.getElementById('recapGrossLine').style.display = t.gross > 0 ? '' : 'none';
+  document.getElementById('recapTotal').textContent = fmtPrice(t.total);
+  const slot = document.getElementById('recapVatSlot');
+  if (slot && !slot.firstChild) { slot.innerHTML = vatInfoHtml('vatInfoRecap'); bindVatInfo(slot); }
 }
+
+function bindVatInfo(scope) {
+  scope.querySelectorAll('.kf-info').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wrap = btn.closest('.kf-vat');
+      const open = wrap.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+}
+document.addEventListener('click', () => {
+  document.querySelectorAll('.kf-vat.is-open').forEach(w => {
+    w.classList.remove('is-open');
+    const b = w.querySelector('.kf-info');
+    if (b) b.setAttribute('aria-expanded', 'false');
+  });
+});
 
 function buildPayload() {
   const f = document.getElementById('leadForm');
@@ -474,18 +598,23 @@ function buildPayload() {
     base: BASE,
     baseFormatted: fmtPrice(BASE),
     baseIncludes: MODEL.baseIncludes || [],
-    total: total(),
-    totalFormatted: fmtPrice(total()),
+    total: totals().total,
+    totalFormatted: fmtPrice(totals().total),
+    totals: (function(){ const t = totals(); return {
+      net: t.net, netFormatted: fmtPrice(t.net),
+      vatIncluded: t.gross, vatIncludedFormatted: fmtPrice(t.gross)
+    }; })(),
+    transportKm: transportKm(),
     configuration: MODEL.steps.map(step => ({
       step: step.title,
       items: step.groups.flatMap(g => {
         const v = state.sel[g.key];
-        if (g.type === 'multi') return (v||[]).map(id => { const o=g.options.find(x=>x.id===id); return { group:g.title, value:o.label, price:o.price }; });
+        if (g.type === 'multi') return (v||[]).map(id => { const o=g.options.find(x=>x.id===id); return { group:g.title, value:o.label, price:optPrice(o), vat:optVat(o) }; });
         const o = v && g.options.find(x=>x.id===v);
-        return o ? [{ group:g.title, value:o.label, price:o.price }] : [];
+        return o ? [{ group:g.title, value:o.label, price:optPrice(o), vat:optVat(o) }] : [];
       })
     })),
-    summary: items.map(i => ({ group:i.group, value:i.label, price:i.price })),
+    summary: items.map(i => ({ group:i.group, value:i.label, price:i.price, vat:i.vat })),
     contact: {
       name: f.name.value.trim(),
       email: f.email.value.trim(),
@@ -633,13 +762,23 @@ function buildPdfDoc() {
     });
     if (!rows.length) return;
     sectionTitle(step.title);
-    rows.forEach((o) => line(o.label, o.price > 0 ? '+ ' + fmtPrice(o.price) : 'v ceně', o.price > 0));
+    rows.forEach((o) => {
+      const p = optPrice(o);
+      line(o.label, p > 0 ? '+ ' + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '') : 'v ceně', p > 0);
+    });
     y += 7;
   });
 
+  const T = totals();
   openSection = null;
+  room(130);
+  sectionTitle('Rekapitulace ceny');
+  line('Dům a vybavení (bez DPH)', fmtPrice(T.net), true);
+  if (T.gross > 0) line('Práce na pozemku (vč. DPH)', fmtPrice(T.gross), true);
+  if (transportKm() > 0) line('Z toho doprava, ' + transportKm() + ' km po 80 Kč', fmtPrice(transportKm() * 80), false);
+  openSection = null;
+  y += 9;
   room(70);
-  y += 2;
   stroke(PDF.ink); doc.setLineWidth(1);
   doc.rect(M, y, CW, 54, 'S');
   body(false); doc.setFontSize(8); ink(PDF.blue);
@@ -647,9 +786,9 @@ function buildPdfDoc() {
   doc.text('ORIENTAČNÍ CENA CELKEM', M + 18, y + 22);
   doc.setCharSpace(0);
   doc.setFontSize(7.5);
-  doc.text('bez DPH', M + 18, y + 37);
+  doc.text('DPH 12 % u domu k bydlení, 21 % pro podnikání', M + 18, y + 37);
   display(); doc.setFontSize(21); ink(PDF.ink);
-  doc.text(pdfSafe(fmtPrice(total())), right - 18, y + 34, { align: 'right' });
+  doc.text(pdfSafe(fmtPrice(T.total)), right - 18, y + 34, { align: 'right' });
   y += 64;
 
   const f = document.getElementById('leadForm');
@@ -669,7 +808,7 @@ function buildPdfDoc() {
     y += boxH + 16;
   }
 
-  const note = 'Tento dokument je orientační a nezávazný. Ceny jsou uvedeny bez DPH, nezahrnují individuální dopravu mimo standardní oblast ani přípravu pozemku, pokud není uvedeno jinak. Vygenerováno konfigurátorem na flexihouse.cz.';
+  const note = 'Tento dokument je orientační a nezávazný. Dům a jeho vybavení uvádíme bez DPH, sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Práce na pozemku, tedy doprava, usazení, betonové patky, montáž, připojení na sítě a klimatizace, jsou uvedené včetně DPH. Cena nezahrnuje přípravu pozemku ani přípojky, pokud není uvedeno jinak. Vygenerováno konfigurátorem na flexihouse.cz.';
   body(false); doc.setFontSize(7.5);
   const noteLines = doc.splitTextToSize(note, CW);
   room(noteLines.length * 10 + 12);
@@ -754,12 +893,28 @@ function bindForm() {
 }
 
 Object.values(GROUPS).forEach(g => {
-  if (g.type !== 'multi' && g.options.length === 1) {
+  if (g.type === 'multi') {
+    g.options.filter(o => o.preset).forEach(o => {
+      const btn = elMain.querySelector('.opt[data-group="'+g.key+'"][data-opt="'+o.id+'"]');
+      if (btn) selectOption(btn);
+    });
+  } else if (g.options.length === 1) {
     const btn = elMain.querySelector('.opt[data-group="'+g.key+'"][data-opt="'+g.options[0].id+'"]');
     if (btn) selectOption(btn);
   }
 });
 
+const kmInput = document.getElementById('kfKmInput');
+if (kmInput) kmInput.addEventListener('input', () => {
+  state.km = kmInput.value;
+  refreshDynamicPrices();
+  renderSummary();
+});
+
+const sumSlot = document.getElementById('sumVatSlot');
+if (sumSlot) { sumSlot.innerHTML = vatInfoHtml('vatInfoSum'); bindVatInfo(sumSlot); }
+
+syncKmField();
 renderSummary();
 goTo(0);
 bindForm();
@@ -825,7 +980,7 @@ vizStart();
     </div>
     <div class="foot__legal">
       <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10</span>
-      <span>Vytvořil statly.cz</span>
+      <span>Vytvořil <a class="foot__by" href="https://statly.cz/" target="_blank" rel="noopener">statly.cz</a></span>
     </div>
   </div>
 </footer>
