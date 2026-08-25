@@ -1,7 +1,7 @@
 (function (global) {
 'use strict';
 
-var TEX_VERZE = '2';
+var TEX_VERZE = '3';
 
 var TEX = {
   wood:      { soubor: 'fasada.webp',       normala: 'fasada_n.webp' },
@@ -31,12 +31,16 @@ var MAT = {
   teren:   { tex: null, tint: [0.30, 0.30, 0.29], rough: 0.95, metal: 0.00, teren: 1 }
 };
 
-var W_OPEN = 6.32, W_FOLD = 2.20, D = 5.90, H = 2.35, LIFT = 0.11;
+var W_OPEN = 6.276, W_FOLD = 2.250, D = 5.85, H = 2.337, LIFT = 0.070;
 var STRANA = (W_OPEN - W_FOLD) / 2;
 var PANEL = 1.15;                 
 var PODHLED_DLAZ = 0.66;          
 var RAM_S = 0.062;                
-var SOKL = 0.245, PREKLAD = 0.225;  
+var SOKL = 0.150, PREKLAD = 0.242;  
+var OKNO_W = 1.120, OKNO_H = 1.100, OKNO_PARAPET = 0.80;
+var OKNO_MALE_W = 0.700, OKNO_MALE_H = 0.400, OKNO_MALE_PARAPET = 1.55;
+var DVERE_W = 1.500, DVERE_H = 2.190;
+var OKNO_OD_ROHU = 1.43;
 var PRESAH = 0.26;                
 var FASADA_Z = 0.022;             
 
@@ -549,7 +553,7 @@ function Scena(canvas, opt) {
     var panelH = panelY1 - panelY0;
     var pal = S.facade === 'grey' ? 'grey' : (S.facade === 'black' ? 'black' : 'wood');
 
-    var KROK = 0.045;
+    var KROK = 0.225;
     var moduly = [];
     if (half - W_FOLD / 2 > 0.06) {
       moduly.push({ x0: -half, x1: -W_FOLD / 2, zF: zF - KROK, zB: zB + KROK, stred: false });
@@ -570,22 +574,15 @@ function Scena(canvas, opt) {
       }
       if (strana === 'front') {
         if (m.stred) {
-          var dw = Math.min(1.98, (b - a) - 0.10), dh = vyskaPole - 0.10;
-          out.push({ u: stred - dw / 2 - a, v: 0.05, w: dw, h: dh,
-            podil: [0.17, 0.33, 0.33, 0.17], hloubka: 0.080, ram: 0.062, dvere: true });
-        } else if (stred < 0) {
-          pridej(stred + 0.02, 1.32, 1.04, 0.96, { tabuli: 2 });
+          out.push({ u: stred - DVERE_W / 2 - a, v: 0.02, w: DVERE_W, h: DVERE_H,
+            podil: [0.5, 0.5], hloubka: 0.080, ram: 0.062, dvere: true });
         } else {
-          pridej(stred + 0.06, 0.94, 0.80, 1.16, { tabuli: 2 });
+          pridej(stred, OKNO_W, OKNO_H, OKNO_PARAPET, { tabuli: 2 });
         }
+      } else if (m.stred) {
+        pridej(stred, OKNO_MALE_W, OKNO_MALE_H, OKNO_MALE_PARAPET, { tabuli: 1 });
       } else {
-        if (m.stred) {
-          pridej(stred + 0.02, 0.50, 0.50, 1.42, { tabuli: 1 });
-        } else if (stred < 0) {
-          pridej(stred - 0.04, 1.30, 1.02, 1.00, { tabuli: 2 });
-        } else {
-          pridej(stred + 0.04, 1.30, 1.02, 1.00, { tabuli: 2 });
-        }
+        pridej(stred, OKNO_W, OKNO_H, OKNO_PARAPET, { tabuli: 2 });
       }
       return out;
     }
@@ -626,11 +623,12 @@ function Scena(canvas, opt) {
       var tileU = w / panelu;
       var otvory = [];
       if (S.fold > 0.45) {
-        var ok = o.ven > 0 ? { c: -0.35, w: 1.10, h: 0.88, p: 1.04 } : { c: 0.30, w: 0.92, h: 0.78, p: 1.12 };
-        var u = o.ven > 0 ? (b - ok.c - ok.w / 2) : (ok.c - ok.w / 2 - a);
-        if (u > 0.10 && u + ok.w < w - 0.10) {
-          otvory.push({ u: u, v: (LIFT + ok.p) - panelY0, w: ok.w, h: ok.h, tabuli: 2 });
-        }
+        [a + OKNO_OD_ROHU, b - OKNO_OD_ROHU].forEach(function (c) {
+          var u = (o.ven > 0 ? (b - c) : (c - a)) - OKNO_W / 2;
+          if (u > 0.10 && u + OKNO_W < w - 0.10) {
+            otvory.push({ u: u, v: (LIFT + OKNO_PARAPET) - panelY0, w: OKNO_W, h: OKNO_H, tabuli: 2 });
+          }
+        });
       }
       var rohBL, dirU, dirN;
       if (o.ven > 0) {
@@ -697,33 +695,38 @@ function Scena(canvas, opt) {
     }
 
     function stit(z, ven, otevreny, lemNa) {
-      var zk = z - ven * 0.02;
-      var yPata = y1 - PREKLAD;
       if (!otevreny) {
         var su = function (x) { return (ven > 0 ? x + half : half - x) / PANEL; };
         var sv = function (y) { return (y - panelY0) / panelH; };
-        [[-half, 0], [0, half]].forEach(function (c) {
-          var xl = c[0], xp = c[1];
-          var yl = podhledY(xl, zk), yp = podhledY(xp, zk);
-          var L0 = v3(xl, yPata, zk), P0 = v3(xp, yPata, zk);
-          var P1 = v3(xp, yp, zk), L1 = v3(xl, yl, zk);
-          var uL0 = [su(xl), sv(yPata)], uP0 = [su(xp), sv(yPata)];
-          var uP1 = [su(xp), sv(yp)], uL1 = [su(xl), sv(yl)];
-          if (ven > 0) sit.quad(pal, L0, P0, P1, L1, { uv: [uL0, uP0, uP1, uL1] });
-          else sit.quad(pal, P0, L0, L1, P1, { uv: [uP0, uL0, uL1, uP1] });
+        moduly.forEach(function (m) {
+          var zk = (ven > 0 ? m.zF : m.zB) - ven * 0.02;
+          var x0 = m.x0 - RAM_S, x1 = m.x1 + RAM_S;
+          var casti = (x0 < -0.01 && x1 > 0.01) ? [[x0, 0], [0, x1]] : [[x0, x1]];
+          casti.forEach(function (c) {
+            var xl = c[0], xp = c[1];
+            var yl = podhledY(xl, zk), yp = podhledY(xp, zk);
+            if (yl - y1 < 0.005 && yp - y1 < 0.005) return;
+            var L0 = v3(xl, y1, zk), P0 = v3(xp, y1, zk);
+            var P1 = v3(xp, yp, zk), L1 = v3(xl, yl, zk);
+            var uL0 = [su(xl), sv(y1)], uP0 = [su(xp), sv(y1)];
+            var uP1 = [su(xp), sv(yp)], uL1 = [su(xl), sv(yl)];
+            if (ven > 0) sit.quad(pal, L0, P0, P1, L1, { uv: [uL0, uP0, uP1, uL1] });
+            else sit.quad(pal, P0, L0, L1, P1, { uv: [uP0, uL0, uL1, uP1] });
+          });
         });
       }
-      var lemZ = (lemNa === undefined ? z : lemNa) + ven * 0.035;
+      var lemZ = (lemNa === undefined ? z : lemNa) - ven * 0.012;
       var kraje = [
-        [v3(-half - PRESAH, okapH, lemZ), v3(0, hreben, lemZ)],
-        [v3(0, hreben, lemZ), v3(half + PRESAH, okapH, lemZ)]
+        [v3(-half - PRESAH, okapH, lemZ), v3(0, hreben + 0.012, lemZ)],
+        [v3(0, hreben + 0.012, lemZ), v3(half + PRESAH, okapH, lemZ)]
       ];
       kraje.forEach(function (k) {
         var a = k[0], b = k[1];
+        var hloubka = okapH - okapD + 0.10;
         if (ven > 0) {
-          sit.quad('ocel', v3(a[0], a[1] - 0.19, a[2]), v3(b[0], b[1] - 0.19, b[2]), b, a, { tileU: 1.2, tileV: 0.35 });
+          sit.quad('ocel', v3(a[0], a[1] - hloubka, a[2]), v3(b[0], b[1] - hloubka, b[2]), b, a, { tileU: 1.2, tileV: 0.35 });
         } else {
-          sit.quad('ocel', v3(b[0], b[1] - 0.19, b[2]), v3(a[0], a[1] - 0.19, a[2]), a, b, { tileU: 1.2, tileV: 0.35 });
+          sit.quad('ocel', v3(b[0], b[1] - hloubka, b[2]), v3(a[0], a[1] - hloubka, a[2]), a, b, { tileU: 1.2, tileV: 0.35 });
         }
       });
     }

@@ -9,12 +9,20 @@ Textury nejsou kreslené, jsou to rektifikované výřezy z fotek. Fotka se pře
 homografii převede na kolmý pohled se známým měřítkem (px na metr), takže
 kresba na modelu vychází ve skutečné velikosti. Měřítko se opírá o:
 
-  fasáda   malé okno na zadní stěně (IMG_2285); jeho šířka plyne ze šířky
-           středního modulu 2,20 m, kterou dává katalog. Odtud rozteč kresby
-           prken ve fasádním plechu 0,215 m (ověřeno i na IMG_2289 a DJI_0173).
+  fasáda   malé okno na zadní stěně (IMG_2285) slouží jen jako čtyřbodová
+           reference pro homografii. Vodorovné měřítko drží šířka středního
+           modulu 2,250 m z výrobního výkresu, svislé výška panelu 2,335 m
+           (2500 celkem mínus rám 70 dole a 95 nahoře). Odtud rozteč kresby
+           prken ve fasádním plechu 0,225 m.
   prkna    rovina terasy se rektifikuje přes horizont a ohnisko z EXIF
            (IMG_2277, 14 mm). Výška fotoaparátu nad podlahou se dopočítá tak,
-           aby rozteč prken vyšla 0,148 m.
+           aby rozteč prken vyšla 0,148 m. Terasu výrobní výkres neřeší, tohle
+           číslo je pořád odečtené z fotek.
+
+OKNO_W a OKNO_H nejsou skutečné rozměry okna — je to jen čtyřbodová reference
+pro homografii, doladěná tak, aby rozteč kresby prken vyšla 0,225 m a výška
+plechu 2,335 m. Když se sáhne na jednu, druhá se posune taky, protože homografie
+není separabilní; hodnoty vznikly dvěma iteracemi.
 
 Kontrolní čísla vypisuje skript při běhu — když se rozteč po rektifikaci
 rozjede, měřítko sedí špatně.
@@ -29,7 +37,7 @@ FOTKY = os.path.join(KOREN, 'podklady-3d', 'fotky')
 CIL = os.path.join(KOREN, 'assets', 'tex')
 os.makedirs(CIL, exist_ok=True)
 
-PANEL_W, PANEL_H = 1.15, 1.88
+PANEL_W, PANEL_H = 1.15, 1.946
 PRKNO = 0.148
 DLAZDICE_PRKEN = 8
 
@@ -231,8 +239,8 @@ def zmensi(a, W, H):
     return np.asarray(obraz(a).resize((W, H), Image.LANCZOS), dtype=np.float32) / 255.
 
 
-OKNO_W, OKNO_H = 0.539, 0.560
-PLANKA = 0.220
+OKNO_W, OKNO_H = 0.5662, 0.5112
+PLANKA = 0.225
 FAS_PXM = 900.0
 FAS_OKNO = [(3352.2, 1464.3), (3829.9, 1477.5), (3829.0, 1980.2), (3330.9, 1975.6)]
 FAS_BILA = np.array([0.94994, 1.00057, 1.04949])
@@ -247,6 +255,17 @@ def rekt_zadni_stena():
     o, mimo = vzorkuj(a, H, 6600, 3400, ox=-3100, oy=-1300)
     o[mimo] = 0
     return np.clip(o / FAS_BILA, 0, 1.2)
+
+
+def svisly_rozsah(stena, x0, x1):
+    """Najde, kde na stěně začíná a končí fasádní plech; mimo něj je ocelový rám."""
+    P = FAS_PXM
+    pas = stena[:, int(x0 * P + 3100):int(x1 * P + 3100)]
+    mx, mn = pas.max(axis=2), pas.min(axis=2)
+    je = ((mx > 0.16) & ((mx - mn) / np.maximum(mx, 1e-3) > 0.22)
+          & (pas[..., 0] > pas[..., 1] * 1.25))
+    ys = np.where(je.mean(axis=1) > 0.6)[0]
+    return (ys.min() - 1300) / P, (ys.max() - 1300) / P
 
 
 def fasada():
@@ -265,7 +284,9 @@ def fasada():
         return A[int(y0 * P + 1300):int(y1 * P + 1300),
                  int(x0 * P + 3100):int(x1 * P + 3100)].copy()
 
-    X0, X1, Y0, Y1 = -0.578, 1.198, -0.03, 1.90
+    X0, X1 = -0.605, 1.253
+    Y0, Y1 = svisly_rozsah(stena, -0.58, -0.42)
+    print('  plech svisle %.3f .. %.3f m (%.3f m, panel %.3f)' % (Y0, Y1, Y1 - Y0, PANEL_H))
     c = vyrez(stena, X0, X1, Y0, Y1)
     m = vyrez(spatne, X0, X1, Y0, Y1)
     print('  zakryto oknem, růžicí a odlesky: %.1f %%' % (100 * m.mean()))

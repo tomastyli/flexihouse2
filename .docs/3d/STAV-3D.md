@@ -143,18 +143,51 @@ návštěvník uvidí staré textury s novým modelem.
 
 ## Rozměry, které model používá
 
-Z webu (ověřené): 6,32 × 5,90 m rozloženo, 2,20 m složeno, výška 2,48 m.
+Od 25. 8. 2026 jsou z **výrobního výkresu** (UPS Housing, 01/01, měřítko 1:100,
+`~/Desktop/Expandable container house drawing.pdf`). Do té doby byly odečtené
+z fotek a většina byla vedle.
 
-Odečtené z fotek (poměry sedí, absolutní čísla čekají na doměření):
-- výška stěny 2,35 m, podlaha 0,11 m nad terénem
-- ocelový sokl 0,245 m, horní pás 0,225 m, sloupky 0,124 m
-- rozteč spár ve fasádním plechu 1,15 m
-- přesah střechy 0,26 m, lem 0,19 m, hřeben 1,24 m nad okapem (~20°)
-- terasa hluboká 2,15 m, prkna po 148 mm se spárou 5 mm
-- okna — průčelí: velké 1,32 × 1,04 (parapet 0,96), prosklené dveře
-  se dvěma světlíky přes skoro celý střední modul, menší vpravo 0,94 × 0,80
-  (parapet 1,16); zadní: 2× 1,30 × 1,02 (parapet 1,00), mezi nimi
-  0,50 × 0,50 (parapet 1,42); boky: vpravo 1,10 × 0,88, vlevo 0,92 × 0,78
+| co | model | výkres |
+|---|---|---|
+| šířka rozloženo | 6,276 | 2013 + 2250 + 2013 = 6276 |
+| střední (přepravní) modul | 2,250 | 2250 |
+| boční moduly | 2,013 | 2013 |
+| hloubka přes střední modul | 5,850 | 225 + 5400 + 225 = 5850 |
+| hloubka bočnice | 5,400 | 5400 |
+| výška boxu | 2,337 | 2337 |
+| pod boxem (patky) | 0,070 | 70 |
+| nad boxem (střecha) | — kreslí se zvlášť | 95 |
+| předsazení středního modulu | 0,225 | 225 na každé straně |
+
+**Kóta 2337 je výška boxu VČETNĚ ocelových rámů, ne výška fasádního panelu.**
+Výšku rámů výkres nekótuje, takže se bere z poměru změřeného na rektifikované
+fotce (IMG_2285): horní pás **0,242**, panel **1,945**, sokl **0,150**. Součet
+sedí na 2,337. Čísla 70 a 95 jsou patky pod boxem a střešní nástavba nad ním —
+kdo si je splete s rámy, dostane dům bez černé příčky nad okny.
+
+**Otvorů je devět a jsou jen tří druhů:**
+
+| označení | ks | rozměr | kde |
+|---|---|---|---|
+| W1 | 8 | 1120 × 1100 | po dvou na každé ze čtyř stěn |
+| W2 | 1 | 700 × 400 | zadní stěna, uprostřed, parapet 1,55 |
+| D1 | 1 | 1500 × 2190 | průčelí, uprostřed |
+
+Okna na bočnicích jsou 1,43 m od každého rohu, parapet všech W1 je 0,80 m nad
+spodkem boxu. D2 a D3 (800 × 2050) jsou dveře vnitřní, model je nekreslí.
+
+**Předsazení středního modulu je 225 mm, ne 45.** První kolo ho odečetlo z fotky
+a bylo pětkrát vedle.
+
+## Co výkres neřeší
+
+Na zadní stěně kreslí model kulatou větrací růžici a tři odpadní vývody u paty
+podle fotek — na výkresu nejsou. Rozteč spár ve fasádním plechu (`PANEL`, 1,15 m)
+výkres taky neuvádí, drží se odečtená hodnota.
+
+Na fotkách má malé okno na zadní stěně poměr stran zhruba 1:1, kdežto W2 je podle
+výkresu 700 × 400, tedy výrazně na šířku. Model kreslí výkres. Buď se dodávaná
+verze liší, nebo je na fotkách jiná zakázka.
 
 ## Tvar střechy
 
@@ -190,9 +223,7 @@ model nekreslí, Tomáš je zamítl — dům sedí na terénu.
 
 ## Co zbývá
 
-1. **Kóty** — výška stěny, přesah střechy, skutečné rozměry oken.
-   Výkres od výrobce nebo deset minut s metrem.
-2. **Fotky šedé a černé fasády** — v sadě nejsou, všechny jednotky jsou cedrové.
+1. **Fotky šedé a černé fasády** — v sadě nejsou, všechny jednotky jsou cedrové.
    Ty dvě varianty jsou přebarvená stejná kresba dřeva.
    Doměřit rozteč prken terasy metrem — 0,148 m je pořád odhad z prvního kola.
 3. **Ověřit tvar střechy s výrobcem** — fotografované jednotky mají plochou
@@ -214,6 +245,16 @@ takže i s rozbitou CSS jen vykreslí menší náhled.
 
 ## Na co si dát pozor (draze zaplacené)
 
+- **Lem štítu patří přesně na hranu střechy, ne před ni.** Když je posunutý
+  dopředu, zůstane mezi ním a hranou střechy štěrbina a tou je při pohledu
+  shora vidět podhled — na štítu z toho vznikne světlý klín, který vypadá jako
+  rozbitá textura. Lem se proto sází o 12 mm dovnitř a je hlubší než tloušťka
+  střechy, aby hranu s jistotou přebral.
+- **Štít se musí kreslit po modulech, každý v rovině svého modulu.** Střední
+  modul je předsazený o 225 mm, takže jeden štít přes celou šířku leží před
+  bočními moduly a zakryje jejich horní ocelový pás — na průčelí pak chybí
+  černá příčka mezi stěnou a střechou. Štít taky začíná až na `y1`, ne na
+  `y1 - PREKLAD`, jinak si s tím pásem leze do cesty.
 - **Podhled nesmí být jedna plocha přes celý půdorys.** Když se natáhne i nad
   interiér, protne štítovou stěnu a na štítu z něj zůstane šedý klín, který
   vypadá jako rozbitá textura. Kreslí se proto po pásech: zadní přesah, oba
