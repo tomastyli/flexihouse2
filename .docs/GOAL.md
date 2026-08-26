@@ -78,6 +78,79 @@ Zbývá: `assets/site.css` a `assets/home.css` smazat, až na nich nebude viset 
 6. ~~`konfigurator.html`~~ hotovo
 7. ~~Přepnout `index.html` na návrh D~~ hotovo. Smazání `assets/site.css` a `home.css` zbývá, visí na nich už jen archivní `_navrh-*.html`.
 
+## Stav k 26. 8. 2026 — co z „otevřených věcí" zbylo
+
+Seznam níž je z 4. 8. a je zastaralý. Přeměřeno a přepsáno 26. 8.:
+
+| položka z 4. 8. | stav |
+|---|---|
+| Dev banner | **hotovo**, na žádné stránce už není |
+| Izolace 80 vs 75/100 mm | **hotovo**, homepage i konfigurátor uvádějí 75 a 100 mm |
+| Produkční deploy | **hotovo**, Pages projekt `flexihouse2` v účtu Dana Prokeše, domény `flexihouse.cz` i `www` |
+| Ceny | **hotovo**, 400 000 v katalogu, na detailu i jako `base` v konfigurátoru |
+| Fotky Office a dům na míru | **otevřené**, pořád jen rendery |
+| Písmo ve značce | Archivo nasazený a funguje, papírová položka |
+
+### Naměřeno na produkci (26. 8. 2026, Lighthouse desktop)
+
+Do té doby se měřil jen náhledový projekt, takže tyhle věci nebyly vidět.
+
+| stránka | výkon | přístupnost | postupy | SEO | LCP | CLS |
+|---|---|---|---|---|---|---|
+| / | 100 | 100 | 100 | 92 | 0,6 s | 0 |
+| /katalog | 100 | 100 | 100 | 92 | 0,6 s | 0 |
+| /konfigurator | 100 | 100 | 100 | 92 | 0,5 s | 0 |
+| /poptavka | 100 | 100 | 100 | 92 | 0,4 s | 0 |
+| /flexi-house | 99 | 100 | 100 | 92 | 0,9 s | 0 |
+| /flexi-office | 100 | 100 | 100 | 92 | 0,7 s | 0 |
+| /podminky | 100 | 100 | 100 | 92 | 0,4 s | 0 |
+
+Homepage měla před opravou výkon 86 a CLS 0,073. Tři nálezy, všechny opravené:
+
+- **Hero se stahoval dvakrát.** Preload nabízel kandidáty jen do 1200w, ale
+  `<img srcset>` má i 1400w. Prohlížeč stáhl obojí, 133 + 139 kB. Pravidlo:
+  `imagesrcset` v preloadu musí být znak po znaku stejná sada jako `srcset`
+  v elementu, jinak se obrázek stáhne dvakrát a v Lighthousu to vypadá jako
+  „velký obrázek", ne jako duplicita.
+- **`sizes` lhalo o šířce.** Karty `flexi-office` a `dum-na-miru` v mřížce
+  `.picks` měly `100vw, 1280px`, přestože jsou široké 485 px, takže se tahal
+  originál 1051×788. Kartu `flexi-house` to minulo, ta `sizes` měla správně —
+  chyba vznikla kopírováním jen na dvou ze tří karet.
+- **Posun rozvržení dělalo písmo.** Systémový sans-serif je na nadpisu
+  homepage o 28 % širší než Bricolage (2758 vs 2153 px, změřeno). Nadpis se
+  v náhradním písmu zalomil na víc řádků a při doběhnutí Bricolage shodil
+  zbytek stránky. Přidaná rodina `BricolageNahrada` se `size-adjust: 80 %`
+  sedí na 0,1 %. Výška řádku jde z `line-height`, takže `size-adjust`
+  blokovým rozvržením nehne.
+
+Celkem homepage z 633 na 392 kB.
+
+**SEO 92 na všech stránkách je planý poplach.** Cloudflare vkládá do
+`robots.txt` řádek `Content-Signal:`, který Lighthouse nezná a hlásí jako
+neznámou direktivu. Podle specifikace robots.txt se neznámé direktivy ignorují,
+Googlu to nevadí. Zmizí to zároveň s vypnutím Managed robots.txt, viz níž.
+
+**Konfigurátor těsně po deployi jednou ukázal CLS 0,382.** Tři běhy po sobě
+pak daly 0. Je to studená edge cache po nasazení nových textur, ne chyba
+stránky — neopravovat, jen se tím nenechat zmást.
+
+### Otevřené — potřebuje Tomáše nebo Dana
+
+1. **AI crawlery jsou zablokované.** Živý `robots.txt` zakazuje ClaudeBot,
+   GPTBot, Google-Extended, CCBot, Bytespider, Applebot-Extended,
+   meta-externalagent a Amazonbot. Není to v repu, vkládá to Cloudflare.
+   Vypíná se to v dashboardu zóny `flexihouse.cz` ve dvou vrstvách, stejně
+   jako se to řešilo u mojeviditelnost.cz: **Managed robots.txt** a
+   **Block AI bots**. Zóna je v účtu Dana Prokeše, přes API to nejde —
+   token má na zónu jen čtení a endpoint zápis odmítá (10405).
+   Než se to vypne, web se nedostane do odpovědí AI asistentů.
+2. **Fotky.** Flexi Office a Dům na míru mají jen rendery.
+3. **Odeslání poptávky naostro nikdo neověřil.** Obě funkce jsou nasazené,
+   validace i honeypot na produkci odpovídají správně a všechny tři proměnné
+   (`RESEND_API_KEY`, `LEAD_TO_EMAIL`, `RESEND_FROM`) jsou v produkčním
+   prostředí nastavené. Neověřené zůstává jen to, že Resend e-mail opravdu
+   doručí — to nejde zkusit, aniž by přišla falešná poptávka Danovi do schránky.
+
 ## Hotovo znamená
 
 - [ ] stránka jede na `assets/flexi.css`, žádný inline blok tokenů
