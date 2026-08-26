@@ -134,22 +134,51 @@ Googlu to nevadí. Zmizí to zároveň s vypnutím Managed robots.txt, viz níž
 pak daly 0. Je to studená edge cache po nasazení nových textur, ne chyba
 stránky — neopravovat, jen se tím nenechat zmást.
 
+### Vyřešeno 26. 8. odpoledne
+
+**AI crawlery odblokované.** Byly to opravdu dvě vrstvy a jedna zamykala
+druhou. V **AI Crawl Control → Security** byla polovina crawlerů zablokovaná,
+ale jednotlivé přepínače nešly přepnout: tooltip prozradil, že je drží nadřazené
+**Block AI bots Scope**. To se přepnulo z „Block on all pages" na
+„Do not block (allow crawlers)", čímž se odemklo všech 32 přepínačů a všechny
+spadly na nezablokované. Druhá vrstva je **AI Crawl Control → Signals →
+Managed robots.txt**, ta se vypnula zvlášť. Teprve pak robots.txt přestal být
+„Cloudflare Managed" a začal se servírovat náš vlastní z repa.
+
+Vedlejší efekt: SEO v Lighthouse vyskočilo z 92 na **100** na všech stránkách,
+protože zmizel řádek `Content-Signal:`, který Lighthouse neumí přečíst.
+**Celý web je teď 100/100/100/100.**
+
+Zóna je v účtu Dana Prokeše a přes API to nejde, token má na zónu jen čtení
+(zápis vrací 10405). Klikalo se v dashboardu.
+
+**Ceny a texty srovnané.** Základní cena 400 000 Kč je za hrubou stavbu:
+konstrukce, okna, dveře, fasáda, zateplení 75 mm. Všechno ostatní je příplatek,
+včetně elektroinstalace za 5 000 Kč a terasy za 40 000 Kč, přestože se dům
+jmenuje „rozkládací dům s terasou". Stránky to dřív vydávaly za samozřejmost.
+Detail domu má teď oddíl **Co je v ceně od 400 000 Kč** s rozpisem podle
+konfigurátoru a s oběma sazbami DPH.
+
+**Detail domu si odporoval v zateplení.** Konstrukce, Technické parametry i
+JSON-LD uváděly EPS 50 mm, zatímco cena o dva odstavce výš, FAQ na homepage
+i konfigurátor mluví o 75 mm. Sjednoceno na 75 mm se 100 mm jako příplatkem
+podle Danova ceníku z 25. 8. **Těch 50 mm byl zbytek původního datasheetu,
+ať to Dan potvrdí.**
+
+**Audit češtiny** (`design-pravidla/nastroje/cestina-audit.py`) hlásí dva
+nálezy, oba jsou plané: „Buď jsme ji přesunuli, nebo…" je párová spojka a
+„je majetkem provozovatele, nebo je užíván…" je vylučovací poměr, čárka tam
+patří. Ručně opravené věci, které nástroj nechytí, jsou v commitu 304a47d.
+
 ### Otevřené — potřebuje Tomáše nebo Dana
 
-1. **AI crawlery jsou zablokované.** Živý `robots.txt` zakazuje ClaudeBot,
-   GPTBot, Google-Extended, CCBot, Bytespider, Applebot-Extended,
-   meta-externalagent a Amazonbot. Není to v repu, vkládá to Cloudflare.
-   Vypíná se to v dashboardu zóny `flexihouse.cz` ve dvou vrstvách, stejně
-   jako se to řešilo u mojeviditelnost.cz: **Managed robots.txt** a
-   **Block AI bots**. Zóna je v účtu Dana Prokeše, přes API to nejde —
-   token má na zónu jen čtení a endpoint zápis odmítá (10405).
-   Než se to vypne, web se nedostane do odpovědí AI asistentů.
-2. **Fotky.** Flexi Office a Dům na míru mají jen rendery.
-3. **Odeslání poptávky naostro nikdo neověřil.** Obě funkce jsou nasazené,
-   validace i honeypot na produkci odpovídají správně a všechny tři proměnné
-   (`RESEND_API_KEY`, `LEAD_TO_EMAIL`, `RESEND_FROM`) jsou v produkčním
-   prostředí nastavené. Neověřené zůstává jen to, že Resend e-mail opravdu
-   doručí — to nejde zkusit, aniž by přišla falešná poptávka Danovi do schránky.
+1. **Fotky.** Flexi Office a Dům na míru mají jen rendery.
+2. **Potvrdit zateplení** základního provedení, viz výš.
+3. **„Bambusová podlaha 18 mm"** v konstrukci detailu domu zní jako doslovný
+   překlad z čínského datasheetu a fotky ani 3D model bambus neukazují.
+   Neměnil jsem to, protože nemám čím to vyvrátit.
+4. **Kolik poptávek z webu reálně chodí** nikdo nesleduje. GA4 eventy běží
+   od 25. 8., data už být musí.
 
 ## Hotovo znamená
 
