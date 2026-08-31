@@ -161,7 +161,10 @@
   background:var(--paper);color:var(--muted);font:inherit;font-size:0.68rem;font-weight:700;line-height:1;cursor:pointer;
   border-radius:50%;transition:border-color .18s,color .18s}
 .kf-info:hover,.kf-info:focus-visible{border-color:var(--ink);color:var(--ink);outline:none}
-.kf-tip{position:absolute;bottom:calc(100% + 9px);left:-10px;width:min(290px,78vw);padding:12px 14px;
+/* Zavřená bublina musí být display:none. Se skrytou viditelností pořád
+   zabírá místo a na 320px displeji odsouvala stránku o 9 px doprava. */
+.kf-tip{position:absolute;bottom:calc(100% + 9px);left:-10px;width:min(290px,68vw);padding:12px 14px;
   background:var(--ink);color:#fff;font-size:0.78rem;line-height:1.5;text-transform:none;letter-spacing:0;font-weight:400;
-  opacity:0;visibility:hidden;transition:opacity .18s;z-index:5;pointer-events:none}
-.kf-vat:hover .kf-tip,.kf-vat.is-open .kf-tip,.kf-info:focus-visible + .kf-tip{opacity:1;visibility:visible}
+  display:none;opacity:0;visibility:hidden;z-index:5;pointer-events:none;
+  transition:opacity .18s,display .18s allow-discrete,visibility .18s allow-discrete}
+.kf-vat:hover .kf-tip,.kf-vat.is-open .kf-tip,.kf-info:focus-visible + .kf-tip{display:block;opacity:1;visibility:visible}
