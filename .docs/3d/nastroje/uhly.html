@@ -1,0 +1,39 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>Úhly</title>
+<style>body{margin:0;background:#fff}.s{position:relative;width:1200px;height:800px}canvas{position:absolute;inset:0;width:100%;height:100%}</style>
+</head><body>
+<div class="s"><canvas id="c" data-vyska="ramec"></canvas></div>
+<script>
+window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()); }, 16); };
+var q = new URLSearchParams(location.search);
+if (q.has('x')) {
+  window.__MISTA = [{ klic: 'blizko', nazev: 'Zblízka',
+    oko: [parseFloat(q.get('x')), parseFloat(q.get('y') || '1.55'), parseFloat(q.get('z'))],
+    yaw: parseFloat(q.get('yaw') || '0'), pitch: parseFloat(q.get('pitch') || '0') }];
+}
+fetch('../../../assets/flexi-3d.js?v=' + Date.now()).then(function (r) { return r.text(); }).then(function (zdroj) {
+  var kotva = '  function misto() {';
+  if (zdroj.indexOf(kotva) < 0) throw new Error('kotva v flexi-3d.js chybí');
+  zdroj = zdroj.replace(kotva, '  if (global.__MISTA) MISTA = MISTA.concat(global.__MISTA);\n' + kotva);
+  var test = q.get('test') || '';
+  if (test.indexOf('nostin') >= 0) zdroj = zdroj.replace("'  float st = stinovost(N);',", "'  float st = 1.0;',");
+  if (test.indexOf('notex') >= 0) zdroj = zdroj.replace("'  if(uMaTex > 0.5) alb *= texture(uAlb, vUv).rgb;',", "'  if(uMaTex > 0.5) alb *= vec3(0.72);',");
+  if (test.indexOf('noao') >= 0) zdroj = zdroj.replace('aAo', 'aAoX');
+  (0, eval)(zdroj);
+  var cv = document.getElementById('c');
+  var V = Flexi3D.vytvor(cv, { pomer: 0.667, zaklad: '../../../' });
+  V.nastav({ roof: q.get('roof') || 'gable', facade: 'wood', terrace: true,
+    pohled: q.get('pohled') || 'dovnitr',
+    misto: q.has('x') ? 6 : parseInt(q.get('m') || '1', 10),
+    kuchyn: q.get('kuchyn') !== '0', koupelna: q.get('koupelna') !== '0' });
+  if (!q.has('x')) {
+    var yaw = parseFloat(q.get('yaw') || '0'), pitch = parseFloat(q.get('pitch') || '0');
+    if (yaw || pitch) {
+      var dx = -yaw / 0.0060, dy = pitch / 0.0038;
+      cv.dispatchEvent(new PointerEvent('pointerdown', { clientX: 0, clientY: 0, bubbles: true }));
+      cv.dispatchEvent(new PointerEvent('pointermove', { clientX: dx, clientY: dy, bubbles: true }));
+      cv.dispatchEvent(new PointerEvent('pointerup', { clientX: dx, clientY: dy, bubbles: true }));
+    }
+  }
+  window.V = V;
+});
+</script></body></html>

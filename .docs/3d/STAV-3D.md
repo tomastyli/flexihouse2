@@ -1,4 +1,4 @@
-# 3D konfigurátor Flexi House — stav k 26. 8. 2026
+# 3D konfigurátor Flexi House — stav k 31. 8. 2026
 
 ## Kde to běží
 
@@ -45,6 +45,210 @@ byl náhled tmavý uprostřed bílé stránky.
 Textury jsou znovu vyříznuté z fotek, ve WebP a s normálovými mapami.
 Šedá a černá fasáda se stahují až při první volbě (úspora 145 kB).
 Při načtení stránky se táhne 266 kB textur.
+
+## Změny 31. 8. večer — zařizovací předměty do realistické podoby
+
+Dan Prokeš se ptal, jestli nejde interiér udělat věrohodněji. Nešlo o textury
+ani o světlo, ale o to, že veškerý nábytek byl z ostrých kvádrů.
+
+### Fazeta je ta jediná věc, která rozhoduje
+
+Ostrá hrana dává tvrdý přechod mezi dvěma odstíny a mozek to čte jako hračku.
+Skutečná dvířka mají fazetu kolem 2 mm, která po obvodu udělá tenkou světlou
+linku. Nová funkce `kvadrF()` kreslí kvádr se zkosením: šest zmenšených stěn,
+dvanáct pásků na hranách, osm rohových trojúhelníků.
+
+Winding se neodvozuje, ale **kontroluje**: každý quad se porovná s vektorem
+od středu kvádru a když normála míří dovnitř, pořadí vrcholů se otočí. Stejně
+to dělá `loft()` a `vicko()`. Bez toho by se pořadí u dvanácti hran a osmi
+rohů nedalo uhlídat a část ploch by byla černá.
+
+### Co ještě dělalo „umělost"
+
+**Spáry mezi čely byly bílé linky.** Za čely nebylo nic tmavého, takže linka
+vypadala jako jeden odlitek. Nový materiál `spara` je tmavá deska schovaná za
+čely; ve čtyřmilimetrových mezerách se objeví jako stín. Totéž v koupelně.
+
+**Madla byla schovaná uvnitř korpusu.** Kromě špatného směru (viz ráno) měla
+tyčka i nožky stejný poloměr, takže v pravém úhlu zůstala díra do trubky.
+Nožky mají teď menší průměr a `trubka()` umí víčka.
+
+**Oblouk baterie byl řetízek samostatných trubek.** Každá si volila vlastní
+referenční vektor, prstence se mezi články nepotkaly a na výtoku byly schody.
+`oblouk()` je teď jeden souvislý sweep se společným rámem.
+
+**WC byly dva kvádry.** Teď je to loft: mísa z osmi prstenců (superelipsa,
+mocnina 3,0 až 3,8), samostatné prkénko, zavřené víko, nádržka s víkem
+a chromové dvojtlačítko. Rozměry ze specifikace: 0,37 × 0,68 × 0,78,
+obruba 0,41.
+
+**Skříňka umyvadla neměla dvířka vůbec.** Teď má dvoje s vloženou rámečkovou
+výplní a dvě krátká madla u sebe uprostřed, plus chromový sifon pod mísou.
+
+**Zrcadlová skříňka byla kvádr s plátkem skla.** Teď má tři otevřené
+přihrádky na severní polovině, zrcadlová dvířka na jižní a římsu nahoře.
+
+**Vanička byla hladká deska.** Přibyly protiskluzové drážky s roztečí 0,085
+(16 pruhů), leštěný rám po celém obvodu, lineární žlab u paty zadní stěny
+a práh na přední hraně.
+
+### Sklo konečně propouští
+
+Renderer uměl jen `sklo`, což je tmavá odrazivá tabule správná pro pohled na
+dům zvenku. Uvnitř z toho byla černá díra: zástěna sprchy i prosklené dveře
+vypadaly jako zeď. Nový příznak `cire` s parametrem `cireAlfa` se kreslí
+v průhledném průchodu:
+
+- `skloCire` (alfa asi 0,13) — čiré křídlo zástěny a výplň dveří D3
+- `skloMat` (alfa 0,72) — matné křídlo, prosvítá skrz jako opravdové satináto
+
+### Deska linky flekatá nebyla od stínu
+
+Vypadalo to jako stínová akné, ale test s vypnutým stínem to vyvrátil a test
+s vypnutou texturou potvrdil: nízkofrekvenční složka `deska.webp` měla
+směrodatnou odchylku 2,4 úrovně a při dlaždici 0,30 m se opakovala každých
+30 cm. Textura se propustila horní propustí (rozmazání přes zabalenou
+dlaždici, aby neujely okraje), odchylka je teď 1,14 a jemné zrno zůstalo.
+`TEX_VERZE` na 6.
+
+**Postup, který to rozhodl, je v `uhly.html`:** `?test=nostin` vypne stínovou
+mapu, `?test=notex` nahradí albedo šedou. Bez toho by se hádalo dál.
+
+### Stínování ve výklencích
+
+`ambSpecC` násobilo AO jen z 65 %, takže kovové a lesklé plochy v hlubokých
+místech (vana dřezu, vnitřek skříňky) zůstávaly světlé. Sníženo na 82 %.
+Přeměřeno na exteriéru: max rozdíl 5 úrovní jasu, žádný pixel nad 6,
+tedy beze změny venku.
+
+### Dřez byl celou dobu zakrytý, ne jenom světlý
+
+Vana se tvářila jako plechová destička i po přestavbě na čtyři pásy kolem
+otvoru. Ztmavení materiálu nedělalo **vůbec nic** a měření to potvrdilo:
+průměrný jas výřezu vany zůstal na 163,2 i po změně materiálu z leštěného
+kovu na matný tmavý. Do vany totiž vůbec nebylo vidět — **korpus skříňky je
+plný kvádr a jeho horní plocha ve výřezu desky vanu zakrývala**. Vidělo se
+na vršek korpusu 33 mm pod deskou, ne na dno vany 200 mm pod ní.
+
+Opraveno `bez: 'y+'` na obou korpusech; horní plocha je pod deskou stejně
+vždycky schovaná. Po opravě jas spadl na 40 (moc), doladěno materiálem
+`nerezVana` (tint 0,62, rough 0,28, metal 0,55) a AO 0,55 až 0,93 na **102**,
+tedy zřetelně tmavší než bílá deska. Přibyl odtok na střed vany.
+
+**Poučení: než začneš ladit materiál, ověř, že se na tu plochu vůbec díváš.**
+Stačilo změřit průměrný jas výřezu před a po — dvě čísla ukázala, že změna
+nemá žádný efekt, a to je jiná diagnóza než „je to moc světlé".
+
+### Linka dobíhá ke stěně
+
+`IN.linkaA.x1` bylo 3,039, tedy 49 mm od stěny, a mezerou byla vidět podlaha.
+Teď je 3,078. Do zadního rohu zajíždí rohový sloupek (líc 3,085), takže se
+linka o něj opře a sloupek vystupuje nad deskou — přesně jak by byla deska
+kolem sloupku vyříznutá. Sloupek zbytek k lící stěny vyplní, žádná škvíra.
+
+### Čísla
+
+Quadů 3 252 → **4 162** (+28 %). Koplanárních dvojic 7, součet ploch
+0,0063 m2, tedy čistší než ráno při menší geometrii. Zkosení a AO
+předpokládají, že se nábytek kreslí přes `kvadrF`, ne přes `sit.kvadr`.
+
+## Změny 31. 8. — koplanarita, kuchyně a otevřený parapet
+
+Tomáš hlásil dvě věci: „nesedí okno v kuchyni" a „z různých úhlů ty textury
+bugují". Obojí jsou dvě různé příčiny a ani jedna není v texturách.
+
+### Prokazatelně to nebyly textury, ale z-fighting
+
+Renderer **nemá zapnuté ořezávání odvrácených stěn** (`CULL_FACE` se nikde
+nezapíná, jen vypíná ve stínovém průchodu). Každá plocha, která ležela přesně
+v rovině jiné plochy, se proto o pixely prala a výsledek se měnil s úhlem
+pohledu. Na rendrech to vypadalo jako roztrhaná černá šmouha přes stěnu —
+odtud „textury bugují".
+
+Nejhorší dvojice byly rohové sloupky a stropní pás v rovině stěn, spára
+u podlahy v rovině podlahy, spodek desky linky v rovině horní plochy korpusu
+(1,0 m²) a záda skříněk v rovině stěny.
+
+**Zapnout `CULL_FACE` globálně nejde** — vyzkoušeno a změřeno: interiér se
+spraví, ale na exteriéru zmizí černý pás nad vchodem a kus rámu u štítu.
+Winding a normály sice sedí (ověřeno na všech 3 322 quadech), ale exteriér
+má plochy, které se schválně koukají z obou stran.
+
+Opraveno **rozestoupením geometrie** o 1,5 až 10 mm, tedy bez zásahu do
+rendereru. Konstanta `ODST = 0.003`. Kde se dvě opravy potkaly ve stejné
+rovině (záda linky vs. spára u podlahy), jsou odsazení rozvrstvená.
+
+### Nástroj, který to našel
+
+`.docs/3d/nastroje/koplanarita.html` — načte `assets/flexi-3d.js` fetchem,
+vloží do něj jeden řádek, spustí evalem a projde všechny quady: seskupí je
+podle roviny a nahlásí dvojice různých materiálů, které se v té rovině
+překrývají. **Nemá vlastní kopii rendereru**, měří to, co je v `assets/`.
+
+Stav: **před 60+ dvojic, největší 1,0 m², dohromady ~2,5 m² →
+po 8 dvojic, největší 0,0018 m², dohromady 0,0066 m².** Zbytek jsou
+třísky schované uvnitř zařizovacích předmětů.
+
+Úhly se dají projet přes `.docs/3d/nastroje/uhly.html?m=1&yaw=0.35&pitch=-0.1`
+(`m` je index místa, `yaw`/`pitch` v radiánech, `pohled=ven` na exteriér).
+
+### Kuchyně měla tři vlastní chyby
+
+**Rameno B mělo čela i madla na opačném líci.** Rameno B stojí zády
+k příčce koupelny na `x0`, odkrytý líc je `x1`. Dvířka i úchytky se kreslily
+na `x0 - 0.018`, tedy dovnitř příčky. Celé rameno se dřezem bylo hladká bílá
+bedna. Opraveno na `x1`, odkrytá délka 0,600 jižně od ramene A sedí se
+specifikací.
+
+**Obloučková madla byla schovaná v korpusu.** `madloIn` odsazovalo tyčku
+o `z - 0.030`, tedy proti směru, kam čelo kouká. Z madel byly vidět jen
+špičky nákližků jako dva tmavé body. Funkce má teď parametr směru a umí
+i osu `z` pro rameno B.
+
+**Dřez byl plechová destička.** Deska linky byla plný kvádr, vana se kreslila
+uvnitř něj a lem přes ni jako celistvá deska. Deska ramene B i lem dřezu se
+teď kreslí jako čtyři pásy kolem otvoru, stejně jako umyvadlo v koupelně.
+
+### Parapet oken versus výška linky — zvolena varianta B
+
+Tohle je ta „nesedící" věc a **jedním číslem se to vyřešit nedá**, jde
+o bod N3 a N5 ze specifikace.
+
+Model dnes kombinuje parapet **0,80 z výkresu** (0,649 nad podlahou)
+s deskou linky **0,750**, což je hodnota odvozená z fotek pro parapet 0,88.
+Deska proto leží 0,101 **nad** spodní hranou okna a zadní lišta zajíždí
+0,159 do okna. Fotky přitom měří opak: horní plocha desky je 0,150 až 0,170
+**pod** spodní hranou rámu a nad lištou je vždy pruh holé stěny.
+
+Změřené varianty (podlaha 0,221, horní hrana panelu 2,165, spodek černého
+pásu 2,307):
+
+| varianta | parapet nad podlahou | deska | lišta → parapet | nadpraží → černý pás | nadpraží → panel venku |
+|---|---|---|---|---|---|
+| dnes | 0,649 | 0,750 | **−0,159** | +0,337 | +0,195 |
+| A: nechat okna, snížit desku | 0,649 | 0,489 | +0,102 | +0,337 | +0,195 |
+| B: zvednout okna | 0,794 | 0,680 | +0,056 | +0,192 | +0,050 |
+| C: fotky doslova | 0,910 | 0,750 | +0,102 | +0,076 | **−0,066** |
+
+A dává pracovní desku ve výšce 49 cm, C se nevejde pod horní pás.
+**B je jediná, kde nic není absurdní.** Tomáš ji 31. 8. vybral, takže
+v repu je `OKNO_PARAPET = 0.940` a deska linky 0,680 (parapet 0,789 nad
+podlahou). Okna se tím zvedla o 140 mm i na exteriéru.
+
+Rozložení linky drzí poměry ze specifikace: sokl 0,113 + čelo 0,530 +
+deska 0,037. Tři čela zásuvkové skříňky se počítají z výšky korpusu,
+dřív byly natvrdo 0,240 a společně dávaly 0,720 do korpusu vysokého 0,585,
+takže spodní zajel pod sokl.
+
+**Pozor, `pridej()` v `oknaNaStene` má pojistku `v + h > vyskaPole - 0.05`
+a při vyšším parapetu okno tiše zahodí.** V prvním pokusu (parapet 0,975)
+zmizely otvory v čelních a zadních panelech a z kuchyňského okna byla cedrová
+stěna — na rendru to nevypadá jako zahozené okno, ale jako rozbitá textura.
+Strop je 0,945 a tam vychází pojistka na 4e-16, tedy na hřebíku. Proto 0,940,
+kde zůstává rezerva 5 mm. Kdo bude parapet měnit, musí tu rezervu přepočítat.
+
+Metr to pořád rozhodne líp: pokud Tomáš změří parapet a výšku linky,
+přepočítat obojí naráz, ne jedno bez druhého (body N3 a N5).
 
 ## Změny 26. 8. — patky, sítě do oken a rozbor textur
 

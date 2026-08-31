@@ -1,0 +1,70 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>Koplanarita</title>
+<style>body{margin:0;background:#fff;font:12px ui-monospace,monospace}.s{width:520px;height:350px;position:relative}canvas{position:absolute;inset:0;width:100%;height:100%}pre{padding:10px;white-space:pre-wrap}</style>
+</head><body>
+<div class="s"><canvas id="c" data-vyska="ramec"></canvas></div>
+<pre id="out">měřím…</pre>
+<script>
+window.requestAnimationFrame = function (cb) { return setTimeout(function () { cb(performance.now()); }, 16); };
+var HRANA = 1.2e-3;
+
+fetch('../../../assets/flexi-3d.js?v=' + Date.now()).then(function (r) { return r.text(); }).then(function (zdroj) {
+  var kotva = "if (S.pohled === 'dovnitr') postavInterier(zrcadli(sit));";
+  if (zdroj.indexOf(kotva) < 0) throw new Error('kotva v flexi-3d.js chybí, uprav ji tady');
+  (0, eval)(zdroj.replace(kotva, kotva + '\n    global.__SIT = sit;'));
+  var V = Flexi3D.vytvor(document.getElementById('c'), { pomer: 0.667, zaklad: '../../../' });
+  V.nastav({ roof: 'gable', facade: 'wood', terrace: true, pohled: 'dovnitr', misto: 1 });
+  setTimeout(zmer, 400);
+}).catch(function (e) { document.getElementById('out').textContent = 'CHYBA: ' + e.message; });
+
+function zmer() {
+  if (!window.__SIT) { document.getElementById('out').textContent = 'síť se nepostavila'; return; }
+  var d = window.__SIT.davky, quady = [];
+  Object.keys(d).forEach(function (m) {
+    var db = d[m];
+    for (var i = 0; i < db.pos.length / 3; i += 4) {
+      var p = [];
+      for (var k = 0; k < 4; k++) p.push([db.pos[(i + k) * 3], db.pos[(i + k) * 3 + 1], db.pos[(i + k) * 3 + 2]]);
+      var osa = -1, hodnota = 0;
+      for (var a = 0; a < 3; a++) {
+        var mn = Math.min(p[0][a], p[1][a], p[2][a], p[3][a]), mx = Math.max(p[0][a], p[1][a], p[2][a], p[3][a]);
+        if (mx - mn < 1e-6) { osa = a; hodnota = (mn + mx) / 2; break; }
+      }
+      if (osa < 0) continue;
+      var b = [[Infinity, -Infinity], [Infinity, -Infinity], [Infinity, -Infinity]];
+      for (var a2 = 0; a2 < 3; a2++) for (var k2 = 0; k2 < 4; k2++) {
+        var v = p[k2][a2];
+        if (v < b[a2][0]) b[a2][0] = v;
+        if (v > b[a2][1]) b[a2][1] = v;
+      }
+      quady.push({ m: m, osa: osa, hodnota: hodnota, b: b });
+    }
+  });
+  var roviny = {}, nalezy = {};
+  quady.forEach(function (q) {
+    var klic = q.osa + ':' + (Math.round(q.hodnota / HRANA) * HRANA).toFixed(4);
+    (roviny[klic] = roviny[klic] || []).push(q);
+  });
+  Object.keys(roviny).forEach(function (klic) {
+    var L = roviny[klic];
+    for (var i = 0; i < L.length; i++) for (var j = i + 1; j < L.length; j++) {
+      var A = L[i], B = L[j];
+      if (A.m === B.m) continue;
+      var o1 = (A.osa + 1) % 3, o2 = (A.osa + 2) % 3;
+      var v1 = Math.min(A.b[o1][1], B.b[o1][1]) - Math.max(A.b[o1][0], B.b[o1][0]);
+      var v2 = Math.min(A.b[o2][1], B.b[o2][1]) - Math.max(A.b[o2][0], B.b[o2][0]);
+      if (v1 > 2e-3 && v2 > 2e-3) {
+        var k = [A.m, B.m].sort().join(' | ') + '  @' + 'xyz'[A.osa] + '=' + A.hodnota.toFixed(3);
+        if (!nalezy[k]) nalezy[k] = { n: 0, plocha: 0 };
+        nalezy[k].n++;
+        nalezy[k].plocha = Math.max(nalezy[k].plocha, v1 * v2);
+      }
+    }
+  });
+  var radky = Object.keys(nalezy).map(function (k) { return { k: k, n: nalezy[k].n, p: nalezy[k].plocha }; });
+  radky.sort(function (x, y) { return y.p - x.p; });
+  var soucet = radky.reduce(function (s, r) { return s + r.p; }, 0);
+  document.getElementById('out').textContent =
+    'quadů ' + quady.length + ', dvojic ' + radky.length + ', součet ploch ' + soucet.toFixed(4) + ' m2\n\n' +
+    radky.map(function (r) { return r.k + '   dvojic ' + r.n + '   plocha ' + r.p.toFixed(4); }).join('\n');
+}
+</script></body></html>
