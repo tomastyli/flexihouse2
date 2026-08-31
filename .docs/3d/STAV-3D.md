@@ -1,4 +1,4 @@
-# 3D konfigurátor Flexi House — stav k 31. 8. 2026
+# 3D konfigurátor Flexi House — stav k 31. 8. 2026, ŽIVÉ (`flexi-3d.js?v=12`, `TEX_VERZE` 6)
 
 ## Kde to běží
 
@@ -514,7 +514,7 @@ model nekreslí, Tomáš je zamítl — dům sedí na terénu.
 5. Zvednout `TEX_VERZE` a `?v=` u JS a CSS při každém dalším zásahu do textur.
 6. **3D interiér** — další krok, viz níže.
 
-## 3D interiér (postaveno 25. 8. 2026, NENASAZENO)
+## 3D interiér (postaveno 25. 8. 2026, ŽIVÉ od 31. 8. 2026)
 
 Interiér se staví jen v režimu `pohled: 'dovnitr'`, aby exteriérový náhled
 nenesl jeho trojúhelníky ani textury. Kód je v `assets/flexi-3d.js`
