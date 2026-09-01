@@ -18,3 +18,6 @@ _pfp.html
 
 # podklady pro 3D — nepatří na web
 podklady-3d/
+
+.dev.vars
+.docs/wrangler-dev.toml

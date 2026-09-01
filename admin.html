@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Poptávky | Flexi House</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:'Bricolage';font-weight:200 800;font-display:swap;src:url(fonts/bricolage-ext-sub.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Bricolage';font-weight:200 800;font-display:swap;src:url(fonts/bricolage-lat-sub.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:'Instrument';font-weight:400 700;font-display:swap;src:url(fonts/instrument-ext-sub.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Instrument';font-weight:400 700;font-display:swap;src:url(fonts/instrument-lat-sub.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+:root{
+  --ink:#16202a;
+  --blue:#5a7885;
+  --soft:#eef2f4;
+  --paper:#ffffff;
+  --muted:rgba(22,32,42,.7);
+  --hair:rgba(22,32,42,.12);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--soft);color:var(--ink);font-family:'Instrument',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2{margin:0;font-family:'Bricolage',system-ui,sans-serif;font-weight:800;font-variation-settings:'wdth' 84;text-transform:uppercase;line-height:.98;letter-spacing:-.01em}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+
+.top{background:var(--ink);color:#fff;padding:18px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top h1{font-size:1.15rem;color:#fff}
+.top__sub{font-size:.85rem;color:rgba(255,255,255,.55)}
+.top__end{margin-left:auto;display:flex;gap:10px;align-items:center}
+.lnk{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:8px 16px;font-size:.85rem}
+.lnk:hover{background:rgba(255,255,255,.18)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 64px}
+
+.login{max-width:380px;margin:14vh auto;background:var(--paper);border:1px solid var(--hair);padding:34px}
+.login h2{font-size:1.4rem;margin-bottom:6px}
+.login p{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+.login label{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;font-weight:600;color:var(--muted);margin-bottom:7px}
+input[type=password]{width:100%;padding:13px 15px;border:1px solid var(--hair);background:var(--soft);font:inherit;color:var(--ink)}
+input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
+.btn{background:var(--ink);color:#fff;border:0;padding:14px 26px;font-weight:600;font-size:.95rem;width:100%;margin-top:16px}
+.btn:hover{background:#22303e}
+.btn:disabled{opacity:.55;cursor:default}
+.err{margin-top:14px;padding:11px 14px;background:#fdecec;border:1px solid #f2b8b8;color:#8f2020;font-size:.88rem}
+
+.souhrn{background:var(--paper);border:1px solid var(--hair);padding:20px 24px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:34px}
+.souhrn div{min-width:90px}
+.souhrn dt{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600;overflow-wrap:anywhere}
+.souhrn dd{margin:3px 0 0;font-size:1.7rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.souhrn dd small{font-size:.8rem;color:var(--muted);font-weight:400}
+.souhrn .varovani dd{color:#a32b2b}
+
+.pruh{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.pruh h2{font-size:1.05rem}
+.pruh span{font-size:.85rem;color:var(--muted)}
+
+.radek{background:var(--paper);border:1px solid var(--hair);border-bottom:0;padding:16px 22px;display:grid;grid-template-columns:104px 1fr auto;gap:20px;align-items:start}
+.radek:last-of-type{border-bottom:1px solid var(--hair)}
+.radek:hover{background:#fbfcfd}
+.radek__kdy{font-size:.82rem;color:var(--muted);line-height:1.5;font-variant-numeric:tabular-nums}
+.radek__kdo strong{font-size:1.02rem;font-weight:600;display:block}
+.radek__kont{font-size:.9rem;color:var(--muted);margin-top:3px;display:flex;gap:16px;flex-wrap:wrap}
+.radek__kont a{color:var(--blue);text-decoration:none}
+.radek__kont a:hover{text-decoration:underline}
+.radek__zprava{margin-top:9px;font-size:.9rem;color:var(--muted);white-space:pre-wrap;border-left:2px solid var(--hair);padding-left:12px}
+.radek__prava{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.znacka{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding:4px 10px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap}
+.znacka--konf{background:var(--ink);color:#fff;border-color:var(--ink)}
+.radek__cena{font-weight:700;font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.radek__model{font-size:.9rem;color:var(--muted);text-align:right}
+.radek__chyba{background:#fdecec;border:1px solid #f2b8b8;color:#8f2020;font-size:.78rem;padding:6px 10px;max-width:280px;text-align:left}
+.rozbal{background:none;border:0;color:var(--blue);font-size:.8rem;padding:0;text-decoration:underline}
+.konfig{grid-column:1/-1;margin-top:6px;border-top:1px solid var(--hair);padding-top:12px}
+.konfig table{width:100%;border-collapse:collapse;font-size:.85rem}
+.konfig td{padding:5px 0;border-bottom:1px solid var(--hair);vertical-align:top}
+.konfig td:first-child{color:var(--muted);width:38%}
+.konfig td:last-child{text-align:right;white-space:nowrap;padding-left:14px;font-variant-numeric:tabular-nums}
+
+.prazdno{background:var(--paper);border:1px solid var(--hair);padding:52px 24px;text-align:center;color:var(--muted)}
+.hidden{display:none}
+
+@media(max-width:720px){
+  .wrap{padding:18px 16px 48px}
+  .radek{grid-template-columns:1fr;gap:10px;padding:15px 18px}
+  .radek__prava{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;align-items:center}
+  .radek__model{text-align:left}
+  .souhrn{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px;padding:16px 18px}
+  .souhrn div{min-width:0}
+  .souhrn dt{font-size:.64rem;letter-spacing:.06em}
+  .souhrn dd{font-size:1.25rem}
+  .radek__chyba{max-width:none}
+}
+</style>
+</head>
+<body>
+
+<div id="login" class="login">
+  <h2>Poptávky</h2>
+  <p>Přehled poptávek z webu Flexi House.</p>
+  <form id="loginForm">
+    <label for="heslo">Heslo</label>
+    <input type="password" id="heslo" autocomplete="current-password" required>
+    <button class="btn" type="submit" id="loginBtn">Přihlásit se</button>
+  </form>
+  <div id="loginErr" class="err hidden"></div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="top">
+    <h1>Poptávky</h1>
+    <span class="top__sub">flexihouse.cz</span>
+    <div class="top__end">
+      <button class="lnk" id="obnovit">Obnovit</button>
+      <button class="lnk" id="odhlasit">Odhlásit</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <dl class="souhrn" id="souhrn"></dl>
+    <div class="pruh">
+      <h2>Všechny poptávky</h2>
+      <span id="pocet"></span>
+    </div>
+    <div id="seznam"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var login=document.getElementById('login'), app=document.getElementById('app');
+  var loginForm=document.getElementById('loginForm'), loginErr=document.getElementById('loginErr');
+  var loginBtn=document.getElementById('loginBtn'), heslo=document.getElementById('heslo');
+
+  function chyba(t){ loginErr.textContent=t; loginErr.classList.remove('hidden'); }
+
+  function fmtDatum(iso){
+    var d=new Date(iso);
+    if(isNaN(d)) return iso;
+    var dt=d.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric',year:'numeric'});
+    var cas=d.toLocaleTimeString('cs-CZ',{hour:'2-digit',minute:'2-digit'});
+    return dt+'<br>'+cas;
+  }
+  function fmtCena(n){
+    if(n==null) return '';
+    return new Intl.NumberFormat('cs-CZ').format(n)+' Kč';
+  }
+  function esc(s){
+    return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function vykresli(d){
+    var s=d.souhrn;
+    document.getElementById('souhrn').innerHTML=
+      '<div><dt>Celkem</dt><dd>'+s.celkem+'</dd></div>'+
+      '<div><dt>Za 7 dní</dt><dd>'+s.za7dni+'</dd></div>'+
+      '<div><dt>Za 30 dní</dt><dd>'+s.za30dni+'</dd></div>'+
+      '<div><dt>Formulář</dt><dd>'+s.formular+'</dd></div>'+
+      '<div><dt>Konfigurátor</dt><dd>'+s.konfigurator+'</dd></div>'+
+      (s.nedorucene>0 ? '<div class="varovani"><dt>Neodesláno</dt><dd>'+s.nedorucene+'</dd></div>' : '');
+
+    document.getElementById('pocet').textContent = d.poptavky.length ? ('zobrazeno '+d.poptavky.length) : '';
+
+    var seznam=document.getElementById('seznam');
+    if(!d.poptavky.length){
+      seznam.innerHTML='<div class="prazdno">Zatím tu není žádná poptávka. Jakmile někdo odešle formulář nebo konfigurátor, objeví se tady.</div>';
+      return;
+    }
+
+    seznam.innerHTML=d.poptavky.map(function(p){
+      var konf='';
+      if(p.konfigurace){
+        try{
+          var polozky=JSON.parse(p.konfigurace);
+          if(polozky.length){
+            konf='<div class="konfig hidden" id="k'+p.id+'"><table>'+polozky.map(function(i){
+              return '<tr><td>'+esc(i.group)+'</td><td>'+esc(i.value)+(i.price?' · '+fmtCena(i.price):'')+'</td></tr>';
+            }).join('')+'</table></div>';
+          }
+        }catch(e){}
+      }
+      return '<div class="radek">'+
+        '<div class="radek__kdy">'+fmtDatum(p.vzniklo)+'</div>'+
+        '<div class="radek__kdo">'+
+          '<strong>'+esc(p.jmeno)+'</strong>'+
+          '<div class="radek__kont">'+
+            '<a href="tel:'+esc(p.telefon)+'">'+esc(p.telefon)+'</a>'+
+            '<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>'+
+          '</div>'+
+          (p.zprava?'<div class="radek__zprava">'+esc(p.zprava)+'</div>':'')+
+        '</div>'+
+        '<div class="radek__prava">'+
+          '<span class="znacka'+(p.typ==='konfigurator'?' znacka--konf':'')+'">'+(p.typ==='konfigurator'?'Konfigurátor':'Formulář')+'</span>'+
+          (p.model?'<span class="radek__model">'+esc(p.model)+'</span>':'')+
+          (p.cena?'<span class="radek__cena">'+fmtCena(p.cena)+'</span>':'')+
+          (konf?'<button class="rozbal" data-k="k'+p.id+'">Konfigurace</button>':'')+
+          (p.mail_odeslan?'':'<span class="radek__chyba">E-mail se neodeslal'+(p.mail_chyba?': '+esc(p.mail_chyba.slice(0,120)):'')+'</span>')+
+        '</div>'+
+        konf+
+      '</div>';
+    }).join('');
+
+    seznam.querySelectorAll('.rozbal').forEach(function(b){
+      b.addEventListener('click',function(){
+        var el=document.getElementById(b.dataset.k);
+        if(!el) return;
+        var skryto=el.classList.toggle('hidden');
+        b.textContent = skryto ? 'Konfigurace' : 'Skrýt konfiguraci';
+      });
+    });
+  }
+
+  async function nacti(){
+    var r=await fetch('/api/admin/poptavky',{headers:{'Accept':'application/json'}});
+    if(r.status===401) return false;
+    var j=await r.json().catch(function(){return{};});
+    if(!r.ok){ alert(j.error||'Poptávky se nepodařilo načíst.'); return true; }
+    vykresli(j);
+    return true;
+  }
+
+  async function otevri(){
+    login.classList.add('hidden');
+    app.classList.remove('hidden');
+    await nacti();
+  }
+
+  loginForm.addEventListener('submit',async function(e){
+    e.preventDefault();
+    loginErr.classList.add('hidden');
+    loginBtn.disabled=true; loginBtn.textContent='Přihlašuji…';
+    try{
+      var r=await fetch('/api/admin/login',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({heslo:heslo.value})
+      });
+      var j=await r.json().catch(function(){return{};});
+      if(r.ok&&j.ok){ heslo.value=''; await otevri(); }
+      else chyba(j.error||'Přihlášení se nepovedlo.');
+    }catch(err){
+      chyba('Přihlášení se nepovedlo. Zkuste to prosím znovu.');
+    }
+    loginBtn.disabled=false; loginBtn.textContent='Přihlásit se';
+  });
+
+  document.getElementById('obnovit').addEventListener('click',nacti);
+  document.getElementById('odhlasit').addEventListener('click',async function(){
+    await fetch('/api/admin/logout',{method:'POST'});
+    location.reload();
+  });
+
+  nacti().then(function(prihlasen){ if(prihlasen) otevri(); });
+})();
+</script>
+
+</body>
+</html>

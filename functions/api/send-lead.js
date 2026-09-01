@@ -1,3 +1,5 @@
+import { ulozPoptavku, oznacMail } from './_uloz.js';
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -29,7 +31,18 @@ export async function onRequestPost(context) {
     const FROM = env.RESEND_FROM || 'Flexi House <onboarding@resend.dev>';
     const TO_US = (env.LEAD_TO_EMAIL || 'dandaprokes@gmail.com').split(',').map(e => e.trim()).filter(Boolean);
 
+    const zaznamId = await ulozPoptavku(env, {
+      typ: 'formular',
+      jmeno: lead.name,
+      email: lead.email,
+      telefon: lead.phone,
+      model: lead.model,
+      zprava: lead.message,
+      zdroj: request.headers.get('Referer') || null
+    });
+
     if (!env.RESEND_API_KEY) {
+      await oznacMail(env, zaznamId, false, 'Chybí RESEND_API_KEY.');
       return json({ ok: false, error: 'Server není nakonfigurován (RESEND_API_KEY).' }, 500);
     }
 
@@ -47,6 +60,8 @@ export async function onRequestPost(context) {
       subject: 'Děkujeme za poptávku, Flexi House',
       html: emailCustomer(lead)
     });
+
+    await oznacMail(env, zaznamId, r1.ok, r1.detail);
 
     if (!r1.ok) {
       return json({ ok: false, error: 'E-mail se nepodařilo odeslat.', detail: r1.detail }, 502);

@@ -64,3 +64,38 @@ nenastavuješ, jen nasaď web.
 - [ ] Doména `flexihouse.cz` ověřená v Resend (DNS záznamy v Cloudflare)
 - [ ] Spuštěný nový deploy po přidání proměnných
 - [ ] Test: odeslat poptávku z webu → přijde e-mail na `LEAD_TO_EMAIL`
+
+---
+
+## 7. Databáze poptávek a přehled na `/admin`
+
+Poptávky se ukládají do Cloudflare D1 **ještě předtím**, než se je pokusíme
+poslat mailem. Když Resend selže, poptávka se neztratí a v přehledu je
+označená jako neodeslaná.
+
+**Databáze** (už existuje, region EEUR):
+- název `flexihouse`, id `345c6cf5-c0f4-4c5a-980f-4926a66e8890`
+- schéma je v `.docs/schema.sql`
+
+**Co nastavit v Cloudflare Pages** (Settings → Bindings a Variables):
+- D1 binding: název proměnné `DB` → databáze `flexihouse` (Production i Preview)
+- Secret `ADMIN_PASSWORD` — heslo do přehledu
+- Secret `ADMIN_SECRET` — náhodný řetězec, kterým se podepisuje přihlašovací cookie
+
+Bez těchto tří věcí web běží dál normálně, jen se poptávky neukládají
+a `/admin` hlásí, že databáze není připojená.
+
+**Místní vývoj:**
+- `.dev.vars` obsahuje `ADMIN_PASSWORD` a `ADMIN_SECRET` (mimo git)
+- `.docs/wrangler-dev.toml` je konfigurace jen pro místní běh (mimo git),
+  aby Pages na produkci nezačal číst konfiguraci ze souboru místo z dashboardu
+- spuštění: `npx wrangler pages dev . --d1 DB=flexihouse --port 8788`
+- schéma do místní databáze: soubor `.sqlite` najdeš ve
+  `.wrangler/state/v3/d1/miniflare-D1DatabaseObject/` a naliješ do něj
+  `.docs/schema.sql` přes `sqlite3`
+
+### Checklist pro přehled poptávek
+- [ ] D1 binding `DB` přidaný (Production + Preview)
+- [ ] `ADMIN_PASSWORD` a `ADMIN_SECRET` přidané jako secrets
+- [ ] Schéma nalité do ostré databáze (`wrangler d1 execute flexihouse --remote --file=.docs/schema.sql`)
+- [ ] Test: odeslat poptávku → objeví se na `/admin`
