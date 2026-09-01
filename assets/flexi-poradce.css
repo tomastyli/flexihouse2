@@ -1,0 +1,188 @@
+/* Poradce Flexi House. Třídy mají předponu fhp-, aby se nesrazily se styly webu.
+   Tokeny se dědí z flexi.css, tady se jen používají. */
+.fhp-wid{
+  position:fixed;right:24px;bottom:24px;z-index:80;
+  width:392px;max-width:calc(100vw - 32px);
+  height:min(624px,calc(100vh - 48px));
+  display:flex;flex-direction:column;
+  background:var(--paper);
+  border:1px solid var(--hair);
+  box-shadow:0 26px 64px rgba(22,32,42,.22);
+  transform-origin:bottom right;
+}
+.fhp-wid[hidden]{display:none}
+.fhp-wid{
+  transform-origin:bottom right;
+  transition:opacity .22s ease,transform .3s cubic-bezier(.16,1,.3,1);
+}
+.fhp-wid.is-shut{opacity:0;transform:translateY(14px) scale(.97)}
+.fhp-launch{transition:opacity .18s ease,transform .18s ease}
+.fhp-launch.is-shut{opacity:0;transform:scale(.9)}
+.fhp-wid__head{
+  display:flex;align-items:center;gap:12px;
+  padding:13px 14px 13px 16px;
+  border-bottom:1px solid var(--hair);
+  background:var(--soft);
+}
+.fhp-wid__head svg{width:38px;height:27px;flex:none}
+.fhp-wid__id{min-width:0}
+.fhp-wid__id b{
+  display:block;
+  font-family:'Archivo','Instrument Sans',sans-serif;
+  font-weight:800;font-variation-settings:'wdth' 116;
+  text-transform:uppercase;letter-spacing:0.04em;font-size:0.79rem;
+}
+.fhp-wid__id small{display:flex;align-items:baseline;gap:7px;font-size:0.72rem;line-height:1.35;color:var(--muted);margin-top:3px}
+.fhp-dot{
+  position:relative;flex:none;width:7px;height:7px;border-radius:50%;
+  background:#1f9d5b;transform:translateY(-1px);
+}
+.fhp-dot::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:#1f9d5b;animation:fhp-pip 2.4s ease-out infinite;
+}
+@keyframes fhp-pip{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(2.8);opacity:0}}
+.fhp-wid__x{
+  margin-left:auto;width:34px;height:34px;flex:none;
+  display:grid;place-items:center;
+  background:transparent;border:1px solid transparent;cursor:pointer;
+}
+.fhp-wid__x:hover{border-color:var(--hair);background:var(--paper)}
+.fhp-wid__x svg{width:14px;height:14px}
+
+.fhp-wid__log{
+  flex:1;overflow-y:auto;overscroll-behavior:contain;
+  padding:18px 16px 8px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.fhp-msg{max-width:88%;padding:12px 15px;font-size:0.94rem;line-height:1.6}
+.fhp-msg b{font-weight:700}
+.fhp-msg--bot{background:var(--soft);color:var(--ink);align-self:flex-start}
+.fhp-msg--me{background:var(--ink);color:#fff;align-self:flex-end}
+.fhp-msg--me b{color:#fff}
+.fhp-msg p+p{margin-top:10px}
+.fhp-msg--bot p{color:var(--ink)}
+.fhp-fill{
+  background:rgba(90,120,133,.18);
+  border-bottom:1px dotted var(--deep);
+  color:var(--deep);font-weight:600;padding:0 3px;
+}
+.fhp-cards{display:flex;flex-direction:column;gap:8px;align-self:flex-start;width:100%}
+.fhp-card{
+  display:flex;align-items:stretch;gap:0;width:100%;text-align:left;
+  background:var(--paper);border:1.5px solid rgba(22,32,42,.22);
+  cursor:pointer;padding:0;transition:border-color .18s;
+}
+.fhp-card:hover{border-color:var(--ink)}
+.fhp-card img{width:86px;height:auto;min-height:86px;align-self:stretch;flex:none;object-fit:cover;background:var(--soft)}
+.fhp-card__t{padding:11px 13px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.fhp-card__t b{font-size:0.9rem;font-weight:700;line-height:1.25}
+.fhp-card__t small{font-size:0.79rem;line-height:1.4;color:var(--muted)}
+.fhp-card__t i{font-style:normal;font-size:0.79rem;font-weight:700;color:var(--deep);font-variant-numeric:tabular-nums}
+.fhp-dots{display:inline-flex;gap:5px;align-items:center;height:1.35em}
+.fhp-caret{
+  display:inline-block;width:2px;height:0.95em;margin-left:1px;
+  background:var(--ink);vertical-align:-0.11em;
+  animation:fhp-caretblink .82s steps(1) infinite;
+}
+@keyframes fhp-caretblink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.fhp-dots i{width:6px;height:6px;background:var(--deep);opacity:.35;animation:fhp-blip 1.1s infinite}
+.fhp-dots i:nth-child(2){animation-delay:.16s}
+.fhp-dots i:nth-child(3){animation-delay:.32s}
+@keyframes fhp-blip{0%,60%,100%{opacity:.25}30%{opacity:.9}}
+
+.fhp-chips{display:flex;flex-wrap:wrap;gap:7px;align-self:flex-start;max-width:100%}
+.fhp-chip{
+  display:inline-flex;align-items:center;min-height:40px;
+  padding:8px 13px;font-size:0.845rem;font-weight:600;line-height:1.3;
+  background:var(--paper);border:1.5px solid rgba(22,32,42,.22);
+  cursor:pointer;transition:border-color .18s,background .18s;
+}
+.fhp-chip:hover{border-color:var(--ink);background:var(--soft)}
+.fhp-chip--human{border-color:var(--blue);color:var(--deep)}
+.fhp-chip--human:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.fhp-lead{align-self:stretch;background:var(--soft);padding:15px;display:flex;flex-direction:column;gap:10px}
+.fhp-lead label{font-size:0.78rem;font-weight:700;letter-spacing:0.02em;display:block;margin-bottom:4px}
+.fhp-lead input{
+  width:100%;height:44px;padding:0 12px;font-size:16px;
+  font-family:inherit;color:var(--ink);
+  background:var(--paper);border:1.5px solid rgba(22,32,42,.22);
+}
+.fhp-lead input:focus{border-color:var(--ink);outline:none}
+.fhp-lead button{
+  height:46px;background:var(--ink);color:#fff;border:0;cursor:pointer;
+  font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
+  font-weight:800;font-variation-settings:'wdth' 88;
+  text-transform:uppercase;letter-spacing:0.07em;font-size:0.8rem;
+}
+.fhp-lead button:hover{background:var(--blue)}
+.fhp-lead .fhp-err{font-size:0.78rem;color:#a2382c;font-weight:600}
+.fhp-past{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.fhp-wid__foot{border-top:1px solid var(--hair);padding:10px 14px 12px;position:relative}
+.fhp-nap{
+  position:absolute;left:14px;right:14px;bottom:calc(100% - 8px);z-index:3;
+  background:var(--paper);border:1.5px solid var(--ink);
+  box-shadow:0 -10px 28px rgba(22,32,42,.14);
+}
+.fhp-nap[hidden]{display:none}
+.fhp-nap__hl{
+  margin:0;padding:9px 13px 5px;font-size:0.7rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);
+}
+.fhp-nap__list{margin:0;padding:0 0 5px;list-style:none;max-height:206px;overflow-y:auto}
+.fhp-nap__list li{
+  padding:9px 13px;font-size:0.9rem;line-height:1.35;cursor:pointer;
+}
+.fhp-nap__list li:hover,.fhp-nap__list li[aria-selected="true"]{background:var(--soft)}
+.fhp-nap__list li b{font-weight:700;background:rgba(90,120,133,.22)}
+.fhp-wid__note{font-size:0.71rem;line-height:1.45;color:var(--muted);margin-bottom:9px}
+.fhp-wid__note a{border-bottom:1px solid var(--hair)}
+.fhp-wid__form{display:flex;gap:8px}
+.fhp-wid__form input{
+  flex:1;min-width:0;height:46px;padding:0 13px;font-size:16px;
+  font-family:inherit;color:var(--ink);
+  background:var(--paper);border:1.5px solid rgba(22,32,42,.22);
+}
+.fhp-wid__form input:focus{border-color:var(--ink);outline:none}
+.fhp-wid__form button{
+  width:46px;height:46px;flex:none;display:grid;place-items:center;
+  background:var(--ink);border:0;cursor:pointer;color:#fff;
+}
+.fhp-wid__form button:hover{background:var(--blue)}
+.fhp-wid__form input:disabled{background:var(--soft);color:var(--muted)}
+.fhp-wid__form button:disabled{opacity:.4;cursor:default}
+.fhp-wid__form button:disabled:hover{background:var(--ink)}
+.fhp-wid__form svg{width:17px;height:17px}
+
+.fhp-launch{
+  position:fixed;right:24px;bottom:24px;z-index:80;
+  display:flex;align-items:center;gap:11px;
+  height:56px;padding:0 20px 0 16px;
+  background:var(--ink);color:#fff;border:0;cursor:pointer;
+  font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
+  font-weight:800;font-variation-settings:'wdth' 88;
+  text-transform:uppercase;letter-spacing:0.06em;font-size:0.83rem;
+  box-shadow:0 14px 34px rgba(22,32,42,.26);
+}
+.fhp-launch:hover{background:var(--blue)}
+.fhp-launch[hidden]{display:none}
+.fhp-launch svg{width:30px;height:22px}
+
+@media (max-width:560px){
+  .fhp-wid{right:0;bottom:0;left:0;top:0;width:100%;max-width:none;height:100%;border:0;transform-origin:bottom center}
+  .fhp-wid.is-shut{opacity:1;transform:translateY(100%)}
+  .fhp-launch{right:16px;bottom:16px}
+  .fhp-chip{min-height:48px;padding:10px 15px}
+  .fhp-nap__list li{min-height:48px;display:flex;align-items:center;padding:10px 14px}
+  .fhp-nap__list{max-height:240px}
+  .fhp-wid__log{padding:16px 14px 8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .fhp-wid,.fhp-launch{transition-duration:.01ms !important}
+  .fhp-dots i{animation-duration:.01ms !important}
+  .fhp-caret{animation:none;opacity:1}
+  .fhp-dot::after{display:none}
+}
+.fhp-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

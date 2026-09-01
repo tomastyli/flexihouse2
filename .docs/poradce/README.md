@@ -189,12 +189,41 @@ udělat export**, tabulka se v průběhu zahazuje a znovu zakládá.
 
 Testy předání a adminu: `node .docs/poradce/test-predani.mjs`.
 
+### Widget na webu
+
+Produkční poradce je `assets/flexi-poradce.js` a `assets/flexi-poradce.css`, připojený
+na `index`, `flexi-house`, `flexi-office`, `katalog`, `konfigurator` a `poptavka`.
+Sám se vloží do stránky, nepotřebuje žádné místo v HTML. Třídy mají předponu `fhp-`,
+aby se nesrazily se styly webu.
+
+Mluví s `/api/poradce` a při předání kontaktu s `/api/poradce-predat`. Když endpoint
+neodpoví, poradce nemlčí, ale nabídne telefon na Dana.
+
+**ID relace vydává prohlížeč** přes `crypto.randomUUID` a drží ho v `sessionStorage`,
+takže je nehádatelné a po zavření karty zaniká. Server ho zatím na nikoho neváže,
+takže ta náhodnost je jediná ochrana přepisu. Kdyby se poradce někdy dostal k citlivějším
+datům, musí se ID vydávat na serveru v podepsané cookie.
+
+**Turnstile má past v pořadí.** Token je jednorázový a platí 300 vteřin, proto si ho widget
+bere čerstvý před každou zprávou. Potřebuje k tomu dvě věci: skript Turnstile na stránce
+a atribut `data-poradce-turnstile` se sitekey na elementu `<html>`. Bez nich token neposílá.
+Když se tedy nastaví `TURNSTILE_SECRET` na serveru dřív, než se přidá skript na web,
+**každá zpráva skončí na 403** a poradce bude jen opakovat, že se mu nedaří odpovědět.
+Nastavovat v pořadí: nejdřív web, pak secret.
+
+`demo.html` zůstává jako ukázka bez backendu a od téhle chvíle se s produkční verzí rozchází:
+demo běží na rozhodovacím stromu, produkce se ptá modelu. Když se mění texty, měnit obojí,
+nebo demo prohlásit za historii.
+
+**Pozor při slučování:** větev `konfigurator-nahled` sahá na `konfigurator.html` taky,
+takže se obě větve o ten soubor porvou. Slučovat po jedné, ne najednou.
+
 ### Co ještě zbývá dodělat
 
 - Vytvořit tabulky na ostré D1: `.docs/poradce/schema-poradce.sql`.
 - Nastavit `ANTHROPIC_API_KEY` jako secret, ne jako proměnnou.
 - Vyrobit Turnstile klíč pro poradce a nastavit `TURNSTILE_SECRET`.
-- Napojit widget z `demo.html` na `/api/poradce` místo rozhodovacího stromu.
+- Přidat na web skript Turnstile a sitekey, teprve pak nastavit `TURNSTILE_SECRET`.
 - Pustit `migrace-email-nullable.sql` na ostrou D1 (po exportu).
 - Odchytit duplicitní poptávky podle telefonu, aby stejný člověk nezaložil deset stejných.
 
