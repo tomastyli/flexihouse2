@@ -191,10 +191,20 @@ Testy předání a adminu: `node .docs/poradce/test-predani.mjs`.
 
 ### Widget na webu
 
-Produkční poradce je `assets/flexi-poradce.js` a `assets/flexi-poradce.css`, připojený
-na `index`, `flexi-house`, `flexi-office`, `katalog`, `konfigurator` a `poptavka`.
+Produkční poradce je `assets/flexi-poradce.js` a `assets/flexi-poradce.css`.
 Sám se vloží do stránky, nepotřebuje žádné místo v HTML. Třídy mají předponu `fhp-`,
 aby se nesrazily se styly webu.
+
+**Je v `main`, ale VYPNUTÝ.** Žádná stránka ho nenačítá, takže ho na webu nikdo nevidí.
+Zapíná se přidáním dvou řádků na `index`, `flexi-house`, `flexi-office`, `katalog`,
+`konfigurator` a `poptavka`:
+
+    <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
+    <script src="assets/flexi-poradce.js?v=1" defer></script>
+
+První patří za `flexi.css` v hlavičce, druhý před `</body>`.
+**Zapínat až po** vytvoření tabulek v D1, nastavení `ANTHROPIC_API_KEY` a spuštění migrace
+e-mailu. Bez nich odpoví poradce každému návštěvníkovi poruchovou větou.
 
 Mluví s `/api/poradce` a při předání kontaktu s `/api/poradce-predat`. Když endpoint
 neodpoví, poradce nemlčí, ale nabídne telefon na Dana.
