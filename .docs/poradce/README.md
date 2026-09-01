@@ -26,6 +26,8 @@ Co demo umí:
 
 - Témata jako tlačítka, stejná logika jako u Alzy. Zkratka, ne klec.
 - Volné psaní. Dotaz se páruje podle klíčových slov, funguje i bez diakritiky.
+- Poradce se otevírá a zavírá plynule, na mobilu vyjede zdola. Zelené kolečko v hlavičce
+  tepe, dokud je poradce k dispozici.
 - Odpověď se streamuje po znacích s blikajícím kurzorem, ne po slovech. Rychlost se dopočítává
   z délky textu, takže krátká i dlouhá odpověď trvá zhruba stejně (kolem dvou vteřin).
   Za čárkou se přidá 75 ms, za tečkou 165 ms, mezi odstavci 210 ms, což dělá ten rytmus.
@@ -103,8 +105,10 @@ Zábrany, které musí zůstat:
 
 ## Právní část
 
-- V hlavičce je „Odpovídá automaticky". Musí tam zůstat, u chatbotů to vyžadují evropská
-  pravidla o AI a je to i slušnost.
+- V hlavičce je „Automatický poradce". Slovo automatický tam musí zůstat, u chatbotů to
+  vyžadují evropská pravidla o AI a je to i slušnost. Zelené kolečko vedle něj znamená
+  „odpovídá hned", ne že u toho sedí člověk. Kdyby tam mělo být napsané Online, začne to
+  slibovat živého člověka a to je jiný slib.
 - Jakmile v chatu padne telefon nebo mail, jsou to osobní údaje. Řádek o zpracování s odkazem
   je nad polem pro psaní, ale chce to odstavec v `zasady-ochrany-soukromi.html` a rozhodnout,
   jak dlouho přepisy držet.
