@@ -2365,7 +2365,7 @@ function Scena(canvas, opt) {
     var r = cv.getBoundingClientRect();
     var sirka = rodic && rodic.width > 8 ? rodic.width : r.width;
     if (!sirka) return;
-    sirka = Math.min(sirka, 2000);
+    sirka = Math.min(sirka, 2600);
     var vyska = sirka * pomer;
     if (cv.dataset && cv.dataset.vyska === 'ramec' && rodic && rodic.height > 8) {
       vyska = rodic.height;
@@ -2373,7 +2373,9 @@ function Scena(canvas, opt) {
     vyska = Math.max(120, vyska);
     var w = Math.round(sirka * DPR);
     var h = Math.round(vyska * DPR);
-    var ROZPOCET = 2600000;
+    // Zvětšený náhled je násobně větší než malé okénko. Kdyby byl rozpočet nízký,
+    // tlačítko Zvětšit by paradoxně dodalo měkčí obraz, než jaký byl předtím.
+    var ROZPOCET = 5200000;
     if (w * h > ROZPOCET) {
       var k = Math.sqrt(ROZPOCET / (w * h));
       w = Math.round(w * k);
