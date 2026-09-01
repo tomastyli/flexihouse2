@@ -77,13 +77,24 @@ označená jako neodeslaná.
 - název `flexihouse`, id `345c6cf5-c0f4-4c5a-980f-4926a66e8890`
 - schéma je v `.docs/schema.sql`
 
-**Co nastavit v Cloudflare Pages** (Settings → Bindings a Variables):
-- D1 binding: název proměnné `DB` → databáze `flexihouse` (Production i Preview)
-- Secret `ADMIN_PASSWORD` — heslo do přehledu
-- Secret `ADMIN_SECRET` — náhodný řetězec, kterým se podepisuje přihlašovací cookie
+**Nastaveno 1. 9. 2026 (Production):** D1 binding `DB` → `flexihouse`,
+secrets `ADMIN_PASSWORD` a `ADMIN_SECRET`. Preview záměrně bez bindingu,
+aby testovací nasazení nepsala do ostrých poptávek.
 
-Bez těchto tří věcí web běží dál normálně, jen se poptávky neukládají
-a `/admin` hlásí, že databáze není připojená.
+Bez těchto tří věcí by web běžel dál normálně, jen by se poptávky
+neukládaly a `/admin` by hlásil, že databáze není připojená.
+
+**Binding jde nastavit i bez dashboardu**, přes Cloudflare API (wrangler
+sám na to příkaz nemá). Token se dá vytáhnout z `~/.wrangler/config/default.toml`:
+
+```
+curl -X PATCH -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  --data '{"deployment_configs":{"production":{"d1_databases":{"DB":{"id":"345c6cf5-c0f4-4c5a-980f-4926a66e8890"}}}}}' \
+  https://api.cloudflare.com/client/v4/accounts/3d2387ff6d1be6ec4a82d28b306b42bb/pages/projects/flexihouse2
+```
+
+PATCH na `env_vars` posílat vždy s **celou** sadou proměnných, ne jen s
+novými. Před zásahem si stáhnout GET stejné adresy jako zálohu.
 
 **Místní vývoj:**
 - `.dev.vars` obsahuje `ADMIN_PASSWORD` a `ADMIN_SECRET` (mimo git)
@@ -95,7 +106,14 @@ a `/admin` hlásí, že databáze není připojená.
   `.docs/schema.sql` přes `sqlite3`
 
 ### Checklist pro přehled poptávek
-- [ ] D1 binding `DB` přidaný (Production + Preview)
-- [ ] `ADMIN_PASSWORD` a `ADMIN_SECRET` přidané jako secrets
-- [ ] Schéma nalité do ostré databáze (`wrangler d1 execute flexihouse --remote --file=.docs/schema.sql`)
-- [ ] Test: odeslat poptávku → objeví se na `/admin`
+- [x] D1 binding `DB` přidaný (Production; Preview vědomě ne)
+- [x] `ADMIN_PASSWORD` a `ADMIN_SECRET` přidané jako secrets
+- [x] Schéma nalité do ostré databáze (`wrangler d1 execute flexihouse --remote --file=.docs/schema.sql`)
+- [x] Nasazeno 1. 9. 2026, commit `71ae006`. Ověřeno naostro: `/admin` odpovídá,
+      špatné heslo 401, správné 200, přehled čte z ostré D1.
+- [ ] Test s reálným odesláním poptávky přes web (pošle mail na `LEAD_TO_EMAIL`,
+      takže až po domluvě s Danem)
+
+**Poznámka k RESEND_API_KEY:** je v Pages uložený jako `plain_text`, ne jako
+secret, takže je v dashboardu čitelný. Přepnout na secret při nejbližší
+příležitosti.
