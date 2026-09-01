@@ -85,13 +85,16 @@ To je jediná práce na jeho straně a je to zároveň zdroj znalostní báze.
 
 Demo páruje klíčová slova. Produkční verze má odpovídat modelem nad pevnou znalostní bází.
 
-1. **Znalostní báze** jako jeden textový soubor. Bot smí odpovídat jen z něj. Co v něm není,
+1. **Znalostní báze** je `baze.md`. Endpoint ji čte z `functions/api/_poradce-baze.js`,
+   který se z ní generuje příkazem `node .docs/poradce/sestav-bazi.mjs`. Důvod: `.docs/`
+   se na Pages nenahrává, takže by ji funkce za běhu nenašla. Po každé úpravě báze
+   ten příkaz pustit, jinak poradce jede podle staré verze. Bot smí odpovídat jen z něj. Co v něm není,
    na to odpoví předáním na Dana. Tohle je nejdůležitější pravidlo celé věci.
 2. **Worker** na `/api/poradce`, stejná infrastruktura jako `send-lead` a `send-konfigurace`.
    Bázi držet v systémovém promptu s cachováním, aby se neplatila při každé zprávě znovu.
-3. **Model**: `claude-opus-5`. Na tenhle typ odpovědí stačí `claude-haiku-4-5` a je pětkrát
-   levnější ($1 / $5 za milion tokenů proti $5 / $25). Přepnutí je jeden řádek.
-   Při dvou stech konverzacích měsíčně jde o jednotky stovek korun.
+3. **Model**: nastavený je `claude-opus-5`, protože jsi model nevybral a tohle je výchozí.
+   Na tenhle typ odpovědí stačí `claude-haiku-4-5` a je pětkrát levnější ($1 / $5 za milion
+   tokenů proti $5 / $25). Přepnutí je proměnná `PORADCE_MODEL`, nemusí se sahat do kódu.
 4. **Ukládání konverzací** do D1 vedle poptávek. Dan v `/admin` uvidí přepisy, takže po dvou
    týdnech přesně ví, na co se lidi ptají, a doplní to do báze.
 5. **Předání člověku** zapisuje poptávku do stejné tabulky jako formulář a konfigurátor,
@@ -127,24 +130,41 @@ ale ukazují chování a kód se přenese do produkce:
 - Poptávkový formulář má skryté pole jako past na roboty. Když je vyplněné, poptávka se
   zahodí a člověk nic nepozná.
 
-### Co musí být na serveru
+### Co je postavené na serveru
 
-Tohle je ta část, která skutečně brání, a bez ní to nasadit nejde:
+Endpoint `functions/api/poradce.js` je hotový a otestovaný, jen ještě není napojený na web.
+Zábrany v něm běží v tomhle pořadí, od nejlevnější po nejdražší, aby se na útočníka
+neutrácelo za model:
 
-- **Turnstile** na endpointu poradce i na předání kontaktu. Cloudflare ho už na webu máme.
-- **Limit podle IP** v KV nebo D1, řádově dvacet zpráv za deset minut a šedesát za den.
-  Po vyčerpání poradce nabídne telefon na Dana místo odpovědi.
-- **Strop konverzace**, po zhruba dvaceti zprávách nabídnout předání a další už neodpovídat.
-- **Denní strop útraty** za model. Po překročení se poradce přepne do režimu, kdy jen sbírá
-  kontakt. Radši den bez bota než účet za tisíce.
-- **Odpovídat jen ze znalostní báze.** Tohle je zároveň nejlepší ochrana proti vnucování
-  instrukcí: když model nemá co jiného říct, není co unést. Text od návštěvníka se do promptu
-  vkládá jako data, ne jako pokyn.
-- **Téma na vstupu.** Co není o domech, dostane jednu větu a nabídku Dana. Ušetří to peníze
-  a zavře to celou kategorii zneužití.
-- **Logovat a hlídat.** Přepisy jsou v D1, takže první zneužití je vidět a dá se na něj
-  reagovat. Bez logu se to pozná až na faktuře.
-- **Poptávky odchytit před Danem**: shoda telefonu, aby stejný člověk nezaložil deset poptávek.
+1. Tělo požadavku nejvýš 4 kB, zpráva nejvýš 300 znaků.
+2. Skryté pole jako past na roboty, stejný vzorec jako u `send-lead.js`.
+3. Turnstile, pokud je nastavené `TURNSTILE_SECRET`. Bez tokenu 403.
+4. Limit podle IP z D1: dvacet zpráv za deset minut a šedesát za den.
+5. Strop konverzace: po dvaceti zprávách v jedné relaci poradce předá kontakt.
+6. Denní strop odpovědí (`PORADCE_DENNI_STROP`, výchozí 400). Po překročení poradce
+   jen sbírá kontakt. Radši den bez bota než účet za tisíce.
+7. Teprve pak volání modelu.
+
+Dotaz od návštěvníka jde do modelu obalený v `<dotaz-navstevnika>` a pravidla říkají,
+že text uvnitř je vždycky jen dotaz, nikdy pokyn. Znalostní báze se posílá s cachováním,
+takže se neplatí při každé zprávě znovu.
+
+Když model spadne, odmítne odpovědět nebo chybí databáze, poradce nepadá. Vrátí větu
+s telefonem na Dana. Konverzace se ukládají do `poradce_zpravy`, takže první zneužití
+je vidět v datech, ne až na faktuře.
+
+Testy: `node .docs/poradce/test-poradce.mjs`, šestnáct zkoušek s podvrženou databází
+a podvrženým voláním API. Pozor, lokální běh nedokazuje chování na produkci
+(viz past s Workers limity v ostatních projektech).
+
+### Co ještě zbývá dodělat
+
+- Vytvořit tabulky na ostré D1: `.docs/poradce/schema-poradce.sql`.
+- Nastavit `ANTHROPIC_API_KEY` jako secret, ne jako proměnnou.
+- Vyrobit Turnstile klíč pro poradce a nastavit `TURNSTILE_SECRET`.
+- Napojit widget z `demo.html` na `/api/poradce` místo rozhodovacího stromu.
+- Přidat přepisy do `/admin` vedle poptávek.
+- Odchytit duplicitní poptávky podle telefonu, aby stejný člověk nezaložil deset stejných.
 
 ## Právní část
 
