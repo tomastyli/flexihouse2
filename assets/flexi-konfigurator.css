@@ -140,7 +140,8 @@
 /* .kf-stage je sticky a sticky prvek zakládá vlastní vrstvu, takže by se
    zvětšený náhled schoval pod navigaci. Na dobu zvětšení se sticky ruší. */
 body.kf-zoomed .kf-stage{position:static}
-.kf-viz.is-zoom{position:fixed;inset:0;z-index:90;border:0;display:flex;flex-direction:column;max-width:none}
+.kf-viz.is-zoom{position:fixed;inset:0;z-index:90;border:0;display:flex;flex-direction:column;max-width:none;
+  transform-origin:top left;will-change:transform}
 .kf-viz.is-zoom .kf-viz__stage{flex:1;aspect-ratio:auto;max-height:none;min-height:0}
 .kf-viz.is-zoom .kf-viz__bar{border-top:1px solid var(--hair)}
 .kf-viz.is-zoom .kf-viz__zoom{color:var(--paper);background:var(--ink);border-color:var(--ink)}
