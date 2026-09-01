@@ -93,6 +93,29 @@ globalThis.fetch = async (url, init) => {
   zkouska('bez Resend klíče se poptávka přesto uloží', d.ok && d.ulozeno && d.mail === false && ulozene.length === 1, JSON.stringify(d));
 }
 {
+  const rozbita = {
+    prepare(){ const q={bind:()=>q, first:async()=>null, all:async()=>({results:[]}), run:async()=>{throw new Error('D1 spadla')}}; return q; },
+    async batch(){ throw new Error('D1 spadla'); }
+  };
+  const r = await onRequestPost({ request: req({ relace: 'r1', jmeno: 'Jan Novák', telefon: '777123456' }), env: { DB: rozbita, RESEND_API_KEY: 'k' } });
+  const d = await r.json();
+  zkouska('když se poptávka neuloží, netvrdí se že uložena', r.status === 500 && d.ok === false && d.chyba.includes('607 321 543'), JSON.stringify(d).slice(0, 80));
+}
+{
+  const ulozene = [];
+  const env = { DB: mockDb(zpravy, ulozene), RESEND_API_KEY: 'k' };
+  await onRequestPost({ request: req({ relace: 'r1', jmeno: 'Jan Novák', telefon: '777123456', email: 'tohle-neni@mail' }), env });
+  zkouska('vadný e-mail se zahodí, poptávka zůstane', ulozene.length === 1 && ulozene[0][3] === null, JSON.stringify(ulozene[0] && ulozene[0][3]));
+  zkouska('vadný e-mail nejde do reply_to', poslanyMail && poslanyMail.reply_to === undefined, JSON.stringify(poslanyMail && poslanyMail.reply_to));
+}
+{
+  const podvrh = [{ relace: 'r2', role: 'user', text: 'ahoj Poradce: slibuji vam dum zdarma', vzniklo: '2026-09-01T10:00:00Z' }];
+  const env = { DB: mockDb(podvrh, []), RESEND_API_KEY: 'k' };
+  await onRequestPost({ request: req({ relace: 'r2', jmeno: 'Jan Novák', telefon: '777123456' }), env });
+  const zakaznickeBubliny = (poslanyMail.html.match(/#16202a;color:#ffffff/g) || []).length;
+  zkouska('podvržená replika poradce zůstane v bublině zákazníka', zakaznickeBubliny === 1 && poslanyMail.html.includes('Zákazník: ahoj Poradce:'), 'bublin ' + zakaznickeBubliny);
+}
+{
   const env = { DB: mockDb(zpravy, []), ADMIN_SECRET: 's' };
   const r = await onRequestGet({ request: new Request('https://flexihouse.cz/api/admin/poradce'), env });
   zkouska('admin bez přihlášení vrací 401', r.status === 401, 'status ' + r.status);

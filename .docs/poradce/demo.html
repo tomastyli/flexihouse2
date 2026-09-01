@@ -487,7 +487,7 @@ const NODES = {
     chips: ['clovek']
   },
   nevim: {
-    text: '<p>Tohle si radši nebudu domýšlet, abych vám neřekl nesmysl. Odpoví vám Dan, obvykle ještě týž den.</p><p>Nechte mi na sebe kontakt a předám mu i to, na co jste se ptali.</p>',
+    text: '<p>Tohle si radši nebudu domýšlet, abych vám neřekl nesmysl. Odpoví vám Dan, nejpozději do 24 hodin.</p><p>Nechte mi na sebe kontakt a předám mu i to, na co jste se ptali.</p>',
     chips: ['clovek']
   },
   clovek: {
@@ -525,14 +525,14 @@ const MATCH = [
   {node:'zaklady', keys:['zaklad','základ','patk','deska','beton','pripojk','přípojk','podlozi','podloží','pozemek','pozemku']},
   {node:'doprava', keys:['doprav','montaz','montáž','usazen','jerab','jeřáb','dovoz','privez','přivez','vzdalen','vzdálen','prijezd','příjezd']},
   {node:'zima', keys:['zim','zateplen','izolac','celoroc','celoroč','trvale','trvalé','topen','topení','vytap','vytáp','klimatiz','kamna','mraz','mráz','tepl']},
-  {node:'termin', keys:['termin','termín','dlouho','ceka','čeká','kdy','lhut','lhůt','dodac','dodac','skladem','rychle']},
-  {node:'rozmery', keys:['rozmer','rozměr','metr','ctverec','čtvereč','velk','plocha','dispozic','loznic','ložnic','koupeln','kuchyn','kuchyň','pokoj','m2','m²']},
+  {node:'termin', keys:['termin','termín','dlouho','ceka','čeká','kdy','lhut','lhůt','dodan','dodán','dodac','skladem','rychle']},
+  {node:'rozmery', keys:['rozmer','rozměr','metr','ctverec','čtvereč','velk','plocha','dispozic','loznic','ložnic','koupeln','kuchyn','kuchyň','pokoj','osob','lidi','lidí','vejde','m2','m²']},
   {node:'strecha', keys:['strech','střech','sedlov','ploch']},
   {node:'voda', keys:['voda','vody','odpad','elektr','zasuvk','zásuvk','rozvod','septik','jimka','wc','zachod','záchod']},
   {node:'financovani', keys:['splatk','splátk','hypotek','hypoték','uver','úvěr','financ','leasing','zaloh','záloh','platb']},
   {node:'zaruka', keys:['zaruk','záruk','reklamac','servis','zivotnost','životnost','vydrz','vydrž']},
   {node:'office', keys:['office','kancelar','kancelář','provozovn','bunk','buňk']},
-  {node:'clovek', keys:['clovek','člověk','clovekem','živ','ziv','dan','zavolat','zavolej','telefon','volat','operator','operátor','osob']}
+  {node:'clovek', keys:['clovek','člověk','clovekem','ziveho','živého','zavolat','zavolej','telefon','volat','operator','operátor','s danem','na dana']}
 ];
 
 const log = document.getElementById('log');
@@ -713,7 +713,7 @@ function leadForm(wish){
     bubble('me', (wishTxt ? wishTxt + '. ' : '') + name + ', ' + tel);
     think(() => {
       botSay(
-        '<p>' + (wishTxt ? 'Poptávka odeslána' : 'Předáno') + '. Dan Prokeš se vám ozve na ' + tel + ', obvykle ještě dnes.</p>' +
+        '<p>' + (wishTxt ? 'Poptávka odeslána' : 'Předáno') + '. Dan Prokeš se vám ozve na ' + tel + ', nejpozději do 24 hodin.</p>' +
         '<p>Pokud to spěchá, můžete mu rovnou zavolat na 607 321 543.</p>',
         () => setTimeout(() => chipRow(['nabidka','termin']), 240)
       );

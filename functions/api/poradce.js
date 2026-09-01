@@ -11,6 +11,7 @@ const DENNI_STROP_ODPOVEDI = 400;
 const HISTORIE = 8;
 
 const PREDAT = 'Tohle si radši nebudu domýšlet. Upřesní vám to Dan Prokeš na 607 321 543, nebo mi tu nechte kontakt a ozve se vám sám.';
+const PORUCHA = 'Teď se mi nedaří odpovědět. Zkuste to prosím za chvíli, nebo rovnou volejte Danovi na 607 321 543.';
 
 const PRAVIDLA = [
   'Jsi poradce na webu firmy Flexi House, která vyrábí modulární domy. Píšeš česky a vykáš.',
@@ -51,21 +52,29 @@ export async function onRequestPost(context) {
     }
 
     if (data.website && String(data.website).trim() !== '') {
-      return json({ ok: true, odpoved: PREDAT, predat: true });
+      return json({ ok: true, odpoved: PORUCHA, predat: true });
     }
 
     const relace = typeof data.relace === 'string' ? data.relace.slice(0, 64) : '';
-    const zprava = String(data.zprava || '').trim().slice(0, MAX_ZNAKU);
+    // Zalomení řádků a uzavírací značka by šly zneužít k vyrobení falešné repliky
+    // poradce v přepisu, který čte Dan, a k vystoupení z obalu dotazu.
+    const zprava = String(data.zprava || '')
+      .replace(/<\/?dotaz-navstevnika>/gi, '')
+      .replace(/[\r\n]+/g, ' ')
+      .trim()
+      .slice(0, MAX_ZNAKU);
     if (!relace || !zprava) return json({ ok: false, chyba: 'Chybí zpráva.' }, 400);
 
     const lidsky = await overTurnstile(env, data.turnstile, ip);
     if (!lidsky) return json({ ok: false, chyba: 'Ověření se nepodařilo. Zkuste to prosím znovu.' }, 403);
 
     const kratky = await limit(env, `k:${ip}`, LIMIT_KRATKY);
+    if (kratky === 'chyba') return json({ ok: true, odpoved: PORUCHA, predat: true });
     if (!kratky) {
       return json({ ok: true, odpoved: 'Zpráv chodí víc, než stíhám. Zkuste to prosím za chvíli, nebo rovnou volejte Danovi na 607 321 543.', predat: true });
     }
     const denni = await limit(env, `d:${ip}`, LIMIT_DENNI);
+    if (denni === 'chyba') return json({ ok: true, odpoved: PORUCHA, predat: true });
     if (!denni) {
       return json({ ok: true, odpoved: PREDAT, predat: true, konec: true });
     }
@@ -80,7 +89,8 @@ export async function onRequestPost(context) {
     }
 
     if (!env.ANTHROPIC_API_KEY) {
-      return json({ ok: false, chyba: 'Poradce není nakonfigurován.' }, 500);
+      console.error('poradce: chybí ANTHROPIC_API_KEY');
+      return json({ ok: true, odpoved: PORUCHA, predat: true });
     }
 
     const odpoved = await zeptejSe(env, historie, zprava);
@@ -89,13 +99,20 @@ export async function onRequestPost(context) {
     return json({ ok: true, odpoved: odpoved.text, predat: odpoved.predat });
   } catch (e) {
     console.error('poradce selhal:', e);
-    return json({ ok: true, odpoved: PREDAT, predat: true });
+    return json({ ok: true, odpoved: PORUCHA, predat: true });
   }
 }
 
+function obal(text) {
+  return `<dotaz-navstevnika>\n${text}\n</dotaz-navstevnika>`;
+}
+
 async function zeptejSe(env, historie, zprava) {
-  const zpravy = historie.map(z => ({ role: z.role, content: z.text }));
-  zpravy.push({ role: 'user', content: `<dotaz-navstevnika>\n${zprava}\n</dotaz-navstevnika>` });
+  const zpravy = historie.map(z => ({
+    role: z.role,
+    content: z.role === 'user' ? obal(z.text) : z.text
+  }));
+  zpravy.push({ role: 'user', content: obal(zprava) });
 
   const model = env.PORADCE_MODEL || MODEL;
   const umiEffort = /^claude-(opus|fable|mythos|sonnet)-(5|4-[678])/.test(model);
@@ -149,7 +166,9 @@ async function zeptejSe(env, historie, zprava) {
     .trim();
 
   if (!text) return { text: PREDAT, predat: true };
-  return { text, predat: /Dan|607 321 543/.test(text) };
+  // Dřív se předání poznávalo podle zmínky o Danovi, jenže tu má poradce i v běžné
+  // cenové odpovědi, takže formulář vyskakoval bez důvodu.
+  return { text, predat: text.includes(PREDAT) };
 }
 
 async function overTurnstile(env, token, ip) {
@@ -187,19 +206,29 @@ async function limit(env, klic, cfg) {
     return true;
   } catch (e) {
     console.error('limit selhal:', e);
-    return false;
+    return 'chyba';
   }
 }
 
 async function stropVycerpan(env) {
   if (!maDb(env)) return false;
-  const strop = Number(env.PORADCE_DENNI_STROP || DENNI_STROP_ODPOVEDI);
+  // Proměnné z Cloudflare jsou vždy řetězce. Překlep by dal NaN a porovnání by bylo
+  // vždy nepravdivé, čímž by strop tiše zmizel.
+  let strop = Number(env.PORADCE_DENNI_STROP);
+  if (!Number.isFinite(strop) || strop <= 0) {
+    if (env.PORADCE_DENNI_STROP !== undefined) {
+      console.warn('poradce: PORADCE_DENNI_STROP není kladné číslo, beru', DENNI_STROP_ODPOVEDI);
+    }
+    strop = DENNI_STROP_ODPOVEDI;
+  }
   try {
     const den = new Date().toISOString().slice(0, 10);
     const row = await env.DB.prepare(
       "SELECT COUNT(*) AS n FROM poradce_zpravy WHERE role = 'assistant' AND vzniklo >= ?"
     ).bind(den).first();
-    return !!row && row.n >= strop;
+    const vycerpano = !!row && row.n >= strop;
+    if (vycerpano) console.warn(`poradce: denní strop ${strop} vyčerpán, jen sbírám kontakty`);
+    return vycerpano;
   } catch (e) {
     console.error('strop selhal:', e);
     return true;

@@ -21,7 +21,10 @@ export async function onRequestPost({ request, env }) {
     const relace = typeof data.relace === 'string' ? data.relace.slice(0, 64) : '';
     const jmeno = String(data.jmeno || '').trim().slice(0, 120);
     const telefon = String(data.telefon || '').trim().slice(0, 40);
-    const email = String(data.email || '').trim().slice(0, 160);
+    let email = String(data.email || '').trim().slice(0, 160);
+    // E-mail je nepovinný. Když je vadný, zahodíme ho, ale poptávku o něj nepřipravíme:
+    // překlep v nepovinném poli nesmí stát kvalifikovaného zájemce.
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) email = '';
     const prani = String(data.prani || '').trim().slice(0, 300);
 
     if (jmeno.length < 2) return json({ ok: false, chyba: 'Doplňte prosím jméno.' }, 400);
@@ -34,9 +37,12 @@ export async function onRequestPost({ request, env }) {
     }
 
     const prepis = await nactiPrepis(env, relace);
+    const prepisText = prepis
+      .map(z => `${z.role === 'user' ? 'Zákazník' : 'Poradce'}: ${z.text}`)
+      .join('\n');
     const zprava = [
       prani ? `Přání: ${prani}` : '',
-      prepis ? `Z konverzace s poradcem:\n${prepis}` : 'Konverzace s poradcem není k dispozici.'
+      prepisText ? `Z konverzace s poradcem:\n${prepisText}` : 'Konverzace s poradcem není k dispozici.'
     ].filter(Boolean).join('\n\n');
 
     const zaznamId = await ulozPoptavku(env, {
@@ -48,6 +54,14 @@ export async function onRequestPost({ request, env }) {
       zprava,
       zdroj: request.headers.get('Referer') || null
     });
+
+    if (zaznamId == null) {
+      console.error('predani: poptavku se nepodarilo ulozit');
+      return json({
+        ok: false,
+        chyba: 'Kontakt se nepodařilo uložit. Zavolejte prosím Danovi na 607 321 543.'
+      }, 500);
+    }
 
     if (!env.RESEND_API_KEY) {
       await oznacMail(env, zaznamId, false, 'Chybí RESEND_API_KEY.');
@@ -72,17 +86,15 @@ export async function onRequestPost({ request, env }) {
 }
 
 async function nactiPrepis(env, relace) {
-  if (!maDb(env) || !relace) return '';
+  if (!maDb(env) || !relace) return [];
   try {
     const { results } = await env.DB.prepare(
       'SELECT role, text FROM poradce_zpravy WHERE relace = ? ORDER BY id LIMIT 40'
     ).bind(relace).all();
-    return (results || [])
-      .map(z => `${z.role === 'user' ? 'Zákazník' : 'Poradce'}: ${z.text}`)
-      .join('\n');
+    return results || [];
   } catch (e) {
     console.error('nacteni prepisu selhalo:', e);
-    return '';
+    return [];
   }
 }
 
@@ -125,10 +137,12 @@ function esc(s) {
 }
 
 function sablona({ jmeno, telefon, email, prani, prepis }) {
-  const radky = prepis
-    ? prepis.split('\n').map(r => {
-        const zakaznik = r.startsWith('Zákazník:');
-        return `<p style="margin:0 0 8px;padding:9px 12px;background:${zakaznik ? '#16202a' : '#eef2f4'};color:${zakaznik ? '#ffffff' : '#16202a'};font-size:14px;line-height:1.5">${esc(r)}</p>`;
+  // Role se bere z databáze, ne z prefixu textu, jinak si ji návštěvník napíše sám.
+  const radky = prepis.length
+    ? prepis.map(z => {
+        const zakaznik = z.role === 'user';
+        const kdo = zakaznik ? 'Zákazník' : 'Poradce';
+        return `<p style="margin:0 0 8px;padding:9px 12px;background:${zakaznik ? '#16202a' : '#eef2f4'};color:${zakaznik ? '#ffffff' : '#16202a'};font-size:14px;line-height:1.5">${esc(kdo)}: ${esc(z.text)}</p>`;
       }).join('')
     : '<p style="margin:0;color:#5a7885;font-size:14px">Konverzace není k dispozici.</p>';
 
