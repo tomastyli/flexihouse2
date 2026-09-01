@@ -92,9 +92,22 @@ Demo páruje klíčová slova. Produkční verze má odpovídat modelem nad pevn
    na to odpoví předáním na Dana. Tohle je nejdůležitější pravidlo celé věci.
 2. **Worker** na `/api/poradce`, stejná infrastruktura jako `send-lead` a `send-konfigurace`.
    Bázi držet v systémovém promptu s cachováním, aby se neplatila při každé zprávě znovu.
-3. **Model**: nastavený je `claude-opus-5`, protože jsi model nevybral a tohle je výchozí.
-   Na tenhle typ odpovědí stačí `claude-haiku-4-5` a je pětkrát levnější ($1 / $5 za milion
-   tokenů proti $5 / $25). Přepnutí je proměnná `PORADCE_MODEL`, nemusí se sahat do kódu.
+3. **Model** se přepíná proměnnou `PORADCE_MODEL`, do kódu se sahat nemusí. Odhad při
+   konverzaci o pěti zprávách a kurzu 23 Kč za dolar:
+
+   | Model | Cena za milion | Minimum pro cache | Konverzace | 150 za měsíc | Strop denního limitu |
+   |---|---|---|---|---|---|
+   | `claude-opus-5` | 5 / 25 | 512 tok | 1,25–1,33 Kč | 187–199 Kč | 3 000 Kč |
+   | `claude-sonnet-5` | 3 / 15 | 1 024 tok | 0,75–0,80 Kč | 112–119 Kč | 1 800 Kč |
+   | `claude-haiku-4-5` | 1 / 5 | 4 096 tok | 0,35–0,39 Kč | 53–58 Kč | 900 Kč |
+
+   Systémový prompt má 4 038 znaků, tedy zhruba 1 350 až 1 600 tokenů. **Na Haiku se proto
+   cachování vůbec nezapne** a v tabulce je počítané bez něj. Chyba se nevrátí, jen se platí
+   plná cena za bázi u každé zprávy.
+
+   **Pozor při zkracování báze:** u Sonnetu je práh 1 024 tokenů a jsme nad ním jen s rezervou.
+   Kdyby báze spadla pod něj, cachování se tiše vypne a cena naopak vyroste. Po nasazení
+   ověřit v odpovědi API pole `cache_read_input_tokens`, jestli není nula.
 4. **Ukládání konverzací** do D1 vedle poptávek. Dan v `/admin` uvidí přepisy, takže po dvou
    týdnech přesně ví, na co se lidi ptají, a doplní to do báze.
 5. **Předání člověku** zapisuje poptávku do stejné tabulky jako formulář a konfigurátor,

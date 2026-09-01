@@ -116,6 +116,13 @@ fakeAnthropic('Základní cena je 480 000 Kč.');
     JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
 }
 {
+  const env = { ANTHROPIC_API_KEY: 'test', PORADCE_MODEL: 'claude-sonnet-5', DB: mockDb({}) };
+  await onRequestPost({ request: req({ relace: 'sonnet', zprava: 'cena' }), env });
+  zkouska('sonnet dostane effort, ale ne fallbacks',
+    posledniTelo.output_config.effort === 'low' && posledniTelo.fallbacks === undefined,
+    JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
+}
+{
   const stav = { limity: new Map() };
   const env = { ANTHROPIC_API_KEY: 'test', DB: mockDb(stav) };
   let blokovano = null;

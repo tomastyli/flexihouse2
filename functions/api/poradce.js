@@ -98,7 +98,8 @@ async function zeptejSe(env, historie, zprava) {
   zpravy.push({ role: 'user', content: `<dotaz-navstevnika>\n${zprava}\n</dotaz-navstevnika>` });
 
   const model = env.PORADCE_MODEL || MODEL;
-  const spickovy = /^claude-(opus|fable|mythos|sonnet)-5/.test(model);
+  const umiEffort = /^claude-(opus|fable|mythos|sonnet)-(5|4-[678])/.test(model);
+  const umiFallbacks = /^claude-(opus|fable|mythos)-5/.test(model);
 
   const telo = {
     model,
@@ -111,17 +112,15 @@ async function zeptejSe(env, historie, zprava) {
   };
   // effort a fallbacks umí jen současná řada. Haiku 4.5 na effort vrací 400,
   // takže by přepnutí PORADCE_MODEL na levnější model rozbilo celého poradce.
-  if (spickovy) {
-    telo.output_config = { effort: 'low' };
-    telo.fallbacks = 'default';
-  }
+  if (umiEffort) telo.output_config = { effort: 'low' };
+  if (umiFallbacks) telo.fallbacks = 'default';
 
   const hlavicky = {
     'content-type': 'application/json',
     'x-api-key': env.ANTHROPIC_API_KEY,
     'anthropic-version': '2023-06-01'
   };
-  if (spickovy) hlavicky['anthropic-beta'] = 'server-side-fallback-2026-07-01';
+  if (umiFallbacks) hlavicky['anthropic-beta'] = 'server-side-fallback-2026-07-01';
 
   const r = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
