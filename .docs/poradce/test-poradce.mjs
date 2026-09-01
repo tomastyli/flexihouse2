@@ -148,6 +148,28 @@ fakeAnthropic('Základní cena je 480 000 Kč.');
   zkouska('denní strop útraty přepne na předání', d.predat === true && d.odpoved.includes('Dan'), d.odpoved.slice(0, 50));
 }
 {
+  const rozbita = {
+    prepare(){ const q={bind:()=>q, first:async()=>{throw new Error('D1 spadla')}, all:async()=>{throw new Error('D1 spadla')}, run:async()=>{throw new Error('D1 spadla')}}; return q; },
+    async batch(){ throw new Error('D1 spadla'); }
+  };
+  let volanoModel = false;
+  const puvodni = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes('anthropic.com')) volanoModel = true;
+    return puvodni(url, init);
+  };
+  const r = await onRequestPost({ request: req({ relace: 'db', zprava: 'cena' }), env: { ANTHROPIC_API_KEY: 'test', DB: rozbita } });
+  const d = await r.json();
+  globalThis.fetch = puvodni;
+  zkouska('chyba databáze zavře zábrany a model se nevolá', d.predat === true && !volanoModel, JSON.stringify({ predat: d.predat, volanoModel }));
+}
+{
+  fakeAnthropic('useknuta veta', { stop_reason: 'max_tokens' });
+  const r = await onRequestPost({ request: req({ relace: 'mt', zprava: 'cena' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('naražení na max_tokens nepošle useknutou větu', d.predat === true && !d.odpoved.includes('useknuta'), d.odpoved.slice(0, 40));
+}
+{
   fakeAnthropic('', { status: 500 });
   const r = await onRequestPost({ request: req({ relace: 'f', zprava: 'cena' }), env: zaklad() });
   const d = await r.json();

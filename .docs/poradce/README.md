@@ -43,26 +43,20 @@ Demo nikam nic neodesílá. Formulář jen potvrdí odeslání.
 
 ## Odkud jsou čísla
 
-Všechny ceny v odpovědích jsou vytažené z `konfigurator.html`, ne vymyšlené:
+Ceny jsou **jen v `baze.md`**, nikde jinde se neopisují. Že sedí s konfigurátorem,
+hlídá `node .docs/poradce/test-ceny.mjs`: porovná základ i každou placenou volbu
+z `konfigurator.html` s textem báze a spadne, když se rozejdou.
 
-| Položka | Cena |
-|---|---|
-| Základ rozkládacího domu | 480 000 Kč |
-| Flexi Office | od 70 000 Kč, 10 ks skladem |
-| Sedlová střecha | 40 000 Kč |
-| Zateplení 100 mm | 30 000 Kč |
-| Elektro + voda a odpad | 50 000 Kč |
-| Klimatizace s tepelným čerpadlem | 25 000 Kč |
-| Kamna | 30 000 Kč |
-| Terasa | 20 000 Kč |
-| Doprava a usazení | 15 000 Kč |
-| Montáž na místě | 40 000 Kč |
-| Vyřízení povolení | 15 000 Kč |
+Ten test vznikl proto, že se to už jednou rozešlo. První verze báze měla ceny z doby
+před commitem `8ff9006` a lišila se u devíti z jedenácti položek, základ o 80 000 Kč.
+Poznámka v README to nezachytila, protože poznámka nikoho nezastaví.
 
-Rozměry rozloženého domu 6,3 × 5,9 m, zhruba 30 m², dvě ložnice.
+Zásadní věc, kterou musí poradce říkat rovnou: **základní cena 400 000 Kč je hrubá stavba.**
+Není v ní kuchyň, koupelna, elektroinstalace, vytápění, terasa ani doprava. Lidé to čekají
+jinak a je lepší je nenechat dojít k tomu až v nabídce.
 
-Pozor: pokud se ceny v konfigurátoru změní, musí se změnit i tady. Až bude znalostní báze
-v samostatném souboru, půjde ceny číst z jednoho místa.
+Doprava se počítá podle vzdálenosti (20 000 Kč plus 80 Kč za kilometr), takže ji poradce
+bez znalosti místa neřekne přesně a odkazuje na konfigurátor.
 
 ## Co chybí a musí doplnit Dan
 

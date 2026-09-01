@@ -103,7 +103,7 @@ async function zeptejSe(env, historie, zprava) {
 
   const telo = {
     model,
-    max_tokens: 400,
+    max_tokens: 1600,
     system: [
       { type: 'text', text: PRAVIDLA },
       { type: 'text', text: BAZE, cache_control: { type: 'ephemeral' } }
@@ -135,6 +135,12 @@ async function zeptejSe(env, historie, zprava) {
 
   const data = await r.json();
   if (data.stop_reason === 'refusal') return { text: PREDAT, predat: true };
+  // Na Opusu 5 je přemýšlení zapnuté i bez parametru thinking a ukrajuje ze stejného
+  // rozpočtu jako odpověď. Useknutou větu nechceme poslat zákazníkovi.
+  if (data.stop_reason === 'max_tokens') {
+    console.error('poradce: odpoved narazila na max_tokens', JSON.stringify(data.usage || {}));
+    return { text: PREDAT, predat: true };
+  }
 
   const text = (data.content || [])
     .filter(b => b.type === 'text')
@@ -165,6 +171,8 @@ async function overTurnstile(env, token, ip) {
 async function limit(env, klic, cfg) {
   if (!maDb(env)) return true;
   const ted = Date.now();
+  // Při chybě D1 se zavírá, ne otevírá. Výpadek databáze jinak vypne všechny stropy
+  // nákladů právě ve chvíli, kdy se o tom nikde nic nezapisuje.
   try {
     const row = await env.DB.prepare('SELECT pocet, do_kdy FROM poradce_limit WHERE klic = ?').bind(klic).first();
     if (!row || ted > row.do_kdy) {
@@ -179,7 +187,7 @@ async function limit(env, klic, cfg) {
     return true;
   } catch (e) {
     console.error('limit selhal:', e);
-    return true;
+    return false;
   }
 }
 
@@ -194,7 +202,7 @@ async function stropVycerpan(env) {
     return !!row && row.n >= strop;
   } catch (e) {
     console.error('strop selhal:', e);
-    return false;
+    return true;
   }
 }
 

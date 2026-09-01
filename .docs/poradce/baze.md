@@ -3,7 +3,9 @@
 Tenhle soubor je jediný zdroj pravdy pro odpovědi poradce. Co v něm není, na to poradce
 neodpovídá a předá člověka Danovi. Nepřidávat sem nic, co není potvrzené.
 
-Ceny musí souhlasit s `konfigurator.html`. Když se změní tam, změnit i tady.
+Ceny musí souhlasit s `konfigurator.html`. Hlídá to `node .docs/poradce/test-ceny.mjs`,
+který porovná čísla tady s objektem MODELS a skupinami voleb v konfigurátoru.
+Po každé úpravě pustit i `node .docs/poradce/sestav-bazi.mjs`.
 
 ## Firma
 
@@ -14,46 +16,54 @@ Kontakt: Dan Prokeš, 607 321 543, dandaprokes@gmail.com. Druhý kontakt Jan Pro
 
 ## Co nabízíme
 
-**Flexi House**, rozkládací dům na bydlení. Základní cena 480 000 Kč.
-Rozložený má 6,3 × 5,9 m, tedy zhruba 30 m². Uvnitř dvě ložnice, obývací prostor
-s kuchyňskou linkou a plná koupelna.
+**Flexi House**, rozkládací dům. Základní cena 400 000 Kč.
+Rozložený má 6,3 × 5,9 m, tedy zhruba 30 m², a krytou terasu. Dispozice jsou dvě ložnice,
+obývací prostor s kuchyňským koutem a koupelna.
 
 **Flexi Office**, kancelářský kontejner od 70 000 Kč. Deset kusů je skladem.
 
 **Dům na míru**, sestava z modulů podle zadání zákazníka. Cena vychází ze zadání,
 nedá se odhadnout dopředu. Vede na poptávku.
 
-## Co je v základní ceně 480 000 Kč
+## Co je a co není v základní ceně 400 000 Kč
 
-Plochá střecha, obklad podle výběru (dřevěný, šedý nebo černý, všechny za stejnou cenu),
-zateplení 75 mm, elektroinstalace se zásuvkami, světly a jištěním, kuchyňská linka,
-koupelna, okna a dveře, ocelový rám.
+V ceně je nosná konstrukce, okna a dveře, fasádní obklad a zateplení 75 mm.
+
+**Pozor, tohle v základní ceně NENÍ a hodně lidí to čeká:** kuchyňská linka, koupelna,
+elektroinstalace, vytápění, terasa, doprava, montáž ani příprava pozemku. Základní cena
+je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou, ne až v nabídce.
 
 ## Příplatky
 
 | Položka | Cena |
 |---|---|
-| Sedlová střecha | 40 000 Kč |
+| Sedlová střecha | 90 000 Kč |
+| Fasádní obklad dřevěný, šedý nebo černý | v ceně, všechny stejně |
+| Koupelna | 30 000 Kč |
+| Kuchyňská linka | 10 000 Kč |
+| Elektroinstalace | 5 000 Kč |
 | Zateplení 100 mm místo 75 mm | 30 000 Kč |
-| Rozvody vody a odpadu k elektroinstalaci | 50 000 Kč |
-| Klimatizace s tepelným čerpadlem, topí i chladí | 25 000 Kč |
+| Klimatizace s montáží | 20 000 Kč |
 | Kamna | 30 000 Kč |
-| Terasa | 20 000 Kč |
-| Doprava a usazení na pozemek | 15 000 Kč |
-| Montáž a zprovoznění na místě | 40 000 Kč |
-| Vyřízení ohlášení nebo stavebního povolení | 15 000 Kč |
+| Terasa | 40 000 Kč |
+| Sítě do oken | 10 000 Kč |
+| Betonové patky | 50 000 Kč |
+| Doprava na místo a usazení | 20 000 Kč a k tomu 80 Kč za kilometr |
+| Montáž domku | 30 000 Kč |
+| Připojení na sítě | 30 000 Kč |
+| Vyřízení povolení | 15 000 Kč |
 
-Běžná sestava: základ 480 000 plus doprava 15 000, montáž 40 000 a klimatizace 25 000,
-tedy 560 000 Kč.
+Doprava se počítá podle vzdálenosti z výroby na pozemek, proto ji bez znalosti místa
+nelze říct přesně. Sazba je 20 000 Kč plus 80 Kč za kilometr.
 
 Ceny domu a vybavení jsou bez DPH, práce na pozemku včetně DPH. Konečnou cenu potvrzuje
 Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 
 ## Celoroční bydlení
 
-Zateplení 75 mm v základu stačí na běžnou zimu. Pro trvalé bydlení doporučujeme
-zimní variantu 100 mm za 30 000 Kč. Topit lze klimatizací s tepelným čerpadlem
-nebo kamny.
+Zateplení 75 mm je v základní ceně. Pro trvalé bydlení je zimní varianta 100 mm
+za 30 000 Kč. Topit lze klimatizací s montáží za 20 000 Kč nebo kamny za 30 000 Kč.
+Vytápění není v základní ceně.
 
 ## Povolení
 
@@ -61,8 +71,9 @@ Ohlášení nebo stavební povolení umíme vyřídit za zákazníka, stojí to 
 
 ## Konfigurátor
 
-Na webu je konfigurátor na adrese /konfigurator, kde si člověk sestavu naklikne
-a vidí orientační cenu i 3D náhled. Poradce na něj odkazuje, kdykoli jde o cenu sestavy.
+Na webu je konfigurátor na adrese /konfigurator, kde si člověk sestavu naklikne, zadá
+vzdálenost kvůli dopravě a vidí orientační cenu i 3D náhled. Poradce na něj odkazuje,
+kdykoli jde o cenu celé sestavy, protože položek je hodně a součet má smysl ukázat.
 
 ## NEVÍME
 
@@ -70,9 +81,8 @@ U těchhle témat poradce nesmí nic tvrdit ani odhadovat. Řekne, že to upřes
 a nabídne předání kontaktu.
 
 - Dodací lhůta od objednávky po usazení.
-- Jaký základ musí být na pozemku a co si zajišťuje zákazník sám.
-- Přípojky elektřiny a vody, co se čeká na hranici pozemku.
-- Do jaké vzdálenosti platí cena dopravy a jaká musí být příjezdová cesta.
+- Jaká musí být příjezdová cesta a jestli je potřeba jeřáb.
+- Co přesně obnáší připojení na sítě a co si zajišťuje zákazník sám.
 - Co konkrétně bude který pozemek potřebovat za povolení podle typu užívání.
 - Financování, splátky, úvěr, zálohy.
 - Záruka, délka a rozsah.
