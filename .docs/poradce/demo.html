@@ -540,33 +540,33 @@ const CHIP_LABEL = {
 };
 
 const OTAZKY = [
-  { t: 'Kolik stojí základní dům?', node: 'cena' },
-  { t: 'Co všechno je v základní ceně?', node: 'cena' },
-  { t: 'Kolik stojí dům se vším vybavením?', node: 'priplatky' },
-  { t: 'Co si můžu připlatit?', node: 'priplatky' },
-  { t: 'Kolik stojí koupelna a kuchyň?', node: 'voda' },
-  { t: 'Je elektroinstalace v ceně?', node: 'voda' },
-  { t: 'Potřebuju stavební povolení?', node: 'povoleni' },
-  { t: 'Vyřídíte povolení za mě?', node: 'povoleni' },
-  { t: 'Co musím mít připravené na pozemku?', node: 'zaklady' },
-  { t: 'Jaké základy dům potřebuje?', node: 'zaklady' },
-  { t: 'Kolik stojí doprava na pozemek?', node: 'doprava' },
-  { t: 'Jak probíhá montáž na místě?', node: 'doprava' },
-  { t: 'Dá se v něm bydlet celoročně?', node: 'zima' },
-  { t: 'Jak se dům vytápí?', node: 'zima' },
-  { t: 'Jaké je zateplení?', node: 'zima' },
-  { t: 'Za jak dlouho dům dodáte?', node: 'termin' },
-  { t: 'Máte něco skladem?', node: 'termin' },
-  { t: 'Jaké má dům rozměry?', node: 'rozmery' },
-  { t: 'Kolik lidí se do domu vejde?', node: 'rozmery' },
-  { t: 'Kolik je to metrů čtverečních?', node: 'rozmery' },
-  { t: 'Jaké jsou možnosti střechy?', node: 'strecha' },
-  { t: 'Jakou nabídku máte?', node: 'nabidka' },
-  { t: 'Co je Flexi Office?', node: 'office' },
-  { t: 'Chci dům na míru', node: 'naMiru' },
-  { t: 'Jde dům koupit na splátky?', node: 'financovani' },
-  { t: 'Jakou dáváte záruku?', node: 'zaruka' },
-  { t: 'Chci mluvit s člověkem', node: 'clovek' }
+  { t: 'Kolik stojí základní dům?', node: 'cena', alias: 'cena cenu ceny cenik penize korun rozpocet levne draho' },
+  { t: 'Co všechno je v základní ceně?', node: 'cena', alias: 'cena zaklad zahrnuje obsahuje soucasti' },
+  { t: 'Kolik stojí dům se vším vybavením?', node: 'cena', alias: 'celkem dohromady vsechno vybaveni kompletni' },
+  { t: 'Co si můžu připlatit?', node: 'priplatky', alias: 'priplatek priplatky volitelne moznosti navic extra vybaveni doplnky' },
+  { t: 'Co stojí koupelna a kuchyň?', node: 'voda', alias: 'koupelna kuchyn kuchyne linka wc sprcha zachod kolik' },
+  { t: 'Je elektroinstalace v ceně?', node: 'voda', alias: 'elektrina elektro zasuvky rozvody voda odpad site pripojeni' },
+  { t: 'Potřebuju stavební povolení?', node: 'povoleni', alias: 'povoleni ohlaseni urad stavebni uzemni papiry' },
+  { t: 'Vyřídíte povolení za mě?', node: 'povoleni', alias: 'povoleni vyrizeni urad zaridite' },
+  { t: 'Co musím mít připravené na pozemku?', node: 'zaklady', alias: 'pozemek pozemku priprava priprave zaklad zaklady patky deska beton' },
+  { t: 'Jaké základy dům potřebuje?', node: 'zaklady', alias: 'zaklad zaklady patky beton deska podklad' },
+  { t: 'Co stojí doprava na pozemek?', node: 'doprava', alias: 'doprava dovoz privoz kilometr km usazeni vzdalenost kolik' },
+  { t: 'Jak probíhá montáž na místě?', node: 'doprava', alias: 'montaz sestaveni instalace jerab usazeni' },
+  { t: 'Dá se v něm bydlet celoročně?', node: 'zima', alias: 'celorocne zima bydleni trvale mraz teplo' },
+  { t: 'Jak se dům vytápí?', node: 'zima', alias: 'topeni vytapeni klimatizace kamna tepelne cerpadlo' },
+  { t: 'Jaké je zateplení?', node: 'zima', alias: 'zatepleni izolace mm zima' },
+  { t: 'Za jak dlouho dům dodáte?', node: 'termin', alias: 'termin dodani dodaci lhuta kdy dlouho ceka rychle' },
+  { t: 'Máte něco skladem?', node: 'termin', alias: 'skladem zasoba hned ihned' },
+  { t: 'Jaké má dům rozměry?', node: 'rozmery', alias: 'rozmer rozmery metry m2 plocha velikost dispozice loznice pokoje' },
+  { t: 'Kolik lidí se do domu vejde?', node: 'rozmery', alias: 'osob lidi rodina vejde kapacita spani' },
+  { t: 'Jaká je podlahová plocha?', node: 'rozmery', alias: 'metry ctverecni m2 plocha vymera kolik' },
+  { t: 'Jaké jsou možnosti střechy?', node: 'strecha', alias: 'strecha sedlova plocha krytina' },
+  { t: 'Jakou nabídku máte?', node: 'nabidka', alias: 'nabidka nabizite katalog sortiment vyber typy domy moznosti' },
+  { t: 'Co je Flexi Office?', node: 'office', alias: 'office kancelar kancelare provozovna bunka' },
+  { t: 'Chci dům na míru', node: 'naMiru', alias: 'na miru atyp vlastni navrh upravit vetsi patro' },
+  { t: 'Jde dům koupit na splátky?', node: 'financovani', alias: 'splatky hypoteka uver financovani zaloha platba' },
+  { t: 'Jakou dáváte záruku?', node: 'zaruka', alias: 'zaruka reklamace servis zivotnost vydrzi' },
+  { t: 'Chci mluvit s člověkem', node: 'clovek', alias: 'clovek zivy telefon zavolat operator dan kontakt' }
 ];
 
 const MATCH = [
@@ -579,9 +579,9 @@ const MATCH = [
   {node:'doprava', keys:['doprav','montaz','montáž','usazen','jerab','jeřáb','dovoz','privez','přivez','vzdalen','vzdálen','prijezd','příjezd']},
   {node:'zima', keys:['zim','zateplen','izolac','celoroc','celoroč','trvale','trvalé','topen','topení','vytap','vytáp','klimatiz','kamna','mraz','mráz','tepl']},
   {node:'termin', keys:['termin','termín','dlouho','ceka','čeká','kdy','lhut','lhůt','dodan','dodán','dodac','skladem','rychle']},
-  {node:'rozmery', keys:['rozmer','rozměr','metr','ctverec','čtvereč','velk','plocha','dispozic','loznic','ložnic','koupeln','kuchyn','kuchyň','pokoj','osob','lidi','lidí','vejde','m2','m²']},
+  {node:'rozmery', keys:['rozmer','rozměr','metr','ctverec','čtvereč','velk','plocha','dispozic','loznic','ložnic','pokoj','osob','lidi','lidí','vejde','m2','m²']},
   {node:'strecha', keys:['strech','střech','sedlov','ploch']},
-  {node:'voda', keys:['voda','vody','odpad','elektr','zasuvk','zásuvk','rozvod','septik','jimka','wc','zachod','záchod']},
+  {node:'voda', keys:['voda','vody','odpad','elektr','zasuvk','zásuvk','rozvod','septik','jimka','wc','zachod','záchod','koupeln','kuchyn','kuchyň','linka']},
   {node:'financovani', keys:['splatk','splátk','hypotek','hypoték','uver','úvěr','financ','leasing','zaloh','záloh','platb']},
   {node:'zaruka', keys:['zaruk','záruk','reklamac','servis','zivotnost','životnost','vydrz','vydrž']},
   {node:'office', keys:['office','kancelar','kancelář','provozovn','bunk','buňk']},
@@ -866,10 +866,14 @@ function napHledej(text){
   const slova = t.split(/\s+/).filter(Boolean);
   return OTAZKY
     .map(o => {
-      const n = norm(o.t);
-      if (n.startsWith(t)) return { o, skore: 0 };
-      if (n.includes(t)) return { o, skore: 1 };
-      if (slova.every(w => n.includes(w))) return { o, skore: 2 };
+      const veta = norm(o.t);
+      // Otázky jsou psané ve skloňovaných tvarech, ale lidé začínají psát prvním pádem.
+      // Bez aliasů mlčelo našeptávání i na slovo cena.
+      const seno = veta + ' ' + (o.alias || '');
+      if (veta.startsWith(t)) return { o, skore: 0 };
+      if (veta.includes(t)) return { o, skore: 1 };
+      if (seno.includes(t)) return { o, skore: 2 };
+      if (slova.every(w => seno.includes(w))) return { o, skore: 3 };
       return null;
     })
     .filter(Boolean)
@@ -879,9 +883,12 @@ function napHledej(text){
 }
 
 function napZvyrazni(veta, hledane){
-  const i = norm(veta).indexOf(norm(hledane));
-  if (i < 0 || !hledane) return escHtml(veta);
-  return escHtml(veta.slice(0, i)) + '<b>' + escHtml(veta.slice(i, i + hledane.length)) + '</b>' + escHtml(veta.slice(i + hledane.length));
+  const h = norm(hledane);
+  const i = norm(veta).indexOf(h);
+  // Krájí se délkou normalizovaného vstupu. Text vložený ze schránky v rozkladu NFD
+  // je delší než to, co se skutečně shodovalo, a tučný výřez by přetekl za konec shody.
+  if (i < 0 || !h) return escHtml(veta);
+  return escHtml(veta.slice(0, i)) + '<b>' + escHtml(veta.slice(i, i + h.length)) + '</b>' + escHtml(veta.slice(i + h.length));
 }
 
 function escHtml(t){
@@ -891,16 +898,25 @@ function escHtml(t){
 function napVykresli(text){
   napAktualni = napHledej(text);
   if (!napAktualni.length) { napZavri(); return; }
-  napVyber = -1;
   napList.innerHTML = napAktualni.map((o, i) =>
     `<li id="nap-${i}" role="option" aria-selected="false">${napZvyrazni(o.t, text)}</li>`
   ).join('');
   nap.hidden = false;
   q.setAttribute('aria-expanded', 'true');
-  q.removeAttribute('aria-activedescendant');
+  napOdznac();
   napList.querySelectorAll('li').forEach((li, i) => {
-    li.addEventListener('mousedown', e => { e.preventDefault(); napPouzij(i); });
+    // mousedown jen drží fokus v poli, aby ho blur nezavřel dřív než klik dopadne.
+    // Aktivace visí na click, protože odečítače a hlasové ovládání posílají syntetický
+    // click bez mousedownu a položka by pro ně byla mrtvá.
+    li.addEventListener('mousedown', e => { if (e.button === 0) e.preventDefault(); });
+    li.addEventListener('click', e => { if (e.button === 0) napPouzij(i); });
   });
+}
+
+function napOdznac(){
+  napVyber = -1;
+  napList.querySelectorAll('li').forEach(li => li.setAttribute('aria-selected', 'false'));
+  q.removeAttribute('aria-activedescendant');
 }
 
 function napOznac(i){
@@ -937,6 +953,9 @@ q.addEventListener('keydown', e => {
   else if (e.key === 'ArrowUp') { e.preventDefault(); napOznac(napVyber - 1); }
   else if (e.key === 'Escape') { e.preventDefault(); napZavri(); }
   else if (e.key === 'Enter' && napVyber >= 0) { e.preventDefault(); napPouzij(napVyber); }
+  // Pohyb kurzoru výběr ruší, jinak by Enter po stisku Home odeslal nabídku
+  // místo toho, co má člověk napsané.
+  else if (['Home', 'End', 'ArrowLeft', 'ArrowRight'].includes(e.key)) napOdznac();
 });
 
 form.addEventListener('submit', e => {
