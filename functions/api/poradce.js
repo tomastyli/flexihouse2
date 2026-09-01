@@ -97,25 +97,36 @@ async function zeptejSe(env, historie, zprava) {
   const zpravy = historie.map(z => ({ role: z.role, content: z.text }));
   zpravy.push({ role: 'user', content: `<dotaz-navstevnika>\n${zprava}\n</dotaz-navstevnika>` });
 
+  const model = env.PORADCE_MODEL || MODEL;
+  const spickovy = /^claude-(opus|fable|mythos|sonnet)-5/.test(model);
+
+  const telo = {
+    model,
+    max_tokens: 400,
+    system: [
+      { type: 'text', text: PRAVIDLA },
+      { type: 'text', text: BAZE, cache_control: { type: 'ephemeral' } }
+    ],
+    messages: zpravy
+  };
+  // effort a fallbacks umí jen současná řada. Haiku 4.5 na effort vrací 400,
+  // takže by přepnutí PORADCE_MODEL na levnější model rozbilo celého poradce.
+  if (spickovy) {
+    telo.output_config = { effort: 'low' };
+    telo.fallbacks = 'default';
+  }
+
+  const hlavicky = {
+    'content-type': 'application/json',
+    'x-api-key': env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  };
+  if (spickovy) hlavicky['anthropic-beta'] = 'server-side-fallback-2026-07-01';
+
   const r = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
-      'anthropic-beta': 'server-side-fallback-2026-07-01'
-    },
-    body: JSON.stringify({
-      model: env.PORADCE_MODEL || MODEL,
-      max_tokens: 400,
-      output_config: { effort: 'low' },
-      fallbacks: 'default',
-      system: [
-        { type: 'text', text: PRAVIDLA },
-        { type: 'text', text: BAZE, cache_control: { type: 'ephemeral' } }
-      ],
-      messages: zpravy
-    })
+    headers: hlavicky,
+    body: JSON.stringify(telo)
   });
 
   if (!r.ok) {
