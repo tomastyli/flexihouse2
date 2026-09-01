@@ -2,7 +2,9 @@
 
 **Stav k 2. 9. 2026: sloučeno do `main` a nasazené, ale widget je VYPNUTÝ.**
 Kód je na produkci, na webu ho ale nikdo nevidí, protože ho žádná stránka nenačítá.
-`.docs/` se na Pages nenahrává, tenhle soubor tedy veřejný není (ověřeno, vrací 404).
+Tenhle soubor veřejný není (ověřeno, vrací 404), ale **ne proto, že by se nenahrával**.
+Cloudflare Pages dot-složky nasazuje. `/.docs/` schovává `functions/_middleware.js`.
+Kdo ten middleware smaže, odkryje i ceník ve `baze.md` na klientském webu.
 
 ## Kde se pokračuje
 
@@ -114,7 +116,7 @@ Demo páruje klíčová slova. Produkční verze má odpovídat modelem nad pevn
 
 1. **Znalostní báze** je `baze.md`. Endpoint ji čte z `functions/api/_poradce-baze.js`,
    který se z ní generuje příkazem `node .docs/poradce/sestav-bazi.mjs`. Důvod: `.docs/`
-   se na Pages nenahrává, takže by ji funkce za běhu nenašla. Po každé úpravě báze
+   je schované middlewarem a funkce by ji za běhu stejně nenašla. Po každé úpravě báze
    ten příkaz pustit, jinak poradce jede podle staré verze. Bot smí odpovídat jen z něj. Co v něm není,
    na to odpoví předáním na Dana. Tohle je nejdůležitější pravidlo celé věci.
 2. **Worker** na `/api/poradce`, stejná infrastruktura jako `send-lead` a `send-konfigurace`.
