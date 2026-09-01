@@ -35,6 +35,7 @@ export async function onRequestGet({ request, env }) {
         za30dni: od(30),
         formular: poptavky.filter(p => p.typ === 'formular').length,
         konfigurator: poptavky.filter(p => p.typ === 'konfigurator').length,
+        poradce: poptavky.filter(p => p.typ === 'poradce').length,
         nedorucene: poptavky.filter(p => !p.mail_odeslan).length
       }
     });

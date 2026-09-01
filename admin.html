@@ -68,6 +68,15 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .radek__prava{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
 .znacka{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding:4px 10px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap}
 .znacka--konf{background:var(--ink);color:#fff;border-color:var(--ink)}
+.znacka--por{background:var(--blue);color:#fff;border-color:var(--blue)}
+.zalozky{display:flex;gap:0;margin-bottom:22px}
+.zalozka{background:var(--paper);border:1px solid var(--hair);margin-right:-1px;padding:10px 20px;font:inherit;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer}
+.zalozka:hover{color:var(--ink)}
+.zalozka.is-on{background:var(--ink);border-color:var(--ink);color:#fff;position:relative;z-index:1}
+.kroky{margin-top:10px;border-left:2px solid var(--hair);padding-left:12px}
+.kroky p{margin:0 0 7px;font-size:.9rem;line-height:1.5;white-space:pre-wrap}
+.kroky p.od-zak{font-weight:600;color:var(--ink)}
+.kroky p.od-por{color:var(--muted)}
 .radek__cena{font-weight:700;font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .radek__model{font-size:.9rem;color:var(--muted);text-align:right}
 .radek__chyba{background:#fdecec;border:1px solid #f2b8b8;color:#8f2020;font-size:.78rem;padding:6px 10px;max-width:280px;text-align:left}
@@ -118,12 +127,28 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
   </div>
 
   <div class="wrap">
-    <dl class="souhrn" id="souhrn"></dl>
-    <div class="pruh">
-      <h2>Všechny poptávky</h2>
-      <span id="pocet"></span>
+    <div class="zalozky">
+      <button class="zalozka is-on" type="button" data-view="poptavky">Poptávky</button>
+      <button class="zalozka" type="button" data-view="konverzace">Konverzace s poradcem</button>
     </div>
-    <div id="seznam"></div>
+
+    <div id="viewPoptavky">
+      <dl class="souhrn" id="souhrn"></dl>
+      <div class="pruh">
+        <h2>Všechny poptávky</h2>
+        <span id="pocet"></span>
+      </div>
+      <div id="seznam"></div>
+    </div>
+
+    <div id="viewKonverzace" class="hidden">
+      <dl class="souhrn" id="souhrnK"></dl>
+      <div class="pruh">
+        <h2>Co se lidé ptali poradce</h2>
+        <span id="pocetK"></span>
+      </div>
+      <div id="seznamK"></div>
+    </div>
   </div>
 </div>
 
@@ -150,6 +175,13 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  var STITKY={konfigurator:['Konfigurátor',' znacka--konf'],poradce:['Poradce',' znacka--por'],formular:['Formulář','']};
+
+  function stitek(typ){
+    var t=STITKY[typ]||STITKY.formular;
+    return '<span class="znacka'+t[1]+'">'+t[0]+'</span>';
+  }
+
   function vykresli(d){
     var s=d.souhrn;
     document.getElementById('souhrn').innerHTML=
@@ -158,6 +190,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
       '<div><dt>Za 30 dní</dt><dd>'+s.za30dni+'</dd></div>'+
       '<div><dt>Formulář</dt><dd>'+s.formular+'</dd></div>'+
       '<div><dt>Konfigurátor</dt><dd>'+s.konfigurator+'</dd></div>'+
+      '<div><dt>Poradce</dt><dd>'+(s.poradce||0)+'</dd></div>'+
       (s.nedorucene>0 ? '<div class="varovani"><dt>Neodesláno</dt><dd>'+s.nedorucene+'</dd></div>' : '');
 
     document.getElementById('pocet').textContent = d.poptavky.length ? ('zobrazeno '+d.poptavky.length) : '';
@@ -186,12 +219,12 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           '<strong>'+esc(p.jmeno)+'</strong>'+
           '<div class="radek__kont">'+
             '<a href="tel:'+esc(p.telefon)+'">'+esc(p.telefon)+'</a>'+
-            '<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>'+
+            (p.email?'<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>':'')+
           '</div>'+
           (p.zprava?'<div class="radek__zprava">'+esc(p.zprava)+'</div>':'')+
         '</div>'+
         '<div class="radek__prava">'+
-          '<span class="znacka'+(p.typ==='konfigurator'?' znacka--konf':'')+'">'+(p.typ==='konfigurator'?'Konfigurátor':'Formulář')+'</span>'+
+          stitek(p.typ)+
           (p.model?'<span class="radek__model">'+esc(p.model)+'</span>':'')+
           (p.cena?'<span class="radek__cena">'+fmtCena(p.cena)+'</span>':'')+
           (konf?'<button class="rozbal" data-k="k'+p.id+'">Konfigurace</button>':'')+
@@ -211,6 +244,62 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     });
   }
 
+  function vykresliK(d){
+    var s=d.souhrn;
+    document.getElementById('souhrnK').innerHTML=
+      '<div><dt>Konverzací</dt><dd>'+s.celkem+'</dd></div>'+
+      '<div><dt>Za 7 dní</dt><dd>'+s.za7dni+'</dd></div>'+
+      '<div><dt>Za 30 dní</dt><dd>'+s.za30dni+'</dd></div>'+
+      '<div><dt>Zpráv celkem</dt><dd>'+s.zprav+'</dd></div>';
+
+    document.getElementById('pocetK').textContent = d.konverzace.length ? ('zobrazeno '+d.konverzace.length) : '';
+
+    var seznam=document.getElementById('seznamK');
+    if(!d.konverzace.length){
+      seznam.innerHTML='<div class="prazdno">Zatím tu není žádná konverzace. Objeví se tady, jakmile někdo napíše poradci na webu.</div>';
+      return;
+    }
+
+    seznam.innerHTML=d.konverzace.map(function(k){
+      return '<div class="radek">'+
+        '<div class="radek__kdy">'+fmtDatum(k.konec)+'</div>'+
+        '<div class="radek__kdo">'+
+          '<strong>'+esc(k.prvni||'(bez dotazu)')+'</strong>'+
+          '<div class="kroky hidden" id="r'+esc(k.relace)+'"></div>'+
+        '</div>'+
+        '<div class="radek__prava">'+
+          '<span class="znacka">'+k.zprav+' zpráv</span>'+
+          '<button class="rozbal" data-relace="'+esc(k.relace)+'">Přepis</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    seznam.querySelectorAll('.rozbal').forEach(function(b){
+      b.addEventListener('click',async function(){
+        var el=document.getElementById('r'+b.dataset.relace);
+        if(!el) return;
+        if(!el.classList.contains('hidden')){
+          el.classList.add('hidden');
+          b.textContent='Přepis';
+          return;
+        }
+        if(!el.dataset.nacteno){
+          b.disabled=true;
+          var r=await fetch('/api/admin/poradce?relace='+encodeURIComponent(b.dataset.relace));
+          var j=await r.json().catch(function(){return{};});
+          b.disabled=false;
+          if(!r.ok){ alert(j.error||'Přepis se nepodařilo načíst.'); return; }
+          el.innerHTML=(j.zpravy||[]).map(function(z){
+            return '<p class="'+(z.role==='user'?'od-zak':'od-por')+'">'+esc(z.text)+'</p>';
+          }).join('');
+          el.dataset.nacteno='1';
+        }
+        el.classList.remove('hidden');
+        b.textContent='Skrýt přepis';
+      });
+    });
+  }
+
   async function nacti(){
     var r=await fetch('/api/admin/poptavky',{headers:{'Accept':'application/json'}});
     if(r.status===401) return false;
@@ -220,10 +309,27 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     return true;
   }
 
+  async function nactiK(){
+    var r=await fetch('/api/admin/poradce',{headers:{'Accept':'application/json'}});
+    if(r.status===401) return;
+    var j=await r.json().catch(function(){return{};});
+    if(!r.ok){ document.getElementById('seznamK').innerHTML='<div class="prazdno">'+esc(j.error||'Konverzace se nepodařilo načíst.')+'</div>'; return; }
+    vykresliK(j);
+  }
+
+  document.querySelectorAll('.zalozka').forEach(function(z){
+    z.addEventListener('click',function(){
+      document.querySelectorAll('.zalozka').forEach(function(x){ x.classList.toggle('is-on', x===z); });
+      document.getElementById('viewPoptavky').classList.toggle('hidden', z.dataset.view!=='poptavky');
+      document.getElementById('viewKonverzace').classList.toggle('hidden', z.dataset.view!=='konverzace');
+    });
+  });
+
   async function otevri(){
     login.classList.add('hidden');
     app.classList.remove('hidden');
     await nacti();
+    nactiK();
   }
 
   loginForm.addEventListener('submit',async function(e){
@@ -245,7 +351,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     loginBtn.disabled=false; loginBtn.textContent='Přihlásit se';
   });
 
-  document.getElementById('obnovit').addEventListener('click',nacti);
+  document.getElementById('obnovit').addEventListener('click',function(){ nacti(); nactiK(); });
   document.getElementById('odhlasit').addEventListener('click',async function(){
     await fetch('/api/admin/logout',{method:'POST'});
     location.reload();
