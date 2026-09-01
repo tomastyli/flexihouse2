@@ -26,8 +26,12 @@ Co demo umí:
 
 - Témata jako tlačítka, stejná logika jako u Alzy. Zkratka, ne klec.
 - Volné psaní. Dotaz se páruje podle klíčových slov, funguje i bez diakritiky.
-- Vypisování odpovědi po slovech, mezi 22 a 56 ms na slovo. Během psaní je vstup zamčený.
-  Při zapnutém omezení animací se text zobrazí rovnou.
+- Odpověď se streamuje po znacích s blikajícím kurzorem, ne po slovech. Rychlost se dopočítává
+  z délky textu, takže krátká i dlouhá odpověď trvá zhruba stejně (kolem dvou vteřin).
+  Za čárkou se přidá 75 ms, za tečkou 165 ms, mezi odstavci 210 ms, což dělá ten rytmus.
+  Tečky „píše" blikají uvnitř té samé bubliny, do které se pak text vypíše, nemizí a nevzniká
+  druhá. Během psaní je vstup zamčený. Při zapnutém omezení animací se text zobrazí rovnou
+  a stejně tak při přepnutí na jinou záložku, aby text nezamrzl v půlce.
 - Karty domů s fotkami přímo v bublině (větev „Jakou máte nabídku"). Karta je klikatelná.
 - Větev na míru končí poptávkovým formulářem s polem „Co potřebujete".
 - „Chci mluvit s člověkem" je pod každou odpovědí. Bere jméno a telefon.
