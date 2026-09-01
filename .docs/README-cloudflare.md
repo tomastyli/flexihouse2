@@ -114,6 +114,10 @@ novými. Před zásahem si stáhnout GET stejné adresy jako zálohu.
 - [ ] Test s reálným odesláním poptávky přes web (pošle mail na `LEAD_TO_EMAIL`,
       takže až po domluvě s Danem)
 
-**Poznámka k RESEND_API_KEY:** je v Pages uložený jako `plain_text`, ne jako
-secret, takže je v dashboardu čitelný. Přepnout na secret při nejbližší
-příležitosti.
+**RESEND_API_KEY přepnut na secret 1. 9. 2026.** Do té doby byl uložený jako
+`plain_text` a šel přečíst v dashboardu i přes API. Teď ho API vrací bez
+hodnoty. Důsledek: **klíč už odsud nikde nepřečteš**, další kopie je jen v
+Resendu. Kdyby bylo potřeba ho měnit, vygenerovat nový v Resendu.
+
+Změna typu se projeví až novým deployem, proto po ní následoval retry
+posledního nasazení.
