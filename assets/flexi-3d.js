@@ -2365,14 +2365,24 @@ function Scena(canvas, opt) {
     var r = cv.getBoundingClientRect();
     var sirka = rodic && rodic.width > 8 ? rodic.width : r.width;
     if (!sirka) return;
-    sirka = Math.min(sirka, 2000);
+    sirka = Math.min(sirka, 2600);
     var vyska = sirka * pomer;
     if (cv.dataset && cv.dataset.vyska === 'ramec' && rodic && rodic.height > 8) {
-      vyska = Math.min(rodic.height, sirka * 1.6);
+      vyska = rodic.height;
     }
-    vyska = Math.max(120, Math.min(vyska, 1200));
-    var w = Math.min(4096, Math.round(sirka * DPR));
-    var h = Math.min(4096, Math.round(vyska * DPR));
+    vyska = Math.max(120, vyska);
+    var w = Math.round(sirka * DPR);
+    var h = Math.round(vyska * DPR);
+    // Zvětšený náhled je násobně větší než malé okénko. Kdyby byl rozpočet nízký,
+    // tlačítko Zvětšit by paradoxně dodalo měkčí obraz, než jaký byl předtím.
+    var ROZPOCET = 5200000;
+    if (w * h > ROZPOCET) {
+      var k = Math.sqrt(ROZPOCET / (w * h));
+      w = Math.round(w * k);
+      h = Math.round(h * k);
+    }
+    w = Math.min(4096, w);
+    h = Math.min(4096, h);
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
     naplanuj();
   }
