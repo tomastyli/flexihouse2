@@ -1,6 +1,39 @@
 # Chatový poradce na web
 
-Stav k 1. 9. 2026. Nic z toho není nasazené, `.docs/` se na Pages nenahrává.
+**Stav k 2. 9. 2026: sloučeno do `main` a nasazené, ale widget je VYPNUTÝ.**
+Kód je na produkci, na webu ho ale nikdo nevidí, protože ho žádná stránka nenačítá.
+`.docs/` se na Pages nenahrává, tenhle soubor tedy veřejný není (ověřeno, vrací 404).
+
+## Kde se pokračuje
+
+Tohle je jediný zdroj pravdy o poradci. Kdo na tom bude dělat dál, začíná tady.
+
+**Hotové a nasazené:** endpoint `/api/poradce` se zábranami, `/api/poradce-predat`
+(zakládá poptávku, přikládá přepis, posílá mail Danovi), záložka Konverzace s poradcem
+v `/admin`, widget v `assets/flexi-poradce.js` a `.css`, znalostní báze `baze.md`
+srovnaná s konfigurátorem a hlídaná testem.
+
+**Další krok je zapnout widget.** Musí mu ale předcházet tyhle tři věci, jinak poradce
+odpoví každému návštěvníkovi poruchovou větou (ověřeno naostro, endpoint bez klíče
+vrací právě ji):
+
+1. Tabulky na ostré D1:
+   `npx wrangler@4 d1 execute flexihouse --remote --file=.docs/poradce/schema-poradce.sql`
+2. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou.
+3. Migrace e-mailu: `migrace-email-nullable.sql`. **Napřed export databáze**, tabulka
+   `poptavky` se zahazuje a zakládá znovu.
+
+Teprve pak přidat dva řádky na šest stránek podle oddílu Widget na webu níže.
+
+**Nezávisle na tom čeká na Dana** osm chybějících údajů, viz oddíl Co chybí a musí doplnit
+Dan. Bez nich poradce funguje, jen na ta témata couvá s „to upřesní Dan".
+
+**Testy:** `node .docs/poradce/test-poradce.mjs` (24), `test-predani.mjs` (16),
+`test-ceny.mjs` (hlídá, že se báze nerozešla s konfigurátorem). Pouštět po každé změně
+cen nebo endpointu.
+
+**Náhled dema:** `node .docs/poradce/serve.js`, pak `http://localhost:4610`.
+Odkaz pro Dana: `https://claude.ai/code/artifact/20427eb7-0189-4a51-9723-cecbd7d54849`.
 
 ## Proč vzniká
 
