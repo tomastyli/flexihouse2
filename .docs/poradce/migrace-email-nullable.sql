@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS poptavky (
+CREATE TABLE poptavky_nove (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   vzniklo TEXT NOT NULL,
   typ TEXT NOT NULL,
@@ -14,11 +14,15 @@ CREATE TABLE IF NOT EXISTS poptavky (
   mail_chyba TEXT
 );
 
+INSERT INTO poptavky_nove
+  (id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba)
+SELECT
+  id, vzniklo, typ, jmeno, NULLIF(email, ''), telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba
+FROM poptavky;
+
+DROP TABLE poptavky;
+
+ALTER TABLE poptavky_nove RENAME TO poptavky;
+
 CREATE INDEX IF NOT EXISTS poptavky_vzniklo ON poptavky (vzniklo DESC);
 CREATE INDEX IF NOT EXISTS poptavky_typ ON poptavky (typ);
-
-CREATE TABLE IF NOT EXISTS prihlaseni (
-  ip TEXT PRIMARY KEY,
-  pokusy INTEGER NOT NULL DEFAULT 0,
-  blokovano_do INTEGER
-);

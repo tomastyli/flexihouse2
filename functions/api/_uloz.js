@@ -115,7 +115,7 @@ export async function ulozPoptavku(env, p) {
       new Date().toISOString(),
       p.typ,
       p.jmeno,
-      p.email,
+      p.email || null,
       p.telefon,
       p.model || null,
       p.zprava || null,

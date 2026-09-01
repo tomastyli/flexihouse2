@@ -170,13 +170,38 @@ Testy: `node .docs/poradce/test-poradce.mjs`, šestnáct zkoušek s podvrženou 
 a podvrženým voláním API. Pozor, lokální běh nedokazuje chování na produkci
 (viz past s Workers limity v ostatních projektech).
 
+### Napojení na admin
+
+Poradce se s adminem potkává na dvou místech.
+
+**Předání kontaktu zakládá poptávku.** `functions/api/poradce-predat.js` uloží poptávku
+s `typ = 'poradce'`, do pole `zprava` přiloží celý přepis konverzace a pošle Danovi mail
+přes Resend, stejně jako to dělá formulář. Poptávka se objeví v existujícím seznamu
+v `/admin` vedle formuláře a konfigurátoru, jen s vlastním štítkem. Dan tak volá poučený,
+protože vidí, na co se ten člověk předtím ptal.
+
+Mail chodí **jen u předání kontaktu**, nikdy u běžné konverzace. Smysl celé věci je Danovi
+maily ubrat, ne přidat, a předání je kvalifikovaný zájemce, ne dotaz na cenu.
+
+**Přepisy mají v adminu vlastní záložku.** `functions/api/admin/poradce.js` seskupí zprávy
+podle relace, v `admin.html` přibyla záložka Konverzace s poradcem se souhrnem a rozbalovacím
+přepisem. Tohle je ta smyčka, kvůli které to stojí za to: po dvou týdnech je vidět, na co se
+lidé ptají a kde poradce couvá s „to upřesní Dan", a podle toho se doplní báze.
+
+**Schéma bylo změkčeno.** Chat sbírá jen jméno a telefon, ale `poptavky.email` bylo
+`NOT NULL`. Migrace je v `.docs/poradce/migrace-email-nullable.sql` a přestavuje tabulku,
+protože SQLite neumí `NOT NULL` odebrat příkazem `ALTER`. **Před spuštěním na ostré databázi
+udělat export**, tabulka se v průběhu zahazuje a znovu zakládá.
+
+Testy předání a adminu: `node .docs/poradce/test-predani.mjs`.
+
 ### Co ještě zbývá dodělat
 
 - Vytvořit tabulky na ostré D1: `.docs/poradce/schema-poradce.sql`.
 - Nastavit `ANTHROPIC_API_KEY` jako secret, ne jako proměnnou.
 - Vyrobit Turnstile klíč pro poradce a nastavit `TURNSTILE_SECRET`.
 - Napojit widget z `demo.html` na `/api/poradce` místo rozhodovacího stromu.
-- Přidat přepisy do `/admin` vedle poptávek.
+- Pustit `migrace-email-nullable.sql` na ostrou D1 (po exportu).
 - Odchytit duplicitní poptávky podle telefonu, aby stejný člověk nezaložil deset stejných.
 
 ## Právní část
