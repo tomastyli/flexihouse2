@@ -2368,11 +2368,19 @@ function Scena(canvas, opt) {
     sirka = Math.min(sirka, 2000);
     var vyska = sirka * pomer;
     if (cv.dataset && cv.dataset.vyska === 'ramec' && rodic && rodic.height > 8) {
-      vyska = Math.min(rodic.height, sirka * 1.6);
+      vyska = rodic.height;
     }
-    vyska = Math.max(120, Math.min(vyska, 1200));
-    var w = Math.min(4096, Math.round(sirka * DPR));
-    var h = Math.min(4096, Math.round(vyska * DPR));
+    vyska = Math.max(120, vyska);
+    var w = Math.round(sirka * DPR);
+    var h = Math.round(vyska * DPR);
+    var ROZPOCET = 2600000;
+    if (w * h > ROZPOCET) {
+      var k = Math.sqrt(ROZPOCET / (w * h));
+      w = Math.round(w * k);
+      h = Math.round(h * k);
+    }
+    w = Math.min(4096, w);
+    h = Math.min(4096, h);
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
     naplanuj();
   }
