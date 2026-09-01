@@ -30,7 +30,8 @@ export async function onRequestPost(context) {
       zprava: [c.location ? `Pozemek: ${c.location}` : '', c.message || ''].filter(Boolean).join('\n') || null,
       konfigurace: JSON.stringify(data.summary || []),
       cena: typeof data.total === 'number' ? data.total : null,
-      zdroj: request.headers.get('Referer') || null
+      zdroj: request.headers.get('Referer') || null,
+      relaceKod: typeof data.kod === 'string' && /^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(data.kod) ? data.kod : null
     });
 
     if (!env.RESEND_API_KEY) {
@@ -189,6 +190,7 @@ function emailInternal(data) {
           <strong>E-mail:</strong> <a href="mailto:${esc(c.email)}" style="color:#3f5c69;text-decoration:none">${esc(c.email)}</a>
           ${c.location ? `<br><strong>Lokalita:</strong> ${esc(c.location)}` : ''}
           ${c.message ? `<br><strong>Poznámka:</strong> ${esc(c.message)}` : ''}
+          ${data.kod ? `<br><strong>Kód konfigurace:</strong> ${esc(data.kod)}` : ''}
         </td></tr>
       </table>
     </td></tr>

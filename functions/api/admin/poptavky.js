@@ -17,7 +17,7 @@ export async function onRequestGet({ request, env }) {
 
   try {
     const { results } = await env.DB.prepare(
-      'SELECT id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba ' +
+      'SELECT id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, relace_kod, mail_odeslan, mail_chyba ' +
       'FROM poptavky ORDER BY vzniklo DESC LIMIT 500'
     ).all();
 

@@ -68,6 +68,8 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .radek__prava{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:7px}
 .znacka{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding:4px 10px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap}
 .znacka--konf{background:var(--ink);color:#fff;border-color:var(--ink)}
+.radek__kod{display:inline-block;font-size:.8rem;letter-spacing:.06em;font-weight:600;color:var(--ink);border:1px solid var(--hair);padding:3px 8px;text-decoration:none}
+.radek__kod:hover{border-color:var(--ink);background:var(--soft)}
 .radek__cena{font-weight:700;font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .radek__model{font-size:.9rem;color:var(--muted);text-align:right}
 .radek__chyba{background:#fdecec;border:1px solid #f2b8b8;color:#8f2020;font-size:.78rem;padding:6px 10px;max-width:280px;text-align:left}
@@ -194,6 +196,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           '<span class="znacka'+(p.typ==='konfigurator'?' znacka--konf':'')+'">'+(p.typ==='konfigurator'?'Konfigurátor':'Formulář')+'</span>'+
           (p.model?'<span class="radek__model">'+esc(p.model)+'</span>':'')+
           (p.cena?'<span class="radek__cena">'+fmtCena(p.cena)+'</span>':'')+
+          (p.relace_kod?'<a class="radek__kod" href="/konfigurator?kod='+esc(p.relace_kod)+'" target="_blank" rel="noopener" title="Otevřít konfiguraci">'+esc(p.relace_kod)+'</a>':'')+
           (konf?'<button class="rozbal" data-k="k'+p.id+'">Konfigurace</button>':'')+
           (p.mail_odeslan?'':'<span class="radek__chyba">E-mail se neodeslal'+(p.mail_chyba?': '+esc(p.mail_chyba.slice(0,120)):'')+'</span>')+
         '</div>'+

@@ -26,8 +26,8 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=17">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=14">
+<link rel="stylesheet" href="assets/flexi.css?v=18">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=16">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -86,6 +86,14 @@
     <div class="kf__head">
       <h1 id="kfTitle">Sestavte si <span class="accent">dům na míru</span></h1>
       <p id="kfTagline">Rozkládací dům s terasou. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace. Ceny jsou orientační, finální nabídku připravíme na míru.</p>
+      <form class="kf-obnova" id="kfObnova">
+        <label for="kfKod">Máte kód uložené konfigurace?</label>
+        <div class="kf-obnova__row">
+          <input type="text" id="kfKod" name="kod" placeholder="FH-XXXXXX" autocomplete="off" spellcheck="false" maxlength="9" aria-describedby="kfObnovaErr">
+          <button type="submit" class="btn btn--ghost">Načíst</button>
+        </div>
+        <p class="kf-obnova__err" id="kfObnovaErr" role="status"></p>
+      </form>
     </div>
 
     <div class="kf-progress">
@@ -369,7 +377,16 @@ MODEL.steps.forEach((step, si) => {
     + '        <input type="text" id="f-loc" name="location" placeholder="Obec / okres"></div>'
     + '      <div class="field"><label for="f-msg">Poznámka</label>'
     + '        <textarea id="f-msg" name="message" placeholder="Termín, dotazy, specifické přání..."></textarea></div>'
+    + '      <div class="kf-kod" id="kodBox" hidden>'
+    + '        <div class="kf-kod__h">Kód vaší konfigurace</div>'
+    + '        <div class="kf-kod__val" id="kodVal"></div>'
+    + '        <p class="kf-kod__note">Uschovejte si ho. Kdykoli se k téhle sestavě vrátíte na <b>flexihouse.cz/konfigurator</b>, kde kód zadáte, nebo přes odkaz níže.</p>'
+    + '        <div class="kf-kod__row"><input type="text" id="kodOdkaz" readonly aria-label="Odkaz na konfiguraci">'
+    + '          <button type="button" class="btn btn--ghost" id="kodCopy">Kopírovat</button></div>'
+    + '      </div>'
     + '      <div class="kf-actions">'
+    + '        <button type="button" class="btn btn--ghost" id="saveBtn">'
+    + '          '+svg('doc',16)+' Uložit konfiguraci</button>'
     + '        <button type="button" class="btn btn--ghost" id="pdfBtn">'
     + '          '+svg('doc',16)+' Stáhnout PDF</button>'
     + '        <button type="submit" class="btn btn--green" id="formSubmit">Odeslat nezávaznou poptávku '
@@ -637,6 +654,7 @@ function buildPayload() {
       location: f.location.value.trim(),
       message: f.message.value.trim()
     },
+    kod: ulozenyKod,
     meta: { source:'konfigurator', url: location.href, ts: new Date().toISOString() }
   };
 }
@@ -919,12 +937,147 @@ function vizStart() {
   });
 }
 
+let ulozenyKod = null;
+
+function vyberKUlozeni() {
+  const out = {};
+  Object.keys(GROUPS).forEach(k => {
+    const v = state.sel[k];
+    if (Array.isArray(v)) { if (v.length) out[k] = v.slice(); }
+    else if (v) out[k] = v;
+  });
+  return out;
+}
+
+function zobrazKod(kod, odkaz) {
+  ulozenyKod = kod;
+  const box = document.getElementById('kodBox');
+  if (!box) return;
+  document.getElementById('kodVal').textContent = kod;
+  const inp = document.getElementById('kodOdkaz');
+  inp.value = odkaz;
+  box.hidden = false;
+  box.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+async function ulozKonfiguraci(btn) {
+  const puvodni = btn.innerHTML;
+  btn.setAttribute('disabled','');
+  btn.textContent = 'Ukládám…';
+  try {
+    const res = await fetch('/api/konfigurace', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        model: modelKey,
+        vyber: vyberKUlozeni(),
+        km: transportKm(),
+        cena: total(),
+        souhrn: selectedItems().map(i => ({ group:i.group, value:i.label, price:i.price }))
+      })
+    });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || !j.ok) throw new Error(j.error || 'Uložení se nezdařilo.');
+    zobrazKod(j.kod, j.odkaz);
+    if (window.gtag) gtag('event','save_configuration',{form:'konfigurator'});
+  } catch (err) {
+    const box = document.getElementById('kodBox');
+    if (box) {
+      document.getElementById('kodVal').textContent = '';
+      box.hidden = false;
+      box.querySelector('.kf-kod__note').textContent = String(err.message || err) + ' Konfiguraci si zatím můžete stáhnout v PDF.';
+    }
+  } finally {
+    btn.removeAttribute('disabled');
+    btn.innerHTML = puvodni;
+  }
+}
+
+function aplikujVyber(vyber, km) {
+  Object.keys(GROUPS).forEach(gKey => {
+    const g = GROUPS[gKey];
+    const v = vyber[gKey];
+    if (g.type === 'multi') {
+      const chtene = Array.isArray(v) ? v : [];
+      (g.options || []).forEach(o => {
+        const btn = elMain.querySelector('.opt[data-group="'+gKey+'"][data-opt="'+o.id+'"]');
+        if (!btn) return;
+        const teduVybrano = (state.sel[gKey] || []).includes(o.id);
+        if (teduVybrano !== chtene.includes(o.id)) selectOption(btn);
+      });
+    } else if (typeof v === 'string') {
+      const btn = elMain.querySelector('.opt[data-group="'+gKey+'"][data-opt="'+v+'"]');
+      if (btn) selectOption(btn);
+    }
+  });
+  if (km > 0) {
+    state.km = km;
+    const ki = document.getElementById('kfKmInput');
+    if (ki) ki.value = km;
+  }
+  syncKmField();
+  refreshDynamicPrices();
+  renderSummary();
+}
+
+async function nactiZKodu(kod) {
+  const err = document.getElementById('kfObnovaErr');
+  if (err) err.textContent = '';
+  try {
+    const res = await fetch('/api/konfigurace?kod=' + encodeURIComponent(kod));
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || !j.ok) throw new Error(j.error || 'Konfiguraci se nepodařilo načíst.');
+    aplikujVyber(j.vyber || {}, j.km || 0);
+    zobrazKod(j.kod, location.origin + '/konfigurator?kod=' + j.kod);
+    goTo(RECAP_INDEX);
+    return true;
+  } catch (e) {
+    if (err) err.textContent = String(e.message || e);
+    return false;
+  }
+}
+
+function bindObnova() {
+  const form = document.getElementById('kfObnova');
+  if (!form) return;
+  const pole = document.getElementById('kfKod');
+  const err = document.getElementById('kfObnovaErr');
+  pole.addEventListener('input', () => {
+    let v = pole.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (v.startsWith('FH')) v = v.slice(2);
+    pole.value = v ? 'FH-' + v.slice(0, 6) : '';
+    err.textContent = '';
+  });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const kod = pole.value.trim().toUpperCase();
+    if (!/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kod)) {
+      err.textContent = 'Kód má tvar FH a šest znaků, například FH-4K7P2M.';
+      return;
+    }
+    const btn = form.querySelector('button');
+    btn.setAttribute('disabled', '');
+    await nactiZKodu(kod);
+    btn.removeAttribute('disabled');
+  });
+}
+
 function bindForm() {
   const form = document.getElementById('leadForm');
   const status = document.getElementById('formStatus');
   const submitBtn = document.getElementById('formSubmit');
   const pdfBtn = document.getElementById('pdfBtn');
   if (pdfBtn) pdfBtn.addEventListener('click', downloadPdf);
+  const saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) saveBtn.addEventListener('click', () => ulozKonfiguraci(saveBtn));
+  const kodCopy = document.getElementById('kodCopy');
+  if (kodCopy) kodCopy.addEventListener('click', async () => {
+    const inp = document.getElementById('kodOdkaz');
+    inp.select();
+    try { await navigator.clipboard.writeText(inp.value); kodCopy.textContent = 'Zkopírováno'; }
+    catch { document.execCommand('copy'); kodCopy.textContent = 'Zkopírováno'; }
+    setTimeout(() => { kodCopy.textContent = 'Kopírovat'; }, 2000);
+  });
 
   const setErr = (field, on) => field.closest('.field').classList.toggle('invalid', on);
   const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -986,7 +1139,11 @@ syncKmField();
 renderSummary();
 goTo(0);
 bindForm();
+bindObnova();
 vizStart();
+
+const kodZUrl = (params.get('kod') || '').trim().toUpperCase();
+if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZUrl);
 </script>
 
 <script src="assets/cookies.js?v=9"></script>

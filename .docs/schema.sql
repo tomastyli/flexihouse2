@@ -22,3 +22,20 @@ CREATE TABLE IF NOT EXISTS prihlaseni (
   pokusy INTEGER NOT NULL DEFAULT 0,
   blokovano_do INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS relace (
+  kod TEXT PRIMARY KEY,
+  vzniklo TEXT NOT NULL,
+  typ TEXT NOT NULL,
+  model TEXT,
+  obsah TEXT NOT NULL,
+  cena INTEGER,
+  souhrn TEXT,
+  ip_hash TEXT,
+  zobrazeni INTEGER NOT NULL DEFAULT 0,
+  naposledy TEXT
+);
+
+CREATE INDEX IF NOT EXISTS relace_vzniklo ON relace (vzniklo DESC);
+CREATE INDEX IF NOT EXISTS relace_typ ON relace (typ);
+CREATE INDEX IF NOT EXISTS relace_ip ON relace (ip_hash, vzniklo);
