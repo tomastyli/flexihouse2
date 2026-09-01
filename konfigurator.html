@@ -27,7 +27,7 @@
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/flexi.css?v=17">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=14">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=15">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -99,17 +99,18 @@
         <div class="kf-viz" id="kfViz">
           <div class="kf-viz__stage">
             <canvas class="kf-viz__canvas" id="kfCanvas" data-vyska="ramec" width="900" height="620"></canvas>
-            <div class="kf-viz__hint" id="kfHint">tažením otočíte</div>
-            <button type="button" class="kf-viz__vstup" id="kfVstup">Projít si dům zevnitř</button>
           </div>
           <div class="kf-viz__bar">
             <div class="kf-viz__prep" role="group" aria-label="Pohled na dům">
               <button type="button" class="kf-viz__btn is-on" data-pohled="ven" aria-pressed="true">Zvenku</button>
               <button type="button" class="kf-viz__btn" data-pohled="dovnitr" aria-pressed="false">Uvnitř</button>
             </div>
-            <div class="kf-viz__mista" id="kfMista" hidden></div>
+            <label class="kf-viz__misto" id="kfMistoBox" hidden>
+              <span>Místo</span>
+              <select id="kfMisto"></select>
+            </label>
           </div>
-          <p class="kf-viz__note">Náhled je orientační. Rozměry a rozmístění oken zpřesňujeme podle výrobní dokumentace.</p>
+          <p class="kf-viz__note"><span class="kf-viz__hint" id="kfHint">Tažením otočíte.</span> Náhled je orientační. Rozměry a rozmístění oken zpřesňujeme podle výrobní dokumentace.</p>
         </div>
       </aside>
 
@@ -875,18 +876,12 @@ function vizPrepni(p, m) {
     b.classList.toggle('is-on', on);
     b.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
-  var vstup = document.getElementById('kfVstup');
-  if (vstup) vstup.addEventListener('click', function () { vizPrepni('dovnitr', 0); });
-  var box = document.getElementById('kfMista');
+  var box = document.getElementById('kfMistoBox');
   if (box) box.hidden = p !== 'dovnitr';
   var hint = document.getElementById('kfHint');
-  if (hint) hint.textContent = p === 'dovnitr' ? 'tažením se rozhlédnete, kliknutím na podlahu popojdete' : 'tažením otočíte';
-  var vstup = document.getElementById('kfVstup');
-  if (vstup) vstup.hidden = p === 'dovnitr';
-  document.querySelectorAll('.kf-viz__mbtn').forEach(function (b, i) {
-    b.classList.toggle('is-on', i === vizMisto);
-    b.setAttribute('aria-pressed', i === vizMisto ? 'true' : 'false');
-  });
+  if (hint) hint.textContent = p === 'dovnitr' ? 'Tažením se rozhlédnete, kliknutím na podlahu popojdete.' : 'Tažením otočíte.';
+  var sel = document.getElementById('kfMisto');
+  if (sel) sel.value = String(vizMisto);
   vizObnov();
 }
 function vizObnov() { if (VIZ) VIZ.nastav(vizStav()); }
@@ -895,27 +890,19 @@ function vizStart() {
   if (!cv || !window.Flexi3D) return;
   VIZ = window.Flexi3D.vytvor(cv, { pomer: 0.66 });
   VIZ.nastav(vizStav());
-  var box = document.getElementById('kfMista');
+  var sel = document.getElementById('kfMisto');
   var mista = VIZ.mista ? VIZ.mista() : [];
-  if (box && mista.length) {
+  if (sel && mista.length) {
     mista.forEach(function (m, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'kf-viz__mbtn' + (i === 0 ? ' is-on' : '');
-      b.textContent = m.nazev;
-      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-      b.addEventListener('click', function () { vizPrepni('dovnitr', i); });
-      box.appendChild(b);
+      var o = document.createElement('option');
+      o.value = String(i);
+      o.textContent = m.nazev;
+      sel.appendChild(o);
     });
+    sel.addEventListener('change', function () { vizPrepni('dovnitr', Number(sel.value)); });
   }
   document.querySelectorAll('.kf-viz__btn[data-pohled]').forEach(function (b) {
     b.addEventListener('click', function () { vizPrepni(b.dataset.pohled); });
-  });
-  cv.addEventListener('flexipohyb', function () {
-    document.querySelectorAll('.kf-viz__mbtn').forEach(function (b) {
-      b.classList.remove('is-on');
-      b.setAttribute('aria-pressed', 'false');
-    });
   });
 }
 
