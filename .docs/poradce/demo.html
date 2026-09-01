@@ -226,7 +226,23 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .lead .err{font-size:0.78rem;color:#a2382c;font-weight:600}
 .past{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
-.wid__foot{border-top:1px solid var(--hair);padding:10px 14px 12px}
+.wid__foot{border-top:1px solid var(--hair);padding:10px 14px 12px;position:relative}
+.nap{
+  position:absolute;left:14px;right:14px;bottom:calc(100% - 8px);z-index:3;
+  background:var(--paper);border:1.5px solid var(--ink);
+  box-shadow:0 -10px 28px rgba(22,32,42,.14);
+}
+.nap[hidden]{display:none}
+.nap__hl{
+  margin:0;padding:9px 13px 5px;font-size:0.7rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);
+}
+.nap__list{margin:0;padding:0 0 5px;list-style:none;max-height:206px;overflow-y:auto}
+.nap__list li{
+  padding:9px 13px;font-size:0.9rem;line-height:1.35;cursor:pointer;
+}
+.nap__list li:hover,.nap__list li[aria-selected="true"]{background:var(--soft)}
+.nap__list li b{font-weight:700;background:rgba(90,120,133,.22)}
 .wid__note{font-size:0.71rem;line-height:1.45;color:var(--muted);margin-bottom:9px}
 .wid__note a{border-bottom:1px solid var(--hair)}
 .wid__form{display:flex;gap:8px}
@@ -269,6 +285,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
   .wid.is-shut{opacity:1;transform:translateY(100%)}
   .launch{right:16px;bottom:16px}
   .chip{min-height:48px;padding:10px 15px}
+  .nap__list li{min-height:48px;display:flex;align-items:center;padding:10px 14px}
+  .nap__list{max-height:240px}
   .wid__log{padding:16px 14px 8px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -369,10 +387,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
   <div class="wid__log" id="log" role="log" aria-live="polite"></div>
 
   <div class="wid__foot">
+    <div class="nap" id="nap" hidden>
+      <p class="nap__hl" id="napHl">Ptáte se na tohle?</p>
+      <ul class="nap__list" id="napList" role="listbox" aria-labelledby="napHl"></ul>
+    </div>
     <p class="wid__note">K zodpovězení dotazu zpracováváme vaše osobní údaje. <a href="#">Více informací</a></p>
     <form class="wid__form" id="form">
       <label class="vh" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Váš dotaz</label>
-      <input id="q" type="text" placeholder="Napište dotaz..." autocomplete="off" maxlength="300">
+      <input id="q" type="text" placeholder="Napište dotaz..." autocomplete="off" maxlength="300"
+        role="combobox" aria-expanded="false" aria-controls="napList" aria-autocomplete="list">
       <button type="submit" aria-label="Odeslat dotaz">
         <svg viewBox="0 0 17 17" aria-hidden="true"><path d="M1 8.5 H15 M9 2.5 L15 8.5 L9 14.5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
       </button>
@@ -515,6 +538,36 @@ const CHIP_LABEL = {
   office:'Flexi Office',
   clovek:'Chci mluvit s člověkem'
 };
+
+const OTAZKY = [
+  { t: 'Kolik stojí základní dům?', node: 'cena' },
+  { t: 'Co všechno je v základní ceně?', node: 'cena' },
+  { t: 'Kolik stojí dům se vším vybavením?', node: 'priplatky' },
+  { t: 'Co si můžu připlatit?', node: 'priplatky' },
+  { t: 'Kolik stojí koupelna a kuchyň?', node: 'voda' },
+  { t: 'Je elektroinstalace v ceně?', node: 'voda' },
+  { t: 'Potřebuju stavební povolení?', node: 'povoleni' },
+  { t: 'Vyřídíte povolení za mě?', node: 'povoleni' },
+  { t: 'Co musím mít připravené na pozemku?', node: 'zaklady' },
+  { t: 'Jaké základy dům potřebuje?', node: 'zaklady' },
+  { t: 'Kolik stojí doprava na pozemek?', node: 'doprava' },
+  { t: 'Jak probíhá montáž na místě?', node: 'doprava' },
+  { t: 'Dá se v něm bydlet celoročně?', node: 'zima' },
+  { t: 'Jak se dům vytápí?', node: 'zima' },
+  { t: 'Jaké je zateplení?', node: 'zima' },
+  { t: 'Za jak dlouho dům dodáte?', node: 'termin' },
+  { t: 'Máte něco skladem?', node: 'termin' },
+  { t: 'Jaké má dům rozměry?', node: 'rozmery' },
+  { t: 'Kolik lidí se do domu vejde?', node: 'rozmery' },
+  { t: 'Kolik je to metrů čtverečních?', node: 'rozmery' },
+  { t: 'Jaké jsou možnosti střechy?', node: 'strecha' },
+  { t: 'Jakou nabídku máte?', node: 'nabidka' },
+  { t: 'Co je Flexi Office?', node: 'office' },
+  { t: 'Chci dům na míru', node: 'naMiru' },
+  { t: 'Jde dům koupit na splátky?', node: 'financovani' },
+  { t: 'Jakou dáváte záruku?', node: 'zaruka' },
+  { t: 'Chci mluvit s člověkem', node: 'clovek' }
+];
 
 const MATCH = [
   {node:'nabidka', keys:['nabidk','nabizite','nabízíte','katalog','sortiment','vyber','výběr','jake domy','jaké domy','typy','moznosti','možnosti','co delate','co děláte','ukaz','ukáž']},
@@ -793,14 +846,108 @@ function strazce(text){
   return null;
 }
 
+const nap = document.getElementById('nap');
+const napList = document.getElementById('napList');
+let napVyber = -1;
+let napAktualni = [];
+
+function napZavri(){
+  nap.hidden = true;
+  napList.innerHTML = '';
+  napVyber = -1;
+  napAktualni = [];
+  q.setAttribute('aria-expanded', 'false');
+  q.removeAttribute('aria-activedescendant');
+}
+
+function napHledej(text){
+  const t = norm(text);
+  if (t.length < 2) return [];
+  const slova = t.split(/\s+/).filter(Boolean);
+  return OTAZKY
+    .map(o => {
+      const n = norm(o.t);
+      if (n.startsWith(t)) return { o, skore: 0 };
+      if (n.includes(t)) return { o, skore: 1 };
+      if (slova.every(w => n.includes(w))) return { o, skore: 2 };
+      return null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.skore - b.skore)
+    .slice(0, 5)
+    .map(x => x.o);
+}
+
+function napZvyrazni(veta, hledane){
+  const i = norm(veta).indexOf(norm(hledane));
+  if (i < 0 || !hledane) return escHtml(veta);
+  return escHtml(veta.slice(0, i)) + '<b>' + escHtml(veta.slice(i, i + hledane.length)) + '</b>' + escHtml(veta.slice(i + hledane.length));
+}
+
+function escHtml(t){
+  return t.replace(/[<>&]/g, ch => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]));
+}
+
+function napVykresli(text){
+  napAktualni = napHledej(text);
+  if (!napAktualni.length) { napZavri(); return; }
+  napVyber = -1;
+  napList.innerHTML = napAktualni.map((o, i) =>
+    `<li id="nap-${i}" role="option" aria-selected="false">${napZvyrazni(o.t, text)}</li>`
+  ).join('');
+  nap.hidden = false;
+  q.setAttribute('aria-expanded', 'true');
+  q.removeAttribute('aria-activedescendant');
+  napList.querySelectorAll('li').forEach((li, i) => {
+    li.addEventListener('mousedown', e => { e.preventDefault(); napPouzij(i); });
+  });
+}
+
+function napOznac(i){
+  const polozky = napList.querySelectorAll('li');
+  if (!polozky.length) return;
+  napVyber = (i + polozky.length) % polozky.length;
+  polozky.forEach((li, j) => li.setAttribute('aria-selected', j === napVyber ? 'true' : 'false'));
+  const akt = polozky[napVyber];
+  q.setAttribute('aria-activedescendant', akt.id);
+  akt.scrollIntoView({ block: 'nearest' });
+}
+
+function napPouzij(i){
+  const volba = napAktualni[i];
+  if (!volba) return;
+  napZavri();
+  touched = true;
+  document.querySelectorAll('.chips').forEach(c => c.remove());
+  bubble('me', escHtml(volba.t));
+  q.value = '';
+  answer(volba.node);
+}
+
+q.addEventListener('input', () => {
+  if (busy) { napZavri(); return; }
+  napVykresli(q.value.trim());
+});
+
+q.addEventListener('blur', () => setTimeout(napZavri, 120));
+
+q.addEventListener('keydown', e => {
+  if (nap.hidden) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); napOznac(napVyber + 1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); napOznac(napVyber - 1); }
+  else if (e.key === 'Escape') { e.preventDefault(); napZavri(); }
+  else if (e.key === 'Enter' && napVyber >= 0) { e.preventDefault(); napPouzij(napVyber); }
+});
+
 form.addEventListener('submit', e => {
   e.preventDefault();
   const text = q.value.trim().slice(0, 300);
   if (!text || busy) return;
   touched = true;
   q.value = '';
+  napZavri();
   document.querySelectorAll('.chips').forEach(c => c.remove());
-  bubble('me', text.replace(/[<>&]/g, ch => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch])));
+  bubble('me', escHtml(text));
   const stop = strazce(text);
   if (stop) {
     if (stop.pauza) {
