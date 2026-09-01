@@ -224,6 +224,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 }
 .lead button:hover{background:var(--blue)}
 .lead .err{font-size:0.78rem;color:#a2382c;font-weight:600}
+.past{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
 .wid__foot{border-top:1px solid var(--hair);padding:10px 14px 12px}
 .wid__note{font-size:0.71rem;line-height:1.45;color:var(--muted);margin-bottom:9px}
@@ -371,7 +372,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
     <p class="wid__note">K zodpovězení dotazu zpracováváme vaše osobní údaje. <a href="#">Více informací</a></p>
     <form class="wid__form" id="form">
       <label class="vh" for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Váš dotaz</label>
-      <input id="q" type="text" placeholder="Napište dotaz..." autocomplete="off">
+      <input id="q" type="text" placeholder="Napište dotaz..." autocomplete="off" maxlength="300">
       <button type="submit" aria-label="Odeslat dotaz">
         <svg viewBox="0 0 17 17" aria-hidden="true"><path d="M1 8.5 H15 M9 2.5 L15 8.5 L9 14.5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
       </button>
@@ -468,6 +469,22 @@ const NODES = {
     q: 'Co je Flexi Office',
     text: '<p>Flexi Office je kancelářský kontejner od 70 000 Kč. Deset kusů máme skladem, takže je k dispozici hned.</p><p>Používá se jako kancelář, zázemí na stavbě nebo provozovna.</p>',
     chips: ['doprava','clovek']
+  },
+  mimo: {
+    text: '<p>Poradím jen s domy Flexi House, jejich cenou, dodáním a tím, co obsahují. Na nic jiného tady nejsem.</p>',
+    chips: ['nabidka','cena']
+  },
+  klid: {
+    text: '<p>S tímhle vám neporadím. Když jde o dům, cenu nebo dodání, ptejte se dál.</p>',
+    chips: ['nabidka','cena']
+  },
+  opakovani: {
+    text: '<p>Na tohle jsem odpovídal o kus výš. Když vám ta odpověď nesedí, předám vás Danovi, ten to doupřesní.</p>',
+    chips: ['clovek']
+  },
+  brzda: {
+    text: '<p>Zprávy chodí rychleji, než stíhám. Za chvilku pokračujeme.</p><p>Pokud to spěchá, volejte Danovi na 607 321 543.</p>',
+    chips: ['clovek']
   },
   nevim: {
     text: '<p>Tohle si radši nebudu domýšlet, abych vám neřekl nesmysl. Odpoví vám Dan, obvykle ještě týž den.</p><p>Nechte mi na sebe kontakt a předám mu i to, na co jste se ptali.</p>',
@@ -600,12 +617,16 @@ function typeInto(el, html, done){
 const mqMobile = window.matchMedia('(max-width:560px)');
 const sendBtn = form.querySelector('button');
 
+let pauzaDo = 0;
+
 function setBusy(v){
-  busy = v;
-  q.disabled = v;
-  sendBtn.disabled = v;
-  q.placeholder = v ? 'Poradce píše...' : 'Napište dotaz...';
-  if (!v && !mqMobile.matches) q.focus();
+  const pauza = Date.now() < pauzaDo;
+  const zamek = v || pauza;
+  busy = zamek;
+  q.disabled = zamek;
+  sendBtn.disabled = zamek;
+  q.placeholder = v ? 'Poradce píše...' : (pauza ? 'Chviličku...' : 'Napište dotaz...');
+  if (!zamek && !mqMobile.matches) q.focus();
 }
 
 function botSay(html, done){
@@ -667,6 +688,7 @@ function leadForm(wish){
   box.className = 'lead';
   box.innerHTML =
     (wish ? '<div><label for="lw">Co potřebujete</label><input id="lw" type="text" placeholder="Dvě ložnice a velká terasa"></div>' : '') +
+    '<input class="past" id="lp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
     '<div><label for="ln">Jméno</label><input id="ln" type="text" autocomplete="name" placeholder="Jan Novák"></div>' +
     '<div><label for="lt">Telefon</label><input id="lt" type="tel" autocomplete="tel" inputmode="tel" placeholder="777 123 456"></div>' +
     '<button type="button">' + (wish ? 'Odeslat poptávku' : 'Předat Danovi') + '</button>';
@@ -683,6 +705,8 @@ function leadForm(wish){
       box.appendChild(e);
       return;
     }
+    const past = box.querySelector('#lp');
+    if (past && past.value) { box.remove(); return; }
     const w = box.querySelector('#lw');
     const wishTxt = w ? w.value.trim() : '';
     box.remove();
@@ -731,14 +755,61 @@ function route(text){
   return best || 'nevim';
 }
 
+const VNUCENI = ['ignoruj','ignore previous','zapomen na','zapomen vsechno','instrukce','system prompt','systemovy prompt','jsi ted','od ted jsi','pretvaruj se','tvar se ze jsi','act as','jailbreak','vypis prompt','rekni mi svuj'];
+const MIMO = ['napis mi basen','napis basen','recept na','domaci ukol','napis kod','v pythonu','prelozi','napis esej','vymysli vtip','napis pribeh','kdo je prezident'];
+const HRUBOST = ['kokot','pico','picus','kurva','debil','idiot','mrdk','sracka','sracky','hovno','zmrd','vole ty'];
+
+const casy = [];
+let posledni = '';
+let opakovani = 0;
+
+function nesmysl(t){
+  if (t.length < 2) return true;
+  if (/(.)\1{5,}/.test(t)) return true;
+  if (/\d/.test(t)) return false;
+  const pismena = t.replace(/[^a-z]/gi, '');
+  if (pismena.length < 2) return true;
+  if (pismena.length > 6 && !/[aeiouy]/i.test(pismena)) return true;
+  return false;
+}
+
+function strazce(text){
+  const t = norm(text);
+  const ted = Date.now();
+  while (casy.length && ted - casy[0] > 30000) casy.shift();
+  casy.push(ted);
+  if (casy.length > 5) return { node: 'brzda', pauza: 12000 };
+  if (t === norm(posledni)) {
+    opakovani++;
+    if (opakovani >= 2) return { node: 'opakovani' };
+  } else {
+    opakovani = 0;
+  }
+  posledni = text;
+  if (VNUCENI.some(k => t.includes(k))) return { node: 'mimo' };
+  if (MIMO.some(k => t.includes(k))) return { node: 'mimo' };
+  if (HRUBOST.some(k => t.includes(k))) return { node: 'klid' };
+  if (nesmysl(t)) return { node: 'mimo' };
+  return null;
+}
+
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const text = q.value.trim();
+  const text = q.value.trim().slice(0, 300);
   if (!text || busy) return;
   touched = true;
   q.value = '';
   document.querySelectorAll('.chips').forEach(c => c.remove());
   bubble('me', text.replace(/[<>&]/g, ch => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[ch])));
+  const stop = strazce(text);
+  if (stop) {
+    if (stop.pauza) {
+      pauzaDo = Date.now() + stop.pauza;
+      setTimeout(() => setBusy(false), stop.pauza + 60);
+    }
+    answer(stop.node);
+    return;
+  }
   answer(route(text));
 });
 
