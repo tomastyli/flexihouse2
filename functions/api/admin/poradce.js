@@ -32,6 +32,14 @@ export async function onRequestGet({ request, env }) {
     const ted = Date.now();
     const den = 86400000;
     const od = (dni) => konverzace.filter(k => ted - Date.parse(k.konec) <= dni * den).length;
+    const pred30 = new Date(ted - 30 * den).toISOString();
+
+    // Kolik dotazů poradce zodpověděl a kolik z toho vzešlo kontaktů. To jsou čísla,
+    // která klientovi ukazují užitek. Peníze sem nepatří, ty jsou v /api/admin/spotreba.
+    const odpovedi = await pocet(env,
+      "SELECT COUNT(*) AS n FROM poradce_zpravy WHERE role = 'assistant' AND vzniklo >= ?", pred30);
+    const predani = await pocet(env,
+      "SELECT COUNT(*) AS n FROM poptavky WHERE typ = 'poradce' AND vzniklo >= ?", pred30);
 
     return json(200, {
       ok: true,
@@ -40,12 +48,24 @@ export async function onRequestGet({ request, env }) {
         celkem: konverzace.length,
         za7dni: od(7),
         za30dni: od(30),
-        zprav: konverzace.reduce((n, k) => n + k.zprav, 0)
+        zprav: konverzace.reduce((n, k) => n + k.zprav, 0),
+        odpovedi30: odpovedi,
+        predani30: predani
       }
     });
   } catch (e) {
     console.error('nacteni konverzaci selhalo:', e);
     return json(500, { error: 'Konverzace se nepodařilo načíst.' });
+  }
+}
+
+async function pocet(env, sql, param) {
+  try {
+    const row = await env.DB.prepare(sql).bind(param).first();
+    return row ? row.n : 0;
+  } catch (e) {
+    console.error('pocet selhal:', e);
+    return 0;
   }
 }
 

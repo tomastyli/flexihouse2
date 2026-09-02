@@ -267,7 +267,8 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
       '<div><dt>Konverzací</dt><dd>'+s.celkem+'</dd></div>'+
       '<div><dt>Za 7 dní</dt><dd>'+s.za7dni+'</dd></div>'+
       '<div><dt>Za 30 dní</dt><dd>'+s.za30dni+'</dd></div>'+
-      '<div><dt>Zpráv celkem</dt><dd>'+s.zprav+'</dd></div>';
+      '<div><dt>Zodpovězeno za 30 dní</dt><dd>'+(s.odpovedi30||0)+'<small> dotazů</small></dd></div>'+
+      '<div><dt>Předaných kontaktů</dt><dd>'+(s.predani30||0)+'<small> za 30 dní</small></dd></div>';
 
     document.getElementById('pocetK').textContent = d.konverzace.length ? ('zobrazeno '+d.konverzace.length) : '';
 

@@ -120,6 +120,12 @@ globalThis.fetch = async (url, init) => {
   const r = await onRequestGet({ request: new Request('https://flexihouse.cz/api/admin/poradce'), env });
   zkouska('admin bez přihlášení vrací 401', r.status === 401, 'status ' + r.status);
 }
+{
+  // Klientský pohled nesmí obsahovat peníze, ty patří jen do /api/admin/spotreba.
+  const zdroj = JSON.stringify(await import('node:fs').then(m => m.readFileSync('functions/api/admin/poradce.js', 'utf8')));
+  const penize = /\bkc\b|cena|Kč|usd|kurz/i.test(JSON.parse(zdroj));
+  zkouska('klientský přehled neobsahuje ceny', !penize, penize ? 'našel jsem zmínku o penězích' : '');
+}
 
 const padlo = vysledky.filter(v => !v.ok);
 for (const v of vysledky) console.log((v.ok ? '  ok   ' : '  PADLO') + '  ' + v.n + (v.ok ? '' : '   [' + v.d + ']'));

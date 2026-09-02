@@ -200,6 +200,17 @@ Testy: `node .docs/poradce/test-poradce.mjs`, šestnáct zkoušek s podvrženou 
 a podvrženým voláním API. Pozor, lokální běh nedokazuje chování na produkci
 (viz past s Workers limity v ostatních projektech).
 
+### Dva pohledy na stejná data
+
+Záložka **Konverzace s poradcem** je pro klienta. Ukazuje počty konverzací, kolik dotazů
+poradce za třicet dní zodpověděl a kolik z toho vzešlo předaných kontaktů, plus přepisy.
+**Žádné koruny.** Rozhodnuto vědomě: jakmile klient uvidí cenu za odpověď, kupuje si
+odpovědi, ne službu, a v tichém měsíci si spočítá, že platí za nic. Čísla o využití
+hodnotu dokládají, ceny svádějí k handrkování o položky. Hlídá to test v `test-predani.mjs`,
+který spadne, kdyby se do klientského endpointu dostala zmínka o penězích.
+
+Peníze jsou jen v záložce **Spotřeba** níže, kterou klient nevidí.
+
 ### Spotřeba a podklad pro fakturaci
 
 Ke každé odpovědi se do `poradce_zpravy` zapisuje model a spotřeba tokenů včetně toho,
