@@ -112,6 +112,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .foot__note{margin-top:18px;max-width:32ch;font-size:0.95rem}
 .foot__person{display:block;color:var(--ink);font-weight:600}
 .foot__person span{display:block;font-weight:400;color:var(--muted);font-size:0.88rem}
+.foot__adr{color:var(--ink);font-weight:600}
+.foot__adr span{display:block;font-weight:400;color:var(--muted);font-size:0.88rem}
 .foot__legal{margin-top:clamp(40px,5vw,64px);padding-top:22px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:0.82rem;color:var(--muted)}
 .foot__by{color:var(--ink);font-weight:600;border-bottom:1px solid var(--hair);transition:border-color .2s}
 .foot__by:hover{border-bottom-color:var(--ink)}
