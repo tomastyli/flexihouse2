@@ -257,6 +257,8 @@ body.is-locked{overflow:hidden}
 .place__info{display:flex;flex-direction:column;background:var(--paper);border:2px solid var(--ink);padding:clamp(24px,3vw,34px)}
 .place__info h2{font-size:clamp(1.6rem,2.6vw,2.2rem);margin-bottom:14px}
 .place__info>p{font-size:1rem;margin-bottom:26px}
+.place__kde{margin:0 0 26px;font-size:1.05rem;color:var(--muted)}
+.place__kde a{font-weight:600;color:var(--ink);border-bottom:2px solid var(--blue)}
 .place__meta{margin:0 0 28px;display:grid;gap:0}
 .place__meta>div{padding:15px 0;border-top:1px solid var(--hair)}
 .place__meta>div:first-of-type{padding-top:0;border-top:0}
@@ -269,7 +271,8 @@ body.is-locked{overflow:hidden}
 .place__go{margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:18px 24px}
 
 .leaflet-container{background:#e6ebee;font-family:'Instrument',system-ui,sans-serif;outline-offset:2px}
-.leaflet-tile-pane{filter:grayscale(1) brightness(1.03) contrast(1.06) sepia(0.16) hue-rotate(174deg) saturate(1.15)}
+/* Dlaždice se nechávají tak, jak jsou. Přebarvené do brandu vypadaly jako ledová
+   krajina a člověk v nich hůř poznával, kde to vlastně je. */
 .leaflet-bar,.leaflet-bar a{border:0;box-shadow:none;background-clip:padding-box}
 .leaflet-control-zoom{margin:14px}
 .leaflet-control-zoom a{width:38px;height:38px;line-height:34px;color:var(--ink);background:var(--paper);border:2px solid var(--ink);border-radius:0;font-size:1.2rem;font-weight:600;transition:background-color .18s,color .18s}
@@ -280,10 +283,9 @@ body.is-locked{overflow:hidden}
 
 .pin{background:none;border:0}
 .pin__in{display:block;animation:pin-drop .5s cubic-bezier(.2,.7,.3,1) both}
-.pin__plaque{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:104px;height:64px;background:var(--paper);border:2px solid var(--ink);box-shadow:0 12px 24px rgba(22,32,42,.28)}
-.pin__plaque svg{display:block;width:42px;height:30px}
-.pin__name{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:118%;font-size:9px;line-height:1;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink)}
-.pin__tip{display:block;width:18px;height:13px;margin:0 auto;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
+.pin__plaque{display:flex;align-items:center;justify-content:center;width:46px;height:46px;background:var(--paper);border:2px solid var(--ink);box-shadow:0 6px 14px rgba(22,32,42,.3)}
+.pin__plaque svg{display:block;width:30px;height:22px}
+.pin__tip{display:block;width:14px;height:10px;margin:0 auto;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
 @keyframes pin-drop{from{transform:translateY(-18px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.pin__in{animation:none}}
 

@@ -26,7 +26,7 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=19">
+<link rel="stylesheet" href="assets/flexi.css?v=20">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 </head>
 <body>
@@ -182,20 +182,8 @@
     <div class="place__info">
       <h2 id="kde-h">Kde si dům projdete</h2>
       <p>V Litomyšli stojí hotové kusy. Než se pro nějaký rozhodnete, můžete si ho projít zevnitř, sáhnout si na materiály a zeptat se přímo na místě.</p>
-      <dl class="place__meta">
-        <div>
-          <dt>Kde</dt>
-          <dd>Litomyšl<small>Pardubický kraj</small></dd>
-        </div>
-        <div>
-          <dt>Souřadnice</dt>
-          <dd class="place__gps">49.876139, 16.302220</dd>
-        </div>
-        <div>
-          <dt>Termín prohlídky</dt>
-          <dd><a href="tel:+420607321543">607 321 543</a><small>Zavolejte a domluvíme se</small></dd>
-        </div>
-      </dl>
+      <p class="place__kde">Litomyšl, Pardubický kraj. Na prohlídku se domluvíme telefonem
+        na <a href="tel:+420607321543">607 321 543</a>.</p>
       <div class="place__go">
         <a class="btn btn--out" href="https://mapy.com/zakladni?source=coor&amp;id=16.302220%2C49.876139&amp;x=16.302220&amp;y=49.876139&amp;z=17" target="_blank" rel="noopener">Navigovat</a>
         <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=49.876139%2C16.302220" target="_blank" rel="noopener">Otevřít v Google Maps</a>
@@ -219,8 +207,8 @@
     }).addTo(map);
     L.marker([lat,lng],{
       interactive:false,keyboard:false,alt:'Flexi House, Litomyšl',
-      icon:L.divIcon({className:'pin',iconSize:[104,77],iconAnchor:[52,77],
-        html:'<span class="pin__in"><span class="pin__plaque"><svg viewBox="9 16 46 33" aria-hidden="true"><path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/><path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/><path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/><path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/><path d="M 44.6 30.7 L 50.12 27.94 L 50.12 23.74 L 44.6 26.5 Z" fill="#eef2f4"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/><path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/><path d="M 36.365 36.2175 L 36.635 36.0825 L 36.635 25.4825 L 36.365 25.6175 Z" fill="#16202a"/><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/><path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/><path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/><path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.24 Z" fill="#eef2f4"/></svg><span class="pin__name">Flexi House</span></span><span class="pin__tip"></span></span>'})
+      icon:L.divIcon({className:'pin',iconSize:[46,56],iconAnchor:[23,56],
+        html:'<span class="pin__in"><span class="pin__plaque"><svg viewBox="9 16 46 33" aria-hidden="true"><path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/><path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/><path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/><path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/><path d="M 44.6 30.7 L 50.12 27.94 L 50.12 23.74 L 44.6 26.5 Z" fill="#eef2f4"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/><path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/><path d="M 36.365 36.2175 L 36.635 36.0825 L 36.635 25.4825 L 36.365 25.6175 Z" fill="#16202a"/><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/><path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/><path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/><path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.24 Z" fill="#eef2f4"/></svg></span><span class="pin__tip"></span></span>'})
     }).addTo(map);
     if(!touch){
       map.on('click',function(){ map.scrollWheelZoom.enable(); });
