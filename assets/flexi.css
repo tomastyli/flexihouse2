@@ -296,3 +296,30 @@ body.is-locked{overflow:hidden}
 @media (max-width:640px){
   .leaflet-control-zoom a{width:46px;height:46px;line-height:42px;font-size:1.35rem}
 }
+
+/* Zaoblení je tady výslovné přání zadavatele, jinak je web hranatý.
+   Vrátit se dá jedním číslem: --film-r na 0. */
+:root{--film-r:20px}
+.film{margin-top:clamp(64px,8vw,116px)}
+.film .intro{margin-bottom:clamp(24px,3vw,36px)}
+.film h2{font-size:clamp(2rem,4.6vw,3.6rem)}
+.film__ramec{
+  position:relative;
+  width:calc(100% - 2*var(--pad));
+  max-width:1600px;
+  margin:0 auto clamp(56px,7vw,104px);
+  border-radius:var(--film-r);
+  overflow:hidden;
+  background:var(--soft);
+  aspect-ratio:16/9;
+  max-height:min(86vh,900px);
+}
+.film__media{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 58%;
+  display:block;
+}
+@media(max-width:640px){
+  :root{--film-r:14px}
+  .film__ramec{aspect-ratio:4/3}
+}
