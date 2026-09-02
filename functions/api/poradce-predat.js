@@ -152,7 +152,7 @@ function sablona({ jmeno, telefon, email, prani, prepis }) {
   <p style="margin:0 0 6px;font-size:16px"><a href="tel:${esc(telefon)}" style="color:#16202a">${esc(telefon)}</a></p>
   ${email ? `<p style="margin:0 0 6px;font-size:16px"><a href="mailto:${esc(email)}" style="color:#16202a">${esc(email)}</a></p>` : ''}
   ${prani ? `<p style="margin:14px 0 0;padding:12px;background:#eef2f4;font-size:15px"><strong>Přání:</strong> ${esc(prani)}</p>` : ''}
-  <h2 style="margin:26px 0 10px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#5a7885">Na co se ptal</h2>
+  <h2 style="margin:26px 0 10px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#5a7885">Průběh konverzace</h2>
   ${radky}
   <p style="margin:22px 0 0;font-size:13px;color:#5a7885">Odesláno z poradce na flexihouse.cz.</p>
 </div>`;

@@ -103,23 +103,23 @@ fakeAnthropic('Základní cena je 480 000 Kč.');
   zkouska('báze se posílá s cachováním',
     posledniTelo.system[1].cache_control && posledniTelo.system[1].cache_control.type === 'ephemeral',
     JSON.stringify(posledniTelo.system[1].cache_control));
-  zkouska('model je claude-opus-5', posledniTelo.model === 'claude-opus-5', posledniTelo.model);
-  zkouska('opus dostane effort i fallbacks',
+  zkouska('výchozí model je claude-sonnet-5', posledniTelo.model === 'claude-sonnet-5', posledniTelo.model);
+  zkouska('sonnet dostane effort, ale ne fallbacks',
+    posledniTelo.output_config.effort === 'low' && posledniTelo.fallbacks === undefined,
+    JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
+}
+{
+  const env = { ANTHROPIC_API_KEY: 'test', PORADCE_MODEL: 'claude-opus-5', DB: mockDb({}) };
+  await onRequestPost({ request: req({ relace: 'opus', zprava: 'cena' }), env });
+  zkouska('opus po přepnutí dostane effort i fallbacks',
     posledniTelo.output_config.effort === 'low' && posledniTelo.fallbacks === 'default',
-    JSON.stringify(posledniTelo.output_config));
+    JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
 }
 {
   const env = { ANTHROPIC_API_KEY: 'test', PORADCE_MODEL: 'claude-haiku-4-5', DB: mockDb({}) };
   await onRequestPost({ request: req({ relace: 'haiku', zprava: 'cena' }), env });
   zkouska('haiku nedostane effort ani fallbacks',
     posledniTelo.output_config === undefined && posledniTelo.fallbacks === undefined,
-    JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
-}
-{
-  const env = { ANTHROPIC_API_KEY: 'test', PORADCE_MODEL: 'claude-sonnet-5', DB: mockDb({}) };
-  await onRequestPost({ request: req({ relace: 'sonnet', zprava: 'cena' }), env });
-  zkouska('sonnet dostane effort, ale ne fallbacks',
-    posledniTelo.output_config.effort === 'low' && posledniTelo.fallbacks === undefined,
     JSON.stringify({ e: posledniTelo.output_config, f: posledniTelo.fallbacks }));
 }
 {

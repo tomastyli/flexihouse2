@@ -127,7 +127,7 @@ Demo páruje klíčová slova. Produkční verze má odpovídat modelem nad pevn
    | Model | Cena za milion | Minimum pro cache | Konverzace | 150 za měsíc | Strop denního limitu |
    |---|---|---|---|---|---|
    | `claude-opus-5` | 5 / 25 | 512 tok | 1,25–1,33 Kč | 187–199 Kč | 3 000 Kč |
-   | `claude-sonnet-5` | 3 / 15 | 1 024 tok | 0,75–0,80 Kč | 112–119 Kč | 1 800 Kč |
+   | **`claude-sonnet-5` (nastavený)** | 3 / 15 | 1 024 tok | 0,75–0,80 Kč | 112–119 Kč | 1 800 Kč |
    | `claude-haiku-4-5` | 1 / 5 | 4 096 tok | 0,35–0,39 Kč | 53–58 Kč | 900 Kč |
 
    Systémový prompt má 4 038 znaků, tedy zhruba 1 350 až 1 600 tokenů. **Na Haiku se proto
