@@ -343,6 +343,9 @@
         btn.focus();
         return;
       }
+      // Stejná událost jako u formuláře a konfigurátoru, ať jsou všechny tři cesty
+      // k poptávce vidět na jednom místě.
+      if (window.gtag) window.gtag('event', 'generate_lead', { form: 'poradce', value: 1 });
       box.remove();
       bublina('me', esc(jmeno + ', ' + tel));
       rekni('Předáno. Dan Prokeš se vám ozve na ' + tel + ', nejpozději do 24 hodin. Pokud to spěchá, můžete mu rovnou zavolat na 607 321 543.');
