@@ -97,7 +97,7 @@ export async function onRequestPost(context) {
     }
 
     const odpoved = await zeptejSe(env, historie, zprava);
-    await uloz(env, relace, ip, zprava, odpoved.text);
+    await uloz(env, relace, ip, zprava, odpoved);
 
     return json({ ok: true, odpoved: odpoved.text, predat: odpoved.predat });
   } catch (e) {
@@ -150,16 +150,16 @@ async function zeptejSe(env, historie, zprava) {
 
   if (!r.ok) {
     console.error('anthropic', r.status, (await r.text()).slice(0, 300));
-    return { text: PREDAT, predat: true };
+    return { text: PREDAT, predat: true, model: model };
   }
 
   const data = await r.json();
-  if (data.stop_reason === 'refusal') return { text: PREDAT, predat: true };
+  if (data.stop_reason === 'refusal') return { text: PREDAT, predat: true, model: model, usage: data.usage || null };
   // Na Opusu 5 je přemýšlení zapnuté i bez parametru thinking a ukrajuje ze stejného
   // rozpočtu jako odpověď. Useknutou větu nechceme poslat zákazníkovi.
   if (data.stop_reason === 'max_tokens') {
     console.error('poradce: odpoved narazila na max_tokens', JSON.stringify(data.usage || {}));
-    return { text: PREDAT, predat: true };
+    return { text: PREDAT, predat: true, model: model, usage: data.usage || null };
   }
 
   const text = (data.content || [])
@@ -168,10 +168,10 @@ async function zeptejSe(env, historie, zprava) {
     .join('')
     .trim();
 
-  if (!text) return { text: PREDAT, predat: true };
+  if (!text) return { text: PREDAT, predat: true, model: model, usage: data.usage || null };
   // Dřív se předání poznávalo podle zmínky o Danovi, jenže tu má poradce i v běžné
   // cenové odpovědi, takže formulář vyskakoval bez důvodu.
-  return { text, predat: text.includes(PREDAT) };
+  return { text, predat: text.includes(PREDAT), model, usage: data.usage || null };
 }
 
 async function overTurnstile(env, token, ip) {
@@ -267,12 +267,24 @@ async function nactiHistorii(env, relace) {
 async function uloz(env, relace, ip, dotaz, odpoved) {
   if (!maDb(env)) return;
   const ted = new Date().toISOString();
+  // Spotřeba se zapisuje k odpovědi, ne k dotazu. Bez ní nejde poznat, že se
+  // vypnulo cachování nebo že někdo prolezl strop, dokud nepřijde vyúčtování.
+  const u = odpoved.usage || {};
   try {
     await env.DB.batch([
       env.DB.prepare('INSERT INTO poradce_zpravy (relace, vzniklo, role, text, ip) VALUES (?, ?, ?, ?, ?)')
         .bind(relace, ted, 'user', dotaz, ip),
-      env.DB.prepare('INSERT INTO poradce_zpravy (relace, vzniklo, role, text, ip) VALUES (?, ?, ?, ?, ?)')
-        .bind(relace, ted, 'assistant', odpoved, null)
+      env.DB.prepare(
+        'INSERT INTO poradce_zpravy (relace, vzniklo, role, text, ip, model, tok_vstup, tok_vystup, tok_cache_zapis, tok_cache_cteni) ' +
+        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+      ).bind(
+        relace, ted, 'assistant', odpoved.text, null,
+        odpoved.model || null,
+        u.input_tokens == null ? null : u.input_tokens,
+        u.output_tokens == null ? null : u.output_tokens,
+        u.cache_creation_input_tokens == null ? null : u.cache_creation_input_tokens,
+        u.cache_read_input_tokens == null ? null : u.cache_read_input_tokens
+      )
     ]);
   } catch (e) {
     console.error('uloz selhalo:', e);

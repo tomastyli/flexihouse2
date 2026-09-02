@@ -4,7 +4,12 @@ CREATE TABLE IF NOT EXISTS poradce_zpravy (
   vzniklo TEXT NOT NULL,
   role TEXT NOT NULL,
   text TEXT NOT NULL,
-  ip TEXT
+  ip TEXT,
+  model TEXT,
+  tok_vstup INTEGER,
+  tok_vystup INTEGER,
+  tok_cache_zapis INTEGER,
+  tok_cache_cteni INTEGER
 );
 
 CREATE INDEX IF NOT EXISTS poradce_zpravy_relace ON poradce_zpravy (relace, id);

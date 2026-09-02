@@ -21,7 +21,8 @@ vrací právě ji):
 
 1. Tabulky na ostré D1:
    `npx wrangler@4 d1 execute flexihouse --remote --file=.docs/poradce/schema-poradce.sql`
-2. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou.
+2. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou. K tomu `PORADCE_STATS_SECRET`,
+   jinak přehled spotřeby neexistuje ani pro tebe.
 3. Migrace e-mailu: `migrace-email-nullable.sql`. **Napřed export databáze**, tabulka
    `poptavky` se zahazuje a zakládá znovu.
 
@@ -199,6 +200,27 @@ Testy: `node .docs/poradce/test-poradce.mjs`, šestnáct zkoušek s podvrženou 
 a podvrženým voláním API. Pozor, lokální běh nedokazuje chování na produkci
 (viz past s Workers limity v ostatních projektech).
 
+### Spotřeba a podklad pro fakturaci
+
+Ke každé odpovědi se do `poradce_zpravy` zapisuje model a spotřeba tokenů včetně toho,
+kolik se přečetlo z cache. Bez toho nejde poznat, že se cachování tiše vyplo nebo že
+někdo prolezl denní strop, dokud nepřijde vyúčtování.
+
+Přehled je `/api/admin/spotreba` a v adminu se ukáže jako záložka **Spotřeba**.
+**Vidí ji jen ten, kdo zná `PORADCE_STATS_SECRET`** a přidá ho do adresy jako `?s=…`.
+Je to podklad pro fakturaci, takže ho nemá vidět ten, komu se fakturuje: admin heslo
+na to nestačí a bez klíče se záložka vůbec nevykreslí. Endpoint na chybný i chybějící
+klíč vrací 404, ne 403, aby neprozradil, že něco takového existuje.
+
+Ceny se počítají z ceníku Anthropicu podle skutečně použitého modelu, cache zápis
+za 1,25 násobku vstupu a čtení za 0,1. Kurz je 23 Kč za dolar, přepíše se proměnnou
+`KURZ_USD`.
+
+Pro už existující tabulku je připravená `migrace-spotreba.sql` se čtyřmi novými sloupci.
+U čerstvě zakládané databáze stačí `schema-poradce.sql`, ty sloupce už v něm jsou.
+
+Testy: `node .docs/poradce/test-spotreba.mjs`.
+
 ### Napojení na admin
 
 Poradce se s adminem potkává na dvou místech.
@@ -266,7 +288,7 @@ takže se obě větve o ten soubor porvou. Slučovat po jedné, ne najednou.
 ### Co ještě zbývá dodělat
 
 - Vytvořit tabulky na ostré D1: `.docs/poradce/schema-poradce.sql`.
-- Nastavit `ANTHROPIC_API_KEY` jako secret, ne jako proměnnou.
+- Nastavit `ANTHROPIC_API_KEY` a `PORADCE_STATS_SECRET` jako secrets, ne jako proměnné.
 - Vyrobit Turnstile klíč pro poradce a nastavit `TURNSTILE_SECRET`.
 - Přidat na web skript Turnstile a sitekey, teprve pak nastavit `TURNSTILE_SECRET`.
 - Pustit `migrace-email-nullable.sql` na ostrou D1 (po exportu).

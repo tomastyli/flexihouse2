@@ -130,6 +130,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     <div class="zalozky">
       <button class="zalozka is-on" type="button" data-view="poptavky">Poptávky</button>
       <button class="zalozka" type="button" data-view="konverzace">Konverzace s poradcem</button>
+      <button class="zalozka hidden" type="button" data-view="spotreba" id="zalozkaSpotreba">Spotřeba</button>
     </div>
 
     <div id="viewPoptavky">
@@ -139,6 +140,15 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
         <span id="pocet"></span>
       </div>
       <div id="seznam"></div>
+    </div>
+
+    <div id="viewSpotreba" class="hidden">
+      <dl class="souhrn" id="souhrnS"></dl>
+      <div class="pruh">
+        <h2>Spotřeba poradce</h2>
+        <span id="pocetS"></span>
+      </div>
+      <div id="seznamS"></div>
     </div>
 
     <div id="viewKonverzace" class="hidden">
@@ -329,14 +339,63 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
       document.querySelectorAll('.zalozka').forEach(function(x){ x.classList.toggle('is-on', x===z); });
       document.getElementById('viewPoptavky').classList.toggle('hidden', z.dataset.view!=='poptavky');
       document.getElementById('viewKonverzace').classList.toggle('hidden', z.dataset.view!=='konverzace');
+      document.getElementById('viewSpotreba').classList.toggle('hidden', z.dataset.view!=='spotreba');
     });
   });
+
+  // Spotřeba se ukáže jen s vlastním klíčem v adrese. Je to podklad pro fakturaci,
+  // nemá ho vidět ten, komu se fakturuje. Klíč ověřuje server, ne tenhle kód.
+  function klicSpotreby(){
+    var m = location.search.match(/[?&]s=([^&]+)/);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  function fmtKc(n){ return new Intl.NumberFormat('cs-CZ',{style:'currency',currency:'CZK',maximumFractionDigits:2}).format(n); }
+  function fmtTok(n){ return new Intl.NumberFormat('cs-CZ').format(n); }
+
+  async function nactiSpotrebu(){
+    var klic = klicSpotreby();
+    if(!klic) return;
+    var r = await fetch('/api/admin/spotreba?s='+encodeURIComponent(klic));
+    if(!r.ok) return;
+    var d = await r.json().catch(function(){return{};});
+    if(!d.ok) return;
+
+    document.getElementById('zalozkaSpotreba').classList.remove('hidden');
+
+    var s7=d.za7dni, s30=d.za30dni, dnes=d.dnes;
+    document.getElementById('souhrnS').innerHTML=
+      '<div><dt>Dnes</dt><dd>'+fmtKc(dnes.kc)+'<small> / '+dnes.odpovedi+' odp.</small></dd></div>'+
+      '<div><dt>Za 7 dní</dt><dd>'+fmtKc(s7.kc)+'<small> / '+s7.odpovedi+' odp.</small></dd></div>'+
+      '<div><dt>Za 30 dní</dt><dd>'+fmtKc(s30.kc)+'<small> / '+s30.odpovedi+' odp.</small></dd></div>'+
+      '<div><dt>Z cache za 30 dní</dt><dd>'+fmtTok(s30.tokeny.cacheCteni)+'<small> tokenů</small></dd></div>'+
+      (d.bezUdaju>0 ? '<div class="varovani"><dt>Bez údajů</dt><dd>'+d.bezUdaju+'</dd></div>' : '');
+
+    document.getElementById('pocetS').textContent = 'kurz '+d.kurz+' Kč za dolar';
+
+    var sez=document.getElementById('seznamS');
+    if(!d.podleDnu.length){
+      sez.innerHTML='<div class="prazdno">Zatím žádná spotřeba. Objeví se tady, jakmile poradce odpoví první zprávu.</div>';
+      return;
+    }
+    sez.innerHTML=d.podleDnu.map(function(x){
+      return '<div class="radek">'+
+        '<div class="radek__kdy">'+esc(x.den)+'</div>'+
+        '<div class="radek__kdo"><strong>'+fmtKc(x.kc)+'</strong>'+
+          '<div class="radek__kont">'+esc(x.model||'model neznámý')+'</div></div>'+
+        '<div class="radek__prava">'+
+          '<span class="znacka">'+x.odpovedi+' odp.</span>'+
+          (x.cacheCteni>0?'':'<span class="radek__chyba">bez cache</span>')+
+        '</div></div>';
+    }).join('');
+  }
 
   async function otevri(){
     login.classList.add('hidden');
     app.classList.remove('hidden');
     await nacti();
     nactiK();
+    nactiSpotrebu();
   }
 
   loginForm.addEventListener('submit',async function(e){
@@ -358,7 +417,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     loginBtn.disabled=false; loginBtn.textContent='Přihlásit se';
   });
 
-  document.getElementById('obnovit').addEventListener('click',function(){ nacti(); nactiK(); });
+  document.getElementById('obnovit').addEventListener('click',function(){ nacti(); nactiK(); nactiSpotrebu(); });
   document.getElementById('odhlasit').addEventListener('click',async function(){
     await fetch('/api/admin/logout',{method:'POST'});
     location.reload();
