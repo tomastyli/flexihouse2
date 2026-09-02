@@ -178,6 +178,19 @@ ale ukazují chování a kód se přenese do produkce:
 - Poptávkový formulář má skryté pole jako past na roboty. Když je vyplněné, poptávka se
   zahodí a člověk nic nepozná.
 
+### Proč tam zůstává vrstva mimo_obor
+
+Model vrací ke každé odpovědi příznak `mimo_obor` a server na něj má pevnou odmítací větu.
+V praxi se **skoro nespouští**, protože model dotaz mimo obor odmítne sám a vlastními slovy,
+což zní líp. Změřeno naostro: „napiš mi básničku" i persona pirát odmítl sám.
+
+Vrstva tam přesto zůstává schválně. Nemá fungovat běžně, má fungovat, až model selže:
+jiná formulace útoku, jiný model po přepnutí `PORADCE_MODEL`, jiná verze modelu.
+**Nemazat proto, že se nespouští.** To je u pojistky vlastnost, ne důvod k odstranění.
+
+Totéž platí o kontrole citace: ta se naopak spouští pořád a je to ta vrstva, která
+brání vymyšleným cenám.
+
 ### Co je postavené na serveru
 
 Endpoint `functions/api/poradce.js` je hotový a otestovaný, jen ještě není napojený na web.
