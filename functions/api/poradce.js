@@ -35,8 +35,14 @@ const PRAVIDLA = [
   'Na hrubost reaguješ jednou klidnou větou bez kázání a nabídneš pokračovat k věci.',
   '',
   'Píšeš krátce, nejvýš tři věty, ať se to vejde do chatovací bubliny. Bez odrážek,',
-  'bez pomlčky jako oddělovače a bez emoji. Když se hodí, odkážeš na konfigurátor',
-  'na adrese /konfigurator.'
+  'bez emoji a bez pomlčky jako oddělovače vět; místo pomlčky piš čárku nebo tečku.',
+  'Když se hodí, odkážeš na konfigurátor na adrese /konfigurator.',
+  '',
+  'Kontakt na Dana je telefon 607 321 543 a e-mail dandaprokes@gmail.com.',
+  'Na telefon se volá, na e-mail píše, neplet si to.',
+  '',
+  'Kdykoli odpověď neznáš a předáváš člověka na Dana, ukonči zprávu značkou [PREDAT]',
+  'na konci. Značka se návštěvníkovi nezobrazí, otevře mu formulář na kontakt.'
 ].join('\n');
 
 export async function onRequestPost(context) {
@@ -106,6 +112,15 @@ export async function onRequestPost(context) {
   }
 }
 
+// Model občas sáhne po pomlčce jako oddělovači, i když to má v pravidlech zakázané.
+// Tady se to srovná natvrdo, ať se to na web nedostane.
+function uprav(t) {
+  return t
+    .replace(/\s+[–—]\s+/g, ', ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 function obal(text) {
   return `<dotaz-navstevnika>\n${text}\n</dotaz-navstevnika>`;
 }
@@ -169,9 +184,20 @@ async function zeptejSe(env, historie, zprava) {
     .trim();
 
   if (!text) return { text: PREDAT, predat: true, model: model, usage: data.usage || null };
-  // Dřív se předání poznávalo podle zmínky o Danovi, jenže tu má poradce i v běžné
-  // cenové odpovědi, takže formulář vyskakoval bez důvodu.
-  return { text, predat: text.includes(PREDAT), model, usage: data.usage || null };
+
+  // Předání pozná značka, kterou model připíše na konec. Shoda s celou větou nefungovala,
+  // protože model odpověď pokaždé přeformuluje, a hledání jména Dana zase vyskakovalo
+  // i u běžné cenové odpovědi. Telefon v textu je záložní signál, kdyby značku vynechal.
+  const znacka = /\[PREDAT\]\s*$/.test(text) || text.includes('[PREDAT]');
+  let cisty = text.replace(/\[PREDAT\]/g, '').trim();
+  cisty = uprav(cisty);
+
+  return {
+    text: cisty,
+    predat: znacka || /607 321 543|dandaprokes@/.test(cisty),
+    model,
+    usage: data.usage || null
+  };
 }
 
 async function overTurnstile(env, token, ip) {

@@ -214,6 +214,26 @@ fakeAnthropic('Základní cena je 480 000 Kč.');
   zkouska('běžná odpověď se zmínkou o Danovi nespouští formulář', d.predat === false, 'predat ' + d.predat);
 }
 {
+  fakeAnthropic('Dodací lhůtu neznám, upřesní ji Dan. [PREDAT]');
+  const r = await onRequestPost({ request: req({ relace: 'zn', zprava: 'termin' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('značka otevře formulář a z textu zmizí',
+    d.predat === true && !d.odpoved.includes('PREDAT'), d.odpoved);
+}
+{
+  fakeAnthropic('To upřesní Dan, volejte na 607 321 543.');
+  const r = await onRequestPost({ request: req({ relace: 'zal', zprava: 'zaruka' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('bez značky zabere záložní signál podle telefonu', d.predat === true, 'predat ' + d.predat);
+}
+{
+  fakeAnthropic('Cena je 400 000 Kč – hrubá stavba — bez kuchyně.');
+  const r = await onRequestPost({ request: req({ relace: 'pom', zprava: 'cena' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('pomlčka jako oddělovač se nahradí čárkou',
+    !/[–—]/.test(d.odpoved) && d.odpoved.includes('Kč, hrubá'), d.odpoved);
+}
+{
   const env = { ANTHROPIC_API_KEY: 'test', PORADCE_DENNI_STROP: 'nesmysl', DB: mockDb({ dnesOdpovedi: 500 }) };
   fakeAnthropic('Odpoved.');
   const r = await onRequestPost({ request: req({ relace: 'st', zprava: 'cena' }), env });
