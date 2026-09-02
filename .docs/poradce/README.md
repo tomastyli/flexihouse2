@@ -294,6 +294,18 @@ Produkční poradce je `assets/flexi-poradce.js` a `assets/flexi-poradce.css`.
 Sám se vloží do stránky, nepotřebuje žádné místo v HTML. Třídy mají předponu `fhp-`,
 aby se nesrazily se styly webu.
 
+**Otevírá se jen na kliknutí.** Sám naskakující chat je otravný, takže poradce startuje
+zavřený a nad tlačítkem se jednou objeví tichý pozdrav. Ukáže se **až po 14 vteřinách
+nebo po skutečném posunu stránkou**, ne hned po načtení, a to jen když:
+
+- návštěvník už neodbavuje cookie lištu (ta sedí taky dole a překryla by ho),
+- pozdrav se v téhle relaci ještě neukázal,
+- návštěvník ho někdy dřív nezavřel křížkem (to si pamatuje natrvalo).
+
+Pouhá poloha na stránce nestačí, protože prohlížeč umí obnovit scroll z minulé návštěvy
+a pozdrav by vyskočil hned po načtení. Musí se člověk skutečně pohnout o kus dolů,
+a ne v prvních třech vteřinách.
+
 **Je v `main`, ale VYPNUTÝ.** Žádná stránka ho nenačítá, takže ho na webu nikdo nevidí.
 Zapíná se přidáním dvou řádků na `index`, `flexi-house`, `flexi-office`, `katalog`,
 `konfigurator` a `poptavka`:

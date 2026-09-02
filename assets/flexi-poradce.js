@@ -5,6 +5,9 @@
   var API_PREDAT = '/api/poradce-predat';
   var MAX_ZNAKU = 300;
   var KLIC_RELACE = 'fh_poradce_relace';
+  var KLIC_BUBLINA = 'fh_poradce_bublina';
+  var BUBLINA_PO_MS = 14000;
+  var BUBLINA_PO_SCROLLU = 0.35;
 
   var ZNACKA = '<svg viewBox="9 16 46 33" aria-hidden="true">' +
     '<path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>' +
@@ -425,8 +428,82 @@
     posli(volba.t);
   }
 
+  function pozdrav() {
+    var zavrena = false;
+    try {
+      zavrena = localStorage.getItem(KLIC_BUBLINA) === 'zavreno' ||
+                sessionStorage.getItem(KLIC_BUBLINA) === 'videno';
+    } catch (e) {}
+    if (zavrena) return;
+
+    var b = document.createElement('div');
+    b.className = 'fhp-bublina';
+    b.hidden = true;
+    b.innerHTML =
+      '<span class="fhp-bublina__text">Dobrý den, zeptejte se na cokoli k domům.</span>' +
+      '<button class="fhp-bublina__x" type="button" aria-label="Skrýt pozdrav">&times;</button>';
+    document.body.appendChild(b);
+
+    var casovac = null;
+    function schovej(natrvalo) {
+      b.classList.remove('je-videt');
+      setTimeout(function () { b.remove(); }, 300);
+      window.removeEventListener('scroll', priScrollu);
+      if (casovac) clearTimeout(casovac);
+      try {
+        sessionStorage.setItem(KLIC_BUBLINA, 'videno');
+        if (natrvalo) localStorage.setItem(KLIC_BUBLINA, 'zavreno');
+      } catch (e) {}
+    }
+
+    function ukaz() {
+      if (sahnuto || !b.isConnected) return;
+      // Cookie lišta sedí taky dole a překryla by pozdrav. Než ji člověk odbaví,
+      // nemá smysl se hlásit; po jejím zavření se pozdrav ukáže sám.
+      if (document.querySelector('.fh-cc')) {
+        if (casovac) clearTimeout(casovac);
+        casovac = setTimeout(ukaz, 2000);
+        return;
+      }
+      window.removeEventListener('scroll', priScrollu);
+      if (casovac) clearTimeout(casovac);
+      b.hidden = false;
+      void b.offsetWidth;
+      b.classList.add('je-videt');
+    }
+
+    // Prohlížeč umí obnovit pozici scrollu z minulé návštěvy, takže samotná poloha
+    // na stránce nestačí. Musí se člověk skutečně pohnout, a ne hned po načtení.
+    var zacatek = Date.now();
+    var odkud = window.scrollY;
+    function priScrollu() {
+      if (Date.now() - zacatek < 3000) { odkud = window.scrollY; return; }
+      if (Math.abs(window.scrollY - odkud) < 400) return;
+      var vyska = document.documentElement.scrollHeight - window.innerHeight;
+      if (vyska > 0 && window.scrollY / vyska >= BUBLINA_PO_SCROLLU) ukaz();
+    }
+
+    // Ukáže se, až člověk na stránce chvíli je nebo se v ní posune. Ne hned po načtení.
+    casovac = setTimeout(ukaz, BUBLINA_PO_MS);
+    window.addEventListener('scroll', priScrollu, { passive: true });
+
+    b.querySelector('.fhp-bublina__x').addEventListener('click', function (e) {
+      e.stopPropagation();
+      schovej(true);
+    });
+    b.querySelector('.fhp-bublina__text').addEventListener('click', function () {
+      schovej(false);
+      otevri(true);
+    });
+
+    skryjPozdrav = schovej;
+  }
+
+  var skryjPozdrav = null;
+
   function otevri(on) {
     sahnuto = true;
+    if (skryjPozdrav) { skryjPozdrav(false); skryjPozdrav = null; }
     if (on) {
       launch.classList.add('is-shut');
       wid.hidden = false;
@@ -512,13 +589,11 @@
       else if (['Home', 'End', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) > -1) napOdznac();
     });
 
-    function start() {
-      if (sahnuto) return;
-      wid.hidden = mqMobil.matches;
-      launch.hidden = !mqMobil.matches;
-    }
-    start();
-    mqMobil.addEventListener('change', start);
+    // Poradce se otevírá jen na kliknutí. Sám naskakující chat je otravný a odhání lidi.
+    wid.hidden = true;
+    launch.hidden = false;
+
+    pozdrav();
 
     rekni('Dobrý den, jsem poradce Flexi House. Poradím s cenou, povolením i tím, co dům obsahuje. Napište mi dotaz vlastními slovy, nebo si vyberte téma.',
       function () { temata(TEMATA); }, true);
