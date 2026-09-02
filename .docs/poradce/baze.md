@@ -91,9 +91,23 @@ Tyhle dvě věci si zákazník zajišťuje sám a poradce to musí říct rovnou
 
 ## Povolení
 
-Jestli je potřeba ohlášení nebo stavební povolení, záleží na velikosti stavby a na tom,
-k čemu bude sloužit. Závazně to řekne jedině místní stavební úřad. Vyřízení za zákazníka
+Záleží na velikosti stavby a na tom, k čemu bude sloužit. U menších staveb pro zázemí
+bývá režim jednodušší než u domu určeného k trvalému bydlení. Závazné vyjádření dá jedině
+místní stavební úřad, takže první krok vede tam. Vyřizování povolení ani připojení na sítě
 neděláme.
+
+## Co musí být připravené na pozemku
+
+Rovná plocha a příjezd pro nákladní auto s jeřábem. Dům stojí na betonových patkách,
+klasické základy tedy nepotřebuje. K místu usazení je potřeba dovést vodu, elektřinu
+a odpad. Patky i usazení umíme zajistit, v konfigurátoru jsou mezi doplňky.
+Připojení na sítě si zajišťuje zákazník sám.
+
+## Dodání
+
+Flexi Office máme skladem, odjíždí během několika dní od objednávky. Rozkládací dům
+se vyrábí na zakázku podle konfigurace, konkrétní termín potvrzujeme v nabídce, kterou
+posíláme do 24 hodin od poptávky. Kolik týdnů výroba trvá, poradce neuvádí, to upřesní Dan.
 
 ## Konfigurátor
 
@@ -106,10 +120,7 @@ kdykoli jde o cenu celé sestavy, protože položek je hodně a součet má smys
 U těchhle témat poradce nesmí nic tvrdit ani odhadovat. Řekne, že to upřesní Dan,
 a nabídne předání kontaktu.
 
-- Dodací lhůta od objednávky po usazení.
-- Jaká musí být příjezdová cesta a jestli je potřeba jeřáb.
-- Co všechno musí mít zákazník na pozemku připravené, než dům přijede.
-- Co konkrétně bude který pozemek potřebovat za povolení podle typu užívání.
+- Kolik týdnů trvá výroba rozkládacího domu od objednávky po usazení.
 - Financování, splátky, úvěr, zálohy.
 - Záruka, délka a rozsah.
 - Náklady na vytápění za sezónu.

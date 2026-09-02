@@ -101,20 +101,19 @@ bez znalosti místa neřekne přesně a odkazuje na konfigurátor.
 
 ## Co chybí a musí doplnit Dan
 
-V demu jsou tahle místa vizuálně označená jako „doplní Dan", takže si je proklikne a uvidí je.
-Bez nich bot buď mlčí, nebo by si musel vymýšlet, a vymýšlet si nesmí.
+Zbylo pět otázek. Původně jich bylo osm, ale tři z nich **zodpovídá FAQ na homepage**
+(co mít připravené na pozemku, povolení, dodání) a byly doplněné odtud. Ptát se klienta
+na to, co stojí na jeho vlastním webu, je ztráta jeho ochoty odpovídat.
 
-- Dodací lhůta od objednávky po usazení.
-- Jaký základ musí být na pozemku a co si zajišťuje zákazník.
-- Přípojky elektřiny a vody, co se čeká na hranici pozemku.
-- Do jaké vzdálenosti platí cena dopravy a co potřebuje příjezdová cesta.
-- Co přesně bude pozemek potřebovat za povolení podle typu užívání.
-- Financování a splátky.
-- Záruka, délka a rozsah.
-- Naměřené náklady na vytápění za sezónu.
+1. Kolik týdnů trvá výroba rozkládacího domu od objednávky po usazení. Web říká jen
+   „termín potvrdíme v nabídce", což je nejčastější dotaz zákazníků.
+2. Financování: jde to na splátky, přes úvěr, jaké jsou zálohy.
+3. Záruka: délka a co kryje.
+4. Náklady na vytápění za sezónu, aspoň řádově.
+5. O kolik milimetrů zateplí fasádní panel s dekorem za 23 600 Kč.
 
-K tomu ideálně 20 až 30 reálných dotazů z jeho schránky i s tím, jak na ně odpovídá.
-To je jediná práce na jeho straně a je to zároveň zdroj znalostní báze.
+Dokud chybí, poradce na ně couvne na Dana a nabídne kontakt. Nikdy si je nevymyslí,
+brání tomu kontrola citace.
 
 ## Jak to postavit naostro
 
