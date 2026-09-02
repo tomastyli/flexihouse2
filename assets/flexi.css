@@ -283,9 +283,9 @@ body.is-locked{overflow:hidden}
 
 .pin{background:none;border:0}
 .pin__in{display:block;animation:pin-drop .5s cubic-bezier(.2,.7,.3,1) both}
-.pin__plaque{display:flex;align-items:center;justify-content:center;width:46px;height:46px;background:var(--paper);border:2px solid var(--ink);box-shadow:0 6px 14px rgba(22,32,42,.3)}
+.pin__plaque{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);box-shadow:0 6px 14px rgba(22,32,42,.3)}
 .pin__plaque svg{display:block;width:30px;height:22px}
-.pin__tip{display:block;width:14px;height:10px;margin:0 auto;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
+.pin__tip{display:block;width:12px;height:9px;margin:-2px auto 0;background:var(--ink);clip-path:polygon(0 0,100% 0,50% 100%)}
 @keyframes pin-drop{from{transform:translateY(-18px);opacity:0}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.pin__in{animation:none}}
 
