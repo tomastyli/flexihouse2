@@ -24,7 +24,8 @@ vrací právě ji):
 2. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou. K tomu `PORADCE_STATS_SECRET`,
    jinak přehled spotřeby neexistuje ani pro tebe.
 3. Migrace e-mailu: `migrace-email-nullable.sql`. **Napřed export databáze**, tabulka
-   `poptavky` se zahazuje a zakládá znovu.
+   `poptavky` se zahazuje a zakládá znovu. Hned po ní `migrace-vyrizeno.sql`, ta jen
+   přidává dva sloupce a je bezpečná.
 
 Teprve pak přidat dva řádky na šest stránek podle oddílu Widget na webu níže.
 
@@ -199,6 +200,20 @@ je vidět v datech, ne až na faktuře.
 Testy: `node .docs/poradce/test-poradce.mjs`, šestnáct zkoušek s podvrženou databází
 a podvrženým voláním API. Pozor, lokální běh nedokazuje chování na produkci
 (viz past s Workers limity v ostatních projektech).
+
+### Označení vyřízené
+
+Každá poptávka v `/admin` má tlačítko **Označit vyřízené**. Přepnutá poptávka zešedne
+a jméno se přeškrtne, v souhrnu je čítač **Nevyřízených**. Ukládá se i čas, kdy se
+přepnula, takže půjde zpětně spočítat, jak rychle se Dan k poptávkám dostává.
+
+Přepnutí nepřekresluje celý seznam, jen čítač. Jinak by se pod rukama sesypaly rozbalené
+konfigurace a stránka odskočila nahoru.
+
+Pozor na výklad: `vyřízeno` znamená **zpracováno, ne získáno**. Kolik poptávek skončilo
+zakázkou, tohle neměří a bez druhého stavu a Danovy kázně to měřit nebude.
+
+Migrace pro už existující tabulku: `migrace-vyrizeno.sql`. Testy: `test-stav.mjs`.
 
 ### Dva pohledy na stejná data
 

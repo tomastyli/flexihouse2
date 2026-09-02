@@ -11,7 +11,9 @@ CREATE TABLE IF NOT EXISTS poptavky (
   cena INTEGER,
   zdroj TEXT,
   mail_odeslan INTEGER NOT NULL DEFAULT 0,
-  mail_chyba TEXT
+  mail_chyba TEXT,
+  vyrizeno INTEGER NOT NULL DEFAULT 0,
+  vyrizeno_kdy TEXT
 );
 
 CREATE INDEX IF NOT EXISTS poptavky_vzniklo ON poptavky (vzniklo DESC);

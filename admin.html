@@ -69,6 +69,12 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .znacka{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;padding:4px 10px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap}
 .znacka--konf{background:var(--ink);color:#fff;border-color:var(--ink)}
 .znacka--por{background:var(--blue);color:#fff;border-color:var(--blue)}
+.radek.je-vyrizena{opacity:.55}
+.radek.je-vyrizena .radek__kdo strong{text-decoration:line-through;text-decoration-thickness:1px}
+.stav{font:inherit;font-size:.78rem;font-weight:600;padding:7px 13px;border:1px solid var(--hair);background:var(--paper);color:var(--muted);cursor:pointer;white-space:nowrap}
+.stav:hover{border-color:var(--ink);color:var(--ink)}
+.stav.je-on{background:var(--ink);border-color:var(--ink);color:#fff}
+.stav:disabled{opacity:.5;cursor:default}
 .zalozky{display:flex;gap:0;margin-bottom:22px}
 .zalozka{background:var(--paper);border:1px solid var(--hair);margin-right:-1px;padding:10px 20px;font:inherit;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer}
 .zalozka:hover{color:var(--ink)}
@@ -208,6 +214,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
       '<div><dt>Formulář</dt><dd>'+s.formular+'</dd></div>'+
       '<div><dt>Konfigurátor</dt><dd>'+s.konfigurator+'</dd></div>'+
       '<div><dt>Poradce</dt><dd>'+(s.poradce||0)+'</dd></div>'+
+      '<div><dt>Nevyřízených</dt><dd id="pocetNevyrizenych">'+(s.nevyrizene||0)+'</dd></div>'+
       (s.nedorucene>0 ? '<div class="varovani"><dt>Neodesláno</dt><dd>'+s.nedorucene+'</dd></div>' : '');
 
     document.getElementById('pocet').textContent = d.poptavky.length ? ('zobrazeno '+d.poptavky.length) : '';
@@ -230,7 +237,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           }
         }catch(e){}
       }
-      return '<div class="radek">'+
+      return '<div class="radek'+(p.vyrizeno?' je-vyrizena':'')+'" data-id="'+p.id+'">'+
         '<div class="radek__kdy">'+fmtDatum(p.vzniklo)+'</div>'+
         '<div class="radek__kdo">'+
           '<strong>'+esc(p.jmeno)+'</strong>'+
@@ -244,6 +251,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           stitek(p.typ)+
           (p.model?'<span class="radek__model">'+esc(p.model)+'</span>':'')+
           (p.cena?'<span class="radek__cena">'+fmtCena(p.cena)+'</span>':'')+
+          '<button class="stav'+(p.vyrizeno?' je-on':'')+'" data-stav="'+p.id+'" aria-pressed="'+(p.vyrizeno?'true':'false')+'">'+(p.vyrizeno?'Vyřízeno':'Označit vyřízené')+'</button>'+
           (konf?'<button class="rozbal" data-k="k'+p.id+'">Konfigurace</button>':'')+
           (p.mail_odeslan?'':'<span class="radek__chyba">E-mail se neodeslal'+(p.mail_chyba?': '+esc(p.mail_chyba.slice(0,120)):'')+'</span>')+
         '</div>'+
@@ -257,6 +265,29 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
         if(!el) return;
         var skryto=el.classList.toggle('hidden');
         b.textContent = skryto ? 'Konfigurace' : 'Skrýt konfiguraci';
+      });
+    });
+
+    seznam.querySelectorAll('.stav').forEach(function(b){
+      b.addEventListener('click',async function(){
+        var radek=b.closest('.radek');
+        var bylo=b.classList.contains('je-on');
+        b.disabled=true;
+        var r=await fetch('/api/admin/poptavka-stav',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({id:Number(b.dataset.stav), vyrizeno:!bylo})
+        }).catch(function(){return null;});
+        b.disabled=false;
+        if(!r||!r.ok){ alert('Stav se nepodařilo uložit.'); return; }
+        b.classList.toggle('je-on',!bylo);
+        b.setAttribute('aria-pressed', !bylo ? 'true':'false');
+        b.textContent = !bylo ? 'Vyřízeno' : 'Označit vyřízené';
+        radek.classList.toggle('je-vyrizena',!bylo);
+        // Přepočítat jen čítač, ne překreslovat celý seznam. Jinak by se pod rukama
+        // sesypaly rozbalené konfigurace a stránka odskočila nahoru.
+        var dd=document.getElementById('pocetNevyrizenych');
+        if(dd) dd.textContent = Math.max(0, Number(dd.textContent) + (bylo ? 1 : -1));
       });
     });
   }

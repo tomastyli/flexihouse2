@@ -17,7 +17,8 @@ export async function onRequestGet({ request, env }) {
 
   try {
     const { results } = await env.DB.prepare(
-      'SELECT id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba ' +
+      'SELECT id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba, ' +
+      'COALESCE(vyrizeno, 0) AS vyrizeno, vyrizeno_kdy ' +
       'FROM poptavky ORDER BY vzniklo DESC LIMIT 500'
     ).all();
 
@@ -36,7 +37,8 @@ export async function onRequestGet({ request, env }) {
         formular: poptavky.filter(p => p.typ === 'formular').length,
         konfigurator: poptavky.filter(p => p.typ === 'konfigurator').length,
         poradce: poptavky.filter(p => p.typ === 'poradce').length,
-        nedorucene: poptavky.filter(p => !p.mail_odeslan).length
+        nedorucene: poptavky.filter(p => !p.mail_odeslan).length,
+        nevyrizene: poptavky.filter(p => !p.vyrizeno).length
       }
     });
   } catch (e) {
