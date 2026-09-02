@@ -319,6 +319,26 @@ body.is-locked{overflow:hidden}
   object-fit:cover;object-position:center 58%;
   display:block;
 }
+.film__ramec:has(.film__chysta){display:grid;place-items:center;border:1px solid var(--hair)}
+.film__chysta{
+  display:flex;align-items:baseline;gap:2px;
+  margin:0;color:var(--muted);
+  font-family:'Bricolage',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 84;text-transform:uppercase;
+  letter-spacing:0.06em;font-size:clamp(1rem,2.4vw,1.6rem);
+}
+.film__tecky{display:inline-flex;gap:3px;margin-left:2px}
+.film__tecky i{
+  width:4px;height:4px;background:currentColor;border-radius:50%;
+  align-self:flex-end;margin-bottom:0.18em;
+  animation:film-tecka 1.4s ease-in-out infinite;
+}
+.film__tecky i:nth-child(2){animation-delay:.18s}
+.film__tecky i:nth-child(3){animation-delay:.36s}
+@keyframes film-tecka{0%,70%,100%{opacity:.25}35%{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .film__tecky i{animation:none;opacity:.6}
+}
 @media(max-width:640px){
   :root{--film-r:14px}
   .film__ramec{aspect-ratio:4/3}
