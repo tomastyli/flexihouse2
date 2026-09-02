@@ -57,9 +57,12 @@ function fakeAnthropic(odpoved, opts = {}) {
       if (opts.status && opts.status !== 200) {
         return new Response('chyba', { status: opts.status });
       }
+      const telo = opts.syrove
+        ? odpoved
+        : JSON.stringify({ odpoved: odpoved, zdroj: opts.zdroj || '## Příplatky', mimo_obor: !!opts.mimo });
       return new Response(JSON.stringify({
         stop_reason: opts.stop_reason || 'end_turn',
-        content: [{ type: 'text', text: odpoved }]
+        content: [{ type: 'text', text: telo }]
       }), { status: 200, headers: { 'content-type': 'application/json' } });
     }
     if (String(url).includes('turnstile')) {
@@ -212,6 +215,45 @@ fakeAnthropic('Základní cena je 480 000 Kč.');
   const r = await onRequestPost({ request: req({ relace: 'pr', zprava: 'cena' }), env: zaklad() });
   const d = await r.json();
   zkouska('běžná odpověď se zmínkou o Danovi nespouští formulář', d.predat === false, 'predat ' + d.predat);
+}
+{
+  fakeAnthropic('Napíšu ti básničku o jaru.', { mimo: true });
+  const r = await onRequestPost({ request: req({ relace: 'mo', zprava: 'napis basnicku' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('dotaz mimo obor dostane odmítnutí, ne obsah',
+    d.odpoved.includes('umím jen domy') && !d.odpoved.includes('básničku'), d.odpoved.slice(0, 50));
+}
+{
+  fakeAnthropic('Vyjde to na 250 000 Kč.', { zdroj: 'NEVIM' });
+  const r = await onRequestPost({ request: req({ relace: 'vym', zprava: 'kolik stoji garaz' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('částka bez opory v podkladu se nepustí ven',
+    !d.odpoved.includes('250 000') && d.predat === true, d.odpoved.slice(0, 60));
+}
+{
+  fakeAnthropic('Terasa stojí 40 000 Kč.', { zdroj: '## Vymyšlená sekce' });
+  const r = await onRequestPost({ request: req({ relace: 'faksz', zprava: 'terasa' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('vymyšlený nadpis zdroje se bere jako bez opory', d.predat === true, 'predat ' + d.predat);
+}
+{
+  fakeAnthropic('Terasa stojí 40 000 Kč.', { zdroj: '## Příplatky' });
+  const r = await onRequestPost({ request: req({ relace: 'ok', zprava: 'terasa' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('odpověď s pravou citací projde bez formuláře',
+    d.odpoved.includes('40 000') && d.predat === false, d.odpoved.slice(0, 50));
+}
+{
+  fakeAnthropic('tohle není json', { syrove: true });
+  const r = await onRequestPost({ request: req({ relace: 'nj', zprava: 'cena' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('nerozebratelná odpověď končí předáním', d.predat === true, d.odpoved.slice(0, 40));
+}
+{
+  fakeAnthropic('```json\n{"odpoved":"Terasa stojí 40 000 Kč.","zdroj":"## Příplatky","mimo_obor":false}\n```', { syrove: true });
+  const r = await onRequestPost({ request: req({ relace: 'ohr', zprava: 'terasa' }), env: zaklad() });
+  const d = await r.json();
+  zkouska('JSON v ohrazení se přesto rozebere', d.odpoved.includes('40 000'), d.odpoved.slice(0, 50));
 }
 {
   fakeAnthropic('Dodací lhůtu neznám, upřesní ji Dan. [PREDAT]');
