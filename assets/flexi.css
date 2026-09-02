@@ -88,7 +88,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .faq{margin-top:clamp(64px,8vw,116px)}
 .faq__in{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,52px) clamp(30px,4vw,64px)}
 .faq__item{border-top:1.5px solid var(--hair);padding-top:22px}
-.faq__item h3{font-size:1.12rem;letter-spacing:0.01em;margin-bottom:12px;max-width:24ch}
+.faq__item h2{font-size:1.12rem;letter-spacing:0.01em;margin-bottom:12px;max-width:24ch}
 .faq__item p{font-size:0.99rem;color:var(--muted);max-width:46ch}
 
 .cta{background:var(--blue);color:#fff;padding:clamp(64px,8vw,120px) 0}
