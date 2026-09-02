@@ -20,9 +20,12 @@ export async function onRequestGet({ request, env }) {
     }
 
     const { results } = await env.DB.prepare(
-      "SELECT relace, MIN(vzniklo) AS zacatek, MAX(vzniklo) AS konec, COUNT(*) AS zprav, " +
-      "MIN(CASE WHEN role = 'user' THEN text END) AS prvni " +
-      'FROM poradce_zpravy GROUP BY relace ORDER BY konec DESC LIMIT 100'
+      'SELECT z.relace, MIN(z.vzniklo) AS zacatek, MAX(z.vzniklo) AS konec, COUNT(*) AS zprav, ' +
+      // MIN() nad textem vrací abecedně nejmenší, ne první. Dan by v seznamu viděl
+      // „A doprava?" místo dotazu, kterým člověk konverzaci otevřel.
+      "(SELECT text FROM poradce_zpravy z2 WHERE z2.relace = z.relace AND z2.role = 'user' " +
+      'ORDER BY z2.id LIMIT 1) AS prvni ' +
+      'FROM poradce_zpravy z GROUP BY z.relace ORDER BY konec DESC LIMIT 100'
     ).all();
 
     const konverzace = results || [];

@@ -66,6 +66,7 @@
   var napAktualni = [];
   var napVyber = -1;
   var sahnuto = false;
+  var poradiFormulare = 0;
 
   function relace() {
     var id = null;
@@ -103,14 +104,16 @@
     return d;
   }
 
-  function setBusy(v) {
+  function setBusy(v, bezFokusu) {
     var pauza = Date.now() < pauzaDo;
     var zamek = v || pauza;
     busy = zamek;
     q.disabled = zamek;
     sendBtn.disabled = zamek;
     q.placeholder = v ? 'Poradce píše...' : (pauza ? 'Chviličku...' : 'Napište dotaz...');
-    if (!zamek && !mqMobil.matches) q.focus();
+    // Fokus se bere jen po akci člověka. Úvodní zpráva naskočí sama, a kdyby si
+    // po ní poradce vzal fokus, vytrhne ho tomu, kdo zrovna tabuje stránkou.
+    if (!zamek && !bezFokusu && !mqMobil.matches) q.focus();
   }
 
   function pis(el, text, hotovo) {
@@ -149,13 +152,13 @@
     })();
   }
 
-  function rekni(text, potom) {
+  function rekni(text, potom, bezFokusu) {
     setBusy(true);
     var b = bublina('bot', '<span class="fhp-dots"><i></i><i></i><i></i></span>');
     setTimeout(function () {
       b.innerHTML = '';
       pis(b, text, function () {
-        setBusy(false);
+        setBusy(false, bezFokusu);
         if (potom) potom();
       });
     }, 420 + Math.random() * 220);
@@ -267,33 +270,52 @@
     var stary = log.querySelectorAll('.fhp-lead');
     for (var i = 0; i < stary.length; i++) stary[i].remove();
 
-    var box = document.createElement('div');
+    // Skutečný <form>, aby Enter v poli odesílal. Dřív to byl div s type="button",
+    // takže Enter nedělal nic a působilo to jako rozbité tlačítko.
+    var box = document.createElement('form');
     box.className = 'fhp-lead';
+    box.noValidate = true;
+    var por = ++poradiFormulare;
+    var idJmeno = 'fhpJmeno' + por;
+    var idTel = 'fhpTel' + por;
+    var idPast = 'fhpPast' + por;
     box.innerHTML =
-      '<div><label for="fhpJmeno">Jméno</label><input id="fhpJmeno" type="text" autocomplete="name" placeholder="Jan Novák"></div>' +
-      '<div><label for="fhpTel">Telefon</label><input id="fhpTel" type="tel" autocomplete="tel" inputmode="tel" placeholder="777 123 456"></div>' +
-      '<input class="fhp-past" id="fhpPast" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
-      '<button type="button">Předat Danovi</button>';
+      '<div><label for="' + idJmeno + '">Jméno</label>' +
+      '<input id="' + idJmeno + '" type="text" autocomplete="name" placeholder="Jan Novák">' +
+      '<p class="fhp-err" id="' + idJmeno + 'e" hidden></p></div>' +
+      '<div><label for="' + idTel + '">Telefon</label>' +
+      '<input id="' + idTel + '" type="tel" autocomplete="tel" inputmode="tel" placeholder="777 123 456">' +
+      '<p class="fhp-err" id="' + idTel + 'e" hidden></p></div>' +
+      '<input class="fhp-past" id="' + idPast + '" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<button type="submit">Předat Danovi</button>';
 
     var btn = box.querySelector('button');
-    btn.addEventListener('click', async function () {
-      if (box.querySelector('#fhpPast').value) { box.remove(); return; }
-      var jmeno = box.querySelector('#fhpJmeno').value.trim();
-      var tel = box.querySelector('#fhpTel').value.trim();
-      var stara = box.querySelector('.fhp-err');
-      if (stara) stara.remove();
-      if (jmeno.length < 2 || tel.replace(/\D/g, '').length < 9) {
-        var e = document.createElement('p');
-        e.className = 'fhp-err';
-        e.textContent = 'Doplňte prosím jméno a telefon, na kterém vás Dan zastihne.';
-        box.appendChild(e);
-        return;
-      }
+
+    function chyba(pole, text) {
+      var hl = box.querySelector('#' + pole.id + 'e');
+      hl.textContent = text;
+      hl.hidden = !text;
+      pole.setAttribute('aria-invalid', text ? 'true' : 'false');
+      pole.setAttribute('aria-describedby', text ? pole.id + 'e' : '');
+      return !text;
+    }
+
+    box.addEventListener('submit', async function (ev) {
+      ev.preventDefault();
+      if (box.querySelector('#' + idPast).value) { box.remove(); return; }
+      var poleJmeno = box.querySelector('#' + idJmeno);
+      var poleTel = box.querySelector('#' + idTel);
+      var jmeno = poleJmeno.value.trim();
+      var tel = poleTel.value.trim();
+      var okJmeno = chyba(poleJmeno, jmeno.length < 2 ? 'Doplňte prosím jméno.' : '');
+      var okTel = chyba(poleTel, tel.replace(/\D/g, '').length < 9 ? 'Doplňte telefon, na kterém vás Dan zastihne.' : '');
+      if (!okJmeno) { poleJmeno.focus(); return; }
+      if (!okTel) { poleTel.focus(); return; }
       btn.disabled = true;
       btn.textContent = 'Předávám...';
       var t = await token();
       var ok = false;
-      var chyba = '';
+      var duvod = '';
       try {
         var r = await fetch(API_PREDAT, {
           method: 'POST',
@@ -302,17 +324,20 @@
         });
         var d = await r.json();
         ok = !!(d && d.ok);
-        chyba = (d && d.chyba) || '';
+        duvod = (d && d.chyba) || '';
       } catch (e) {
-        chyba = '';
+        duvod = '';
       }
       if (!ok) {
         btn.disabled = false;
         btn.textContent = 'Předat Danovi';
-        var e2 = document.createElement('p');
-        e2.className = 'fhp-err';
-        e2.textContent = chyba || 'Nepodařilo se odeslat. Zavolejte prosím na 607 321 543.';
+        var e2 = box.querySelector('.fhp-err--odeslani') || document.createElement('p');
+        e2.className = 'fhp-err fhp-err--odeslani';
+        e2.setAttribute('role', 'alert');
+        e2.hidden = false;
+        e2.textContent = duvod || 'Nepodařilo se odeslat. Zavolejte prosím na 607 321 543.';
         box.appendChild(e2);
+        btn.focus();
         return;
       }
       box.remove();
@@ -322,7 +347,7 @@
 
     log.appendChild(box);
     scroll();
-    box.querySelector('#fhpJmeno').focus();
+    box.querySelector('#' + idJmeno).focus();
   }
 
   function napZavri() {
@@ -496,7 +521,7 @@
     mqMobil.addEventListener('change', start);
 
     rekni('Dobrý den, jsem poradce Flexi House. Poradím s cenou, povolením i tím, co dům obsahuje. Napište mi dotaz vlastními slovy, nebo si vyberte téma.',
-      function () { temata(TEMATA); });
+      function () { temata(TEMATA); }, true);
   }
 
   if (document.readyState === 'loading') {

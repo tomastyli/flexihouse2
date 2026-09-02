@@ -144,7 +144,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     <div id="viewKonverzace" class="hidden">
       <dl class="souhrn" id="souhrnK"></dl>
       <div class="pruh">
-        <h2>Co se lidé ptali poradce</h2>
+        <h2>Na co se lidé ptali poradce</h2>
         <span id="pocetK"></span>
       </div>
       <div id="seznamK"></div>
@@ -173,6 +173,13 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
   }
   function esc(s){
     return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function sklonZprav(n){
+    var d=n%10, st=n%100;
+    if(d===1&&st!==11) return n+' zpráva';
+    if(d>=2&&d<=4&&(st<12||st>14)) return n+' zprávy';
+    return n+' zpráv';
   }
 
   var STITKY={konfigurator:['Konfigurátor',' znacka--konf'],poradce:['Poradce',' znacka--por'],formular:['Formulář','']};
@@ -268,7 +275,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           '<div class="kroky hidden" id="r'+esc(k.relace)+'"></div>'+
         '</div>'+
         '<div class="radek__prava">'+
-          '<span class="znacka">'+k.zprav+' zpráv</span>'+
+          '<span class="znacka">'+sklonZprav(k.zprav)+'</span>'+
           '<button class="rozbal" data-relace="'+esc(k.relace)+'">Přepis</button>'+
         '</div>'+
       '</div>';
@@ -290,7 +297,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           b.disabled=false;
           if(!r.ok){ alert(j.error||'Přepis se nepodařilo načíst.'); return; }
           el.innerHTML=(j.zpravy||[]).map(function(z){
-            return '<p class="'+(z.role==='user'?'od-zak':'od-por')+'">'+esc(z.text)+'</p>';
+            return '<p class="'+(z.role==='user'?'od-zak':'od-por')+'">'+(z.role==='user'?'Zákazník: ':'Poradce: ')+esc(z.text)+'</p>';
           }).join('');
           el.dataset.nacteno='1';
         }

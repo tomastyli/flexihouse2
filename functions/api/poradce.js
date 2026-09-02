@@ -1,7 +1,10 @@
 import { maDb } from './_uloz.js';
 import { BAZE } from './_poradce-baze.js';
 
-const MODEL = 'claude-opus-5';
+// Sonnet 5 vybrán vědomě: na odpovědi ze znalostní báze stačí, cachování u něj
+// funguje (práh 1024 tokenů, náš prompt má kolem 1500) a vyjde zhruba na 60 % ceny
+// Opusu. Přepíná se proměnnou PORADCE_MODEL, do kódu se sahat nemusí.
+const MODEL = 'claude-sonnet-5';
 const MAX_ZNAKU = 300;
 const MAX_TELA = 4096;
 const MAX_ZPRAV_RELACE = 20;
