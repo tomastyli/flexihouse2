@@ -208,7 +208,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
           var polozky=JSON.parse(p.konfigurace);
           if(polozky.length){
             konf='<div class="konfig hidden" id="k'+p.id+'"><table>'+polozky.map(function(i){
-              return '<tr><td>'+esc(i.group)+'</td><td>'+esc(i.value)+(i.price?' · '+fmtCena(i.price):'')+'</td></tr>';
+              return '<tr><td>'+esc(i.group)+'</td><td>'+esc(i.value)+(i.price?' · '+(i.from?'od ':'')+fmtCena(i.price):'')+'</td></tr>';
             }).join('')+'</table></div>';
           }
         }catch(e){}

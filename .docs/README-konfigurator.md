@@ -38,3 +38,6 @@ node .claude/serve.js   # http://localhost:4599/konfigurator.html?model=mini
 - Rekapitulace + kontaktní formulář.
 - **Stáhnout PDF** (jsPDF, kreslené přímo — bez rasterizace) — sazba v brandu webu: Bricolage 800 verzálkami na nadpisy, Instrument na text, paleta ink/blue, ostré hrany. Vektorový text, běžná konfigurace se vejde na jednu stranu.
 - **Odeslat poptávku** → JSON na `/api/send-konfigurace` → Resend pošle e-mail nám i zákazníkovi.
+- **Vzorky dekorů** — volba s `img:` se vykreslí jako karta se vzorkem (třída `opt--swatch`), skupina s `swatch:true` má hustší mřížku. Vzorky fasády jsou v `img/fasada/<kód>.webp`, vyřezané ze vzorníku `.docs/fasada-vzornik.png`.
+- **Ceny „od“** — volba s `from:true` se do součtu počítá spodní hranicí a všude (karta, přehled, rekapitulace, PDF, e-mail) se ukáže jako „od X Kč“. Rozpětí patří do popisu volby, ne do ceny.
+- **3D neumí dekory fasády** — mapa `FASADA_3D` v `konfigurator.html` je převádí na tři textury, co model má (`wood`, `grey`, `black`).

@@ -27,7 +27,8 @@ nedá se odhadnout dopředu. Vede na poptávku.
 
 ## Co je a co není v základní ceně 400 000 Kč
 
-V ceně je nosná konstrukce, okna a dveře, fasádní obklad a zateplení 75 mm.
+V ceně je nosná konstrukce, hliníková okna s izolačními dvojskly, dveře, fasádní obklad
+(dřevěný, šedý nebo černý) a zateplení 75 mm.
 
 **Pozor, tohle v základní ceně NENÍ a hodně lidí to čeká:** kuchyňská linka, koupelna,
 elektroinstalace, vytápění, terasa, doprava, montáž ani příprava pozemku. Základní cena
@@ -39,22 +40,38 @@ je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou,
 |---|---|
 | Sedlová střecha | 90 000 Kč |
 | Fasádní obklad dřevěný, šedý nebo černý | v ceně, všechny stejně |
+| Dekor fasády místo základního obkladu | 23 600 Kč, všech jedenáct dekorů stejně |
+| Reflexní skla, galvanizované zasklení | teď bez příplatku, akce |
 | Koupelna | 30 000 Kč |
 | Kuchyňská linka | 10 000 Kč |
 | Elektroinstalace | 5 000 Kč |
 | Zateplení 100 mm místo 75 mm | 30 000 Kč |
-| Klimatizace s montáží | 20 000 Kč |
-| Kamna | 30 000 Kč |
+| Klimatizace s montáží | 29 000 Kč |
 | Terasa | 40 000 Kč |
-| Sítě do oken | 10 000 Kč |
-| Betonové patky | 50 000 Kč |
-| Doprava na místo a usazení | 20 000 Kč a k tomu 80 Kč za kilometr |
-| Montáž domku | 30 000 Kč |
-| Připojení na sítě | 30 000 Kč |
-| Vyřízení povolení | 15 000 Kč |
+| Vstupní schody | 26 661 Kč |
+| Sítě do oken | 10 000 Kč včetně DPH |
+| Betonové patky | od 50 000 Kč, podle podloží až 90 000 Kč |
+| Doprava na místo a usazení | 20 000 Kč a k tomu 100 Kč za kilometr |
+| Montáž domku | od 30 000 Kč, podle náročnosti až 80 000 Kč |
 
 Doprava se počítá podle vzdálenosti z výroby na pozemek, proto ji bez znalosti místa
-nelze říct přesně. Sazba je 20 000 Kč plus 80 Kč za kilometr.
+nelze říct přesně. Sazba je 20 000 Kč plus 100 Kč za kilometr.
+
+Patky a montáž jsou cena od a konfigurátor s nimi počítá ve spodní hranici. Patky vyjdou
+podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na
+30 000 až 80 000 Kč. Rozpětí poradce říct může, konkrétní částku v něm dá až Dan v nabídce.
+
+## Fasáda a dekor fasády
+
+Jsou to dvě různé věci a zákazník si vybírá jedno z nich. **Základní fasádní obklad** je
+v ceně domu, na výběr je dřevěný, šedý nebo černý, všechny stejně. **Dekor fasády** se dává
+místo něj a stojí 23 600 Kč, všech jedenáct dekorů vyjde stejně. Povrch dekoru je hladký
+(andělská bílá, slonová kost, tmavě šedá), omítkový (světle šedá, betonově šedá, pudrová,
+krémová, pouštní žlutá) nebo se dřevěnou kresbou (tmavý ořech, medové dřevo, zlaté dřevo).
+Dekorový panel navíc přidává vrstvu zateplení.
+
+Vzorky dekorů jsou vidět v konfigurátoru, poradce na něj odkazuje. **Tloušťku zateplení
+u panelu poradce NEŘÍKÁ**, tu potvrdí Dan.
 
 Ceny domu a vybavení jsou bez DPH, práce na pozemku včetně DPH. Konečnou cenu potvrzuje
 Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
@@ -62,12 +79,21 @@ Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 ## Celoroční bydlení
 
 Zateplení 75 mm je v základní ceně. Pro trvalé bydlení je zimní varianta 100 mm
-za 30 000 Kč. Topit lze klimatizací s montáží za 20 000 Kč nebo kamny za 30 000 Kč.
-Vytápění není v základní ceně.
+za 30 000 Kč. Topí se klimatizací s montáží za 29 000 Kč, ta umí topit i chladit.
+Vytápění není v základní ceně. Kamna už v nabídce nejsou.
+
+## Co neděláme
+
+Tyhle dvě věci si zákazník zajišťuje sám a poradce to musí říct rovnou, ne to obejít:
+
+- **Připojení na sítě.** Vodu, elektřinu a odpad k domu nenapojujeme.
+- **Vyřízení stavebního povolení nebo ohlášení.** Papíry na úřadě si zákazník řeší sám.
 
 ## Povolení
 
-Ohlášení nebo stavební povolení umíme vyřídit za zákazníka, stojí to 15 000 Kč.
+Jestli je potřeba ohlášení nebo stavební povolení, záleží na velikosti stavby a na tom,
+k čemu bude sloužit. Závazně to řekne jedině místní stavební úřad. Vyřízení za zákazníka
+neděláme.
 
 ## Konfigurátor
 
@@ -82,9 +108,10 @@ a nabídne předání kontaktu.
 
 - Dodací lhůta od objednávky po usazení.
 - Jaká musí být příjezdová cesta a jestli je potřeba jeřáb.
-- Co přesně obnáší připojení na sítě a co si zajišťuje zákazník sám.
+- Co všechno musí mít zákazník na pozemku připravené, než dům přijede.
 - Co konkrétně bude který pozemek potřebovat za povolení podle typu užívání.
 - Financování, splátky, úvěr, zálohy.
 - Záruka, délka a rozsah.
 - Náklady na vytápění za sezónu.
+- O kolik milimetrů zateplí fasádní panel s dekorem.
 - Cokoli o konkrétní zakázce, termínu nebo slevě.

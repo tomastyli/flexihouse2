@@ -119,14 +119,14 @@ function configRows(data) {
           <span style="color:#5b6b80">${esc(it.group)}:</span> <strong>${esc(it.value)}</strong>
         </td>
         <td style="padding:7px 0;border-bottom:1px solid #eef2f4;text-align:right;color:#16202a;font-weight:600;font-size:14px;white-space:nowrap">
-          ${Number(it.price) > 0 ? '+ ' + czk(it.price) + (it.vat === 'incl' ? ' <span style="color:#94a3b8;font-weight:500;font-size:12px">vč. DPH</span>' : '') : '<span style="color:#94a3b8;font-weight:500">v ceně</span>'}
+          ${Number(it.price) > 0 ? '+ ' + (it.from ? 'od ' : '') + czk(it.price) + (it.vat === 'incl' ? ' <span style="color:#94a3b8;font-weight:500;font-size:12px">vč. DPH</span>' : '') : '<span style="color:#94a3b8;font-weight:500">v ceně</span>'}
         </td></tr>`;
     });
   });
   return html;
 }
 
-const VAT_NOTE = 'Dům a jeho vybavení uvádíme bez DPH. Sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Doprava, usazení, patky, montáž, připojení na sítě a klimatizace jsou uvedené včetně DPH.';
+const VAT_NOTE = 'Dům a jeho vybavení uvádíme bez DPH. Sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Doprava, usazení, patky, montáž a sítě do oken jsou uvedené včetně DPH. U položek s „od“ je uvedená spodní hranice: patky vyjdou na 50 000 až 90 000 Kč, montáž na 30 000 až 80 000 Kč podle pozemku.';
 
 function subtotalRows(data) {
   const t = data.totals || {};

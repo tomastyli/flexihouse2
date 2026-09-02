@@ -7,6 +7,17 @@ var TEX = {
   wood:      { soubor: 'fasada.webp',       normala: 'fasada_n.webp' },
   grey:      { soubor: 'fasada-seda.webp',  normala: 'fasada_n.webp' },
   black:     { soubor: 'fasada-cerna.webp', normala: 'fasada_n.webp' },
+  'fas-pz-101': { soubor: 'fasada-pz-101.webp', normala: 'fasada-h_n.webp' },
+  'fas-pz-102': { soubor: 'fasada-pz-102.webp', normala: 'fasada-h_n.webp' },
+  'fas-pz-201': { soubor: 'fasada-pz-201.webp', normala: 'fasada-h_n.webp' },
+  'fas-tz-202': { soubor: 'fasada-tz-202.webp', normala: 'fasada-h_n.webp' },
+  'fas-tz-201': { soubor: 'fasada-tz-201.webp', normala: 'fasada-h_n.webp' },
+  'fas-tz-501': { soubor: 'fasada-tz-501.webp', normala: 'fasada-h_n.webp' },
+  'fas-tz-504': { soubor: 'fasada-tz-504.webp', normala: 'fasada-h_n.webp' },
+  'fas-tz-502': { soubor: 'fasada-tz-502.webp', normala: 'fasada-h_n.webp' },
+  'fas-mz-0302': { soubor: 'fasada-mz-0302.webp', normala: 'fasada-h_n.webp' },
+  'fas-mz-8043': { soubor: 'fasada-mz-8043.webp', normala: 'fasada-h_n.webp' },
+  'fas-mz-0301': { soubor: 'fasada-mz-0301.webp', normala: 'fasada-h_n.webp' },
   deck:      { soubor: 'prkna.webp',        normala: 'prkna_n.webp' },
   roof:      { soubor: 'strecha.webp',      normala: 'strecha_n.webp' },
   soffit:    { soubor: 'podhled.webp',      normala: 'podhled_n.webp' },
@@ -23,6 +34,17 @@ var MAT = {
   wood:    { tex: 'wood',    nahradaTint: [0.625, 0.348, 0.174], rough: 0.31, metal: 0.10 },
   grey:    { tex: 'grey',    nahradaTint: [0.452, 0.445, 0.431], rough: 0.33, metal: 0.10 },
   black:   { tex: 'black',   nahradaTint: [0.140, 0.140, 0.140], rough: 0.35, metal: 0.10 },
+  'fas-pz-101': { tex: 'fas-pz-101', nahradaTint: [0.733, 0.725, 0.698], rough: 0.33, metal: 0.10 },
+  'fas-pz-102': { tex: 'fas-pz-102', nahradaTint: [0.714, 0.694, 0.639], rough: 0.33, metal: 0.10 },
+  'fas-pz-201': { tex: 'fas-pz-201', nahradaTint: [0.329, 0.365, 0.349], rough: 0.33, metal: 0.10 },
+  'fas-tz-202': { tex: 'fas-tz-202', nahradaTint: [0.576, 0.592, 0.612], rough: 0.33, metal: 0.10 },
+  'fas-tz-201': { tex: 'fas-tz-201', nahradaTint: [0.427, 0.439, 0.459], rough: 0.33, metal: 0.10 },
+  'fas-tz-501': { tex: 'fas-tz-501', nahradaTint: [0.682, 0.639, 0.620], rough: 0.33, metal: 0.10 },
+  'fas-tz-504': { tex: 'fas-tz-504', nahradaTint: [0.729, 0.663, 0.463], rough: 0.33, metal: 0.10 },
+  'fas-tz-502': { tex: 'fas-tz-502', nahradaTint: [0.682, 0.604, 0.424], rough: 0.33, metal: 0.10 },
+  'fas-mz-0302': { tex: 'fas-mz-0302', nahradaTint: [0.514, 0.325, 0.216], rough: 0.33, metal: 0.10 },
+  'fas-mz-8043': { tex: 'fas-mz-8043', nahradaTint: [0.718, 0.506, 0.220], rough: 0.33, metal: 0.10 },
+  'fas-mz-0301': { tex: 'fas-mz-0301', nahradaTint: [0.757, 0.388, 0.133], rough: 0.33, metal: 0.10 },
   ocel:    { tex: 'frame',   rough: 0.44, metal: 0.55 },
   ramecek: { tex: 'frame',   tint: [0.72, 0.72, 0.74], rough: 0.44, metal: 0.24 },
   strecha: { tex: 'roof',    rough: 0.60, metal: 0.12 },
@@ -590,7 +612,8 @@ function Scena(canvas, opt) {
     im.onerror = function () { OBR[klic] = null; ceka--; naplanuj(); };
     im.src = zaklad + 'assets/tex/' + soubor + '?v=' + TEX_VERZE;
   }
-  var ODLOZIT = { grey: 1, black: 1, beton: 1,
+  var ODLOZIT = { grey: 1, black: 1, beton: 1, 'fas-pz-101': 1, 'fas-pz-102': 1, 'fas-pz-201': 1, 'fas-tz-202': 1, 'fas-tz-201': 1, 'fas-tz-501': 1, 'fas-tz-504': 1, 'fas-tz-502': 1, 'fas-mz-0302': 1, 'fas-mz-8043': 1, 'fas-mz-0301': 1,
+   
     podlahaIn: 1, stenaIn: 1, lamelyIn: 1, mramorIn: 1, deskaIn: 1 };
   function zajisti(k) {
     if (!TEX[k] || (k in OBR)) return;
@@ -1671,7 +1694,7 @@ function Scena(canvas, opt) {
     var zF = D / 2, zB = -D / 2;
     var panelY0 = y0 + SOKL, panelY1 = y1 - PREKLAD;
     var panelH = panelY1 - panelY0;
-    var pal = S.facade === 'grey' ? 'grey' : (S.facade === 'black' ? 'black' : 'wood');
+    var pal = MAT[S.facade] ? S.facade : 'wood';
 
     var KROK = 0.225;
     var moduly = [];
@@ -2233,7 +2256,7 @@ function Scena(canvas, opt) {
       gl.bindTexture(gl.TEXTURE_2D, nor || plochaNormala);
       gl.uniform1f(pr.u.uMaTex, tex ? 1 : 0);
       gl.uniform1f(pr.u.uMaNor, nor ? 1 : 0);
-      gl.uniform1f(pr.u.uNorSila, m.tex === 'deck' ? 1.0 : (m.tex === 'wood' || m.tex === 'grey' || m.tex === 'black' ? 0.55 : 0.75));
+      gl.uniform1f(pr.u.uNorSila, m.tex === 'deck' ? 1.0 : (m.tex === 'wood' || m.tex === 'grey' || m.tex === 'black' || (m.tex && m.tex.indexOf('fas-') === 0) ? 0.55 : 0.75));
       gl.uniform1f(pr.u.uRough, m.rough);
       gl.uniform1f(pr.u.uMetal, m.metal);
       gl.uniform1f(pr.u.uSklo, m.sklo ? 1 : 0);

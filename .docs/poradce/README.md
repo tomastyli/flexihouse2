@@ -90,7 +90,7 @@ Zásadní věc, kterou musí poradce říkat rovnou: **základní cena 400 000 K
 Není v ní kuchyň, koupelna, elektroinstalace, vytápění, terasa ani doprava. Lidé to čekají
 jinak a je lepší je nenechat dojít k tomu až v nabídce.
 
-Doprava se počítá podle vzdálenosti (20 000 Kč plus 80 Kč za kilometr), takže ji poradce
+Doprava se počítá podle vzdálenosti (20 000 Kč plus 100 Kč za kilometr), takže ji poradce
 bez znalosti místa neřekne přesně a odkazuje na konfigurátor.
 
 ## Co chybí a musí doplnit Dan
