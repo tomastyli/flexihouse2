@@ -11,13 +11,16 @@ CREATE TABLE poptavky_nove (
   cena INTEGER,
   zdroj TEXT,
   mail_odeslan INTEGER NOT NULL DEFAULT 0,
-  mail_chyba TEXT
+  mail_chyba TEXT,
+  vyrizeno INTEGER NOT NULL DEFAULT 0,
+  vyrizeno_kdy TEXT
 );
 
 INSERT INTO poptavky_nove
-  (id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba)
+  (id, vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba, vyrizeno, vyrizeno_kdy)
 SELECT
-  id, vzniklo, typ, jmeno, NULLIF(email, ''), telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba
+  id, vzniklo, typ, jmeno, NULLIF(email, ''), telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan, mail_chyba,
+  COALESCE(vyrizeno, 0), vyrizeno_kdy
 FROM poptavky;
 
 DROP TABLE poptavky;
@@ -26,3 +29,5 @@ ALTER TABLE poptavky_nove RENAME TO poptavky;
 
 CREATE INDEX IF NOT EXISTS poptavky_vzniklo ON poptavky (vzniklo DESC);
 CREATE INDEX IF NOT EXISTS poptavky_typ ON poptavky (typ);
+
+CREATE INDEX IF NOT EXISTS poptavky_vyrizeno ON poptavky (vyrizeno, vzniklo DESC);

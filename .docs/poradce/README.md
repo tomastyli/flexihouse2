@@ -15,19 +15,23 @@ Tohle je jediný zdroj pravdy o poradci. Kdo na tom bude dělat dál, začíná 
 v `/admin`, widget v `assets/flexi-poradce.js` a `.css`, znalostní báze `baze.md`
 srovnaná s konfigurátorem a hlídaná testem.
 
-**Další krok je zapnout widget.** Musí mu ale předcházet tyhle tři věci, jinak poradce
-odpoví každému návštěvníkovi poruchovou větou (ověřeno naostro, endpoint bez klíče
-vrací právě ji):
+**Databáze je hotová.** 2. 9. 2026 proběhly na ostré D1 všechny tři migrace
+(`schema-poradce.sql`, `migrace-vyrizeno.sql`, `migrace-email-nullable.sql`).
+Ověřeno: tabulky `poradce_zpravy` a `poradce_limit` stojí i se sloupci spotřeby,
+`poptavky` mají `vyrizeno`, e-mail smí chybět a jediný záznam v tabulce migraci přežil.
+Záloha před zásahem je v `_zalohy/flexihouse-d1-2026-09-02-1521.sql`.
 
-1. Tabulky na ostré D1:
-   `npx wrangler@4 d1 execute flexihouse --remote --file=.docs/poradce/schema-poradce.sql`
-2. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou. K tomu `PORADCE_STATS_SECRET`,
+Databáze **není v Tomášově účtu**, ale v Danově. Wrangler ji bez
+`CLOUDFLARE_ACCOUNT_ID=3d2387ff6d1be6ec4a82d28b306b42bb` vůbec nevypíše.
+
+**Zbývá jediné, pak jde widget zapnout:**
+
+1. `ANTHROPIC_API_KEY` jako **secret**, ne jako proměnnou. K tomu `PORADCE_STATS_SECRET`,
    jinak přehled spotřeby neexistuje ani pro tebe.
-3. Migrace e-mailu: `migrace-email-nullable.sql`. **Napřed export databáze**, tabulka
-   `poptavky` se zahazuje a zakládá znovu. Hned po ní `migrace-vyrizeno.sql`, ta jen
-   přidává dva sloupce a je bezpečná.
 
 Teprve pak přidat dva řádky na šest stránek podle oddílu Widget na webu níže.
+Dokud klíč chybí, endpoint odpovídá poruchovou větou s telefonem na Dana; ověřeno
+na produkci i po migraci.
 
 **Nezávisle na tom čeká na Dana** osm chybějících údajů, viz oddíl Co chybí a musí doplnit
 Dan. Bez nich poradce funguje, jen na ta témata couvá s „to upřesní Dan".
@@ -313,11 +317,11 @@ takže se obě větve o ten soubor porvou. Slučovat po jedné, ne najednou.
 
 ### Co ještě zbývá dodělat
 
-- Vytvořit tabulky na ostré D1: `.docs/poradce/schema-poradce.sql`.
+- ~~Vytvořit tabulky na ostré D1~~ hotovo 2. 9. 2026.
 - Nastavit `ANTHROPIC_API_KEY` a `PORADCE_STATS_SECRET` jako secrets, ne jako proměnné.
 - Vyrobit Turnstile klíč pro poradce a nastavit `TURNSTILE_SECRET`.
 - Přidat na web skript Turnstile a sitekey, teprve pak nastavit `TURNSTILE_SECRET`.
-- Pustit `migrace-email-nullable.sql` na ostrou D1 (po exportu).
+- ~~Pustit migrace na ostrou D1~~ hotovo 2. 9. 2026, se zálohou.
 - Odchytit duplicitní poptávky podle telefonu, aby stejný člověk nezaložil deset stejných.
 
 ## Právní část
