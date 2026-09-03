@@ -29,7 +29,7 @@ export async function onRequestPost(context) {
     };
 
     const FROM = env.RESEND_FROM || 'Flexi House <onboarding@resend.dev>';
-    const TO_US = (env.LEAD_TO_EMAIL || 'dandaprokes@gmail.com').split(',').map(e => e.trim()).filter(Boolean);
+    const TO_US = (env.LEAD_TO_EMAIL || 'info@flexihouse.cz').split(',').map(e => e.trim()).filter(Boolean);
 
     const zaznamId = await ulozPoptavku(env, {
       typ: 'formular',
@@ -117,7 +117,7 @@ function shell(inner, preheader) {
       <tr><td style="background:#f4f7f8;padding:22px 32px;border-top:1px solid #dde5e8">
         <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6">
           WINstores, s.r.o. · IČO 07836929 · Korunní 2569/108, Praha 10<br>
-          +420 607 321 543 · dandaprokes@gmail.com · flexihouse.cz
+          +420 607 321 543 · info@flexihouse.cz · flexihouse.cz
         </p>
       </td></tr>
     </table>

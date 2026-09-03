@@ -21,8 +21,8 @@ Přidej tyto tři proměnné (doporučeně jako **Secret**) pro **Production** i
 | Název (Variable name) | Hodnota (Value) | Pozn. |
 |---|---|---|
 | `RESEND_API_KEY` | `re_xxxxxxxxxxxxxxxx` | Tvůj API klíč z Resend (máš ho) |
-| `LEAD_TO_EMAIL`  | `dandaprokes@gmail.com` | Kam mají chodit poptávky |
-| `RESEND_FROM`    | `Flexi House <poptavky@flexihouse.cz>` | Odesílatel — doména musí být v Resend ověřená (viz bod 3) |
+| `LEAD_TO_EMAIL`  | `info@flexihouse.cz` | Kam mají chodit poptávky |
+| `RESEND_FROM`    | `Flexi House <info@flexihouse.cz>` | Odesílatel — doména musí být v Resend ověřená (viz bod 3) |
 
 > ⚠️ **Po uložení proměnných musíš spustit nový deploy** (Deployments → … →
 > Retry deployment, nebo nový push). Proměnné se načtou až do nové verze.
@@ -35,7 +35,9 @@ Aby Resend e-maily odeslal z `@flexihouse.cz`, musí být doména ověřená:
 3. Tyto záznamy přidej v Cloudflare: **(doména) → DNS → Records → Add record**
    (přesně podle hodnot z Resend, typy TXT/CNAME).
 4. V Resend klikni **Verify**. Po ověření můžeš v `RESEND_FROM` použít
-   libovolnou adresu na téhle doméně (např. `poptavky@flexihouse.cz`).
+   libovolnou adresu na téhle doméně. Používáme `info@flexihouse.cz`, protože
+   na ni zákazník může odpovědět; `poptavky@flexihouse.cz` je jen odesílací
+   nálepka bez schránky a odpovědi by se odrážely.
 
 **Rychlý test bez ověřené domény:** dočasně nastav
 `RESEND_FROM = onboarding@resend.dev`. V testovacím režimu ale Resend doručí

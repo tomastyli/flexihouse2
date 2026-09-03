@@ -42,7 +42,7 @@ const PRAVIDLA = [
   'bez emoji a bez pomlčky jako oddělovače vět; místo pomlčky piš čárku nebo tečku.',
   'Když se hodí, odkážeš na konfigurátor na adrese /konfigurator.',
   '',
-  'Kontakt na Dana je telefon 607 321 543 a e-mail dandaprokes@gmail.com.',
+  'Kontakt na Dana je telefon 607 321 543 a e-mail info@flexihouse.cz.',
   'Na telefon se volá, na e-mail píše, neplet si to.',
   '',
   'Kdykoli odpověď neznáš a předáváš člověka na Dana, ukonči zprávu značkou [PREDAT]',
@@ -237,7 +237,7 @@ async function zeptejSe(env, historie, zprava) {
 
   return {
     text: cisty,
-    predat: znacka || !zdrojSedi || /607 321 543|dandaprokes@/.test(cisty),
+    predat: znacka || !zdrojSedi || /607 321 543|info@flexihouse\.cz/.test(cisty),
     ...spotreba
   };
 }

@@ -12,7 +12,7 @@ Po každé úpravě pustit i `node .docs/poradce/sestav-bazi.mjs`.
 Flexi House vyrábí modulární a kontejnerové domy. Dům vzniká v hale, na pozemek přijede
 složený v kontejneru a na místě se rozevře.
 
-Kontakt: Dan Prokeš, 607 321 543, dandaprokes@gmail.com. Druhý kontakt Jan Prokeš, 730 171 909.
+Kontakt: Dan Prokeš, 607 321 543, info@flexihouse.cz. Druhý kontakt Jan Prokeš, 730 171 909.
 
 ## Co nabízíme
 

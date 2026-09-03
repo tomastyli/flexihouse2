@@ -68,7 +68,7 @@ export async function onRequestPost({ request, env }) {
       return json({ ok: true, ulozeno: true, mail: false });
     }
 
-    const komu = (env.LEAD_TO_EMAIL || 'dandaprokes@gmail.com').split(',').map(e => e.trim()).filter(Boolean);
+    const komu = (env.LEAD_TO_EMAIL || 'info@flexihouse.cz').split(',').map(e => e.trim()).filter(Boolean);
     const odeslano = await posli(env, {
       from: env.RESEND_FROM || 'Flexi House <onboarding@resend.dev>',
       to: komu,

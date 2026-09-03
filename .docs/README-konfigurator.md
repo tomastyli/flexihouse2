@@ -18,8 +18,8 @@ Uprav čísla u `price:`. `price: 0` = „v základní ceně". Doplň reálné h
 3. V Cloudflare Pages → **Settings → Environment variables** přidej:
    ```
    RESEND_API_KEY = re_xxxxxxxxxxxx
-   LEAD_TO_EMAIL  = dandaprokes@gmail.com
-   RESEND_FROM    = Flexi House <poptavky@flexihouse.cz>
+   LEAD_TO_EMAIL  = info@flexihouse.cz
+   RESEND_FROM    = Flexi House <info@flexihouse.cz>
    ```
    > Doména v `RESEND_FROM` musí být v Resend ověřená. Pro rychlý test lze dočasně použít `onboarding@resend.dev`.
 4. API klíč **nikdy není na frontendu** — žije jen v env proměnné na serveru.
