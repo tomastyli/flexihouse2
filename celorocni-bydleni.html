@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="icon" href="/favicon.svg?v=10" type="image/svg+xml">
+<link rel="icon" href="/favicon-96.png?v=10" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=10">
+<link rel="manifest" href="/site.webmanifest?v=10">
+<title>Mobilní dům na celoroční bydlení | Flexi House</title>
+<link rel="canonical" href="https://flexihouse.cz/celorocni-bydleni">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flexi House">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="Mobilní dům na celoroční bydlení">
+<meta property="og:description" content="Co k mobilnímu domu patří, aby se v něm dalo bydlet i v zimě: zateplení 100 mm, klimatizace s tepelným čerpadlem a přípojky. Ceny i hranice na rovinu.">
+<meta property="og:url" content="https://flexihouse.cz/celorocni-bydleni">
+<meta property="og:image" content="https://flexihouse.cz/img/og/og-home.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Co k mobilnímu domu patří, aby se v něm dalo bydlet i v zimě: zateplení 100 mm, klimatizace s tepelným čerpadlem a přípojky. Ceny i hranice na rovinu.">
+<link rel="preload" href="fonts/bricolage-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/flexi-house.webp" imagesrcset="img/flexi-house-480w.webp 480w, img/flexi-house-800w.webp 800w, img/flexi-house-1200w.webp 1200w, img/flexi-house.webp 2000w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="assets/flexi.css?v=21">
+<link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
+<style>
+.cbhero{position:relative;background:var(--ink)}
+.cbhero__foto{width:100%;height:clamp(430px,68vh,660px);object-fit:cover;object-position:center 56%}
+.cbhero__stin{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,32,42,.72) 0%,rgba(22,32,42,.50) 26%,rgba(22,32,42,.58) 56%,rgba(22,32,42,.90) 100%)}
+.cbhero__in{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;
+  padding-block:clamp(16px,2.4vw,26px) clamp(30px,4vw,54px)}
+.cbhero__kde{font-size:.85rem;color:rgba(255,255,255,.86)}
+.cbhero__kde a{border-bottom:1px solid transparent}
+.cbhero__kde b{color:#fff;font-weight:600}
+.cbhero h1{color:#fff;font-size:clamp(2.15rem,6vw,4.5rem);max-width:15ch}
+.cbhero p{color:#fff;max-width:50ch;font-size:1.06rem;margin-top:clamp(14px,2vw,20px)}
+.cbhero__go{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:clamp(22px,3vw,32px)}
+.cbhero .btn{color:var(--ink);background-color:#fff;border-color:#fff;background-image:linear-gradient(var(--blue),var(--blue))}
+.cbhero .btn:hover{color:#fff}
+.cbhero .link{color:#fff;border-bottom-color:#fff}
+@media (hover:hover) and (pointer:fine){
+  .cbhero__kde a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.5)}
+  .cbhero .link:hover{color:rgba(255,255,255,.78)}
+}
+
+.cb-blok{padding-block:clamp(54px,7vw,100px)}
+.cb-blok--tesny{padding-block:clamp(42px,5vw,72px)}
+.cb-ton{background:var(--soft)}
+.cb-h{font-variation-settings:'wdth' 86;font-size:clamp(1.6rem,3.4vw,2.7rem);line-height:1;letter-spacing:-.01em}
+.cb-split{display:grid;grid-template-columns:minmax(0,.74fr) minmax(0,1.26fr);gap:clamp(22px,5vw,82px);align-items:start}
+.cb-text p{font-size:1.05rem;line-height:1.63;margin:0 0 18px;max-width:64ch}
+.cb-text p:last-child{margin-bottom:0}
+.cb-text a{border-bottom:1px solid var(--blue);transition:color .18s}
+.cb-klic{color:var(--ink);font-weight:600}
+.cb-uzky{max-width:68ch;margin-top:clamp(22px,3vw,32px)}
+.cb-uzky p{font-size:1.05rem;line-height:1.63;margin:0 0 18px}
+.cb-uzky p:last-child{margin-bottom:0}
+.cb-uzky a,.cb-seznam a{border-bottom:1px solid var(--blue);transition:color .18s}
+@media (hover:hover) and (pointer:fine){.cb-text a:hover,.cb-uzky a:hover,.cb-seznam a:hover{color:var(--blue)}}
+
+.cb-dve{display:grid;grid-template-columns:1fr 1fr;column-gap:0;margin-top:clamp(28px,3.4vw,44px)}
+.cb-dve>div{padding-right:clamp(22px,3vw,48px)}
+.cb-dve>div+div{padding:0 0 0 clamp(22px,3vw,48px);border-left:1px solid var(--hair)}
+.cb-dve h3{font-variation-settings:'wdth' 88;font-size:1.1rem;letter-spacing:.01em;margin-bottom:12px}
+.cb-dve p{font-size:1rem;margin:0 0 14px;max-width:44ch}
+.cb-dve p:last-child{margin-bottom:0}
+.cb-dve__cena{display:block;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;font-size:1.5rem;color:var(--ink);margin-bottom:12px;line-height:1.1}
+.cb-dve__cena small{display:block;font-family:'Instrument',sans-serif;font-weight:400;font-size:.85rem;
+  color:var(--muted);letter-spacing:0;margin-top:4px}
+
+.cb-ptejte{margin-top:clamp(26px,3vw,38px);padding-top:18px;border-top:1px solid var(--hair);max-width:64ch}
+.cb-ptejte b{display:block;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;text-transform:uppercase;font-size:.78rem;letter-spacing:.11em;
+  color:#3f5c69;margin-bottom:12px}
+.cb-ptejte ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.cb-ptejte li{color:var(--muted);font-size:.98rem;line-height:1.55}
+
+.cb-radky{margin:clamp(26px,3vw,38px) 0 0;border-top:1px solid var(--hair)}
+.cb-radky>div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;
+  gap:4px 28px;padding:16px 0;border-bottom:1px solid var(--hair)}
+.cb-radky dt{flex:1 1 18ch;min-width:0;font-weight:600;color:var(--ink)}
+.cb-radky dt small{display:block;font-weight:400;font-size:.9rem;color:var(--muted);margin-top:4px;max-width:54ch}
+.cb-radky dd{margin:0;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;font-size:1.12rem;white-space:nowrap}
+.cb-soucet{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 28px;padding:20px 0 0}
+.cb-soucet b{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;
+  text-transform:uppercase;font-size:1rem;letter-spacing:.03em}
+.cb-soucet span{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;font-size:1.6rem;white-space:nowrap}
+.cb-tel{display:inline-flex;align-items:center;min-height:48px;margin-top:8px;
+  font-weight:600;color:var(--ink);border-bottom:2px solid var(--blue)}
+@media (hover:hover) and (pointer:fine){.cb-tel:hover{color:var(--blue)}}
+
+.cb-pas{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(12px,1.6vw,20px)}
+.cb-pas figure{margin:0;display:flex;flex-direction:column}
+.cb-pas img{width:100%;height:clamp(230px,30vw,420px);object-fit:cover;background:var(--soft)}
+.cb-pas figcaption{font-size:.88rem;color:var(--muted);padding-top:10px;max-width:46ch}
+
+.cb-seznam{list-style:none;margin:clamp(24px,3vw,34px) 0 0;padding:0;border-top:1px solid var(--hair)}
+.cb-seznam li{padding:17px 0;border-bottom:1px solid var(--hair);color:var(--muted);max-width:74ch;font-size:1.01rem}
+.cb-seznam b{display:block;color:var(--ink);font-weight:600;margin-bottom:5px}
+
+@media (max-width:900px){
+  .cb-split{grid-template-columns:1fr;gap:18px}
+  .cb-dve{grid-template-columns:1fr;row-gap:26px}
+  .cb-dve>div{padding:0}
+  .cb-dve>div+div{padding:26px 0 0;border-left:0;border-top:1px solid var(--hair)}
+  .cb-pas{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .cbhero__go .btn{width:100%}
+  .cb-radky>div{display:block}
+  .cb-radky dt{width:100%}
+  .cb-radky dd{margin-top:8px}
+}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Flexi House","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Celoroční bydlení"}]},{"@type":"WebPage","name":"Mobilní dům na celoroční bydlení | Flexi House","url":"https://flexihouse.cz/celorocni-bydleni","description":"Co k mobilnímu domu patří, aby se v něm dalo bydlet i v zimě: zateplení 100 mm, klimatizace s tepelným čerpadlem a přípojky. Ceny i hranice na rovinu.","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}}]}</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top__in">
+    <a class="brand" href="/">
+      <svg viewBox="9 16 46 33" aria-hidden="true">
+        <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
+      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
+      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
+      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
+      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
+      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
+      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
+      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
+      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
+      </svg>
+      Flexi House
+    </a>
+    <nav class="nav" aria-label="Hlavní">
+      <a href="/katalog">Domy</a>
+      <a href="/konfigurator">Konfigurátor</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <div class="top__end">
+      <a class="tel" href="tel:+420607321543">607 321 543</a>
+      <a class="btn btn--sm" href="#kontakt">Chci nabídku</a>
+      <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu" hidden>
+  <a class="menu__link" href="/katalog">Domy</a>
+  <a class="menu__link" href="/konfigurator">Konfigurátor</a>
+  <a class="menu__link" href="/poptavka">Poptávka</a>
+  <div class="menu__end">
+    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, voláme zpátky</small></a>
+    <a class="btn" href="/poptavka">Chci nabídku</a>
+  </div>
+</div>
+
+<main>
+<div class="cbhero">
+  <img class="cbhero__foto" src="img/flexi-house.webp" width="2000" height="1125" fetchpriority="high" decoding="async"
+    alt="Modulární dům Flexi House s prosklenou stěnou na zahradě, uvnitř se svítí"
+    srcset="img/flexi-house-480w.webp 480w, img/flexi-house-800w.webp 800w, img/flexi-house-1200w.webp 1200w, img/flexi-house.webp 2000w"
+    sizes="100vw">
+  <div class="cbhero__stin" aria-hidden="true"></div>
+  <div class="cbhero__in">
+    <nav class="wrap cbhero__kde" aria-label="Drobečková navigace">
+      <a href="/">Flexi&nbsp;House</a> / <b aria-current="page">Celoroční bydlení</b>
+    </nav>
+    <div class="wrap">
+      <h1>Mobilní dům<br>na&nbsp;celoroční<br>bydlení</h1>
+      <p>Rozkládací dům se&nbsp;dá objednat v&nbsp;zimní verzi. Chce to&nbsp;tři věci, které v&nbsp;základní ceně nejsou: silnější zateplení, zdroj tepla a&nbsp;přípojky. Najdete je tady i&nbsp;s&nbsp;cenami a&nbsp;s&nbsp;tím, co&nbsp;o&nbsp;domě nevíme.</p>
+      <div class="cbhero__go">
+        <a class="btn" href="/konfigurator">Sestavit zimní verzi</a>
+        <a class="link" href="/poptavka">Chci nabídku na&nbsp;svůj pozemek</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="wrap cb-blok" aria-labelledby="cojeto-h">
+  <div class="cb-split">
+    <h2 class="cb-h" id="cojeto-h">Co znamená<br>celoroční<br>u&nbsp;tohohle domu</h2>
+    <div class="cb-text">
+      <p>Mobilní dům, modulární dům a&nbsp;obytný kontejner jsou u&nbsp;nás jedna a&nbsp;ta samá věc, liší se jen slovo. My mu říkáme rozkládací dům, protože na&nbsp;pozemek přijede složený a&nbsp;na&nbsp;místě se rozevře na&nbsp;zhruba 30&nbsp;m² obytné plochy.</p>
+      <p>S&nbsp;mobilheimem, jak ho znáte z&nbsp;kempů, ho spojuje jen to slovo. Mobilheim v&nbsp;původním významu stojí na&nbsp;podvozku. Náš dům kola nemá. Přijede na&nbsp;návěsu, jeřáb ho složí a&nbsp;usadí na&nbsp;betonové patky, kde zůstane stát.</p>
+      <p>Základní cena 400&nbsp;000&nbsp;Kč bez&nbsp;DPH je za&nbsp;hrubou stavbu: nosnou konstrukci, hliníková okna s&nbsp;izolačními dvojskly, dveře, fasádní obklad a&nbsp;zateplení 75&nbsp;mm. Uvnitř je prázdný prostor bez&nbsp;rozvodů a&nbsp;bez&nbsp;topení.</p>
+      <p><span class="cb-klic">Celoroční</span> u&nbsp;něj proto neznamená, že takový odjede z&nbsp;haly. Znamená to, že se dá objednat v&nbsp;jiné sestavě. Mezi hrubou stavbou a&nbsp;bydlením přes zimu stojí tři rozhodnutí: jak silné zateplení, čím se bude topit a&nbsp;jak k&nbsp;domu dostanete vodu, elektřinu a&nbsp;odpad. První dvě řešíme s&nbsp;vámi my, třetí zůstává na&nbsp;vás. Projdeme je popořadě, včetně místa, kde vám číslo nedáme, a&nbsp;proč.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cb-ton" aria-labelledby="zatepleni-h">
+  <div class="wrap cb-blok">
+    <div class="cb-split">
+      <h2 class="cb-h" id="zatepleni-h">Zateplení:<br>75&nbsp;mm,<br>nebo 100&nbsp;mm</h2>
+      <div class="cb-text">
+        <p>Stěny i&nbsp;strop jsou sendvičové panely s&nbsp;izolací z&nbsp;pěnového polystyrenu, nosný rám je z&nbsp;konstrukční oceli. Tloušťku izolace vybíráte jednou, při objednávce. U&nbsp;hotového domu už to není věc, kterou snadno změníte.</p>
+        <p>Rozdíl mezi oběma variantami je 25&nbsp;milimetrů izolace navíc v&nbsp;každém panelu. Silnější vrstva klade unikajícímu teplu větší odpor, takže vytápění má míň práce. O&nbsp;kolik, to už závisí na&nbsp;tom, kde dům stojí, jak je otočený a&nbsp;jakou teplotu si uvnitř držíte.</p>
+        <p>Co tady nenajdete, je součinitel prostupu tepla, energetická třída ani úspora v&nbsp;korunách. Nemáme je od&nbsp;výroby doložené, a&nbsp;dopočítat je z&nbsp;obecných tabulek by znamenalo vydávat odhad za&nbsp;měření.</p>
+      </div>
+    </div>
+    <div class="cb-dve">
+      <div>
+        <h3>Standard 75&nbsp;mm</h3>
+        <span class="cb-dve__cena">V&nbsp;základní ceně<small>součást 400&nbsp;000&nbsp;Kč bez&nbsp;DPH</small></span>
+        <p>Varianta, se&nbsp;kterou dům odjede z&nbsp;haly, když si nevyberete jinak. Volí ji lidé, kteří dům chtějí na&nbsp;chatu, na&nbsp;zázemí u&nbsp;vody, na&nbsp;ateliér nebo na&nbsp;ubytování přes sezónu.</p>
+      </div>
+      <div>
+        <h3>Zimní 100&nbsp;mm</h3>
+        <span class="cb-dve__cena">30&nbsp;000&nbsp;Kč<small>příplatek bez&nbsp;DPH</small></span>
+        <p>Volba, kterou doporučujeme každému, kdo v&nbsp;domě počítá se&nbsp;zimou. Není to slib konkrétní teploty ani účtu za&nbsp;elektřinu, je to rozhodnutí, které se dělá teď a&nbsp;potom už těžko.</p>
+      </div>
+    </div>
+    <div class="cb-ptejte">
+      <b>Na tohle se nás zeptejte</b>
+      <ul>
+        <li>Kolik milimetrů přidá dekorový fasádní panel za&nbsp;23&nbsp;600&nbsp;Kč bez&nbsp;DPH. Že navíc zatepluje, víme, kolik to dělá, neuvádíme. Berte ho zatím jako volbu vzhledu a&nbsp;vzorníky si prohlédněte v&nbsp;<a href="/konfigurator">konfigurátoru</a> přímo na&nbsp;domě.</li>
+        <li>Jaká je tloušťka izolace v&nbsp;podlaze a&nbsp;ve&nbsp;střeše. U&nbsp;domu na&nbsp;patkách je to jiná otázka než u&nbsp;stěn a&nbsp;odpověď vám dá Dan ke&nbsp;konkrétní sestavě.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap cb-blok" aria-labelledby="topeni-h">
+  <div class="cb-split">
+    <h2 class="cb-h" id="topeni-h">Čím se<br>v&nbsp;domě topí</h2>
+    <div class="cb-text">
+      <p>V&nbsp;nabídce máme jeden zdroj tepla: <span class="cb-klic">klimatizaci s&nbsp;tepelným čerpadlem</span> a&nbsp;montáží za&nbsp;29&nbsp;000&nbsp;Kč bez&nbsp;DPH. Umí topit i&nbsp;chladit, takže se kupuje jedna jednotka místo dvou.</p>
+      <p>Vytápění není v&nbsp;základní ceně. V&nbsp;konfigurátoru je to samostatný krok, ve&nbsp;kterém jde vybrat i&nbsp;dům dodaný bez&nbsp;topného zdroje. To dává smysl u&nbsp;chaty nebo u&nbsp;zázemí, ne&nbsp;u&nbsp;domu, ve&nbsp;kterém chcete bydlet celoročně.</p>
+      <p>Kamna v&nbsp;nabídce nemáme. Kdo si chce topení pořídit sám, ať se ozve předem, ne&nbsp;až&nbsp;bude dům stát na&nbsp;pozemku.</p>
+      <p>Aby měla klimatizace co&nbsp;zapojit, patří k&nbsp;ní <span class="cb-klic">elektroinstalace za&nbsp;5&nbsp;000&nbsp;Kč</span> bez&nbsp;DPH, tedy zásuvky, světla a&nbsp;jištění připravené k&nbsp;zapojení. V&nbsp;konfigurátoru je povinná a&nbsp;tohle je důvod.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cb-ton" aria-labelledby="naklady-h">
+  <div class="wrap cb-blok">
+    <div class="cb-split">
+      <h2 class="cb-h" id="naklady-h">Kolik stojí<br>topit,<br>vám neřekneme</h2>
+      <div class="cb-text">
+        <p>Je to jedna z&nbsp;prvních věcí, na&nbsp;které se lidé ptají, a&nbsp;my na&nbsp;ni číslo nemáme.</p>
+        <p>Nemáme změřenou spotřebu z&nbsp;domu, který stojí na&nbsp;pozemku a&nbsp;topí se v&nbsp;něm celou zimu. Modelový příklad z&nbsp;obecných tabulek bychom sestavit uměli, jenže by to byl výpočet pro&nbsp;cizí dům a&nbsp;cizí zimu, ne&nbsp;pro&nbsp;váš.</p>
+        <p>Rozhoduje o&nbsp;tom spousta věcí, které nejsou na&nbsp;nás. Kde dům stojí a&nbsp;jak je tam v&nbsp;lednu. Jestli v&nbsp;něm bydlíte sami, nebo je vás pět. Jakou teplotu držíte a&nbsp;jestli topíte celý den, nebo jen večer. A&nbsp;za&nbsp;kolik máte elektřinu.</p>
+        <p>Co víme jistě: vytápění není v&nbsp;základní ceně a&nbsp;jediný zdroj tepla, který dodáváme, je klimatizace s&nbsp;tepelným čerpadlem za&nbsp;29&nbsp;000&nbsp;Kč bez&nbsp;DPH včetně montáže.</p>
+        <p>Číslo sem přijde ve&nbsp;chvíli, kdy ho budeme mít změřené z&nbsp;reálného provozu, ne&nbsp;dopočítané z&nbsp;tabulky. Do&nbsp;té doby se na&nbsp;topení zeptejte přímo Dana. Co&nbsp;ví, řekne, a&nbsp;co&nbsp;neví, řekne taky.</p>
+        <a class="cb-tel" href="tel:+420607321543">Zeptat se Dana na&nbsp;607&nbsp;321&nbsp;543</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap cb-blok cb-blok--tesny" aria-label="Interiér rozkládacího domu">
+  <div class="cb-pas">
+    <figure>
+      <img src="img/obyvak.webp" width="1400" height="1049" loading="lazy" decoding="async"
+        alt="Obývací prostor rozkládacího domu Flexi House s pohovkou, jídelním stolem a okny do dvou stran"
+        srcset="img/obyvak-480w.webp 480w, img/obyvak-800w.webp 800w, img/obyvak-1200w.webp 1200w, img/obyvak.webp 1400w"
+        sizes="(max-width:900px) 100vw, 58vw">
+      <figcaption>Obytná část s&nbsp;kuchyňským koutem. Okna do&nbsp;dvou stran se hodí v&nbsp;létě na&nbsp;průvan, v&nbsp;zimě na&nbsp;krátké vyvětrání.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/koupelna.webp" width="2000" height="1125" loading="lazy" decoding="async"
+        alt="Koupelna rozkládacího domu Flexi House se sprchovým koutem, umyvadlem, WC a nástěnným ohřívačem vody"
+        srcset="img/koupelna-480w.webp 480w, img/koupelna-800w.webp 800w, img/koupelna-1200w.webp 1200w, img/koupelna.webp 2000w"
+        sizes="(max-width:900px) 100vw, 40vw">
+      <figcaption>Koupelna se&nbsp;sprchou, umyvadlem a&nbsp;WC stojí 30&nbsp;000&nbsp;Kč bez&nbsp;DPH a&nbsp;v&nbsp;základní ceně není.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap cb-blok cb-blok--tesny" aria-labelledby="leto-h">
+  <div class="cb-split">
+    <h2 class="cb-h" id="leto-h">Léto, stín<br>a&nbsp;chlazení</h2>
+    <div class="cb-text">
+      <p>Ta samá jednotka, která v&nbsp;zimě topí, v&nbsp;létě chladí. To je hlavní důvod, proč ji doporučujeme i&nbsp;lidem, kteří přišli řešit jenom zimu.</p>
+      <p>Malá stavba se přes den prohřeje rychleji než velká, protože je v&nbsp;ní míň hmoty, která by teplo pobrala. Prosklená strana domu je proto věc, kterou má smysl promyslet dřív, než se dům usadí: kam ji na&nbsp;pozemku otočíte a&nbsp;jestli nad&nbsp;ni přijde <span class="cb-klic">krytá terasa za&nbsp;40&nbsp;000&nbsp;Kč</span> bez&nbsp;DPH, jejíž střecha prosklení stíní.</p>
+      <p>Sítě do&nbsp;oken proti hmyzu stojí 10&nbsp;000&nbsp;Kč včetně DPH. Zní to jako drobnost, dokud nechcete v&nbsp;červenci v&nbsp;noci větrat.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cb-ton" aria-labelledby="vlhkost-h">
+  <div class="wrap cb-blok">
+    <div class="cb-split">
+      <h2 class="cb-h" id="vlhkost-h">Vlhkost<br>a&nbsp;větrání</h2>
+      <div class="cb-text">
+        <p>V&nbsp;malém domě je vlhkost větší téma než ve&nbsp;velkém. Vaření, sprchování, sušení prádla i&nbsp;obyčejné dýchání pouštějí do&nbsp;vzduchu vodu každý den, a&nbsp;ve&nbsp;třiceti metrech čtverečních je vzduchu, ve&nbsp;kterém se rozptýlí, podstatně míň. V&nbsp;každé stavbě se pak sráží tam, kde je nejchladněji, tedy v&nbsp;rozích, na&nbsp;ostění oken a&nbsp;za&nbsp;nábytkem přisunutým ke&nbsp;stěně.</p>
+        <p>Plynou z&nbsp;toho tři návyky, které je lepší znát dřív, než se nastěhujete. Větrat krátce a&nbsp;naplno po&nbsp;sprchování a&nbsp;po&nbsp;vaření, místo aby bylo okno celý den na&nbsp;ventilačku. Nesušit prádlo uvnitř bez&nbsp;otevřeného okna. A&nbsp;nechat mezi nábytkem a&nbsp;obvodovou stěnou mezeru, aby za&nbsp;skříní proudil vzduch.</p>
+        <p>Řízené větrání s&nbsp;rekuperací v&nbsp;našem ceníku není, větrá se okny. Sítě proti hmyzu jsou mezi doplňky, takže se dá otevřít i&nbsp;v&nbsp;noci a&nbsp;u&nbsp;vody.</p>
+      </div>
+    </div>
+    <div class="cb-ptejte">
+      <b>Na tohle se nás zeptejte</b>
+      <ul>
+        <li>Jestli je v&nbsp;koupelně za&nbsp;30&nbsp;000&nbsp;Kč odsávací ventilátor. Koupelna je v&nbsp;ceníku jako celek a&nbsp;odsávání v&nbsp;ní neupřesňujeme.</li>
+        <li>Jestli jde do&nbsp;vaší sestavy doplnit rekuperace. Standardně ji nenabízíme, takže odpověď dá Dan ke&nbsp;konkrétní objednávce.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap cb-blok" aria-labelledby="pripojky-h">
+  <div class="cb-split">
+    <h2 class="cb-h" id="pripojky-h">Přípojky<br>a&nbsp;co&nbsp;si zajišťujete sami</h2>
+    <div class="cb-text">
+      <p>Tohle je nejčastější místo, kde lidem plán narazí, tak ať to zazní hned. <span class="cb-klic">Vodu, elektřinu a&nbsp;odpad k&nbsp;domu nepřipojujeme.</span> Je potřeba je mít dovedené k&nbsp;místu usazení a&nbsp;samotné připojení si zajišťujete vy, u&nbsp;elektřiny s&nbsp;distributorem, u&nbsp;vody a&nbsp;odpadu s&nbsp;obcí nebo s&nbsp;projektantem.</p>
+      <p>Stejně tak si sami vyřizujete <span class="cb-klic">stavební povolení nebo ohlášení</span>. Co pro&nbsp;váš pozemek a&nbsp;pro&nbsp;tenhle účel platí, závazně řekne jedině váš stavební úřad.</p>
+      <p>Co uděláme my: betonové patky za&nbsp;50&nbsp;000 až&nbsp;90&nbsp;000&nbsp;Kč podle podloží, dopravu a&nbsp;usazení za&nbsp;20&nbsp;000&nbsp;Kč plus 100&nbsp;Kč za&nbsp;kilometr z&nbsp;výroby a&nbsp;montáž za&nbsp;30&nbsp;000 až&nbsp;80&nbsp;000&nbsp;Kč podle náročnosti sestavení. Pevné číslo dát nedokážeme, dokud neuvidíme pozemek.</p>
+      <p>Pozemek potřebuje rovnou plochu a&nbsp;příjezd pro&nbsp;nákladní auto s&nbsp;jeřábem. Klasické základy dům nepotřebuje, stojí na&nbsp;betonových patkách. Složený měří 2,20&nbsp;×&nbsp;5,90&nbsp;m, váží kolem 2&nbsp;000&nbsp;kg a&nbsp;rozložený má 6,32&nbsp;×&nbsp;5,90&nbsp;m.</p>
+      <p>Práce na&nbsp;pozemku uvádíme včetně DPH, cenu domu a&nbsp;vybavení bez&nbsp;DPH. Nesčítejte je proto dohromady, dokud nemáte nabídku, ve&nbsp;které to bude srovnané.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap cb-blok cb-blok--tesny" aria-labelledby="pobyt-h">
+  <h2 class="cb-h" id="pobyt-h">Trvalý pobyt a&nbsp;adresa</h2>
+  <div class="cb-uzky">
+    <p>Tady jsme opatrní schválně, protože nepřesná věta o&nbsp;papírech je horší než žádná. Trvalý pobyt vám nikdo, kdo prodává domy, slíbit nemůže, protože o&nbsp;něm nerozhoduje.</p>
+    <p>Zákon o&nbsp;evidenci obyvatel klade v&nbsp;§&nbsp;10 dvě podmínky. Objekt musí být označený číslem popisným nebo evidenčním, případně orientačním, a&nbsp;musí být určený pro&nbsp;bydlení, ubytování nebo individuální rekreaci. Ani jednu z&nbsp;nich neurčuje výrobce domu.</p>
+    <p><span class="cb-klic">Číslo přiděluje obecní úřad</span>, u&nbsp;stavby, která potřebuje povolení, na&nbsp;výzvu stavebního úřadu po&nbsp;dokončení. To, jestli je objekt určený k&nbsp;bydlení, plyne z&nbsp;účelu, ke&nbsp;kterému bude povolený a&nbsp;zkolaudovaný. Obojí se rozhoduje na&nbsp;vašem pozemku a&nbsp;na&nbsp;vašem úřadě, ne&nbsp;u&nbsp;nás v&nbsp;hale.</p>
+    <p>Mimochodem, jeden rozšířený omyl: zákon u&nbsp;trvalého pobytu nerozlišuje mezi číslem popisným a&nbsp;evidenčním a&nbsp;připouští i&nbsp;objekt určený pro&nbsp;individuální rekreaci. Že jde o&nbsp;rekreační objekt, tedy samo o&nbsp;sobě trvalý pobyt nevylučuje.</p>
+    <p>Prakticky z&nbsp;toho plyne jediné doporučení, a&nbsp;to hodně důrazné. <span class="cb-klic">První telefonát nepatří nám, ale na&nbsp;stavební úřad.</span> Zeptejte se, v&nbsp;jakém režimu se u&nbsp;vás taková stavba povoluje, co&nbsp;bude úřad chtít vidět, aby ji zkolaudoval k&nbsp;bydlení, a&nbsp;jestli po&nbsp;dokončení dostane číslo. Podle toho, co&nbsp;vám odpoví, se teprve dá mluvit o&nbsp;adrese.</p>
+    <p>Vyřizování papírů neděláme. Nabídku ale připravíme tak, aby se s&nbsp;ní na&nbsp;úřad dalo přijít, tedy s&nbsp;rozměry, hmotností a&nbsp;popisem toho, co&nbsp;je v&nbsp;sestavě.</p>
+  </div>
+</section>
+
+<section class="cb-ton" aria-labelledby="hranice-h">
+  <div class="wrap cb-blok">
+    <h2 class="cb-h" id="hranice-h">Kde je hranice</h2>
+    <ul class="cb-seznam">
+      <li><b>Základní cena není cena celoročního domu.</b> Za&nbsp;400&nbsp;000&nbsp;Kč bez&nbsp;DPH dostanete hrubou stavbu. Zateplení 100&nbsp;mm, topení, elektřinu, koupelnu a&nbsp;kuchyň si k&nbsp;tomu vybíráte, což je dobře, protože platíte jen to, co&nbsp;chcete. Nesmí to ale být překvapení až&nbsp;v&nbsp;nabídce.</li>
+      <li><b>Zateplení se volí při objednávce.</b> Izolace je uvnitř panelů. U&nbsp;hotového domu to není věc, kterou snadno změníte, takže kdo si není jistý, ať volí 100&nbsp;mm rovnou.</li>
+      <li><b>Třicet metrů čtverečních je dům pro&nbsp;jednoho, pro&nbsp;dva, pro&nbsp;pár s&nbsp;dítětem.</b> Na&nbsp;výběr je 1&nbsp;až&nbsp;4 ložnice, ale plocha zůstává stejná. Jako trvalé bydlení pro&nbsp;čtyřčlennou rodinu ho nedoporučujeme a&nbsp;říkáme to radši teď než po&nbsp;dodání.</li>
+      <li><b>Přípojky zůstávají na&nbsp;vás.</b> Když na&nbsp;pozemku není voda ani elektřina, je to samostatná investice, kterou má smysl zjistit dřív, než objednáte dům.</li>
+      <li><b>Zemědělská půda je vlastní kapitola.</b> Když je pozemek vedený jako zemědělský půdní fond, řeší se souhlas s&nbsp;jeho odnětím. Výjimka, u&nbsp;které souhlas potřeba není, se v&nbsp;zastavěném území týká staveb do&nbsp;25&nbsp;m². Rozložený dům má zhruba 30&nbsp;m², takže se na&nbsp;ni nevejde.</li>
+      <li><b>Zdroj tepla nabízíme jeden.</b> Klimatizaci s&nbsp;tepelným čerpadlem. Kdo chce kamna, krb nebo kotel, řeší si je sám a&nbsp;má nám o&nbsp;tom říct předem.</li>
+      <li><b>Na&nbsp;úřad se jde první, ne&nbsp;poslední.</b> Objednat dům a&nbsp;teprve pak zjišťovat, v&nbsp;jakém režimu ho lze na&nbsp;pozemku postavit, je nejdražší možné pořadí.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="wrap cb-blok" aria-labelledby="cena-h">
+  <div class="cb-split">
+    <h2 class="cb-h" id="cena-h">Co zimní<br>verze přidá<br>k&nbsp;ceně</h2>
+    <div class="cb-text">
+      <p>Tři položky, které dělají rozdíl mezi sezónní stavbou a&nbsp;domem, ve&nbsp;kterém počítáte se&nbsp;zimou. Ceny jsou bez&nbsp;DPH a&nbsp;připočítávají se k&nbsp;základní ceně 400&nbsp;000&nbsp;Kč.</p>
+    </div>
+  </div>
+  <dl class="cb-radky">
+    <div>
+      <dt>Zimní zateplení 100&nbsp;mm<small>místo standardních 75&nbsp;mm, volí se při objednávce</small></dt>
+      <dd>30&nbsp;000&nbsp;Kč</dd>
+    </div>
+    <div>
+      <dt>Klimatizace s&nbsp;tepelným čerpadlem<small>včetně montáže, umí topit i&nbsp;chladit</small></dt>
+      <dd>29&nbsp;000&nbsp;Kč</dd>
+    </div>
+    <div>
+      <dt>Elektroinstalace<small>zásuvky, světla a&nbsp;jištění, bez&nbsp;nich se topení nemá kam připojit</small></dt>
+      <dd>5&nbsp;000&nbsp;Kč</dd>
+    </div>
+  </dl>
+  <p class="cb-soucet"><b>Zimní výbava celkem</b><span>64&nbsp;000&nbsp;Kč</span></p>
+  <div class="cb-uzky">
+    <p>Koupelna za&nbsp;30&nbsp;000&nbsp;Kč a&nbsp;kuchyňská linka za&nbsp;10&nbsp;000&nbsp;Kč jsou samostatné volby, které si k&nbsp;bydlení přidá skoro každý. Terasa stojí 40&nbsp;000&nbsp;Kč a&nbsp;vstupní schody 26&nbsp;661&nbsp;Kč, všechno bez&nbsp;DPH. Patky, doprava a&nbsp;montáž se počítají zvlášť a&nbsp;uvádíme je včetně DPH.</p>
+      <p>Sazba DPH se řídí využitím stavby, u&nbsp;domu určeného k&nbsp;bydlení je 12&nbsp;%. Konkrétní sazbu potvrdíme v&nbsp;nabídce, kterou posíláme do&nbsp;24&nbsp;hodin od&nbsp;poptávky.</p>
+      <p>Celou sestavu si naklikáte v&nbsp;<a href="/konfigurator">konfigurátoru</a>, cena se počítá průběžně a&nbsp;na&nbsp;konci si ji stáhnete v&nbsp;PDF. Parametry domu jsou na&nbsp;stránce <a href="/flexi-house">rozkládacího domu</a>, zbytek otázek v&nbsp;<a href="/caste-dotazy">častých dotazech</a>.</p>
+  </div>
+</section>
+
+<section class="cta" id="kontakt" aria-labelledby="kontakt-h">
+  <div class="wrap cta__in">
+    <h2 id="kontakt-h">Chcete cenu na&nbsp;zimní sestavu?</h2>
+    <div>
+      <p>Napište, kde pozemek je a&nbsp;kolik lidí v&nbsp;domě bude bydlet. Připravíme nabídku do&nbsp;24&nbsp;hodin, včetně dopravy, patek a&nbsp;montáže na&nbsp;vaše místo.</p>
+      <div class="cta__actions">
+        <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
+        <a class="btn btn--out" href="/konfigurator">Sestavit v&nbsp;konfigurátoru</a>
+      </div>
+      <div class="cta__contact">
+        <a href="tel:+420607321543">607 321 543</a>
+        <a href="mailto:dandaprokes@gmail.com">dandaprokes@gmail.com</a>
+      </div>
+      <span class="cta__note">Nezávazně, bez placení předem.</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__in">
+      <div>
+        <span class="brand">
+          <svg viewBox="9 16 46 33" aria-hidden="true">
+            <path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/>
+      <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
+      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
+      <path d="M 44.6 30.700000000000003 L 50.120000000000005 27.939999999999998 L 50.120000000000005 23.74 L 44.6 26.500000000000004 Z" fill="#eef2f4"/>
+      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
+      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
+      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
+      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
+      <path d="M 36.365 36.2175 L 36.635 36.082499999999996 L 36.635 25.482499999999998 L 36.365 25.617500000000003 Z" fill="#16202a"/>
+      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
+      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
+      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
+      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
+      <path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.239999999999995 Z" fill="#eef2f4"/>
+          </svg>
+          Flexi House
+        </span>
+        <p class="foot__note">Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Praha, Litomyšl, Brno a odtud po celé ČR.</p>
+      </div>
+      <div>
+        <h3>Domy</h3>
+        <ul>
+          <li><a href="/flexi-house">Rozkládací dům</a></li>
+          <li><a href="/flexi-office">Flexi Office</a></li>
+          <li><a href="/katalog">Katalog</a></li>
+          <li><a href="/konfigurator">Konfigurátor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Společnost</h3>
+        <ul>
+          <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/caste-dotazy">Časté dotazy</a></li>
+          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
+          <li><a href="/podminky">Podmínky použití</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <ul>
+          <li><a class="foot__person" href="tel:+420607321543">Dan Prokeš<span>607 321 543</span></a></li>
+          <li><a class="foot__person" href="tel:+420730171909">Jan Prokeš<span>730 171 909</span></a></li>
+          <li><a href="mailto:dandaprokes@gmail.com">dandaprokes@gmail.com</a></li>
+          <li class="foot__adr">Sokolovská 546<span>570 01 Litomyšl</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__legal">
+      <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10 · Zapsáno v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 308049</span>
+      <span>Vytvořil <a class="foot__by" href="https://statly.cz/" target="_blank" rel="noopener">statly.cz</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/cookies.js?v=9" defer></script>
+<script src="assets/flexi.js?v=9" defer></script>
+<script src="assets/flexi-poradce.js?v=2" defer></script>
+
+</body>
+</html>
