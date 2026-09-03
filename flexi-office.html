@@ -49,6 +49,42 @@
   .of-bloky{grid-template-columns:1fr}
   .of-jedna{grid-template-columns:1fr}
 }
+
+.cbhero{position:relative;background:var(--ink)}
+.cbhero__foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%}
+.cbhero__stin{position:absolute;inset:0;background:
+  linear-gradient(to right,rgba(22,32,42,.93) 0,rgba(22,32,42,.88) 30%,rgba(22,32,42,.52) 52%,rgba(22,32,42,.14) 72%,rgba(22,32,42,0) 88%),
+  linear-gradient(to bottom,rgba(22,32,42,.55) 0,rgba(22,32,42,0) 170px)}
+.cbhero__in{position:relative;display:flex;flex-direction:column;justify-content:space-between;
+  gap:clamp(26px,6vw,56px);min-height:clamp(430px,68vh,660px);
+  padding-block:clamp(16px,2.4vw,26px) clamp(30px,4vw,54px)}
+.cbhero__in>.wrap{width:100%}
+.cbhero a:focus-visible{outline-color:#fff}
+.cbhero__kde{font-size:.85rem;color:rgba(255,255,255,.86)}
+.cbhero__kde a{border-bottom:1px solid transparent}
+.cbhero__kde [aria-current]{color:#fff;font-weight:600}
+.cbhero h1{color:#fff;font-size:clamp(2.15rem,6vw,4.5rem);max-width:15ch}
+.cbhero p{color:#fff;max-width:50ch;font-size:1.06rem;margin-top:clamp(14px,2vw,20px)}
+.cbhero__cena{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;font-size:1.15rem;margin-top:clamp(18px,2.4vw,24px)}
+.cbhero__cena small{display:block;font-family:'Instrument',sans-serif;font-weight:400;
+  font-size:0.88rem;color:rgba(255,255,255,.92);margin-top:3px;max-width:46ch}
+.cbhero__go{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:clamp(22px,3vw,32px)}
+.cbhero .btn{color:var(--ink);background-color:#fff;border-color:#fff;background-image:linear-gradient(var(--blue),var(--blue))}
+.cbhero .link{position:relative;color:#fff;border-bottom-color:#fff}
+.cbhero .link::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:48px}
+@media (hover:hover) and (pointer:fine){
+  .cbhero .btn:hover{color:#fff}
+  .cbhero__kde a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.5)}
+  .cbhero .link:hover{color:rgba(255,255,255,.78)}}
+@media (max-width:640px){
+  .cbhero__go .btn{width:100%}}
+
+@media (max-width:860px){
+  .cbhero__foto{object-position:center 42%}
+  .cbhero__stin{background:
+    linear-gradient(to bottom,rgba(22,32,42,.58) 0,rgba(22,32,42,.16) 150px),
+    linear-gradient(to top,rgba(22,32,42,.93) 0,rgba(22,32,42,.90) 62%,rgba(22,32,42,.60) 100%)}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -110,22 +146,26 @@
 
 
 <main>
-<nav class="wrap crumb" aria-label="Drobečková navigace">
-  <a href="/">Domů</a> / <a href="/katalog">Katalog</a> / <span aria-current="page">Flexi Office</span>
-</nav>
-
-<section class="wrap lede">
-  <h1>Kancelářský kontejner<br>skladem</h1>
-  <p>Hotová bílá jednotka o&nbsp;jedné místnosti, kterou postavíme na&nbsp;váš pozemek. Udělá se z&nbsp;ní zahradní kancelář, studio, showroom, provozovna i&nbsp;recepce na&nbsp;stavbě. Deset kusů máme skladem, takže se&nbsp;nečeká na&nbsp;výrobu, jen na&nbsp;odvoz.</p>
-  <p class="lede__price">od 70&nbsp;000&nbsp;Kč<small>Cena za&nbsp;samotnou jednotku v&nbsp;hotovém bílém provedení. Doprava, patky a&nbsp;montáž se&nbsp;počítají zvlášť podle vašeho pozemku.</small></p>
-  <div class="lede__go">
-    <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
-    <a class="link" href="/katalog">Zpět na katalog</a>
+<div class="cbhero">
+  <img class="cbhero__foto" src="img/flexi-office.webp" width="1376" height="768" fetchpriority="high" decoding="async"
+    alt="Kancelářský kontejner Flexi Office v bílém provedení s tmavým ocelovým rámem, oknem a otevřeným vstupem"
+    srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w"
+    sizes="100vw">
+  <div class="cbhero__stin" aria-hidden="true"></div>
+  <div class="cbhero__in">
+    <nav class="wrap cbhero__kde" aria-label="Drobečková navigace">
+      <a href="/">Domů</a> / <a href="/katalog">Katalog</a> / <span aria-current="page">Flexi Office</span>
+    </nav>
+    <div class="wrap">
+      <h1>Kancelářský kontejner</h1>
+      <p>Jedna místnost v&nbsp;hotovém bílém provedení, kterou postavíme na&nbsp;váš pozemek. Slouží jako zahradní kancelář, studio i&nbsp;provozovna. Deset kusů stojí ve&nbsp;skladu.</p>
+      <p class="cbhero__cena">od 70&nbsp;000&nbsp;Kč<small>Cena za&nbsp;samotnou jednotku. Doprava, patky a&nbsp;montáž se&nbsp;počítají zvlášť podle vašeho pozemku.</small></p>
+      <div class="cbhero__go">
+        <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
+        <a class="link" href="/katalog">Zpět na katalog</a>
+      </div>
+    </div>
   </div>
-</section>
-
-<div class="wrap figbig">
-  <img src="img/flexi-office.webp" width="1376" height="768" alt="Kancelářský kontejner Flexi Office v bílém provedení s tmavým ocelovým rámem, oknem a otevřeným vstupem" fetchpriority="high" decoding="async" srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w" sizes="(max-width:1280px) 100vw, 1280px">
 </div>
 
 <div class="wrap">
@@ -167,8 +207,8 @@
         <p>Když se tým do&nbsp;budovy nevejde, je jednotka na&nbsp;dvoře rychlejší cesta než přístavba. A&nbsp;až přestane být potřeba, odveze se.</p>
       </div>
       <div>
-        <h3>Zázemí sezonního provozu</h3>
-        <p>Kemp, hřiště, sjezdovka nebo farma. Přes sezonu stojí kontejner u&nbsp;vstupu jako pokladna a&nbsp;kancelář, po&nbsp;sezoně se odveze a&nbsp;plocha zůstane volná.</p>
+        <h3>Zázemí sezónního provozu</h3>
+        <p>Kemp, hřiště, sjezdovka nebo farma. Přes sezónu stojí kontejner u&nbsp;vstupu jako pokladna a&nbsp;kancelář, po&nbsp;sezóně se odveze a&nbsp;plocha zůstane volná.</p>
       </div>
     </div>
   </div>
