@@ -89,6 +89,32 @@ figure,figcaption,blockquote,dl,dd{margin:0}
   .pz-radky>div,.pz-omyl>div{gap:10px}
   .pz-seznam,.pz-text p,.pz-radky p,.pz-omyl p,.pz-urad .pz-otazky span{max-width:none}
 }
+
+.cbhero{position:relative;background:var(--ink)}
+.cbhero__foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 56%}
+.cbhero__stin{position:absolute;inset:0;background:
+  linear-gradient(to bottom,rgba(22,32,42,.42) 0,rgba(22,32,42,0) 120px),
+  linear-gradient(to top,rgba(22,32,42,.90) 0,rgba(22,32,42,.86) 220px,rgba(22,32,42,.62) 400px,rgba(22,32,42,.52) 100%)}
+.cbhero__in{position:relative;display:flex;flex-direction:column;justify-content:space-between;
+  gap:clamp(26px,6vw,56px);min-height:clamp(430px,68vh,660px);
+  padding-block:clamp(16px,2.4vw,26px) clamp(30px,4vw,54px)}
+.cbhero__in>.wrap{width:100%}
+.cbhero a:focus-visible{outline-color:#fff}
+.cbhero__kde{font-size:.85rem;color:rgba(255,255,255,.86)}
+.cbhero__kde a{border-bottom:1px solid transparent}
+.cbhero__kde [aria-current]{color:#fff;font-weight:600}
+.cbhero h1{color:#fff;font-size:clamp(2.15rem,6vw,4.5rem);max-width:15ch}
+.cbhero p{color:#fff;max-width:50ch;font-size:1.06rem;margin-top:clamp(14px,2vw,20px)}
+.cbhero__go{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;margin-top:clamp(22px,3vw,32px)}
+.cbhero .btn{color:var(--ink);background-color:#fff;border-color:#fff;background-image:linear-gradient(var(--blue),var(--blue))}
+.cbhero .link{position:relative;color:#fff;border-bottom-color:#fff}
+.cbhero .link::after{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:48px}
+@media (hover:hover) and (pointer:fine){
+  .cbhero .btn:hover{color:#fff}
+  .cbhero__kde a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.5)}
+  .cbhero .link:hover{color:rgba(255,255,255,.78)}}
+@media (max-width:640px){
+  .cbhero__go .btn{width:100%}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Flexi House","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Stavební povolení"}]},{"@type":"WebPage","name":"Modulární dům bez stavebního povolení | Flexi House","url":"https://flexihouse.cz/stavebni-povoleni","description":"Kdy modulární dům povolení nepotřebuje a kdy ano. Co o drobných stavbách říká stavební zákon, proč patky nic nemění a jak se zeptat vlastního stavebního úřadu.","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}}]}</script>
 </head>
@@ -136,24 +162,25 @@ figure,figcaption,blockquote,dl,dd{margin:0}
 </div>
 
 <main>
-<nav class="wrap crumb" aria-label="Drobečková navigace">
-  <a href="/">Domů</a> / <span aria-current="page">Stavební povolení</span>
-</nav>
-
-<section class="wrap lede" aria-labelledby="h1">
-  <h1 id="h1">Modulární dům<br>bez stavebního<br>povolení</h1>
-  <p>Někdy ho opravdu nepotřebujete. Častěji ano. Rozhoduje velikost, účel a&nbsp;pozemek, ne&nbsp;to, že dům přijede hotový a&nbsp;stojí na&nbsp;betonových patkách. Závazně vám odpoví jedině váš stavební úřad. Níž najdete, podle čeho se&nbsp;to řídí a&nbsp;jak se&nbsp;úřadu zeptat tak, abyste dostali odpověď na&nbsp;papíře.</p>
-  <div class="lede__go">
-    <a class="btn" href="/poptavka">Chci podklady pro&nbsp;úřad</a>
-    <a class="link" href="/konfigurator">Sestavit dům v&nbsp;konfigurátoru</a>
+<div class="cbhero">
+  <img class="cbhero__foto" src="img/flexi-house-rozkladaci.webp" width="1400" height="781" fetchpriority="high" decoding="async"
+    alt="Rozložený modulární dům usazený na pozemku, s dlážděnou terasou, křesly a trávníkem kolem"
+    srcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w"
+    sizes="100vw">
+  <div class="cbhero__stin" aria-hidden="true"></div>
+  <div class="cbhero__in">
+    <nav class="wrap cbhero__kde" aria-label="Drobečková navigace">
+      <a href="/">Domů</a> / <span aria-current="page">Stavební povolení</span>
+    </nav>
+    <div class="wrap">
+      <h1 id="h1">Modulární dům<br>bez stavebního<br>povolení</h1>
+      <p>Někdy ho opravdu nepotřebujete. Častěji ano. Rozhoduje velikost, účel a&nbsp;pozemek, ne&nbsp;to, že dům přijede hotový a&nbsp;stojí na&nbsp;betonových patkách. Závazně vám odpoví jedině váš stavební úřad.</p>
+      <div class="cbhero__go">
+        <a class="btn" href="/poptavka">Chci podklady pro&nbsp;úřad</a>
+        <a class="link" href="/konfigurator">Sestavit dům v&nbsp;konfigurátoru</a>
+      </div>
+    </div>
   </div>
-</section>
-
-<div class="wrap figbig">
-  <img src="img/flexi-house-foto.webp" width="1400" height="1050" fetchpriority="high" decoding="async"
-    alt="Rozkládací dům Flexi House s dřevěným obkladem, krytou terasou a zábradlím, rozložený ve výrobní hale"
-    srcset="img/flexi-house-foto-480w.webp 480w, img/flexi-house-foto-800w.webp 800w, img/flexi-house-foto-1200w.webp 1200w, img/flexi-house-foto.webp 1400w"
-    sizes="(max-width:1280px) 100vw, 1280px">
 </div>
 
 <section class="wrap pz-blok" aria-labelledby="kratka-h">
@@ -258,9 +285,9 @@ figure,figcaption,blockquote,dl,dd{margin:0}
   <div class="wrap pz-blok">
     <h2 class="pz-h" id="patky-h">Betonové patky<br>nejsou klička</h2>
     <div class="pz-foto">
-      <img src="img/flexi-house-terrace.webp" width="1400" height="1050" loading="lazy" decoding="async"
-        alt="Rozkládací dům Flexi House postavený na ocelových nohách nad terénem, s krytou terasou a vstupními schody"
-        srcset="img/flexi-house-terrace-480w.webp 480w, img/flexi-house-terrace-800w.webp 800w, img/flexi-house-terrace-1200w.webp 1200w, img/flexi-house-terrace.webp 1400w"
+      <img src="img/dum-na-miru.webp" width="1400" height="788" loading="lazy" decoding="async"
+        alt="Modulární dům s dřevěným obkladem stojící mezi břízami, usazený nad terénem, se vstupními schody"
+        srcset="img/dum-na-miru-480w.webp 480w, img/dum-na-miru-800w.webp 800w, img/dum-na-miru-1200w.webp 1200w, img/dum-na-miru.webp 1400w"
         sizes="(max-width:860px) 100vw, (max-width:1280px) 46vw, 580px">
       <div class="pz-text">
         <p>Dům stojí na&nbsp;betonových patkách a&nbsp;klasické základy nepotřebuje. To je pravda a&nbsp;je to jeden z&nbsp;důvodů, proč je stavba rychlejší a&nbsp;levnější. Na&nbsp;povolení to ale nemá vliv, i&nbsp;když se&nbsp;to tak často podává.</p>
