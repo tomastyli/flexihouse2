@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>net</title>
+<style>html,body{margin:0}#f{width:390px;height:844px;border:0;display:block}</style>
+<iframe id="f"></iframe><pre id="out">running</pre>
+<script>
+const q=new URLSearchParams(location.search); const f=document.getElementById('f'); f.src=q.get('p');
+f.onload=()=>setTimeout(()=>{
+ const w=f.contentWindow,d=f.contentDocument;
+ const H=d.documentElement.scrollHeight;
+ for(let y=0;y<H;y+=400)w.scrollTo(0,y); w.scrollTo(0,0);
+ setTimeout(()=>{
+  const e=w.performance.getEntriesByType('resource').filter(r=>/\.(webp|jpg|png)/.test(r.name));
+  let tot=0; const l=e.map(r=>{tot+=r.transferSize||r.encodedBodySize||0;return (r.encodedBodySize||0)+'  '+r.name.split('/').slice(-2).join('/');});
+  document.getElementById('out').textContent='TOTAL '+tot+'\n'+l.join('\n');
+ },2500);
+},1500);
+</script>

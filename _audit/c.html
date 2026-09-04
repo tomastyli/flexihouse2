@@ -8,6 +8,7 @@ const f=document.getElementById('f');
 f.style.width=W+'px'; f.style.height=H+'px'; f.src='/'+page;
 f.addEventListener('load',()=>{setTimeout(()=>{
   const d=f.contentDocument,w=f.contentWindow;
+  d.querySelectorAll('.fh-cc,[class*="fh-cc"],[id*="cookie"],[class*="cookie"],.fh-poradce,[class*="poradce"]').forEach(e=>e.remove());
   w.scrollTo(0,Y);
   const items=[];
   const walk=d.createTreeWalker(d.body,NodeFilter.SHOW_TEXT);
