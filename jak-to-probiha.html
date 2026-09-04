@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 <style>figure,figcaption,dl,dd{margin:0}
 .jp-a{border-bottom:1px solid var(--blue);transition:color .18s,border-color .18s}
-.pr-pribeh__foto{opacity:.24}
+.jp-fotopozn{color:rgba(255,255,255,.7);margin-top:clamp(16px,2.2vw,22px)}
 .pr-pribeh .jp-a{border-bottom-color:rgba(255,255,255,.6)}
 .pr-pribeh a:focus-visible{outline-color:#fff}
 .jp-kroky{margin-top:clamp(24px,3.4vw,38px)}
@@ -168,39 +168,30 @@
 </section>
 
 <section class="pr-pribeh pr-blok">
-  <img class="pr-pribeh__foto" src="img/flexi-house-slozeny.webp" width="1400" height="788" loading="lazy"
-    decoding="async" alt=""
-    srcset="img/flexi-house-slozeny-480w.webp 480w, img/flexi-house-slozeny-800w.webp 800w, img/flexi-house-slozeny-1200w.webp 1200w, img/flexi-house-slozeny.webp 1400w"
-    sizes="(max-width:900px) 240px, 100vw">
   <div class="wrap">
     <h2 class="pr-h">Z haly na váš pozemek</h2>
     <p class="pr-lead pr-lead--svetly">Rozkládací dům se&nbsp;staví na&nbsp;zakázku podle
       odsouhlasené sestavy. <a class="jp-a" href="/flexi-office">Flexi Office</a> máme skladem,
       odjíždí během několika dní od&nbsp;objednávky. Na&nbsp;pozemek dorazí dům složený, jeřáb
       ho usadí na&nbsp;betonové patky a&nbsp;křídla se&nbsp;rozklopí.</p>
-    <div class="pr-pribeh__rada">
-      <div class="pr-pribeh__krok">
-        <img class="vyrez vyrez--obtah" src="img/vyrez/dum-slozeny-obtah.webp" width="620" height="534"
+    <div class="pr-dvojice">
+      <figure class="pr-dvojice__kus">
+        <img class="vyrez vyrez--obtah" src="img/vyrez/nas-slozeny-obtah.webp" width="620" height="507"
           loading="lazy" decoding="async"
-          alt="Dům složený na šířku 2,20 metru, připravený k převozu"
-          srcset="img/vyrez/dum-slozeny-obtah-400w.webp 400w, img/vyrez/dum-slozeny-obtah.webp 620w" sizes="(max-width:720px) 78vw, 22vw">
-        <p class="pr-pribeh__popis"><b>Přijede složený</b><span>šířka 2,20 m</span></p>
-      </div>
-      <div class="pr-pribeh__krok">
-        <img class="vyrez vyrez--obtah" src="img/vyrez/dum-rozkladani-obtah.webp" width="921" height="644"
-          loading="lazy" decoding="async"
-          alt="Dům při rozkládání, boční křídlo je vyklopené ze středního modulu"
-          srcset="img/vyrez/dum-rozkladani-obtah-400w.webp 400w, img/vyrez/dum-rozkladani-obtah-600w.webp 600w, img/vyrez/dum-rozkladani-obtah-900w.webp 900w" sizes="(max-width:720px) 78vw, 30vw">
-        <p class="pr-pribeh__popis"><b>Křídla se rozklopí</b><span>dvě křídla a střed</span></p>
-      </div>
-      <div class="pr-pribeh__krok">
-        <img class="vyrez vyrez--obtah" src="img/vyrez/dum-hotovy-obtah.webp" width="1131" height="757"
-          loading="lazy" decoding="async"
-          alt="Rozložený dům s krytou terasou a zábradlím, postavený na patkách"
-          srcset="img/vyrez/dum-hotovy-obtah-400w.webp 400w, img/vyrez/dum-hotovy-obtah-600w.webp 600w, img/vyrez/dum-hotovy-obtah-900w.webp 900w" sizes="(max-width:720px) 78vw, 34vw">
-        <p class="pr-pribeh__popis"><b>Stojí na patkách</b><span>terasa je příplatek</span></p>
-      </div>
+          alt="Náš dům složený na šířku 2,20 metru, připravený k převozu"
+          srcset="img/vyrez/nas-slozeny-obtah-400w.webp 400w, img/vyrez/nas-slozeny-obtah-600w.webp 600w, img/vyrez/nas-slozeny-obtah.webp 620w"
+          sizes="(max-width:820px) 82vw, 40vw">
+        <figcaption><b>Takhle dorazí</b><span>šířka 2,20 m, vejde se na běžný návěs</span></figcaption>
+      </figure>
+      <figure class="pr-dvojice__kus pr-dvojice__kus--foto">
+        <img src="img/flexi-house-patky.webp" width="1400" height="788" loading="lazy" decoding="async"
+          alt="Rozložený dům Flexi House s oranžovou fasádou a krytou terasou, usazený na betonových patkách"
+          srcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w"
+          sizes="(max-width:820px) 100vw, 50vw">
+        <figcaption><b>Takhle stojí</b><span>rozklopený a usazený na betonových patkách</span></figcaption>
+      </figure>
     </div>
+    <p class="pr-mikro jp-fotopozn">Obě fotky jsou náš dům, ne&nbsp;katalogový snímek výrobce.</p>
   </div>
 </section>
 
@@ -233,17 +224,17 @@
     <div class="pr-galerie pr-galerie--dve">
       <figure>
         <img src="img/flexi-house-foto.webp" width="1400" height="1050" loading="lazy" decoding="async"
-          alt="Rozevřený dům s dřevěnou fasádou, krytou terasou a schody, hotový ve výrobní hale"
+          alt="Rozevřený dům s dřevěnou fasádou, krytou terasou a schody, stojící ve výrobní hale"
           srcset="img/flexi-house-foto-480w.webp 480w, img/flexi-house-foto-800w.webp 800w, img/flexi-house-foto-1200w.webp 1200w, img/flexi-house-foto.webp 1400w"
           sizes="(max-width:900px) 100vw, 50vw">
-        <figcaption>Hotový a rozevřený, tady ještě v hale</figcaption>
+        <figcaption>Rozevřený dům v hale u výrobce</figcaption>
       </figure>
       <figure>
-        <img src="img/flexi-house-patky.webp" width="1400" height="788" loading="lazy" decoding="async"
-          alt="Rozložený dům s dřevěnou fasádou a krytou terasou, usazený na betonových patkách"
-          srcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w"
+        <img src="img/terasa-detail.webp" width="2000" height="1126" loading="lazy" decoding="async"
+          alt="Prkna kryté terasy ve stínu zábradlí"
+          srcset="img/terasa-detail-480w.webp 480w, img/terasa-detail-800w.webp 800w, img/terasa-detail-1200w.webp 1200w, img/terasa-detail.webp 2000w"
           sizes="(max-width:900px) 100vw, 50vw">
-        <figcaption>Usazený na patkách, terasa a schody jsou příplatek</figcaption>
+        <figcaption>Terasa ani vstupní schody v základní ceně nejsou</figcaption>
       </figure>
     </div>
   </div>
@@ -298,9 +289,9 @@
 </section>
 
 <section class="pr-cta">
-  <img class="vyrez vyrez--obtah pr-cta__vyrez" src="img/vyrez/dum-hotovy-obtah.webp" width="1131" height="757"
+  <img class="vyrez vyrez--obtah pr-cta__vyrez" src="img/vyrez/nas-slozeny-obtah.webp" width="620" height="507"
     loading="lazy" decoding="async" alt="" aria-hidden="true"
-    srcset="img/vyrez/dum-hotovy-obtah-400w.webp 400w, img/vyrez/dum-hotovy-obtah-600w.webp 600w, img/vyrez/dum-hotovy-obtah-900w.webp 900w"
+    srcset="img/vyrez/nas-slozeny-obtah-400w.webp 400w, img/vyrez/nas-slozeny-obtah-600w.webp 600w, img/vyrez/nas-slozeny-obtah.webp 620w"
     sizes="46vw">
   <div class="wrap pr-cta__in">
     <div>
