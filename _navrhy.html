@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Návrhy produktové stránky</title>
+<title>Flexi House, přestavěné stránky a návrhy</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101820;color:#e8edf1;
@@ -40,9 +40,9 @@ iframe{display:block;width:100%;border:0;background:#fff}
 </head>
 <body>
 <header>
-  <h1>Produktová stránka, čtyři směry</h1>
-  <p class="pod">Rozkládací dům jako vzor pro všechny produktové stránky. Každý směr je hotová
-  stránka, ne obrázek. Klikněte do rámu a scrollujte v něm.</p>
+  <h1>Produktová šablona, návrhy a hotové stránky</h1>
+  <p class="pod">Vlevo hotové stránky, vpravo čtyři návrhové směry, ze kterých vznikly. Všechno jsou živé
+  stránky, ne obrázky. Klikněte do rámu a scrollujte v něm.</p>
 </header>
 
 <nav id="zalozky" role="tablist" aria-label="Směry návrhu"></nav>
@@ -62,20 +62,24 @@ iframe{display:block;width:100%;border:0;background:#fff}
 
 <script>
 const SMERY = [
+  {id:'HOTOVO', nazev:'Rozkládací dům', popis:'Z návrhů vybraná a dostavěná stránka. Rámeček parametrů a výkres z C, sekvence výřezů z A, hero z B. Tohle je ta, o které se rozhoduje.', soubor:'rozkladaci-dum.html'},
+  {id:'KATALOG', nazev:'Katalog', popis:'Tři produkty jako řádky s výřezem, e-shopový rytmus.', soubor:'katalog.html'},
+  {id:'OFFICE', nazev:'Flexi Office', popis:'Stejná šablona, jiný produkt. Důkaz, že to není jednorázovka.', soubor:'flexi-office.html'},
+  {id:'CENA', nazev:'Ceník', popis:'Tři modelové sestavy a celý ceník příplatků.', soubor:'cena.html'},
+  {id:'DOMU', nazev:'Homepage', popis:'Zaplněný prázdný blok, výřezy v kartách.', soubor:'index.html'},
   {id:'A', nazev:'Sekvence',       popis:'Tři výřezy vyprávějí pás složený, rozkládá se, stojí. Čísla nesou stránku.'},
   {id:'B', nazev:'Jeden hrdina',   popis:'Jeden velký výřez přesahující přes hranu sekce, jako nálepka nalepená přes stránku.'},
   {id:'C', nazev:'Katalogový list',popis:'Technický list výrobku, výřez s kótovacími linkami a rozměry.'},
-  {id:'D', nazev:'Vrstvy',         popis:'Výřezy jako malé nálepky přes hrany fotek, kontrolovaná koláž.'},
-  {id:'ZIVA', nazev:'Teď živé',    popis:'Současná stránka na flexihouse.cz pro srovnání.', soubor:'flexi-house.html'}
+  {id:'D', nazev:'Vrstvy',         popis:'Výřezy jako malé nálepky přes hrany fotek, kontrolovaná koláž.'}
 ];
-let vybrany = 'A';
+let vybrany = 'HOTOVO';
 
 const zalozky = document.getElementById('zalozky');
 SMERY.forEach(s => {
   const b = document.createElement('button');
   b.type = 'button';
   b.setAttribute('role','tab');
-  b.textContent = s.id === 'ZIVA' ? s.nazev : s.id + ' ' + s.nazev;
+  b.textContent = s.id.length > 1 ? s.nazev : s.id + ' ' + s.nazev;
   b.onclick = () => { vybrany = s.id; vykresli(); };
   b.dataset.id = s.id;
   zalozky.appendChild(b);
@@ -91,7 +95,7 @@ function vykresli() {
     b.setAttribute('aria-selected', b.dataset.id === vybrany ? 'true' : 'false'));
 
   document.getElementById('obsah').innerHTML =
-    '<div class="hlava"><h2>' + (s.id === 'ZIVA' ? s.nazev : s.id + ' ' + s.nazev) + '</h2>'
+    '<div class="hlava"><h2>' + (s.id.length > 1 ? s.nazev : s.id + ' ' + s.nazev) + '</h2>'
     + '<span class="meta"><a href="/' + soubor + '" target="_blank" rel="noopener">otevřít samostatně</a></span></div>'
     + '<p class="popis">' + s.popis + '</p>'
     + '<div class="ramy">'

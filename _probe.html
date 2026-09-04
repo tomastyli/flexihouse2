@@ -1,0 +1,53 @@
+<!doctype html><meta charset="utf-8"><title>probe</title>
+<style>html,body{margin:0}#f{width:390px;height:844px;border:0;display:block}</style>
+<iframe id="f"></iframe><pre id="out">running</pre>
+<script>
+const p = new URLSearchParams(location.search).get('p');
+const f = document.getElementById('f');
+f.src = p;
+f.onload = () => { setTimeout(run, 1200); };
+function run(){
+  const d = f.contentDocument, w = f.contentWindow;
+  const H = d.documentElement.scrollHeight;
+  for(let y=0;y<H;y+=600){ w.scrollTo(0,y); }
+  w.scrollTo(0,0);
+  const res = {};
+  res.scrollWidth = d.documentElement.scrollWidth;
+  res.bodyScrollWidth = d.body.scrollWidth;
+  res.height = H;
+  // overflow offenders
+  const over = [];
+  d.querySelectorAll('*').forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.width>0 && (r.right > 391.5 || r.left < -1.5)){
+      over.push(el.tagName+'.'+(el.className&&el.className.baseVal===undefined?String(el.className).slice(0,40):'')+' L'+Math.round(r.left)+' R'+Math.round(r.right));
+    }
+  });
+  res.overflow = over.slice(0,25);
+  // tap targets
+  const small = [];
+  d.querySelectorAll('a,button,input,select,textarea').forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.width===0&&r.height===0) return;
+    if(r.height < 44 || r.width < 24){
+      small.push((el.textContent||el.getAttribute('aria-label')||el.tagName).trim().slice(0,34)+' ['+Math.round(r.width)+'x'+Math.round(r.height)+']');
+    }
+  });
+  res.smallTargets = small.slice(0,40);
+  // word count in body excluding header/footer
+  const clone = d.body.cloneNode(true);
+  clone.querySelectorAll('header,footer,script,style,noscript,.flexi-poradce,#flexi-poradce,[hidden]').forEach(n=>n.remove());
+  const txt = clone.innerText || clone.textContent;
+  res.words = txt.trim().split(/\s+/).filter(Boolean).length;
+  // first screen text
+  const fs = [];
+  d.querySelectorAll('h1,h2,p,dt,dd,b,span,a').forEach(el=>{
+    const r = el.getBoundingClientRect();
+    if(r.top < 844 && r.bottom > 0 && el.children.length===0){
+      const t=(el.innerText||'').trim(); if(t) fs.push(Math.round(r.top)+': '+t.slice(0,80));
+    }
+  });
+  res.firstScreen = fs.slice(0,60);
+  document.getElementById('out').textContent = JSON.stringify(res,null,1);
+}
+</script>
