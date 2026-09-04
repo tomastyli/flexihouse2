@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Návrhy produktové stránky</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101820;color:#e8edf1;
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif}
+header{padding:22px clamp(16px,4vw,40px) 0}
+h1{margin:0 0 4px;font-size:1.25rem;letter-spacing:-.01em}
+.pod{margin:0;color:#8fa3b0;font-size:.9rem;max-width:70ch}
+nav{display:flex;flex-wrap:wrap;gap:8px;padding:20px clamp(16px,4vw,40px) 0}
+nav button{appearance:none;font:inherit;font-weight:600;color:#cfdae2;background:#1b2733;
+  border:1px solid #2b3a48;padding:10px 18px;min-height:44px;cursor:pointer;transition:.15s}
+nav button:hover{background:#233241;color:#fff}
+nav button[aria-selected=true]{background:#e8edf1;color:#101820;border-color:#e8edf1}
+nav button:focus-visible{outline:2px solid #7fb3d5;outline-offset:2px}
+.ovladac{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;
+  padding:16px clamp(16px,4vw,40px);border-bottom:1px solid #22303d}
+.ovladac label{display:inline-flex;align-items:center;gap:7px;font-size:.86rem;color:#9fb2c0;
+  min-height:44px;cursor:pointer}
+.karta{padding:0 clamp(16px,4vw,40px) 60px}
+.hlava{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;padding:22px 0 14px}
+.hlava h2{margin:0;font-size:1.05rem}
+.hlava .meta{color:#8fa3b0;font-size:.85rem}
+.hlava a{color:#7fb3d5}
+.popis{margin:0 0 18px;color:#a8bac6;max-width:78ch;font-size:.92rem}
+.ramy{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap}
+.ram{border:1px solid #2b3a48;background:#fff;flex:1 1 620px;min-width:0}
+.ram--tel{flex:0 0 393px;max-width:100%}
+.ram figcaption{background:#1b2733;color:#8fa3b0;font-size:.76rem;
+  letter-spacing:.06em;text-transform:uppercase;padding:7px 10px}
+iframe{display:block;width:100%;border:0;background:#fff}
+.chybi{padding:40px 20px;color:#8fa3b0;background:#16202a;text-align:center}
+@media (max-width:900px){.ram--tel{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Produktová stránka, čtyři směry</h1>
+  <p class="pod">Rozkládací dům jako vzor pro všechny produktové stránky. Každý směr je hotová
+  stránka, ne obrázek. Klikněte do rámu a scrollujte v něm.</p>
+</header>
+
+<nav id="zalozky" role="tablist" aria-label="Směry návrhu"></nav>
+
+<div class="ovladac">
+  <label><input type="checkbox" id="vedle" checked> Ukázat mobil vedle desktopu</label>
+  <label>Výška rámu
+    <select id="vyska">
+      <option value="900">900 px</option>
+      <option value="1400" selected>1400 px</option>
+      <option value="2400">2400 px</option>
+    </select>
+  </label>
+</div>
+
+<main id="obsah" class="karta"></main>
+
+<script>
+const SMERY = [
+  {id:'A', nazev:'Sekvence',       popis:'Tři výřezy vyprávějí pás složený, rozkládá se, stojí. Čísla nesou stránku.'},
+  {id:'B', nazev:'Jeden hrdina',   popis:'Jeden velký výřez přesahující přes hranu sekce, jako nálepka nalepená přes stránku.'},
+  {id:'C', nazev:'Katalogový list',popis:'Technický list výrobku, výřez s kótovacími linkami a rozměry.'},
+  {id:'D', nazev:'Vrstvy',         popis:'Výřezy jako malé nálepky přes hrany fotek, kontrolovaná koláž.'},
+  {id:'ZIVA', nazev:'Teď živé',    popis:'Současná stránka na flexihouse.cz pro srovnání.', soubor:'flexi-house.html'}
+];
+let vybrany = 'A';
+
+const zalozky = document.getElementById('zalozky');
+SMERY.forEach(s => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('role','tab');
+  b.textContent = s.id === 'ZIVA' ? s.nazev : s.id + ' ' + s.nazev;
+  b.onclick = () => { vybrany = s.id; vykresli(); };
+  b.dataset.id = s.id;
+  zalozky.appendChild(b);
+});
+
+function vykresli() {
+  const s = SMERY.find(x => x.id === vybrany);
+  const soubor = s.soubor || ('_navrh-' + s.id + '.html');
+  const h = document.getElementById('vyska').value;
+  const vedle = document.getElementById('vedle').checked;
+
+  [...zalozky.children].forEach(b =>
+    b.setAttribute('aria-selected', b.dataset.id === vybrany ? 'true' : 'false'));
+
+  document.getElementById('obsah').innerHTML =
+    '<div class="hlava"><h2>' + (s.id === 'ZIVA' ? s.nazev : s.id + ' ' + s.nazev) + '</h2>'
+    + '<span class="meta"><a href="/' + soubor + '" target="_blank" rel="noopener">otevřít samostatně</a></span></div>'
+    + '<p class="popis">' + s.popis + '</p>'
+    + '<div class="ramy">'
+    + '<figure class="ram"><figcaption>Desktop</figcaption>'
+    + '<iframe src="/' + soubor + '" style="height:' + h + 'px" title="Desktop náhled"></iframe></figure>'
+    + (vedle
+      ? '<figure class="ram ram--tel"><figcaption>Mobil 393 px</figcaption>'
+        + '<iframe src="/' + soubor + '" style="height:' + h + 'px" title="Mobilní náhled"></iframe></figure>'
+      : '')
+    + '</div>';
+}
+
+document.getElementById('vyska').onchange = vykresli;
+document.getElementById('vedle').onchange = vykresli;
+vykresli();
+</script>
+</body>
+</html>

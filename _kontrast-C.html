@@ -1,0 +1,41 @@
+<!doctype html><meta charset="utf-8"><title>k</title>
+<body style="margin:0">
+<div id="out" style="font:12px/1.45 monospace;white-space:pre;padding:8px"></div>
+<iframe id="f" src="/_navrh-C.html" style="width:360px;height:900px;border:0;position:absolute;left:-9999px"></iframe>
+<script>
+function lum(c){const [r,g,b]=c;const f=v=>{v/=255;return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4)};return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b)}
+function parse(s){const m=s.match(/rgba?\(([^)]+)\)/);if(!m)return null;const p=m[1].split(',').map(x=>parseFloat(x));return {c:[p[0],p[1],p[2]],a:p.length>3?p[3]:1}}
+function over(fg,bg){return fg.c.map((v,i)=>v*fg.a+bg[i]*(1-fg.a))}
+document.getElementById('f').onload=()=>{
+ const d=f.contentDocument,w=f.contentWindow;const L=[];
+ function bgOf(el){
+   let e=el;let stack=[];
+   while(e){const cs=w.getComputedStyle(e);const b=parse(cs.backgroundColor);
+     if(b&&b.a>0){stack.push(b); if(b.a===1) break;}
+     if(cs.backgroundImage!=='none') {stack.push({c:[128,128,128],a:0.0,img:cs.backgroundImage.slice(0,40)});}
+     e=e.parentElement;}
+   let base=[255,255,255];
+   for(let i=stack.length-1;i>=0;i--){ if(stack[i].a>0) base=over(stack[i],base); }
+   return base;
+ }
+ const sel='p,li,dd,dt,h1,h2,h3,a,span,small,figcaption,b';
+ const seen=new Set();
+ d.querySelectorAll(sel).forEach(el=>{
+   if(!el.textContent.trim())return;
+   if(el.querySelector(sel))return;
+   const cs=w.getComputedStyle(el);const fg=parse(cs.color);if(!fg)return;
+   const bg=bgOf(el);const fgc=over(fg,bg);
+   const l1=lum(fgc),l2=lum(bg);const cr=(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+   const px=parseFloat(cs.fontSize); const bold=parseInt(cs.fontWeight)>=700;
+   const need=(px>=24||(px>=18.66&&bold))?3:4.5;
+   const key=cs.color+'|'+bg.join()+'|'+px;
+   if(cr<need+0.35){ L.push(cr.toFixed(2)+' need'+need+'  '+px.toFixed(1)+'px  '+cs.color+' on rgb('+bg.map(x=>Math.round(x)).join(',')+')  "'+el.textContent.trim().slice(0,42)+'"'); }
+ });
+ // touch targets
+ const T=[];
+ d.querySelectorAll('a,button,input,select').forEach(el=>{const r=el.getBoundingClientRect();
+   if(r.width===0&&r.height===0)return;
+   if(r.height<44||r.width<44) T.push(Math.round(r.width)+'x'+Math.round(r.height)+'  <'+el.tagName+'> "'+el.textContent.trim().slice(0,34)+'"');});
+ document.getElementById('out').textContent='KONTRAST podezrele ('+L.length+'):\n'+L.join('\n')+'\n\nTOUCH <44px ('+T.length+'):\n'+T.join('\n');
+};
+</script>

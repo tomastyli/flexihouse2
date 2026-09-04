@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>m</title></head><body>
+<pre id="out">cekam</pre>
+<script>
+function slova(el){return el.innerText.split(/[\s ]+/).filter(t=>/[\p{L}\p{N}]/u.test(t)).length}
+(async()=>{
+  const r=[];
+  for(const w of [360,390,414,620,768,821,1000,1280,1440]){
+    const f=document.createElement('iframe');
+    f.style.cssText='position:absolute;left:-99999px;top:0;border:0;width:'+w+'px;height:900px';
+    f.src='/_navrh-D.html';
+    document.body.appendChild(f);
+    await new Promise(x=>{f.onload=x});
+    await new Promise(x=>setTimeout(x,800));
+    const d=f.contentDocument, de=d.documentElement;
+    for(let y=0;y<de.scrollHeight;y+=600){f.contentWindow.scrollTo(0,y);await new Promise(x=>setTimeout(x,60));}
+    f.contentWindow.scrollTo(0,0);
+    await new Promise(x=>setTimeout(x,500));
+
+    // overflow
+    const preteka = de.scrollWidth - de.clientWidth;
+    let viníci=[];
+    if(preteka>0){
+      d.querySelectorAll('body *').forEach(el=>{
+        const b=el.getBoundingClientRect();
+        if(b.right > de.clientWidth+1 || b.left < -1){
+          viníci.push((el.tagName+'.'+(el.className||'')).slice(0,42)+' L'+Math.round(b.left)+' R'+Math.round(b.right));
+        }
+      });
+    }
+
+    // touch targets
+    let male=[];
+    d.querySelectorAll('main a, main button, header a, header button').forEach(el=>{
+      const b=el.getBoundingClientRect();
+      const inline = getComputedStyle(el).display.indexOf('inline')===0 && el.closest('p,li,span');
+      if(b.height>0&&b.height<48) male.push(((el.className||el.tagName)+'').slice(0,28)+':'+Math.round(b.height)+(inline?'(inline)':''));
+    });
+
+    // images: broken / natural size / lazy on hero
+    let img=[];
+    d.querySelectorAll('img').forEach(el=>{
+      if(!el.complete||el.naturalWidth===0) img.push('BROKEN '+el.currentSrc);
+    });
+
+    // cutout overlaps
+    function box(sel){const e=d.querySelector(sel);return e?e.getBoundingClientRect():null}
+    const heroN=box('.pd-hero .pd-nalepka'), heroS=box('.pd-hero'), heroSh=box('.pd-hero .pd-shot');
+    const tmN=box('.pd-tm .pd-nalepka'), tmS=box('.pd-tm'), cis=box('.pd-cis');
+    const galN=box('.pd-gal .pd-nalepka'), galPas=box('.pd-gal__pas'), galPod=box('.pd-gal__pod');
+
+    // font sizes of small text
+    const fs=[];
+    ['.pd-cis dt','.pd-dvoj h3','.pd-dvoj h3 span','.pd-cenovka small','.pd-faq p','.pd-pozn','.pd-gal__pod'].forEach(s=>{
+      const e=d.querySelector(s); if(e) fs.push(s+'='+getComputedStyle(e).fontSize);
+    });
+
+    // word count body minus nav/footer
+    const a=d.body.cloneNode(true);
+    a.querySelectorAll('header.top,.menu,footer.foot,script,style,.vh,nav.crumb').forEach(n=>n.remove());
+    a.style.cssText='position:absolute;left:-99999px;width:900px';
+    d.body.appendChild(a);
+    const sVse=slova(a);
+    a.querySelectorAll('.fh-cc,[class*=poradce],[class*=cookie]').forEach(n=>n.remove());
+    const sBez=slova(a);
+    a.remove();
+
+    r.push('=== '+w+'px ==='
+      +'\n  preteka o '+preteka+'px'+(viníci.length?'\n   vinici: '+viníci.slice(0,8).join(' | '):'')
+      +'\n  slov(bez nav/pat/crumb)='+sVse+'  bez cookie/poradce='+sBez
+      +'\n  hero vyrez: presah dolu '+(heroN&&heroS?Math.round(heroN.bottom-heroS.bottom):'-')+'px, vlevo od hero '+(heroN&&heroS?Math.round(heroN.left-heroS.left):'-')
+      +'\n  tm vyrez: presah pod tmavou '+(tmN&&tmS?Math.round(tmN.bottom-tmS.bottom):'-')+'px, vpravo za wrap '+(tmN?Math.round(de.clientWidth-tmN.right):'-')+'px do okraje'
+      +'\n  tm vyrez vs .pd-cis prekryv: '+(tmN&&cis?Math.round(tmN.bottom-cis.top):'-')+'px'
+      +'\n  gal vyrez: presah pod pas '+(galN&&galPas?Math.round(galN.bottom-galPas.bottom):'-')+'px, mezera k textu '+(galN&&galPod?Math.round(galPod.top-galN.bottom):'-')+'px'
+      +'\n  male cile(<48): '+(male.join(', ')||'zadne')
+      +'\n  obrazky: '+(img.join(' | ')||'vse OK')
+      +'\n  fonty: '+fs.join(', ')
+    );
+    f.remove();
+  }
+  document.getElementById('out').textContent=r.join('\n');
+})();
+</script></body></html>

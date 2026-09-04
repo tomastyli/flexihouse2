@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>g</title></head><body><pre id="out">s</pre>
+<script>
+const O=document.getElementById('out');const log=s=>O.textContent+='\n'+s;
+async function m(w){
+  const f=document.createElement('iframe');
+  f.style.cssText='position:fixed;left:0;top:0;z-index:9;border:0;width:'+w+'px;height:900px;opacity:.02';
+  f.src='/_navrh-C.html';document.body.appendChild(f);
+  await new Promise(x=>{f.onload=x;setTimeout(x,5000)});
+  const d=f.contentDocument;
+  d.querySelectorAll('img[loading=lazy]').forEach(i=>{i.loading='eager';i.src=i.src});
+  await new Promise(x=>setTimeout(x,2500));
+  const R=s=>{const e=d.querySelector(s);return e?e.getBoundingClientRect():null};
+  const rel=(a,b)=>a&&b?('top '+Math.round(a.top-b.top)+' bottom '+Math.round(a.bottom-b.bottom)+' left '+Math.round(a.left-b.left)+' right '+Math.round(a.right-b.right)):'-';
+  const band=R('.kl-band'), bv=R('.kl-band__vyrez img'), bvw=R('.kl-band__vyrez');
+  const pole=R('.kl-vykres__pole'), si=R('.kl-stage img'), st=R('.kl-stage');
+  log(w+'px:');
+  log('  vyrez vs band (klad=presah ven): '+rel(bv,band)+'  overflow='+getComputedStyle(d.querySelector('.kl-band')).overflow);
+  log('  vyrez box h='+(bv?Math.round(bv.height):'-')+' band h='+(band?Math.round(band.height):'-')+' vyrezwrap h='+(bvw?Math.round(bvw.height):'-'));
+  log('  stage img vs pole: img.bottom-pole.bottom='+(si&&pole?Math.round(si.bottom-pole.bottom):'-')+'  img.top-pole.top='+(si&&pole?Math.round(si.top-pole.top):'-'));
+  log('  gal img alt/nat: '+[...d.querySelectorAll('.kl-gal img')].map(i=>i.currentSrc.split('/').pop()+' '+i.naturalWidth+'x'+i.naturalHeight).join(' | '));
+  f.remove();
+}
+(async()=>{for(const w of [1440,1280,1024,900,860,760,600,414,360]){try{await m(w)}catch(e){log(w+' ERR '+e.message)}}log('KONEC');document.title='GHOT';})();
+</script></body></html>
