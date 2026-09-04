@@ -13,32 +13,31 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flexi House">
 <meta property="og:locale" content="cs_CZ">
-<meta property="og:title" content="Katalog modulárních domů | Flexi House">
-<meta property="og:description" content="Tři modely modulárních domů. Rozkládací dům s terasou, kancelář skladem a dům na míru z konfigurátoru.">
+<meta property="og:title" content="Katalog modulárních a mobilních domů">
+<meta property="og:description" content="Rozkládací dům od 400 000 Kč, kancelářský kontejner skladem od 70 000 Kč a sestava na míru z konfigurátoru.">
 <meta property="og:url" content="https://flexihouse.cz/katalog">
 <meta property="og:image" content="https://flexihouse.cz/img/og/og-katalog.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Modulární a mobilní domy: rozkládací kontejnerový dům s terasou od 400 000 Kč, kancelářský kontejner skladem od 70 000 Kč a dům na míru z konfigurátoru.">
+<meta name="description" content="Tři modely Flexi House: rozkládací dům 30 m² od 400 000 Kč bez DPH, kancelářský kontejner skladem od 70 000 Kč a dům na míru z konfigurátoru.">
 <link rel="preload" href="fonts/bricolage-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/flexi-house-foto.webp" imagesrcset="img/flexi-house-foto-480w.webp 480w, img/flexi-house-foto-800w.webp 800w, img/flexi-house-foto-1200w.webp 1200w" imagesizes="(max-width:1280px) 100vw, 1280px" fetchpriority="high">
+<link rel="preload" as="image" href="img/vyrez/dum-hotovy-obtah-900w.webp" imagesrcset="img/vyrez/dum-hotovy-obtah-400w.webp 400w, img/vyrez/dum-hotovy-obtah-600w.webp 600w, img/vyrez/dum-hotovy-obtah-900w.webp 900w" imagesizes="(max-width:820px) 84vw, 44vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=21">
+<link rel="stylesheet" href="assets/produkt.css?v=1">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
- {"@type":"BreadcrumbList","itemListElement":[
-  {"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},
-  {"@type":"ListItem","position":2,"name":"Katalog","item":"https://flexihouse.cz/katalog"}]},
- {"@type":"ItemList","name":"Katalog modulárních domů Flexi House","itemListElement":[
-  {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Flexi House, rozkládací dům s terasou","description":"Rozkládací modulární dům o ploše zhruba 30 m2 s krytou terasou. Přijede složený v kontejneru a na místě se rozloží.","image":"https://flexihouse.cz/img/flexi-house-foto.webp","url":"https://flexihouse.cz/flexi-house","brand":{"@type":"Brand","name":"Flexi House"},"offers":{"@type":"Offer","price":"400000","priceCurrency":"CZK","availability":"https://schema.org/InStock","url":"https://flexihouse.cz/flexi-house"}}},
-  {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Flexi Office","description":"Hotová bílá modulární kancelář, studio nebo showroom. Deset kusů skladem, bez čekání na výrobu.","image":"https://flexihouse.cz/img/flexi-office.webp","url":"https://flexihouse.cz/flexi-office","brand":{"@type":"Brand","name":"Flexi House"},"offers":{"@type":"Offer","price":"70000","priceCurrency":"CZK","availability":"https://schema.org/InStock","url":"https://flexihouse.cz/flexi-office"}}},
-  {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Dům na míru","description":"Modulární dům sestavený v konfigurátoru: jedna až čtyři ložnice, fasáda, okna a vybavení podle vás.","image":"https://flexihouse.cz/img/dum-na-miru.webp","url":"https://flexihouse.cz/konfigurator","brand":{"@type":"Brand","name":"Flexi House"}}}]}]}
-</script>
+<style>figure,figcaption,dl,dd{margin:0}
+.kat-uvod{padding-block:clamp(30px,4vw,52px) 0}
+.kat-uvod h1{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 86;text-transform:uppercase;
+  font-size:clamp(2rem,5vw,3.6rem);line-height:1;letter-spacing:-.02em;margin:10px 0 14px}
+.kat-uvod p{max-width:56ch;font-size:1.04rem}
+.kat-kde{font-size:.85rem;color:var(--muted)}
+</style>
 </head>
 <body>
 
@@ -62,7 +61,7 @@
       Flexi House
     </a>
     <nav class="nav" aria-label="Hlavní">
-      <a href="/katalog" aria-current="page">Domy</a>
+      <a href="/katalog">Domy</a>
       <a href="/konfigurator">Konfigurátor</a>
       <a href="/poptavka">Poptávka</a>
     </nav>
@@ -73,105 +72,126 @@
     </div>
   </div>
 </header>
-<div class="menu" id="menu" hidden>
-  <a class="menu__link" href="/katalog">Domy</a>
-  <a class="menu__link" href="/konfigurator">Konfigurátor</a>
-  <a class="menu__link" href="/poptavka">Poptávka</a>
-  <div class="menu__end">
-    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, voláme zpátky</small></a>
-    <a class="btn" href="/poptavka">Chci nabídku</a>
-  </div>
-</div>
-
-
 <main>
-<nav class="wrap crumb" aria-label="Drobečková navigace">
-  <a href="/">Domů</a> / <span aria-current="page">Katalog</span>
-</nav>
 
-<section class="wrap lede">
-  <h1>Katalog domů</h1>
-  <p>Tři modely, které se liší tím, co s nimi chcete dělat. Vlajkový rozkládací dům s terasou, hotová kancelář skladem nebo dům sestavený přesně podle vás v konfigurátoru.</p>
+<section class="kat-uvod">
+  <div class="wrap">
+    <p class="kat-kde"><a href="/">Domů</a> / <span aria-current="page">Katalog</span></p>
+    <h1>Katalog domů</h1>
+    <p>Tři modely, které se&nbsp;liší tím, co&nbsp;s&nbsp;nimi chcete dělat. Rozkládací dům
+      na&nbsp;bydlení, hotová kancelář skladem, nebo sestava složená přesně podle vás.</p>
+  </div>
 </section>
 
-<div class="wrap rows">
+<section class="pr-blok">
+  <div class="wrap pr-katalog">
 
-  <article class="row">
-    <img src="img/flexi-house-foto.webp" width="1200" height="900" alt="Rozkládací dům Flexi House s dřevěným obkladem a terasou" fetchpriority="high" decoding="async" srcset="img/flexi-house-foto-480w.webp 480w, img/flexi-house-foto-800w.webp 800w, img/flexi-house-foto-1200w.webp 1200w, img/flexi-house-foto.webp 1400w" sizes="(max-width:760px) 100vw, (max-width:1280px) 45vw, 560px">
-    <div>
-      <h2>Flexi House</h2>
-      <p>Vlajková loď. Přijede složený v kontejneru a na místě se rozloží na plnohodnotné bydlení s koupelnou a kuchyní. Používá se na trvalé bydlení, chatu i glamping.</p>
-      <dl>
-        <div><dt>Plocha</dt><dd>zhruba 30 m² a terasa</dd></div>
-        <div><dt>Ložnice</dt><dd>2 v základu</dd></div>
-        <div><dt>Rozměr rozloženo</dt><dd>6,32 × 5,90 m</dd></div>
-        <div><dt>Cena</dt><dd><b>od 400 000 Kč</b> bez DPH za hrubou stavbu, vybavení a doprava zvlášť</dd></div>
-      </dl>
-      <div class="row__go">
-        <a class="btn" href="/flexi-house">Zobrazit dům</a>
-        <a class="link" href="/konfigurator">Spočítat cenu</a>
+    <article class="pr-polozka">
+      <div class="pr-polozka__obraz">
+        <img src="img/vyrez/dum-hotovy-obtah.webp" width="1131" height="757"
+          fetchpriority="high" decoding="async"
+          alt="Rozložený dům s krytou terasou a zábradlím"
+          srcset="img/vyrez/dum-hotovy-obtah-400w.webp 400w, img/vyrez/dum-hotovy-obtah-600w.webp 600w, img/vyrez/dum-hotovy-obtah-900w.webp 900w"
+          sizes="(max-width:820px) 84vw, 44vw">
       </div>
-    </div>
-  </article>
-
-  <article class="row">
-    <img src="img/flexi-office.webp" width="1200" height="900" alt="Bílá modulární kancelář Flexi Office" loading="lazy" decoding="async" srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w" sizes="(max-width:760px) 100vw, (max-width:1280px) 45vw, 560px">
-    <div>
-      <h2>Flexi Office</h2>
-      <p>Hotová bílá kancelář, studio nebo showroom. Deset kusů máme skladem, takže se nečeká na výrobu. Postavíme za pár dní a kdykoli později ji přemístíte jinam.</p>
-      <dl>
-        <div><dt>Využití</dt><dd>kancelář, studio, showroom</dd></div>
-        <div><dt>Provedení</dt><dd>bílé, hotové</dd></div>
-        <div><dt>Dostupnost</dt><dd>10 kusů skladem</dd></div>
-        <div><dt>Cena</dt><dd><b>od 70 000 Kč</b></dd></div>
-      </dl>
-      <div class="row__go">
-        <a class="btn" href="/flexi-office">Zobrazit kancelář</a>
-        <a class="link" href="/poptavka">Poptat</a>
+      <div>
+        <h3>Rozkládací dům</h3>
+        <p>Přijede složený na&nbsp;šířku 2,20&nbsp;m a&nbsp;na&nbsp;místě se&nbsp;rozklopí
+          na&nbsp;zhruba 30&nbsp;m² se&nbsp;dvěma ložnicemi, obývákem a&nbsp;koupelnou.</p>
+        <table class="pr-tab">
+          <tbody>
+            <tr><th scope="row">Rozloženo</th><td>6,32 × 5,90 m</td></tr>
+            <tr><th scope="row">Dispozice</th><td>2 ložnice, jiná není</td></tr>
+            <tr><th scope="row">Dodání</th><td>na zakázku, termín v nabídce</td></tr>
+          </tbody>
+        </table>
+        <p class="pr-polozka__cena">od 400 000 Kč bez DPH
+          <small>hrubá stavba, vybavení a doprava zvlášť</small></p>
+        <p class="pr-polozka__go">
+          <a class="btn" href="/rozkladaci-dum">Zobrazit dům</a>
+          <a class="link" href="/konfigurator">Spočítat cenu</a>
+        </p>
       </div>
-    </div>
-  </article>
+    </article>
 
-  <article class="row">
-    <img src="img/dum-na-miru.webp" width="1200" height="900" alt="Modulární dům na míru sestavený v konfigurátoru" loading="lazy" decoding="async" srcset="img/dum-na-miru-480w.webp 480w, img/dum-na-miru-800w.webp 800w, img/dum-na-miru-1200w.webp 1200w, img/dum-na-miru.webp 1400w" sizes="(max-width:760px) 100vw, (max-width:1280px) 45vw, 560px">
-    <div>
-      <h2>Dům na míru</h2>
-      <p>Sestavíte si vlastní. Vyberete rozložení, počet ložnic, fasádu, okna i vybavení, u každé volby rovnou vidíte, o kolik se cena hne. Nebo napište, co potřebujete, a navrhneme dům my.</p>
-      <dl>
-        <div><dt>Ložnice</dt><dd>1 až 4</dd></div>
-        <div><dt>Zateplení</dt><dd>75 nebo 100 mm</dd></div>
-        <div><dt>Volitelně</dt><dd>elektro s vodou, klimatizace, terasa</dd></div>
-        <div><dt>Cena</dt><dd><b>podle konfigurace</b></dd></div>
-      </dl>
-      <div class="row__go">
-        <a class="btn" href="/konfigurator">Spustit konfigurátor</a>
-        <a class="link" href="/poptavka">Radši poradit</a>
+    <article class="pr-polozka">
+      <div class="pr-polozka__obraz">
+        <img src="img/vyrez/office-obtah.webp" width="840" height="611" loading="lazy" decoding="async"
+          alt="Kancelářský kontejner Flexi Office, bílý kvádr s tmavým rámem"
+          srcset="img/vyrez/office-obtah-400w.webp 400w, img/vyrez/office-obtah-600w.webp 600w, img/vyrez/office-obtah-800w.webp 800w"
+          sizes="(max-width:820px) 84vw, 44vw">
       </div>
-    </div>
-  </article>
-
-</div>
-
-<section class="cta" id="kontakt" aria-labelledby="kontakt-h">
-  <div class="wrap cta__in">
-    <h2 id="kontakt-h">Nevíte, který model je ten pravý?</h2>
-    <div>
-      <p>Napište pár řádků o tom, co potřebujete. Poradíme s výběrem, dopravou i usazením, nezávazně a zdarma.</p>
-      <div class="cta__actions">
-        <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
-        <a class="btn btn--out" href="/konfigurator">Spustit konfigurátor</a>
+      <div>
+        <h3>Flexi Office</h3>
+        <p>Jedna bílá místnost na&nbsp;práci. Kancelář, studio nebo showroom. Nevyrábí se&nbsp;na&nbsp;zakázku,
+          stojí v&nbsp;hale hotová a&nbsp;kdykoli později ji přemístíte jinam.</p>
+        <table class="pr-tab">
+          <tbody>
+            <tr><th scope="row">Provedení</th><td>bílé, jiné neděláme</td></tr>
+            <tr><th scope="row">Skladem</th><td>10 kusů</td></tr>
+            <tr><th scope="row">Dodání</th><td>několik dní od objednávky</td></tr>
+          </tbody>
+        </table>
+        <p class="pr-polozka__cena">od 70 000 Kč
+          <small>kupní cena, ne nájem, doprava a patky zvlášť</small></p>
+        <p class="pr-polozka__go">
+          <a class="btn" href="/flexi-office">Zobrazit kancelář</a>
+          <a class="link" href="/poptavka">Poptat</a>
+        </p>
       </div>
-      <div class="cta__contact">
+    </article>
+
+    <article class="pr-polozka">
+      <div class="pr-polozka__obraz pr-polozka__obraz--foto">
+        <img src="img/dum-na-miru.webp" width="1400" height="788" loading="lazy" decoding="async"
+          alt="Vizualizace modulárního domu s dřevěnou fasádou v lese"
+          sizes="(max-width:820px) 100vw, 46vw">
+        <span class="pr-polozka__znac">Vizualizace</span>
+      </div>
+      <div>
+        <h3>Dům na míru</h3>
+        <p>Sestava složená z&nbsp;modulů podle vašeho zadání. V&nbsp;konfigurátoru si naklikáte fasádu,
+          střechu, zateplení i&nbsp;vybavení a&nbsp;u&nbsp;každé volby rovnou vidíte, o&nbsp;kolik
+          se&nbsp;cena hne.</p>
+        <table class="pr-tab">
+          <tbody>
+            <tr><th scope="row">Fasáda</th><td>obklad nebo 11 dekorů</td></tr>
+            <tr><th scope="row">Střecha</th><td>plochá nebo sedlová</td></tr>
+            <tr><th scope="row">Zateplení</th><td>75 nebo 100 mm</td></tr>
+          </tbody>
+        </table>
+        <p class="pr-polozka__cena">podle konfigurace
+          <small>cena vychází ze zadání, potvrdíme ji v nabídce</small></p>
+        <p class="pr-polozka__go">
+          <a class="btn" href="/konfigurator">Spustit konfigurátor</a>
+          <a class="link" href="/poptavka">Radši poradit</a>
+        </p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="pr-cta">
+  <div class="wrap pr-cta__in">
+    <div>
+      <h2 class="pr-h">Nevíte, který model je ten pravý?</h2>
+      <p>Napište pár řádků o&nbsp;tom, co&nbsp;potřebujete a&nbsp;kam to chcete postavit.
+        Poradíme s&nbsp;výběrem, dopravou i&nbsp;usazením.</p>
+      <p class="pr-cta__kontakt">
         <a href="tel:+420607321543">607 321 543</a>
         <a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a>
-      </div>
-      <span class="cta__note">Nezávazně, bez placení předem.</span>
+      </p>
+    </div>
+    <div class="pr-cta__go">
+      <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
+      <a class="btn btn--out" href="/konfigurator">Spustit konfigurátor</a>
+      <span class="pr-mikro" style="color:rgba(255,255,255,.86)">Nezávazně, bez placení předem.</span>
     </div>
   </div>
 </section>
 
 </main>
-
 <footer class="foot">
   <div class="wrap">
     <div class="foot__in">
@@ -202,7 +222,7 @@
       <div>
         <h3>Domy</h3>
         <ul>
-          <li><a href="/flexi-house">Rozkládací dům</a></li>
+          <li><a href="/rozkladaci-dum">Rozkládací dům</a></li>
           <li><a href="/flexi-office">Flexi Office</a></li>
           <li><a href="/katalog">Katalog</a></li>
           <li><a href="/konfigurator">Konfigurátor</a></li>
