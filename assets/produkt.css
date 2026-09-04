@@ -193,3 +193,16 @@
 @media (prefers-reduced-motion:reduce){
   .pr-hero *,.pr-cta *{transition:none}
 }
+
+.pr-pribeh__rada--jeden{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:center}
+.pr-pribeh__rada--jeden .pr-pribeh__krok img{max-width:100%}
+.pr-pribeh__vedle .pr-pribeh__popis:first-child{margin-top:0}
+.pr-galerie--dve{grid-template-columns:1fr 1fr}
+.pr-galerie--dve figure:first-child{grid-column:auto;grid-row:auto}
+.pr-galerie--dve figure:first-child img{aspect-ratio:16/9;height:auto;flex:none}
+.pr-galerie--dve img{aspect-ratio:16/9}
+@media (max-width:720px){
+  .pr-pribeh__rada--jeden{grid-template-columns:1fr}
+  .pr-pribeh__rada--jeden .pr-pribeh__krok img{max-width:min(88%,340px) !important}
+  .pr-galerie--dve{grid-template-columns:1fr}
+}
