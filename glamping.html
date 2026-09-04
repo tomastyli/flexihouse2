@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon-96.png?v=10" type="image/png" sizes="96x96">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=10">
 <link rel="manifest" href="/site.webmanifest?v=10">
-<title>Glamping domky na prodej, od 400 000 Kč bez DPH | Flexi House</title>
+<title>Glamping domky od 400 000 Kč bez DPH | Flexi House</title>
 <link rel="canonical" href="https://flexihouse.cz/glamping">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flexi House">
@@ -16,7 +16,7 @@
 <meta property="og:title" content="Glamping domky na prodej, od 400 000 Kč bez DPH">
 <meta property="og:description" content="Ubytovací jednotka, která přijede hotová z haly a dá se zase odvézt. Dodáme domek a čísla k němu, návratnost si spočítáte podle svých cen.">
 <meta property="og:url" content="https://flexihouse.cz/glamping">
-<meta property="og:image" content="https://flexihouse.cz/img/og/og-rozkladaci.jpg">
+<meta property="og:image" content="https://flexihouse.cz/img/og/og-home.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,12 +26,22 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/glamping.webp" imagesrcset="img/glamping-480w.webp 480w, img/glamping-800w.webp 800w, img/glamping-1200w.webp 1200w, img/glamping.webp 1400w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" imagesrcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w" imagesizes="(max-width:720px) 250vw, 100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=21">
 <link rel="stylesheet" href="assets/produkt.css?v=1">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 <style>figure,figcaption,dl,dd{margin:0}
-.pr-pribeh__foto{opacity:.26}</style>
+.pr-hero__znac{position:absolute;top:0;right:0;z-index:2;background:var(--ink);color:#fff;
+  font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:6px 12px}
+.pr-hero__kde a{position:relative;display:inline-block}
+.pr-hero__kde a::after{content:"";position:absolute;left:0;right:0;top:50%;
+  transform:translateY(-50%);height:48px}
+.pr-primo--tma li{color:rgba(255,255,255,.86);border-top-color:rgba(255,255,255,.28)}
+.pr-primo--tma a{color:#fff;border-bottom:1px solid rgba(255,255,255,.55)}
+.pr-primo--tma a:focus-visible{outline-color:#fff}
+.pr-cta .btn--out{background-color:var(--blue)}
+.pr-cta__vyrez{width:min(28%,430px);right:calc(var(--pad) * -1.5)}
+@media (max-width:720px){.pr-kota--h{right:0}}</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -41,12 +51,13 @@
   "brand": { "@type": "Brand", "name": "Flexi House" },
   "url": "https://flexihouse.cz/glamping",
   "image": "https://flexihouse.cz/img/flexi-house-rozkladaci.webp",
+  "sameAs": "https://flexihouse.cz/rozkladaci-dum",
   "offers": {
     "@type": "Offer",
-    "price": "400000",
+    "price": "405000",
     "priceCurrency": "CZK",
     "valueAddedTaxIncluded": false,
-    "availability": "https://schema.org/InStock",
+    "availability": "https://schema.org/MadeToOrder",
     "seller": { "@type": "Organization", "name": "WINstores, s.r.o." }
   }
 }
@@ -99,22 +110,25 @@
 <main>
 
 <section class="pr-hero">
-  <img class="pr-hero__foto" src="img/glamping.webp" width="1400" height="788"
+  <img class="pr-hero__foto" src="img/flexi-house-rozkladaci.webp" width="1400" height="781"
     fetchpriority="high" decoding="async"
-    alt="Vizualizace glampingového areálu, sedm tmavých domků v lese propojených dřevěným chodníkem"
-    srcset="img/glamping-480w.webp 480w, img/glamping-800w.webp 800w, img/glamping-1200w.webp 1200w, img/glamping.webp 1400w"
-    sizes="100vw">
+    alt="Rozložený dům Flexi House na zahradě, prosklené stěny a dřevěná terasa s křesly"
+    srcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w"
+    sizes="(max-width:720px) 250vw, 100vw">
   <div class="pr-hero__stin"></div>
+  <span class="pr-hero__znac">Vizualizace</span>
   <div class="pr-hero__in">
     <div class="wrap">
       <p class="pr-hero__kde"><a href="/">Domů</a> / <a href="/katalog">Katalog</a> / <span aria-current="page">Glamping</span></p>
     </div>
     <div class="wrap">
       <h1>Glamping domky</h1>
-      <p>Rozkládací dům jako ubytování pro hosty. Vzniká v&nbsp;hale, na&nbsp;váš pozemek přijede
-        složený na&nbsp;šířku 2,20&nbsp;m a&nbsp;rozklopí se&nbsp;na&nbsp;zhruba 30&nbsp;m².</p>
+      <p>Rozkládací dům jako ubytování pro hosty, vozíme ho po&nbsp;celé&nbsp;ČR. Vzniká v&nbsp;hale,
+        na&nbsp;váš pozemek přijede složený na&nbsp;šířku 2,20&nbsp;m a&nbsp;rozklopí
+        se&nbsp;na&nbsp;zhruba 30&nbsp;m².</p>
       <p class="pr-hero__cena">od&nbsp;400&nbsp;000&nbsp;Kč bez&nbsp;DPH
-        <small>Hrubá stavba. Koupelnu, linku, elektroinstalaci a&nbsp;topení si k&nbsp;ní připočtěte.</small></p>
+        <small>Hrubá stavba. S&nbsp;povinnou elektroinstalací 405&nbsp;000&nbsp;Kč,
+        s&nbsp;vybavením pro hosty 514&nbsp;000&nbsp;Kč.</small></p>
       <div class="pr-hero__go">
         <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
         <a class="link" href="/konfigurator">Spočítat svoji sestavu</a>
@@ -133,15 +147,10 @@
 </div>
 
 <section class="pr-pribeh pr-blok">
-  <img class="pr-pribeh__foto" src="img/montaz.webp" width="1400" height="1049" loading="lazy"
-    decoding="async" alt=""
-    srcset="img/montaz-480w.webp 480w, img/montaz-800w.webp 800w, img/montaz-1200w.webp 1200w, img/montaz.webp 1400w"
-    sizes="100vw">
   <div class="wrap">
     <h2 class="pr-h">Z areálu neuděláte staveniště</h2>
     <p class="pr-lead pr-lead--svetly">Domek se&nbsp;dokončí v&nbsp;hale. Na&nbsp;pozemek přijede
-      složený, jeřáb ho usadí na&nbsp;betonové patky a&nbsp;křídla se&nbsp;rozklopí. U&nbsp;vás se&nbsp;domek
-      usadí a&nbsp;připojí, nestaví se.</p>
+      složený, jeřáb ho usadí na&nbsp;betonové patky a&nbsp;křídla se&nbsp;rozklopí.</p>
     <div class="pr-pribeh__rada pr-pribeh__rada--jeden">
       <div class="pr-pribeh__krok">
         <img class="vyrez vyrez--obtah" src="img/vyrez/dum-hotovy-obtah.webp" width="1131" height="757"
@@ -191,9 +200,11 @@
         </tbody>
       </table>
     </div>
-    <p class="pr-mikro" style="margin-top:16px">Dispozice je jedna a&nbsp;jiný počet ložnic znamená
-      <a href="/poptavka">dům na&nbsp;míru</a>. Celý technický popis má
-      <a href="/rozkladaci-dum">rozkládací dům</a>.</p>
+    <p class="pr-mikro" style="margin-top:16px">Domek na&nbsp;fotce má sedlovou střechu
+      za&nbsp;90&nbsp;000&nbsp;Kč, terasu za&nbsp;40&nbsp;000&nbsp;Kč a&nbsp;vstupní schody
+      za&nbsp;26&nbsp;661&nbsp;Kč bez&nbsp;DPH. V&nbsp;základní ceně je plochá střecha bez terasy.
+      Dispozice je jedna a&nbsp;jiný počet ložnic znamená <a href="/poptavka">dům na&nbsp;míru</a>.
+      Celý technický popis má <a href="/rozkladaci-dum">rozkládací dům</a>.</p>
   </div>
 </section>
 
@@ -234,8 +245,9 @@
     </div>
     <div class="pr-pas">
       <b>+114 000 Kč bez DPH</b>
-      <span>elektroinstalace, koupelna, linka, klimatizace a&nbsp;terasa. Bez nich je to hrubá
-        stavba, ve&nbsp;které hosta neubytujete.</span>
+      <span>elektroinstalace, koupelna, linka, klimatizace a&nbsp;terasa. Bez elektroinstalace
+        a&nbsp;koupelny hosta neubytujete, zbytek je na&nbsp;vás. S&nbsp;celým vybavením stojí domek
+        514&nbsp;000&nbsp;Kč bez&nbsp;DPH.</span>
     </div>
     <p class="pr-mikro" style="margin-top:18px">K&nbsp;tomu práce na&nbsp;pozemku, ty jsou
       včetně&nbsp;DPH: betonové patky 50&nbsp;000 až&nbsp;90&nbsp;000 podle podloží, montáž
@@ -249,9 +261,9 @@
 
 <section class="pr-blok pr-ton">
   <div class="wrap">
-    <h2 class="pr-h">Co uvidí host uvnitř</h2>
+    <h2 class="pr-h">Podívejte se dovnitř</h2>
     <p class="pr-mikro">Fotky jsou z&nbsp;našeho domu s&nbsp;vybavením, nábytek a&nbsp;spotřebiče
-      v&nbsp;dodávce nejsou. Snímek v&nbsp;záhlaví stránky je vizualizace areálu, ne&nbsp;naše zakázka.</p>
+      v&nbsp;dodávce nejsou.</p>
     <div class="pr-galerie">
       <figure>
         <img src="img/interier-cely.webp" width="2000" height="1126" loading="lazy" decoding="async"
@@ -284,7 +296,7 @@
       <figure>
         <img src="img/terasa-detail.webp" width="2000" height="1126" loading="lazy" decoding="async"
           alt="Prkna kryté terasy ve slunci"
-          srcset="img/terasa-detail-480w.webp 480w, img/terasa-detail-800w.webp 800w, img/terasa-detail-1200w.webp 1200w, img/terasa-detail.webp 2000w"
+          srcset="img/terasa-detail-480w.webp 480w, img/terasa-detail-800w.webp 800w"
           sizes="(max-width:520px) 100vw, (max-width:1040px) 50vw, 25vw">
         <figcaption>Terasa za 40 000 Kč bez DPH</figcaption>
       </figure>
@@ -292,8 +304,8 @@
   </div>
 </section>
 
-<section class="pr-blok">
-  <div class="wrap pr-primo">
+<section class="pr-blok pr-tma">
+  <div class="wrap pr-primo pr-primo--tma">
     <div>
       <h2 class="pr-h">Co neděláme</h2>
       <ul>
@@ -303,7 +315,7 @@
       </ul>
     </div>
     <div>
-      <h2 class="pr-h">Co vám nespočítáme</h2>
+      <h2 class="pr-h">Co neumíme doložit</h2>
       <ul>
         <li>Návratnost. Vaši cenu za&nbsp;noc ani obsazenost v&nbsp;okolí neznáme, ta čísla máte vy.</li>
         <li>Délku výroby a&nbsp;záruku. Termín potvrdíme v&nbsp;nabídce.</li>
@@ -324,9 +336,9 @@
       </div>
       <div>
         <h3>Ubytujete v něm i mimo sezónu?</h3>
-        <p>Zateplení 100&nbsp;mm stojí 30&nbsp;000&nbsp;Kč a&nbsp;klimatizace, která topí
-          i&nbsp;chladí, 29&nbsp;000&nbsp;Kč bez&nbsp;DPH. Podrobně
-          na&nbsp;stránce <a href="/celorocni-bydleni">celoroční bydlení</a>.</p>
+        <p>V&nbsp;ceně je zateplení 75&nbsp;mm. Silnější zateplení 100&nbsp;mm stojí
+          30&nbsp;000&nbsp;Kč a&nbsp;klimatizace, která topí i&nbsp;chladí, 29&nbsp;000&nbsp;Kč
+          bez&nbsp;DPH. Podrobně na&nbsp;stránce <a href="/celorocni-bydleni">celoroční bydlení</a>.</p>
       </div>
       <div>
         <h3>Co s domkem, když to nevyjde?</h3>
@@ -345,8 +357,8 @@
   <div class="wrap pr-cta__in">
     <div>
       <h2 class="pr-h">Kolik domků chcete postavit?</h2>
-      <p>Napište, kde pozemek je a&nbsp;kolik jich potřebujete. Vozíme je po&nbsp;celé&nbsp;ČR,
-        nabídku pošleme do&nbsp;24&nbsp;hodin.</p>
+      <p>Napište, kde pozemek je a&nbsp;kolik jich potřebujete. Nabídku pošleme
+        do&nbsp;24&nbsp;hodin.</p>
       <p class="pr-cta__kontakt">
         <a href="tel:+420607321543">607 321 543</a>
         <a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a>
