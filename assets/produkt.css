@@ -139,7 +139,7 @@
 .pr-cta__in{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
   gap:clamp(24px,4vw,64px);align-items:center}
 .pr-cta .pr-h{color:#fff;max-width:15ch}
-.pr-cta p{color:rgba(255,255,255,.92)}
+.pr-cta p{color:#fff}
 .pr-cta__go{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .pr-cta .btn{color:var(--ink);background-color:#fff;border-color:#fff;
   background-image:linear-gradient(var(--ink),var(--ink))}
@@ -288,3 +288,6 @@
   .grid__in>div:nth-child(2){border-top:1px solid var(--hair);padding-top:clamp(16px,2.2vw,22px)}
 }
 .pick--foto img{object-fit:cover;padding:0}
+
+.pr-cta .pr-mikro,.pr-cta span.pr-mikro{color:#fff}
+.pr-lead--svetly{color:rgba(255,255,255,.9)}

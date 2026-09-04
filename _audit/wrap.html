@@ -1,0 +1,24 @@
+<!doctype html><meta charset=utf-8><style>html,body{margin:0}#f{border:0;display:block}</style>
+<iframe id=f></iframe><pre id=out>PENDING</pre>
+<script>
+const P=new URLSearchParams(location.search),page=P.get('p'),W=+P.get('w');
+const f=document.getElementById('f');f.style.width=W+'px';f.style.height='30000px';f.src='/'+page;
+f.addEventListener('load',()=>{setTimeout(()=>{
+ const d=f.contentDocument,w=f.contentWindow,bad=[];
+ const main=d.querySelector('main')||d.body;
+ const walk=d.createTreeWalker(main,NodeFilter.SHOW_TEXT);let n;
+ const re=/\d[  ]\d{3}|\d+[  ](?:m|mm|kg|m²|Kč|km)\b/g;
+ while(n=walk.nextNode()){
+   const t=n.textContent;let m;
+   while((m=re.exec(t))){
+     const r=d.createRange();r.setStart(n,m.index);r.setEnd(n,m.index+m[0].length);
+     const rects=r.getClientRects();
+     if(rects.length>1){
+       let tops=new Set();for(const q of rects)tops.add(Math.round(q.top));
+       if(tops.size>1) bad.push({s:m[0],ctx:t.slice(Math.max(0,m.index-24),m.index+m[0].length+10).replace(/\s+/g,' '),cls:(typeof n.parentElement.className==='string'?n.parentElement.className:''),tag:n.parentElement.tagName});
+     }
+   }
+ }
+ document.getElementById('out').textContent=JSON.stringify({page,W,bad});
+},1200)});
+</script>
