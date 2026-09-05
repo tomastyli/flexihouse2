@@ -32,7 +32,7 @@ Po ověření nahraj do GSC i [`sitemap.xml`](sitemap.xml).
 
 ## 3. Kde se lišta zobrazuje
 Skript `assets/cookies.js` je vložen na: `index.html`, `katalog.html`,
-`mini-house.html`, `flexi-family.html`, `flexi-office.html`, `konfigurator.html`.
+`flexi-office.html`, `konfigurator.html`.
 
 Odkaz **„Nastavení cookies"** v patičce kdykoli znovu otevře lištu
 (volá `window.openCookieSettings()`).

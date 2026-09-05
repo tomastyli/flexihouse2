@@ -66,7 +66,7 @@ Zbývá: `assets/site.css` a `assets/home.css` smazat, až na nich nebude viset 
 | `podminky.html` | **HOTOVO** | převlečeno, právní text doslova zachován |
 | `zasady-ochrany-soukromi.html` | **HOTOVO** | totéž |
 | `404.html` | **HOTOVO** | rozcestník na produkty a kontakty, noindex |
-| `mini-house.html`, `flexi-family.html` | redirecty | nechat být |
+| `mini-house.html`, `flexi-family.html` | smazáno 5. 9. 2026 | staré adresy vede 301 v `_redirects` na `/rozkladaci-dum` |
 
 ## Pořadí
 
