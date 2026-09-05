@@ -21,7 +21,7 @@ Rozložený má 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa v základn�
 příplatek 40 000 Kč. Dispozice jsou dvě ložnice,
 obývací prostor s kuchyňským koutem a koupelna.
 
-**Flexi Office**, kancelářský kontejner od 70 000 Kč. Deset kusů je skladem.
+**Flexi Office**, kancelářský kontejner od 70 000 Kč. Prvních deset kusů je objednaných a budou skladem v Litomyšli; fyzicky ještě nedorazily, fotky neexistují (Tomáš 5. 9. 2026).
 
 **Dům na míru**, sestava z modulů podle zadání zákazníka. Cena vychází ze zadání,
 nedá se odhadnout dopředu. Vede na poptávku.
@@ -106,7 +106,7 @@ Připojení na sítě si zajišťuje zákazník sám.
 
 ## Dodání
 
-Flexi Office máme skladem, odjíždí během několika dní od objednávky. Rozkládací dům
+Flexi Office: prvních deset kusů je objednaných, po naskladnění odjíždí do několika dní od objednávky. Rozkládací dům
 se vyrábí na zakázku podle konfigurace, konkrétní termín potvrzujeme v nabídce, kterou
 posíláme do 24 hodin od poptávky. Kolik týdnů výroba trvá, poradce neuvádí, to upřesní Dan.
 

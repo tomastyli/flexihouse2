@@ -21,6 +21,7 @@ poznamky = []
 def text(f):
     s = open(f, encoding="utf-8").read()
     s = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", s, flags=re.S)
+    s = re.sub(r"</(li|p|div|td|th|h\d|figcaption|dd|dt|tr|small|span|b)>", " | ", s)  # hranice bloku, ať se dvě částky za sebou neslepí
     t = re.sub(r"<[^>]+>", " ", s)
     t = html.unescape(t).replace("\xa0", " ")
     return re.sub(r"\s+", " ", t)

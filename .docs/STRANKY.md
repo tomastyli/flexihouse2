@@ -147,6 +147,10 @@ pro nákladní auto s jeřábem, přípojky vody, elektřiny a odpadu si zajiš�
 
 ## Otevřené otázky na Dana
 
+Zodpovězeno 5. 9. 2026 večer: cena 405 000 platí, ceník zůstává, technické údaje z PDF
+výrobce platí, Office 70 000 a 10 kusů objednáno, adresa Sokolovská 612, glamping = domky na
+míru. Dál otevřené jsou jen body níže (výroba v týdnech, topení, zateplení Office, financování, záruka).
+
 Blokují body 3, 4 a 7.
 
 1. Kolik týdnů trvá výroba rozkládacího domu od objednávky po usazení. (Na Google profilu
