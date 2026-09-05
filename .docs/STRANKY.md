@@ -129,6 +129,10 @@ pro nákladní auto s jeřábem, přípojky vody, elektřiny a odpadu si zajiš�
 - Všechno žije na větvi `integrace/stranky`. Větve `stranka/cena` a `stranka/flexi-house`
   jsou tím překonané.
 
+- Větev `stranka/cena` (1 024 slov, `cn-*`) a worktree `fh-cena` **smazány 5. 9. 2026** na Tomášův
+  pokyn. Žije jen krátká `/cena` ze šablony. Zálohová větev `zaloha-main-cenik` zůstává.
+- `flexi-family.html` a `mini-house.html` smazány, staré adresy vede 301 v `_redirects`.
+
 ## Co do fronty nepatří a proč
 
 - **Tiny house** (320/měs). Ten produkt neděláte.
