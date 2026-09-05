@@ -16,7 +16,7 @@ Kontakt: Dan Prokeš, 607 321 543, info@flexihouse.cz. Druhý kontakt Jan Proke�
 
 ## Co nabízíme
 
-**Flexi House**, rozkládací dům. Základní cena 400 000 Kč.
+**Flexi House**, rozkládací dům. Základní cena 400 000 Kč, k ní je v každé sestavě povinná elektroinstalace 5 000 Kč, takže nejnižší dosažitelná cena je 405 000 Kč bez DPH. Navenek uvádíme **od 405 000 Kč bez DPH**, aby web nesliboval cenu, kterou konfigurátor neumí.
 Rozložený má 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa v základní ceně NENÍ, je to
 příplatek 40 000 Kč. Dispozice jsou dvě ložnice,
 obývací prostor s kuchyňským koutem a koupelna.

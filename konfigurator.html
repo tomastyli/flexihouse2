@@ -209,7 +209,7 @@ function interiorGroups() {
       { id:'kitchen', label:'Kuchyňská linka', desc:'Linka s dřezem a místem pro spotřebiče.', icon:'kitchen', price:10000, preset:true }
     ]},
     { key:'insulation', title:'Zateplení', type:'single', required:true, options:[
-      { id:'std',    label:'Standard 75 mm', desc:'Celoroční komfort pro mírné klima.', icon:'thermo', price:0 },
+      { id:'std',    label:'Standard 75 mm', desc:'Základ. Pro trvalé bydlení doporučujeme 100 mm.', icon:'thermo', price:0 },
       { id:'winter', label:'Zimní 100 mm', desc:'Silnější izolace pro trvalé bydlení i v zimě.', icon:'thermo', price:30000 }
     ]},
     { key:'utilities', title:'Elektroinstalace', type:'single', required:true, options:[
@@ -269,7 +269,7 @@ const fmtPrice = (n) => czk.format(n) + ' Kč';
 
 const SUM_NOTE = 'Dům a vybavení bez DPH, práce na pozemku včetně DPH. Finální cenu potvrdíme v nabídce.';
 const FROM_NOTE = 'U položek s „od“ počítáme spodní hranici: patky vyjdou na 50 000 až 90 000 Kč, montáž na 30 000 až 80 000 Kč podle pozemku.';
-const VAT_TIP = 'Dům a jeho vybavení uvádíme bez DPH. Sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Doprava, usazení, patky, montáž a sítě do oken už DPH obsahují. Konkrétní sazbu potvrdíme v nabídce.';
+const VAT_TIP = 'Dům a jeho vybavení uvádíme bez DPH. Sazba DPH se řídí využitím stavby, potvrdíme ji v nabídce. Doprava, usazení, patky, montáž a sítě do oken už DPH obsahují.';
 
 function transportKm() { const n = Number(state.km); return isFinite(n) && n > 0 ? Math.round(n) : 0; }
 function transportOpt() { const g = GROUPS.addons; return g ? g.options.find(x => x.perKm) : null; }
@@ -840,7 +840,7 @@ function buildPdfDoc() {
   doc.text('ORIENTAČNÍ CENA CELKEM', M + 18, y + 22);
   doc.setCharSpace(0);
   doc.setFontSize(7.5);
-  doc.text('DPH 12 % u domu k bydlení, 21 % pro podnikání', M + 18, y + 37);
+  doc.text('Sazbu DPH podle využití stavby potvrdíme v nabídce', M + 18, y + 37);
   display(); doc.setFontSize(21); ink(PDF.ink);
   doc.text(pdfSafe(fmtPrice(T.total)), right - 18, y + 34, { align: 'right' });
   y += 64;
@@ -862,7 +862,7 @@ function buildPdfDoc() {
     y += boxH + 16;
   }
 
-  const note = 'Tento dokument je orientační a nezávazný. Dům a jeho vybavení uvádíme bez DPH, sazba se řídí využitím stavby: 12 % u domu určeného k bydlení, 21 % pro účely podnikání. Práce na pozemku, tedy doprava, usazení, betonové patky, montáž a sítě do oken, jsou uvedené včetně DPH. U položek s cenou od počítáme spodní hranici: betonové patky vyjdou podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na 30 000 až 80 000 Kč. Cena nezahrnuje přípravu pozemku ani přípojky, připojení na sítě ani vyřízení povolení neděláme. Vygenerováno konfigurátorem na flexihouse.cz.';
+  const note = 'Tento dokument je orientační a nezávazný. Dům a jeho vybavení uvádíme bez DPH, sazba DPH se řídí využitím stavby a potvrdíme ji v nabídce. Práce na pozemku, tedy doprava, usazení, betonové patky, montáž a sítě do oken, jsou uvedené včetně DPH. U položek s cenou od počítáme spodní hranici: betonové patky vyjdou podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na 30 000 až 80 000 Kč. Cena nezahrnuje přípravu pozemku ani přípojky, připojení na sítě ani vyřízení povolení neděláme. Vygenerováno konfigurátorem na flexihouse.cz.';
   body(false); doc.setFontSize(7.5);
   const noteLines = doc.splitTextToSize(note, CW);
   room(noteLines.length * 10 + 12);
@@ -1014,6 +1014,7 @@ function bindForm() {
     if (!ok) return;
 
     const payload = buildPayload();
+    payload.vstup = window.fhVstup ? fhVstup() : '';
     submitBtn.setAttribute('disabled',''); submitBtn.textContent = 'Odesílám…';
     try {
       const res = await fetch('/api/send-konfigurace', {
@@ -1156,7 +1157,7 @@ vizStart();
     </div>
   </div>
 </footer>
-<script src="assets/flexi.js?v=9" defer></script>
+<script src="assets/flexi.js?v=10" defer></script>
 <script src="assets/flexi-poradce.js?v=2" defer></script>
 </body>
 </html>

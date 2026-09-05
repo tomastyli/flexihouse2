@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
       zprava: [c.location ? `Pozemek: ${c.location}` : '', c.message || ''].filter(Boolean).join('\n') || null,
       konfigurace: JSON.stringify(data.summary || []),
       cena: typeof data.total === 'number' ? data.total : null,
-      zdroj: request.headers.get('Referer') || null
+      zdroj: [request.headers.get('Referer'), typeof data.vstup === 'string' ? data.vstup.slice(0, 400) : ''].filter(Boolean).join(' | ') || null
     });
 
     if (!env.RESEND_API_KEY) {

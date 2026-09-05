@@ -52,7 +52,7 @@ export async function onRequestPost({ request, env }) {
       telefon,
       model: prani ? 'Dům na míru' : null,
       zprava,
-      zdroj: request.headers.get('Referer') || null
+      zdroj: [request.headers.get('Referer'), typeof data.vstup === 'string' ? data.vstup.slice(0, 400) : ''].filter(Boolean).join(' | ') || null
     });
 
     if (zaznamId == null) {

@@ -323,7 +323,7 @@
         var r = await fetch(API_PREDAT, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ relace: relace(), jmeno: jmeno, telefon: tel, turnstile: t, website: '' })
+          body: JSON.stringify({ relace: relace(), jmeno: jmeno, telefon: tel, turnstile: t, website: '', vstup: (window.fhVstup ? fhVstup() : '') })
         });
         var d = await r.json();
         ok = !!(d && d.ok);

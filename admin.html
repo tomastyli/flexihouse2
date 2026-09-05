@@ -85,6 +85,9 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
 .kroky p.od-por{color:var(--muted)}
 .radek__cena{font-weight:700;font-size:1rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .radek__model{font-size:.9rem;color:var(--muted);text-align:right}
+.radek__zdroj{font-size:.8rem;color:var(--muted);margin-top:6px}
+.souhrn .zdroje{flex-basis:100%}
+.souhrn .zdroje dd{font-size:.95rem;font-weight:500;line-height:1.6}
 .radek__chyba{background:#fdecec;border:1px solid #f2b8b8;color:#8f2020;font-size:.78rem;padding:6px 10px;max-width:280px;text-align:left}
 .rozbal{background:none;border:0;color:var(--blue);font-size:.8rem;padding:0;text-decoration:underline}
 .konfig{grid-column:1/-1;margin-top:6px;border-top:1px solid var(--hair);padding-top:12px}
@@ -205,6 +208,12 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
     return '<span class="znacka'+t[1]+'">'+t[0]+'</span>';
   }
 
+  function zdrojKratce(z){
+    var m=String(z).match(/vstup: ([^ ]+) <- ([^\]@]+?)(?: \[([^\]]*)\])? @/);
+    if(!m) return String(z).replace(/^https?:\/\/flexihouse\.cz/,'').slice(0,90);
+    return 'přišel na '+m[1]+' z '+m[2].replace(/^https?:\/\//,'').replace(/\/.*$/,'')+(m[3]?' ('+m[3]+')':'');
+  }
+
   function vykresli(d){
     var s=d.souhrn;
     document.getElementById('souhrn').innerHTML=
@@ -215,7 +224,8 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
       '<div><dt>Konfigurátor</dt><dd>'+s.konfigurator+'</dd></div>'+
       '<div><dt>Poradce</dt><dd>'+(s.poradce||0)+'</dd></div>'+
       '<div><dt>Nevyřízených</dt><dd id="pocetNevyrizenych">'+(s.nevyrizene||0)+'</dd></div>'+
-      (s.nedorucene>0 ? '<div class="varovani"><dt>Neodesláno</dt><dd>'+s.nedorucene+'</dd></div>' : '');
+      (s.nedorucene>0 ? '<div class="varovani"><dt>Neodesláno</dt><dd>'+s.nedorucene+'</dd></div>' : '')+
+      (s.zdroje30 && Object.keys(s.zdroje30).length ? '<div class="zdroje"><dt>Zdroje za 30 dní</dt><dd>'+Object.keys(s.zdroje30).sort(function(a,b){return s.zdroje30[b]-s.zdroje30[a];}).map(function(k){return esc(k)+' <small>'+s.zdroje30[k]+'</small>';}).join(' · ')+'</dd></div>' : '');
 
     document.getElementById('pocet').textContent = d.poptavky.length ? ('zobrazeno '+d.poptavky.length) : '';
 
@@ -246,6 +256,7 @@ input[type=password]:focus{outline:2px solid var(--blue);outline-offset:-1px}
             (p.email?'<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>':'')+
           '</div>'+
           (p.zprava?'<div class="radek__zprava">'+esc(p.zprava)+'</div>':'')+
+          (p.zdroj?'<div class="radek__zdroj">'+esc(zdrojKratce(p.zdroj))+'</div>':'')+
         '</div>'+
         '<div class="radek__prava">'+
           stitek(p.typ)+

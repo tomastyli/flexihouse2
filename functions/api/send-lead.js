@@ -38,7 +38,7 @@ export async function onRequestPost(context) {
       telefon: lead.phone,
       model: lead.model,
       zprava: lead.message,
-      zdroj: request.headers.get('Referer') || null
+      zdroj: [request.headers.get('Referer'), typeof data.vstup === 'string' ? data.vstup.slice(0, 400) : ''].filter(Boolean).join(' | ') || null
     });
 
     if (!env.RESEND_API_KEY) {

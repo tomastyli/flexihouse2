@@ -27,3 +27,21 @@
     if(href.indexOf('/poptavka')===0){ send('lead_form_open',{location:location.pathname}); }
   });
 })();
+
+(function(){
+  var K='fh_vstup';
+  try{
+    if(!sessionStorage.getItem(K)){
+      var q=new URLSearchParams(location.search), utm={};
+      ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'].forEach(function(k){ if(q.get(k)) utm[k]=q.get(k).slice(0,80); });
+      sessionStorage.setItem(K, JSON.stringify({ stranka: location.pathname, referrer: document.referrer.slice(0,200), utm: utm, kdy: new Date().toISOString() }));
+    }
+  }catch(e){}
+  window.fhVstup=function(){
+    try{
+      var v=JSON.parse(sessionStorage.getItem(K)||'null'); if(!v) return '';
+      var u=Object.keys(v.utm||{}).map(function(k){ return k+'='+v.utm[k]; }).join('&');
+      return 'vstup: '+v.stranka+(v.referrer?' <- '+v.referrer:' <- přímo')+(u?' ['+u+']':'')+' @'+v.kdy;
+    }catch(e){ return ''; }
+  };
+})();
