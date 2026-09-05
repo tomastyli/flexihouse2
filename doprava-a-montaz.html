@@ -28,7 +28,7 @@
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="img/flexi-house-patky.webp" imagesrcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=22">
-<link rel="stylesheet" href="assets/produkt.css?v=1">
+<link rel="stylesheet" href="assets/produkt.css?v=2">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 <style>dl,dd{margin:0}
 .dam-mist{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
@@ -152,30 +152,27 @@
   </div>
 </section>
 
-<section class="pr-pribeh pr-blok">
+<section class="pr-blok" aria-labelledby="dva-h">
   <div class="wrap">
-    <h2 class="pr-h">Co k vám přijede</h2>
-    <p class="pr-lead pr-lead--svetly">Dům se&nbsp;veze složený a&nbsp;váží zhruba 2&nbsp;000&nbsp;kg,
-      proto ho&nbsp;na&nbsp;patky posadí jeřáb. Křídla se&nbsp;rozklopí až&nbsp;po&nbsp;usazení.</p>
-    <div class="pr-dvojice">
-      <figure class="pr-dvojice__kus">
-        <img class="vyrez vyrez--obtah" src="img/vyrez/nas-slozeny-obtah.webp" width="620" height="507"
-          loading="lazy" decoding="async"
-          alt="Náš dům složený na šířku 2,20 metru, připravený k převozu"
-          srcset="img/vyrez/nas-slozeny-obtah-400w.webp 400w, img/vyrez/nas-slozeny-obtah-600w.webp 600w, img/vyrez/nas-slozeny-obtah.webp 620w"
-          sizes="(max-width:820px) 78vw, 34vw">
+    <h2 class="pr-h" id="dva-h">Co k vám přijede</h2>
+    <p class="pr-lead">Dům se&nbsp;veze složený a&nbsp;váží zhruba 2&nbsp;000&nbsp;kg, proto ho&nbsp;na&nbsp;patky posadí jeřáb. Křídla se&nbsp;rozklopí až&nbsp;po&nbsp;usazení.</p>
+    <div class="pr-dva">
+      <figure>
+        <img src="img/flexi-house-slozeny.webp" width="1400" height="788" loading="lazy" decoding="async"
+          alt="Náš dům složený na šířku 2,20 metru na pozemku, připravený k rozklopení"
+          srcset="img/flexi-house-slozeny-480w.webp 480w, img/flexi-house-slozeny-800w.webp 800w, img/flexi-house-slozeny-1200w.webp 1200w, img/flexi-house-slozeny.webp 1400w"
+          sizes="(max-width:760px) 100vw, (max-width:1280px) 46vw, 600px">
         <figcaption><b>Takhle přijede</b><span>2,20 × 5,90 m, vejde se na běžný návěs</span></figcaption>
       </figure>
-      <figure class="pr-dvojice__kus pr-dvojice__kus--foto">
-        <img src="img/flexi-house-patky.webp" width="1400" height="788" loading="lazy" decoding="async"
-          alt="Tentýž dům rozložený a usazený na betonových patkách, vedle něj krytá terasa"
+      <figure>
+        <img src="img/flexi-house-patky.webp" width="1400" height="788" loading="lazy" decoding="async" style="object-position:68% 62%"
+          alt="Tentýž dům rozložený na betonových patkách, s oranžovou fasádou a krytou terasou"
           srcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w"
-          sizes="(max-width:820px) 100vw, 50vw">
+          sizes="(max-width:760px) 100vw, (max-width:1280px) 46vw, 600px">
         <figcaption><b>Takhle stojí</b><span>6,32 × 5,90 m bez terasy, tolik plochy pod ním srovnejte</span></figcaption>
       </figure>
     </div>
-    <p class="pr-mikro" style="color:rgba(255,255,255,.7);margin-top:18px">Obě fotky jsou náš dům,
-      ne&nbsp;katalogový snímek.</p>
+    <p class="pr-mikro pr-dva__pozn">Obě fotky jsou náš dům, ne&nbsp;katalogový snímek.</p>
   </div>
 </section>
 
