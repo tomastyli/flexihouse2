@@ -75,20 +75,45 @@ for f in STRANKY:
     if re.search(r"75 mm[^.]{0,60}(celoroční komfort|mírné klima)", raw(f), re.I):
         chyby.append(f"{f}: 75 mm popsáno jako celoroční, stránky doporučují na trvalé bydlení 100 mm")
 
-# 6) Čísla, která se musí shodovat s bází (kde se objeví, musí být stejná)
-FAKTA = {
-    "kancelář od": (r"[Oo]d (\d{2,3} \d{3}) Kč[^.]{0,30}(?:kancel|Office)|(?:kancel|Office)[^.]{0,60}?[Oo]d (\d{2,3} \d{3}) Kč", "70 000"),
-    "elektroinstalace": (r"[Ee]lektroinstalac\w*(?: za| je| v každé sestavě)? (\d \d{3}) Kč", "5 000"),
-    "zateplení 100 mm": (r"[Zz]ateplení 100 mm(?: místo 75 mm)?(?: stojí| za)? (\d{2} \d{3})(?! ?\+)", "30 000"),
-    "klimatizace": (r"[Kk]limatizac\w*[^.+]{0,40}? (\d{2} \d{3})(?: ?Kč)?(?! ?\+)", "29 000"),
-    "terasa": (r"\b[Tt]erasa(?: je příplatek| za| stojí)? (\d{2} \d{3})(?: ?Kč)?(?! ?\+)", "40 000"),
-}
-for nazev, (vzor, ok) in FAKTA.items():
-    for f in STRANKY:
-        for m in re.finditer(vzor, text(f)):
-            hodnota = next((g for g in m.groups() if g), m.group(0))
-            if hodnota.replace(" ", "") != ok.replace(" ", ""):
-                poznamky.append(f"{f}: {nazev} = {hodnota} (báze {ok}): …{text(f)[max(0, m.start()-50):m.end()+30]}…")
+# 6) Každá částka na webu musí být cena z konfigurátoru, hranice jeho rozpětí, nebo součet
+#    jeho položek. Konfigurátor je jediný zdroj pravdy pro ceny (Tomáš 5. 9. 2026).
+KONF = open("konfigurator.html", encoding="utf-8").read()
+ceny = {}
+for m in re.finditer(r"\{[^{}]*?id\s*:\s*'([^']+)'[^{}]*?price\s*:\s*(\d+)[^{}]*\}", KONF):
+    ceny[m.group(1)] = int(m.group(2))
+ZAKLAD = int(re.search(r"base\s*:\s*(\d+)", KONF).group(1))
+ROZPETI = {int(x.replace(" ", "")) for x in re.findall(r"(\d{2,3} \d{3}) Kč", re.search(r"FROM_NOTE = '([^']*)'", KONF).group(1))}
+KM = int(re.search(r"perKm\s*:\s*(\d+)", KONF).group(1))
+POVOLENE = set(ceny.values()) | ROZPETI | {ZAKLAD, KM, 70000, 2000000}  # 70 000 = Flexi Office (mimo konfigurátor), 2 000 000 = pokuta v zákoně
+# součty: základ + libovolná podmnožina položek (dekory jsou jedna položka, mají stejnou cenu);
+# stejná cena může být v součtu vícekrát (koupelna 30 000 i zimní zateplení 30 000)
+import itertools
+polozky = []
+videno_dekor = False
+for k, v in ceny.items():
+    if not v or k in ("footings", "transport", "assembly"):
+        continue
+    if v == 23600:
+        if videno_dekor:
+            continue
+        videno_dekor = True
+    polozky.append(v)
+soucty = set()
+for r in range(1, len(polozky) + 1):
+    for kombinace in itertools.combinations(polozky, r):
+        soucty.add(sum(kombinace)); soucty.add(ZAKLAD + sum(kombinace))
+# práce na pozemku: patky + doprava + montáž, spodní a horní hranice
+soucty.add(min(ROZPETI) + ceny.get("transport", 0) + 30000)
+soucty.add(max(ROZPETI) + ceny.get("transport", 0) + 80000)
+for f in STRANKY + [BAZE]:
+    t = text(f) if f.endswith(".html") else open(f, encoding="utf-8").read().replace("\xa0", " ")
+    for m in re.finditer(r"(\d{1,3}(?: \d{3})+) Kč", t):
+        c = int(m.group(1).replace(" ", ""))
+        if c in POVOLENE or c in soucty:
+            continue
+        poznamky.append(f"{f}: {m.group(1)} Kč není cena z konfigurátoru ani součet jeho položek: …{t[max(0, m.start()-60):m.end()+20]}…")
+if not ceny:
+    chyby.append("konfigurator.html: nepodařilo se přečíst ceník (změnil se tvar dat?)")
 
 # 7) Pomíjivá fakta: hlásit, kde jsou, ať se dají jednou za čas ověřit
 POMIJIVA = ["10 kusů", "Deset kusů", "do 24 hodin", "několik dní"]
@@ -103,10 +128,10 @@ if chyby:
 else:
     print("Rozpory: žádné.")
 if poznamky:
-    print(f"\nČísla k ověření ({len(poznamky)}):")
+    print(f"\nČástky mimo konfigurátor ({len(poznamky)}), rozhodnout, jestli je to chyba:")
     for p in poznamky:
         print("  -", p)
 print("\nPomíjivá tvrzení (ověřit u Dana, když se změní sklad nebo lhůty):")
 for p, fs in mista.items():
     print(f"  „{p}“: {', '.join(fs) if fs else 'nikde'}")
-sys.exit(1 if chyby else 0)
+sys.exit(1 if (chyby or poznamky) else 0)
