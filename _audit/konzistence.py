@@ -84,7 +84,7 @@ for m in re.finditer(r"\{[^{}]*?id\s*:\s*'([^']+)'[^{}]*?price\s*:\s*(\d+)[^{}]*
 ZAKLAD = int(re.search(r"base\s*:\s*(\d+)", KONF).group(1))
 ROZPETI = {int(x.replace(" ", "")) for x in re.findall(r"(\d{2,3} \d{3}) Kč", re.search(r"FROM_NOTE = '([^']*)'", KONF).group(1))}
 KM = int(re.search(r"perKm\s*:\s*(\d+)", KONF).group(1))
-POVOLENE = set(ceny.values()) | ROZPETI | {ZAKLAD, KM, 70000, 2000000}  # 70 000 = Flexi Office (mimo konfigurátor), 2 000 000 = pokuta v zákoně
+POVOLENE = set(ceny.values()) | ROZPETI | {ZAKLAD, KM, 70000, 2000000, 4000000}  # 70 000 = Flexi Office (mimo konfigurátor), 2 000 000 a 4 000 000 = stropy pokut v zákoně
 # součty: základ + libovolná podmnožina položek (dekory jsou jedna položka, mají stejnou cenu);
 # stejná cena může být v součtu vícekrát (koupelna 30 000 i zimní zateplení 30 000)
 import itertools
