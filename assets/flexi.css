@@ -51,6 +51,7 @@ p{margin:0;color:var(--muted)}
 .btn--sm{height:40px;padding:0 18px;font-size:0.78rem;letter-spacing:0.09em}
 .link{display:inline-block;font-weight:700;font-size:0.94rem;border-bottom:2px solid var(--blue);padding-bottom:3px;transition:border-color .2s,color .2s}
 .link:hover,a:hover .link{color:var(--blue)}
+.intro p .link,.grid p .link{display:inline;padding-bottom:1px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .cta a:focus-visible{outline-color:#fff}
 .burger{display:none;width:42px;height:42px;align-items:center;justify-content:center;background:transparent;border:1.5px solid var(--hair);cursor:pointer}
