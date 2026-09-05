@@ -92,6 +92,11 @@
     <div class="kf-progress">
       <div class="kf-steps" id="kfSteps">
         <div class="kf-steps__fill" id="kfStepsFill"></div>
+        <div class="kf-step-pill" data-idx="0"><div class="kf-step-pill__dot">1</div><div class="kf-step-pill__lbl">Velikost</div></div>
+        <div class="kf-step-pill" data-idx="1"><div class="kf-step-pill__dot">2</div><div class="kf-step-pill__lbl">Exteriér</div></div>
+        <div class="kf-step-pill" data-idx="2"><div class="kf-step-pill__dot">3</div><div class="kf-step-pill__lbl">Interiér</div></div>
+        <div class="kf-step-pill" data-idx="3"><div class="kf-step-pill__dot">4</div><div class="kf-step-pill__lbl">Doplňky</div></div>
+        <div class="kf-step-pill" data-idx="4"><div class="kf-step-pill__dot">5</div><div class="kf-step-pill__lbl">Rekapitulace</div></div>
       </div>
     </div>
 
@@ -259,7 +264,6 @@ const params = new URLSearchParams(location.search);
 const modelKey = MODELS[params.get('model')] ? params.get('model') : 'flexihouse';
 const MODEL = MODELS[modelKey];
 
-const STEP_LABELS = ['Velikost', 'Exteriér', 'Interiér', 'Doplňky', 'Rekapitulace'];
 const TOTAL_STEPS = MODEL.steps.length + 1;
 const RECAP_INDEX = MODEL.steps.length;
 
@@ -303,13 +307,9 @@ document.getElementById('kfTagline').textContent = MODEL.tagline;
 document.getElementById('sumModel').textContent = MODEL.name;
 if (MODEL.title) document.title = MODEL.title;
 
-STEP_LABELS.slice(0, TOTAL_STEPS).forEach((lbl, i) => {
-  const pill = document.createElement('div');
-  pill.className = 'kf-step-pill';
-  pill.dataset.idx = i;
-  pill.innerHTML = '<div class="kf-step-pill__dot">'+(i+1)+'</div><div class="kf-step-pill__lbl">'+lbl+'</div>';
+Array.from(elSteps.querySelectorAll('.kf-step-pill')).forEach((pill, i) => {
+  if (i >= TOTAL_STEPS) { pill.remove(); return; }
   pill.addEventListener('click', () => { if (i <= maxReached()) goTo(i); });
-  elSteps.appendChild(pill);
 });
 
 MODEL.steps.forEach((step, si) => {
