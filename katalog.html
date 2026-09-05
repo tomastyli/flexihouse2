@@ -26,18 +26,65 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/flexi-house-patky.webp" imagesrcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w" imagesizes="(max-width:820px) 100vw, 46vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/flexi-house-patky.webp" imagesrcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w" imagesizes="(max-width:760px) 100vw, (max-width:1280px) 31vw, 400px" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=22">
 <link rel="stylesheet" href="assets/produkt.css?v=1">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 <style>figure,figcaption,dl,dd{margin:0}
-.kat-uvod{padding-block:clamp(30px,4vw,52px) 0}
-.kat-uvod h1{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
-  font-variation-settings:'wdth' 86;text-transform:uppercase;
-  font-size:clamp(2rem,5vw,3.6rem);line-height:1;letter-spacing:-.02em;margin:10px 0 14px}
-.kat-uvod p{max-width:56ch;font-size:1.04rem}
+.kat-uvod{padding-block:clamp(30px,4vw,52px) clamp(28px,4vw,48px)}
 .kat-kde{font-size:.85rem;color:var(--muted)}
-</style>
+.kat-uvod__in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,5vw,80px);align-items:start;margin-top:10px}
+.kat-uvod h1{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 86;text-transform:uppercase;font-size:clamp(2.1rem,5.4vw,4rem);line-height:.98;letter-spacing:-.02em;margin:0}
+.kat-uvod__in p{max-width:52ch;font-size:1.04rem}
+.kat-uvod__in .link{margin-top:18px}
+.kat-rada{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:auto;gap:clamp(20px,3vw,40px);padding-bottom:clamp(44px,6vw,84px)}
+.kat-kus{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0}
+.kat-kus figure{position:relative;background:var(--soft)}
+.kat-kus img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.kat-kus__znac{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:600;padding:6px 12px}
+.kat-kus h2{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 86;text-transform:uppercase;font-size:clamp(1.3rem,2.2vw,1.6rem);line-height:1.05;margin:20px 0 0}
+.kat-kus>p{margin-top:10px;font-size:.96rem}
+.kat-kus dl{margin-top:18px;border-top:2px solid var(--ink)}
+.kat-kus dl>div{display:grid;grid-template-columns:34% 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--hair);font-size:.94rem}
+.kat-kus dt{color:var(--muted)}
+.kat-kus dd{font-weight:600;color:var(--ink)}
+.kat-kus dd small{display:block;font-weight:400;color:var(--muted);font-size:.84rem;margin-top:2px}
+.kat-kus dl>div:first-child dd{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;font-size:1.18rem;line-height:1.1}
+.kat-kus__go{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;align-self:end;padding-top:22px}
+.kat-srov{background:var(--soft);padding-block:clamp(44px,6vw,84px)}
+.kat-srov__hlava{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(16px,4vw,64px);align-items:end}
+.kat-srov__hlava p{max-width:50ch}
+.kat-tab{width:100%;border-collapse:collapse;margin-top:clamp(24px,3.4vw,40px);table-layout:fixed}
+.kat-tab th,.kat-tab td{text-align:left;vertical-align:top;padding:14px 18px 14px 0;border-top:1px solid var(--hair);font-size:.95rem}
+.kat-tab thead th{border-top:0;border-bottom:2px solid var(--ink);padding-top:0;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 86;text-transform:uppercase;font-size:1rem;color:var(--ink)}
+.kat-tab thead th:first-child{color:var(--muted);font-family:'Instrument',sans-serif;font-weight:400;text-transform:none;font-size:.85rem}
+.kat-tab tbody th{font-weight:400;color:var(--muted)}
+.kat-tab td{color:var(--ink)}
+.kat-tab td b{font-weight:600}
+.kat-tab td a{font-weight:700;border-bottom:2px solid var(--blue)}
+.kat-tab tr:last-child th,.kat-tab tr:last-child td{border-bottom:1px solid var(--hair)}
+@media(max-width:1000px){
+  .kat-rada{grid-template-columns:1fr 1fr}
+  .kat-kus{grid-row:auto;grid-template-rows:none}
+  .kat-kus:last-child{grid-column:span 2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 clamp(20px,3vw,40px)}
+  .kat-kus:last-child figure{grid-row:span 4}
+  .kat-kus:last-child h2{margin-top:0}
+  .kat-kus:last-child .kat-kus__go{margin-top:0}
+}
+@media(max-width:760px){
+  .kat-uvod__in,.kat-srov__hlava{grid-template-columns:1fr}
+  .kat-rada{grid-template-columns:1fr;gap:34px}
+  .kat-kus:last-child{grid-column:auto;display:grid;grid-template-columns:1fr}
+  .kat-kus__go .btn{width:100%}
+  .kat-tab,.kat-tab thead,.kat-tab tbody,.kat-tab tr,.kat-tab th,.kat-tab td{display:block;padding:0}
+  .kat-tab thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .kat-tab tbody tr{border-top:2px solid var(--ink);padding:12px 0 14px;margin-top:18px}
+  .kat-tab tbody tr:first-child{margin-top:0}
+  .kat-tab tbody th{border:0;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 86;text-transform:uppercase;color:var(--ink);font-size:.95rem;padding-bottom:6px}
+  .kat-tab td{border:0;display:grid;grid-template-columns:38% 1fr;gap:10px;padding:7px 0;font-size:.93rem}
+  .kat-tab td::before{content:attr(data-p);color:var(--muted)}
+  .kat-tab tr:last-child td{border-bottom:0}
+}</style>
 </head>
 <body>
 
@@ -77,99 +124,142 @@
 <section class="kat-uvod">
   <div class="wrap">
     <p class="kat-kde"><a href="/">Domů</a> / <span aria-current="page">Katalog</span></p>
-    <h1>Katalog domů</h1>
-    <p>Tři modely, které se&nbsp;liší tím, co&nbsp;s&nbsp;nimi chcete dělat. Rozkládací dům
-      na&nbsp;bydlení, hotová kancelář skladem nebo sestava složená přesně podle vás.</p>
+    <div class="kat-uvod__in">
+      <h1>Katalog domů</h1>
+      <div>
+        <p>Tři modely a&nbsp;liší se&nbsp;hlavně tím, co&nbsp;s&nbsp;nimi chcete dělat: bydlet, pracovat,
+          nebo si&nbsp;dům poskládat přesně podle sebe. Všechny dovezeme na&nbsp;pozemek kdekoli v&nbsp;Česku.</p>
+        <a class="link" href="/konfigurator">Spočítat cenu v&nbsp;konfigurátoru</a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="pr-blok">
-  <div class="wrap pr-katalog">
+<section class="wrap kat-rada" aria-label="Modely">
 
-    <article class="pr-polozka">
-      <div class="pr-polozka__obraz pr-polozka__obraz--foto">
-        <img src="img/flexi-house-patky.webp" width="1400" height="788"
-          fetchpriority="high" decoding="async"
-          alt="Rozložený dům Flexi House s oranžovou fasádou a krytou terasou na betonových patkách"
-          srcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w"
-          sizes="(max-width:820px) 100vw, 46vw">
-        <span class="pr-polozka__znac">Náš dům</span>
-      </div>
-      <div>
-        <h3>Rozkládací dům</h3>
-        <p>Přijede složený na&nbsp;šířku 2,20&nbsp;m a&nbsp;na&nbsp;místě se&nbsp;rozklopí
-          na&nbsp;zhruba 30&nbsp;m² se&nbsp;dvěma ložnicemi, obývákem a&nbsp;koupelnou.</p>
-        <table class="pr-tab">
-          <tbody>
-            <tr><th scope="row">Rozloženo</th><td>6,32 × 5,90 m</td></tr>
-            <tr><th scope="row">Dispozice</th><td>2 ložnice, jiná není</td></tr>
-            <tr><th scope="row">Dodání</th><td>na zakázku, termín v nabídce</td></tr>
-          </tbody>
-        </table>
-        <p class="pr-polozka__cena">od 400 000 Kč bez DPH
-          <small>hrubá stavba, vybavení a doprava zvlášť</small></p>
-        <p class="pr-polozka__go">
-          <a class="btn" href="/rozkladaci-dum">Zobrazit dům</a>
-          <a class="link" href="/konfigurator">Spočítat cenu</a>
-        </p>
-      </div>
-    </article>
+  <article class="kat-kus">
+    <figure>
+      <img src="img/flexi-house-patky.webp" width="1400" height="788"
+        fetchpriority="high" decoding="async"
+        alt="Rozložený dům Flexi House s oranžovou fasádou a krytou terasou na betonových patkách"
+        srcset="img/flexi-house-patky-480w.webp 480w, img/flexi-house-patky-800w.webp 800w, img/flexi-house-patky-1200w.webp 1200w, img/flexi-house-patky.webp 1400w"
+        sizes="(max-width:760px) 100vw, (max-width:1280px) 31vw, 400px">
+      <span class="kat-kus__znac">Náš dům</span>
+    </figure>
+    <h2>Rozkládací dům</h2>
+    <p>Přijede složený na&nbsp;šířku 2,20&nbsp;m a&nbsp;na&nbsp;místě se&nbsp;rozklopí na&nbsp;bydlení
+      se&nbsp;dvěma ložnicemi, obývákem a&nbsp;koupelnou.</p>
+    <dl>
+      <div><dt>Cena</dt><dd>od 400 000 Kč<small>bez DPH, hrubá stavba</small></dd></div>
+      <div><dt>Velikost</dt><dd>6,32 × 5,90 m<small>zhruba 30 m², 2 ložnice</small></dd></div>
+      <div><dt>Dodání</dt><dd>na zakázku<small>termín v nabídce</small></dd></div>
+    </dl>
+    <p class="kat-kus__go">
+      <a class="btn" href="/rozkladaci-dum">Zobrazit dům</a>
+      <a class="link" href="/konfigurator">Spočítat cenu</a>
+    </p>
+  </article>
 
-    <article class="pr-polozka">
-      <div class="pr-polozka__obraz">
-        <img src="img/vyrez/office-obtah.webp" width="840" height="611" loading="lazy" decoding="async"
-          alt="Kancelářský kontejner Flexi Office, bílý kvádr s tmavým rámem"
-          srcset="img/vyrez/office-obtah-400w.webp 400w, img/vyrez/office-obtah-600w.webp 600w, img/vyrez/office-obtah-800w.webp 800w"
-          sizes="(max-width:820px) 84vw, 44vw">
-      </div>
-      <div>
-        <h3>Flexi Office</h3>
-        <p>Jedna bílá místnost na&nbsp;práci. Kancelář, studio nebo showroom. Nevyrábí se&nbsp;na&nbsp;zakázku,
-          stojí v&nbsp;hale hotová a&nbsp;kdykoli později ji přemístíte jinam.</p>
-        <table class="pr-tab">
-          <tbody>
-            <tr><th scope="row">Provedení</th><td>bílé, jiné neděláme</td></tr>
-            <tr><th scope="row">Skladem</th><td>10 kusů</td></tr>
-            <tr><th scope="row">Dodání</th><td>několik dní od objednávky</td></tr>
-          </tbody>
-        </table>
-        <p class="pr-polozka__cena">od 70 000 Kč bez DPH
-          <small>kupní cena, ne nájem, doprava a patky zvlášť</small></p>
-        <p class="pr-polozka__go">
-          <a class="btn" href="/flexi-office">Zobrazit kancelář</a>
-          <a class="link" href="/poptavka">Poptat</a>
-        </p>
-      </div>
-    </article>
+  <article class="kat-kus">
+    <figure>
+      <img src="img/flexi-office.webp" width="1376" height="768" loading="lazy" decoding="async"
+        alt="Kancelářský kontejner Flexi Office, bílý kvádr s tmavým rámem a vstupními dveřmi"
+        srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w"
+        sizes="(max-width:760px) 100vw, (max-width:1280px) 31vw, 400px">
+      <span class="kat-kus__znac">Skladem</span>
+    </figure>
+    <h2>Flexi Office</h2>
+    <p>Jedna bílá místnost na&nbsp;práci. Kancelář, studio nebo showroom. Stojí hotová v&nbsp;hale
+      a&nbsp;kdykoli později ji přemístíte jinam.</p>
+    <dl>
+      <div><dt>Cena</dt><dd>od 70 000 Kč<small>bez DPH, kupní cena, ne nájem</small></dd></div>
+      <div><dt>Velikost</dt><dd>jedna místnost<small>bílé provedení, jiné neděláme</small></dd></div>
+      <div><dt>Dodání</dt><dd>několik dní<small>10 kusů skladem</small></dd></div>
+    </dl>
+    <p class="kat-kus__go">
+      <a class="btn" href="/flexi-office">Zobrazit kancelář</a>
+      <a class="link" href="/poptavka">Poptat</a>
+    </p>
+  </article>
 
-    <article class="pr-polozka">
-      <div class="pr-polozka__obraz pr-polozka__obraz--foto">
-        <img src="img/dum-na-miru.webp" width="1400" height="788" loading="lazy" decoding="async"
-          alt="Vizualizace modulárního domu s dřevěnou fasádou v lese"
-          sizes="(max-width:820px) 100vw, 46vw">
-        <span class="pr-polozka__znac">Vizualizace</span>
-      </div>
-      <div>
-        <h3>Dům na míru</h3>
-        <p>Sestava složená z&nbsp;modulů podle vašeho zadání. Napište, co&nbsp;potřebujete,
-          a&nbsp;spočítáme to. V&nbsp;konfigurátoru si zatím naklikáte rozkládací dům
-          a&nbsp;uvidíte, o&nbsp;kolik se&nbsp;cena hne u&nbsp;každé volby.</p>
-        <table class="pr-tab">
-          <tbody>
-            <tr><th scope="row">Fasáda</th><td>obklad nebo 11 dekorů</td></tr>
-            <tr><th scope="row">Střecha</th><td>plochá nebo sedlová</td></tr>
-            <tr><th scope="row">Zateplení</th><td>75 nebo 100 mm</td></tr>
-          </tbody>
-        </table>
-        <p class="pr-polozka__cena">podle zadání
-          <small>cenu na míru dopředu neodhadneme, spočítáme ji v nabídce</small></p>
-        <p class="pr-polozka__go">
-          <a class="btn" href="/poptavka">Chci nabídku na míru</a>
-          <a class="link" href="/konfigurator">Konfigurátor počítá rozkládací dům</a>
-        </p>
-      </div>
-    </article>
+  <article class="kat-kus">
+    <figure>
+      <img src="img/dum-na-miru.webp" width="1400" height="788" loading="lazy" decoding="async"
+        alt="Vizualizace modulárního domu s dřevěnou fasádou v lese"
+        srcset="img/dum-na-miru-480w.webp 480w, img/dum-na-miru-800w.webp 800w, img/dum-na-miru-1200w.webp 1200w, img/dum-na-miru.webp 1400w"
+        sizes="(max-width:760px) 100vw, (max-width:1280px) 31vw, 400px">
+      <span class="kat-kus__znac">Vizualizace</span>
+    </figure>
+    <h2>Dům na míru</h2>
+    <p>Sestava z&nbsp;modulů podle vašeho zadání. Napište, co&nbsp;potřebujete, a&nbsp;spočítáme to.</p>
+    <dl>
+      <div><dt>Cena</dt><dd>podle zadání<small>spočítáme ji v nabídce</small></dd></div>
+      <div><dt>Velikost</dt><dd>podle zadání<small>dispozice, střecha i fasáda na výběr</small></dd></div>
+      <div><dt>Dodání</dt><dd>na zakázku<small>termín v nabídce</small></dd></div>
+    </dl>
+    <p class="kat-kus__go">
+      <a class="btn" href="/poptavka">Chci nabídku na míru</a>
+      <a class="link" href="/konfigurator">Konfigurátor</a>
+    </p>
+  </article>
 
+</section>
+
+<section class="kat-srov" aria-labelledby="srov-h">
+  <div class="wrap">
+    <div class="kat-srov__hlava">
+      <h2 class="pr-h" id="srov-h">Který se&nbsp;hodí pro vás</h2>
+      <p>Když víte, co&nbsp;od&nbsp;domu chcete, výběr je jednoduchý. Tady je vedle sebe to, v&nbsp;čem
+        se&nbsp;ty tři modely opravdu liší.</p>
+    </div>
+    <table class="kat-tab">
+      <thead>
+        <tr>
+          <th scope="col">Srovnání</th>
+          <th scope="col">Rozkládací dům</th>
+          <th scope="col">Flexi Office</th>
+          <th scope="col">Dům na míru</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Hodí se na</th>
+          <td data-p="Rozkládací dům"><span>trvalé bydlení, chatu, glamping</span></td>
+          <td data-p="Flexi Office"><span>kancelář, studio, showroom, zázemí na&nbsp;stavbě</span></td>
+          <td data-p="Dům na míru"><span>když hotová dispozice nesedí</span></td>
+        </tr>
+        <tr>
+          <th scope="row">Cena od</th>
+          <td data-p="Rozkládací dům"><span><b>400 000 Kč</b> bez DPH, hrubá stavba</span></td>
+          <td data-p="Flexi Office"><span><b>70 000 Kč</b> bez DPH, kupní cena</span></td>
+          <td data-p="Dům na míru"><span>podle zadání, v&nbsp;nabídce</span></td>
+        </tr>
+        <tr>
+          <th scope="row">Velikost</th>
+          <td data-p="Rozkládací dům"><span>6,32 × 5,90 m, zhruba 30 m²</span></td>
+          <td data-p="Flexi Office"><span>jedna místnost</span></td>
+          <td data-p="Dům na míru"><span>podle zadání</span></td>
+        </tr>
+        <tr>
+          <th scope="row">Dodání</th>
+          <td data-p="Rozkládací dům"><span>na zakázku, termín v&nbsp;nabídce</span></td>
+          <td data-p="Flexi Office"><span>několik dní, 10 kusů skladem</span></td>
+          <td data-p="Dům na míru"><span>na zakázku, termín v&nbsp;nabídce</span></td>
+        </tr>
+        <tr>
+          <th scope="row">Co si volíte</th>
+          <td data-p="Rozkládací dům"><span>kuchyň, koupelna, topení a&nbsp;terasa zvlášť</span></td>
+          <td data-p="Flexi Office"><span>jen bílé provedení, vybavení podle nabídky</span></td>
+          <td data-p="Dům na míru"><span>fasáda obklad nebo 11 dekorů, střecha plochá nebo sedlová, zateplení 75 nebo 100 mm</span></td>
+        </tr>
+        <tr>
+          <th scope="row">Podrobně</th>
+          <td data-p="Rozkládací dům"><span><a href="/rozkladaci-dum">Rozkládací dům</a></span></td>
+          <td data-p="Flexi Office"><span><a href="/flexi-office">Flexi Office</a></span></td>
+          <td data-p="Dům na míru"><span><a href="/poptavka">Poptávka na míru</a></span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
