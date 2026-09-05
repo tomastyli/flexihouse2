@@ -109,8 +109,8 @@ export async function ulozPoptavku(env, p) {
   if (!maDb(env)) return null;
   try {
     const r = await env.DB.prepare(
-      'INSERT INTO poptavky (vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, mail_odeslan) ' +
-      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)'
+      'INSERT INTO poptavky (vzniklo, typ, jmeno, email, telefon, model, zprava, konfigurace, cena, zdroj, relace_kod, mail_odeslan) ' +
+      'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)'
     ).bind(
       new Date().toISOString(),
       p.typ,
@@ -121,7 +121,8 @@ export async function ulozPoptavku(env, p) {
       p.zprava || null,
       p.konfigurace || null,
       p.cena == null ? null : p.cena,
-      p.zdroj || null
+      p.zdroj || null,
+      p.relaceKod || null
     ).run();
     return r.meta ? r.meta.last_row_id : null;
   } catch (e) {
@@ -138,5 +139,84 @@ export async function oznacMail(env, id, ok, chyba) {
       .run();
   } catch (e) {
     console.error('oznacMail selhalo:', e);
+  }
+}
+
+const KOD_ZNAKY = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+
+export function novyKod(delka) {
+  const n = delka || 6;
+  const bytes = new Uint8Array(n);
+  crypto.getRandomValues(bytes);
+  let s = '';
+  for (let i = 0; i < n; i++) s += KOD_ZNAKY[bytes[i] % KOD_ZNAKY.length];
+  return 'FH-' + s;
+}
+
+export function platnyKod(kod) {
+  return typeof kod === 'string' && /^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kod.trim().toUpperCase());
+}
+
+export async function hashIp(env, ip) {
+  if (!env.ADMIN_SECRET || !ip) return null;
+  const h = await hmac(env.ADMIN_SECRET, 'ip:' + ip);
+  return h.slice(0, 22);
+}
+
+const RELACE_ZA_HODINU = 20;
+
+export async function limitVycerpan(env, ipHash) {
+  if (!maDb(env) || !ipHash) return false;
+  try {
+    const od = new Date(Date.now() - 3600000).toISOString();
+    const row = await env.DB.prepare('SELECT COUNT(*) AS n FROM relace WHERE ip_hash = ? AND vzniklo > ?')
+      .bind(ipHash, od).first();
+    return !!row && row.n >= RELACE_ZA_HODINU;
+  } catch {
+    return false;
+  }
+}
+
+export async function ulozRelaci(env, r) {
+  if (!maDb(env)) return null;
+  for (let pokus = 0; pokus < 5; pokus++) {
+    const kod = novyKod();
+    try {
+      await env.DB.prepare(
+        'INSERT INTO relace (kod, vzniklo, typ, model, obsah, cena, souhrn, ip_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+      ).bind(
+        kod,
+        new Date().toISOString(),
+        r.typ,
+        r.model || null,
+        r.obsah,
+        r.cena == null ? null : r.cena,
+        r.souhrn || null,
+        r.ipHash || null
+      ).run();
+      return kod;
+    } catch (e) {
+      if (!String(e).includes('UNIQUE')) {
+        console.error('ulozRelaci selhalo:', e);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+
+export async function nactiRelaci(env, kod) {
+  if (!maDb(env)) return null;
+  try {
+    const row = await env.DB.prepare(
+      'SELECT kod, vzniklo, typ, model, obsah, cena, souhrn, zobrazeni FROM relace WHERE kod = ?'
+    ).bind(kod).first();
+    if (!row) return null;
+    await env.DB.prepare('UPDATE relace SET zobrazeni = zobrazeni + 1, naposledy = ? WHERE kod = ?')
+      .bind(new Date().toISOString(), kod).run();
+    return row;
+  } catch (e) {
+    console.error('nactiRelaci selhalo:', e);
+    return null;
   }
 }

@@ -58,7 +58,7 @@
 .opt--swatch .opt__pad{display:block;padding:12px 13px 14px}
 .opt--swatch.selected .opt__img{border-bottom-color:var(--ink)}
 
-.kf-actions{margin-top:clamp(24px,3vw,38px);padding-top:22px;border-top:1px solid var(--hair)}
+.kf-actions{margin-top:clamp(24px,3vw,38px);padding-top:22px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .kf-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .kf-nav__back{background:none;border:0;padding:0;font:inherit;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 .kf-nav__back:hover{color:var(--ink)}
@@ -197,3 +197,22 @@ body.kf-zoomed{overflow:hidden}
   display:none;opacity:0;visibility:hidden;z-index:5;pointer-events:none;
   transition:opacity .18s,display .18s allow-discrete,visibility .18s allow-discrete}
 .kf-vat:hover .kf-tip,.kf-vat.is-open .kf-tip,.kf-info:focus-visible + .kf-tip{display:block;opacity:1;visibility:visible}
+
+.kf-kod{margin-top:clamp(24px,3vw,38px);border:1.5px solid var(--ink);background:var(--soft);padding:20px}
+.kf-kod__h{font-size:0.78rem;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:var(--muted)}
+.kf-kod__val{font-family:'Bricolage',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;font-size:clamp(1.6rem,4vw,2.1rem);letter-spacing:.04em;margin:6px 0 10px}
+.kf-kod__val:empty{display:none}
+.kf-kod__note{font-size:0.88rem;color:var(--muted);margin:0 0 14px}
+.kf-kod__row{display:flex;gap:10px;flex-wrap:wrap}
+.kf-kod__row input{flex:1 1 240px;min-width:0;padding:11px 13px;border:1.5px solid var(--hair);background:var(--paper);font:inherit;font-size:0.88rem;color:var(--ink)}
+.kf-kod__row input:focus{border-color:var(--ink);outline:none}
+.kf-kod__row .btn{flex:0 0 auto}
+
+.kf-obnova{margin-top:18px;padding-top:16px;border-top:1px solid var(--hair);max-width:420px}
+.kf-obnova label{display:block;font-size:0.82rem;color:var(--muted);margin-bottom:8px}
+.kf-obnova__row{display:flex;gap:8px}
+.kf-obnova__row input{flex:1 1 auto;min-width:0;padding:10px 12px;border:1.5px solid var(--hair);background:var(--paper);font:inherit;font-size:0.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.kf-obnova__row input:focus{border-color:var(--ink);outline:none}
+.kf-obnova__row .btn{flex:0 0 auto;padding-block:10px}
+.kf-obnova__err{margin:8px 0 0;font-size:0.82rem;color:#a2382c;min-height:1em}
+.kf-obnova__err:empty{min-height:0}

@@ -154,6 +154,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .form__note{font-size:0.85rem;color:var(--muted);margin:0}
 .form__note a{border-bottom:1px solid var(--blue)}
 .form__status{font-size:0.95rem;margin:0;padding:14px 16px;border-left:3px solid var(--blue);background:var(--soft)}
+.form__status:empty{display:none}
 .form__status[data-state="err"]{border-left-color:#b3402f}
 .aside{position:relative;background:var(--paper);border:2px solid var(--ink);padding:clamp(24px,3vw,34px)}
 .aside::before{content:'';position:absolute;left:-2px;right:-2px;top:-2px;height:7px;background:var(--blue)}
