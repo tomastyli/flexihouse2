@@ -2556,10 +2556,13 @@ global.Flexi3D = {
 function nahrada(canvas, opt) {
   var zaklad = (opt && opt.zaklad) || '';
   var im = document.createElement('img');
-  im.src = zaklad + 'img/flexi-house-1200w.webp';
-  im.alt = 'Flexi House';
-  im.loading = 'lazy';
-  im.style.cssText = 'width:100%;height:auto;display:block;border-radius:inherit';
+  im.src = zaklad + 'img/dum-rozlozeny-venku-1200w.webp';
+  im.srcset = zaklad + 'img/dum-rozlozeny-venku-480w.webp 480w, ' + zaklad + 'img/dum-rozlozeny-venku-800w.webp 800w, ' + zaklad + 'img/dum-rozlozeny-venku-1200w.webp 1200w';
+  im.sizes = '(max-width:820px) 100vw, 46vw';
+  im.width = 1200; im.height = 750;
+  im.alt = 'Rozkládací dům Flexi House s krytou terasou';
+  im.loading = 'eager'; im.decoding = 'async';
+  im.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit';
   var rodic = canvas.parentNode;
   if (rodic) {
     rodic.replaceChild(im, canvas);
