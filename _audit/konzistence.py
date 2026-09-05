@@ -14,6 +14,7 @@ import sys
 
 STRANKY = [f for f in sorted(glob.glob("*.html")) if not f.startswith("_") and f != "admin.html"]
 BAZE = ".docs/poradce/baze.md"
+GBP = ".docs/google-profil.md"  # popis na Google profilu, musí sedět s webem
 chyby = []
 poznamky = []
 
@@ -41,8 +42,8 @@ def ldjson(f):
 
 
 # 1) Cena „od": web nesmí slibovat 400 000, konfigurátor umí nejméně 405 000
-for f in STRANKY + [BAZE]:
-    for m in re.finditer(r"[Oo]d 400 000", raw(f)):
+for f in STRANKY + [BAZE, GBP]:
+    for m in re.finditer(r"[Oo]d 400 000|400 000 Kč bez DPH za hrubou", raw(f)):
         chyby.append(f"{f}: „od 400 000“, konfigurátor dává nejméně 405 000 (základ 400 000 + elektroinstalace 5 000)")
 
 # 2) Schéma: cena domu ve strukturovaných datech = 405000, kancelář 70000
@@ -60,7 +61,7 @@ for f in STRANKY:
                 chyby.append(f"{f}: schéma {jm!r} má cenu {cena}, má být 405000")
 
 # 3) Topení: dodává se „klimatizace, která topí i chladí“, ne tepelné čerpadlo
-for f in STRANKY:
+for f in STRANKY + [BAZE, GBP]:
     if re.search(r"tepeln\w+ čerpadl", raw(f)):
         chyby.append(f"{f}: „tepelné čerpadlo“, konfigurátor i báze říkají „klimatizace, topí i chladí“")
 
@@ -106,7 +107,7 @@ for r in range(1, len(polozky) + 1):
 # práce na pozemku: patky + doprava + montáž, spodní a horní hranice
 soucty.add(min(ROZPETI) + ceny.get("transport", 0) + 30000)
 soucty.add(max(ROZPETI) + ceny.get("transport", 0) + 80000)
-for f in STRANKY + [BAZE]:
+for f in STRANKY + [BAZE, GBP]:
     t = text(f) if f.endswith(".html") else open(f, encoding="utf-8").read().replace("\xa0", " ")
     for m in re.finditer(r"(\d{1,3}(?: \d{3})+) Kč", t):
         c = int(m.group(1).replace(" ", ""))
