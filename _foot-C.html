@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patička C — certifikace, Firmy.cz, Statly</title>
+<link rel="stylesheet" href="assets/flexi.css">
+<style>
+.duvera{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:clamp(40px,6vw,110px);padding-bottom:clamp(34px,4vw,48px);margin-bottom:clamp(38px,4.6vw,58px);border-bottom:1.5px solid var(--hair)}
+.certy{align-self:start}
+.certy ul{margin:16px 0 0;padding:0;list-style:none;display:grid}
+.certy li{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1.5px solid var(--hair);font-size:0.95rem;font-weight:600}
+.certy li svg{width:19px;height:19px;flex:none;color:var(--blue)}
+.certy li span{margin-left:auto;font-weight:400;font-size:0.82rem;color:var(--muted)}
+.certy li.ceka{color:var(--muted)}
+.certy__pozn{margin-top:16px;font-size:0.85rem;max-width:40ch}
+.hodn{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1.5px solid var(--hair)}
+.hodn svg{width:26px;height:26px;flex:none}
+.hodn__cislo{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 84;font-size:1.6rem;line-height:1;letter-spacing:-0.02em}
+.hodn__hvezdy{display:flex;gap:2px}
+.hodn__hvezdy svg{width:14px;height:14px;color:#f0a71b}
+.hodn__popis{font-size:0.86rem;color:var(--muted)}
+.hodn:hover .hodn__popis{color:var(--ink)}
+.widget{width:100%;height:270px;border:1.5px solid var(--hair);background:#fff;display:block}
+.widget__pozn{margin-top:10px;font-size:0.8rem;color:var(--muted)}
+.foot__soc{display:flex;gap:10px;margin-top:26px}
+.soc{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:1.5px solid var(--hair);color:var(--ink);transition:background-color .2s,color .2s,border-color .2s}
+.soc svg{width:20px;height:20px}
+.soc:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.statly{display:inline-flex;align-items:center;gap:10px;margin-left:auto;color:var(--muted);font-size:0.82rem;transition:color .2s}
+.statly:hover{color:var(--ink)}
+.statly__s{width:14px;height:27px;flex:none;color:var(--ink)}
+@media(max-width:860px){.duvera{grid-template-columns:1fr;gap:34px}}
+</style>
+</head>
+<body style="margin:0">
+
+<section class="cta" style="padding:clamp(40px,5vw,64px) 0">
+  <div class="wrap cta__in">
+    <h2>Chcete znát cenu?</h2>
+    <div><p>Modrá sekce nad patičkou zůstává, aby byl vidět přechod.</p></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+
+    <div class="duvera">
+      <div class="certy">
+        <h3>Certifikace a doklady</h3>
+        <ul>
+          <li class="ceka" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            Prohlášení o shodě <span>doplníme</span>
+          </li>
+          <li class="ceka" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            Certifikát <span>doplníme</span>
+          </li>
+          <li class="ceka" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+            Certifikát <span>doplníme</span>
+          </li>
+        </ul>
+        <p class="certy__pozn">Doklady k domům vám pošleme s nabídkou. Chcete je vidět dřív? Napište si o ně.</p>
+      </div>
+
+      <div>
+        <a class="hodn" href="#" data-placeholder="ano">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-2.7-.4-4H24v7.3h12.1c-.2 1.9-1.6 4.9-4.5 6.9l6.9 5.3c4.1-3.8 6.6-9.4 6.6-15.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.2 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1z"/></svg>
+          <span class="hodn__cislo">4,9</span>
+          <span class="hodn__hvezdy" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+          </span>
+          <span class="hodn__popis">23 hodnocení na Googlu</span>
+        </a>
+
+        <iframe class="widget" title="Hodnocení Flexi House na Firmy.cz" loading="lazy" src="https://www.firmy.cz/detail/13311173-vrata-bylany-bylany.html?widget=&amp;limit=3"></iframe>
+        <p class="widget__pozn" data-placeholder="ano">Náhled s cizím profilem. Naostro se vymění za profil Flexi House.</p>
+      </div>
+    </div>
+
+    <div class="foot__in">
+      <div>
+        <span class="brand">
+          <svg viewBox="9 16 46 33" aria-hidden="true">
+            <path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/><path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/><path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/><path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/><path d="M 44.6 30.7 L 50.12 27.94 L 50.12 23.74 L 44.6 26.5 Z" fill="#eef2f4"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/><path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/><path d="M 36.365 36.2175 L 36.635 36.0825 L 36.635 25.4825 L 36.365 25.6175 Z" fill="#16202a"/><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/><path d="M 20 46 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/><path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/><path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.24 Z" fill="#eef2f4"/>
+          </svg>
+          Flexi House
+        </span>
+        <p class="foot__note">Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Praha, Litomyšl, Brno a odtud po celé ČR.</p>
+        <div class="foot__soc">
+          <a class="soc" href="#" aria-label="Facebook" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 3.5h-2.2A3.8 3.8 0 0 0 9.5 7.3V10H7v3.2h2.5v7.3h3.3v-7.3h2.5l.5-3.2h-3V7.6c0-.8.4-1.2 1.2-1.2h1.5z"/></svg>
+          </a>
+          <a class="soc" href="#" aria-label="Instagram" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="16.9" cy="7.1" r="1.15" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="soc" href="#" aria-label="YouTube" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.4" y="5.4" width="19.2" height="13.2" rx="4"/><path d="m10.3 9.4 5 2.6-5 2.6z"/></svg>
+          </a>
+        </div>
+
+      </div>
+      <div>
+        <h3>Domy</h3>
+        <ul>
+          <li><a href="/flexi-house">Rozkládací dům</a></li>
+          <li><a href="/flexi-office">Flexi Office</a></li>
+          <li><a href="/katalog">Katalog</a></li>
+          <li><a href="/konfigurator">Konfigurátor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Společnost</h3>
+        <ul>
+          <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/caste-dotazy">Časté dotazy</a></li>
+          <li><a href="/stavebni-povoleni">Stavební povolení</a></li>
+          <li><a href="/celorocni-bydleni">Celoroční bydlení</a></li>
+          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
+          <li><a href="/podminky">Podmínky použití</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <ul>
+          <li><a class="foot__person" href="tel:+420607321543">Dan Prokeš<span>607 321 543</span></a></li>
+          <li><a class="foot__person" href="tel:+420730171909">Jan Prokeš<span>730 171 909</span></a></li>
+          <li><a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a></li>
+          <li class="foot__adr">Sokolovská 546<span>570 01 Litomyšl</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__legal">
+      <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10 · Zapsáno v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 308049</span>
+      <a class="statly" href="https://statly.cz/" target="_blank" rel="noopener">o web se stará<span class="vh"> Statly</span> <svg class="statly__s" viewBox="310 129 401 766" aria-hidden="true"><g transform="translate(0,1024) scale(0.1,-0.1)" fill="currentColor"><path d="M6390 8884 c-57 -22 -90 -44 -167 -112 -105 -91 -177 -154 -293 -252 -104 -88 -178 -152 -291 -250 -147 -128 -202 -176 -256 -221 -47 -40 -107 -92 -368 -319 -127 -110 -384 -331 -570 -490 -87 -74 -182 -155 -210 -180 -28 -25 -98 -83 -155 -130 -57 -47 -108 -89 -114 -95 -6 -5 -45 -39 -86 -75 -41 -36 -77 -67 -80 -70 -3 -3 -34 -30 -70 -60 -71 -61 -95 -85 -190 -186 -66 -70 -118 -133 -134 -163 -5 -9 -17 -25 -27 -36 -27 -31 -134 -243 -157 -310 -50 -152 -61 -301 -53 -710 6 -292 7 -301 29 -332 14 -20 38 -37 62 -44 66 -20 109 10 323 225 104 105 201 208 214 228 l25 37 -25 58 c-59 140 -63 267 -15 433 47 163 228 395 458 589 30 25 108 93 173 151 65 58 143 125 172 150 76 64 253 220 370 325 55 50 127 112 160 140 33 27 89 77 125 110 36 33 117 105 180 160 63 55 142 125 175 155 64 57 231 207 420 376 61 55 144 128 185 164 41 36 99 88 130 116 30 28 75 68 100 90 169 148 214 204 225 274 14 99 -26 191 -100 230 -39 22 -135 35 -165 24z M6260 6858 c-52 -30 -85 -56 -201 -164 -186 -172 -260 -236 -343 -299 -79 -58 -354 -287 -626 -520 -74 -64 -173 -148 -220 -187 -47 -40 -92 -79 -100 -88 -8 -8 -35 -33 -60 -54 -25 -22 -92 -83 -150 -136 -58 -54 -127 -117 -155 -140 -260 -223 -297 -284 -246 -395 34 -74 102 -115 188 -115 84 0 132 32 343 225 36 33 168 152 295 265 126 113 266 239 310 280 131 121 288 257 395 340 25 19 61 49 80 66 19 18 64 55 100 84 36 28 74 58 85 68 11 9 41 32 66 52 80 61 142 113 200 165 30 27 103 90 161 139 137 113 160 148 162 236 1 49 -4 76 -19 103 -11 20 -22 37 -25 37 -4 0 -15 8 -26 18 -51 46 -152 56 -214 20z M6705 5824 c-46 -7 -131 -53 -183 -98 -26 -23 -94 -78 -151 -121 -57 -44 -135 -106 -175 -138 -39 -32 -78 -64 -86 -70 -29 -23 -125 -102 -130 -107 -3 -3 -30 -25 -60 -50 -30 -24 -75 -62 -100 -85 -25 -22 -72 -62 -105 -90 -33 -27 -95 -81 -139 -120 -43 -38 -98 -86 -121 -105 -39 -33 -141 -122 -319 -280 -79 -70 -229 -205 -366 -329 -129 -118 -385 -347 -475 -426 -44 -39 -94 -84 -110 -100 -34 -33 -230 -207 -344 -305 -125 -107 -169 -157 -182 -203 -23 -86 7 -169 80 -222 40 -30 54 -35 104 -35 40 0 71 7 100 21 37 19 238 189 292 246 11 12 43 41 70 64 28 23 97 86 155 139 58 53 125 115 150 136 25 21 47 41 50 44 3 3 34 32 70 65 36 33 119 110 185 171 66 60 143 130 170 155 62 54 415 389 470 445 22 22 80 83 130 135 49 52 144 150 210 219 66 69 138 145 159 170 21 25 80 88 130 140 50 52 129 138 176 190 46 52 90 96 97 98 11 3 12 -10 7 -60 -6 -62 0 -105 32 -238 34 -138 30 -229 -17 -404 -44 -163 -145 -323 -309 -486 -59 -59 -246 -232 -320 -296 -25 -21 -56 -50 -70 -64 -14 -14 -72 -68 -130 -120 -57 -52 -138 -127 -180 -166 -41 -39 -95 -89 -120 -110 -25 -21 -70 -62 -100 -90 -30 -29 -83 -76 -117 -105 -34 -30 -124 -110 -200 -178 -76 -68 -176 -158 -223 -200 -224 -200 -250 -235 -250 -335 0 -30 5 -58 10 -61 6 -3 10 -13 10 -21 0 -22 69 -93 110 -112 24 -12 60 -17 115 -17 79 0 81 1 142 45 34 25 115 92 180 150 64 58 136 121 159 140 46 38 149 130 414 365 25 23 61 54 80 69 19 16 55 47 80 70 25 22 79 70 120 106 41 36 77 67 80 70 3 3 39 34 80 70 41 36 95 84 120 106 25 23 74 66 109 95 35 30 92 79 127 109 35 30 101 87 146 126 103 88 217 207 286 299 50 66 140 231 156 285 23 78 29 100 37 145 27 147 30 215 24 540 -6 358 -18 518 -42 573 -21 47 -70 100 -114 123 -39 20 -129 31 -184 23z M3961 2052 c-45 -38 -64 -94 -48 -147 20 -70 69 -105 146 -105 40 0 53 5 83 33 47 43 63 95 47 145 -7 20 -28 52 -47 70 -31 28 -42 32 -92 32 -46 0 -61 -5 -89 -28z M3459 1591 c-48 -40 -66 -95 -48 -146 26 -71 85 -104 162 -90 42 8 60 23 86 68 25 45 26 73 5 116 -41 82 -138 107 -205 52z"/></g></svg></a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

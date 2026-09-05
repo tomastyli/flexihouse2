@@ -373,3 +373,92 @@ span.soc{color:rgba(22,32,42,.55)}
   .hodn+.hodn{padding-left:0;border-left:0}
   .foot__soc{margin-left:0;width:100%}
 }
+
+/* ---- katalog: řada modelů ---------------------------------------------
+   Tři produkty přicházejí ze tří zdrojů (fotka z haly, studiový render,
+   zakázka bez tvaru). Sjednocuje je plát: stejná tmavá plocha, stejná
+   podlahová linka a jeden a týž stín, tedy jedno světlo. Výřezy mají
+   zapečený průhledný lem různé tloušťky (dům 2,95 %, kancelář 2,29 %
+   vlastní výšky), proto se spodek dorovnává translateY, jinak by každý
+   objekt plul v jiné výšce nad linkou. */
+.rada{padding:clamp(30px,4vw,54px) 0 clamp(40px,6vw,72px)}
+.kus{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(26px,4vw,58px);
+  align-items:center;padding:clamp(30px,4vw,52px) 0;border-top:1px solid var(--hair)}
+.kus:last-of-type{border-bottom:1px solid var(--hair)}
+.kus--obraceny .kus__plat{order:2}
+.kus--bezobrazku{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}
+.kus__plat{position:relative;background:var(--ink);aspect-ratio:3/2;overflow:hidden}
+.kus__plat::after{content:"";position:absolute;left:clamp(18px,3vw,40px);right:clamp(18px,3vw,40px);
+  bottom:clamp(22px,3vw,38px);height:1px;background:rgba(255,255,255,.16)}
+/* Obrázek nesmí určovat výšku plátu, jinak se plát roztáhne podle své vlastní
+   výšky a poměr 3:2 přestane platit. Proto absolutní pozice a object-fit.
+   Oba výřezy stojí na spodní hraně (object-position), takže sedí na jedné
+   podlahové lince i při různě vysokém průhledném lemu. */
+.kus__vyrez{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  object-position:center bottom;
+  padding:clamp(20px,2.8vw,36px) clamp(18px,3vw,40px) clamp(30px,3.9vw,52px);
+  filter:drop-shadow(0 18px 26px rgba(0,0,0,.55))}
+.kus__vyrez--office{padding-left:clamp(40px,7vw,96px);padding-right:clamp(40px,7vw,96px)}
+.kus__text h3{font-size:clamp(1.5rem,3.2vw,2.3rem);font-variation-settings:'wdth' 86,'opsz' 96;margin:0 0 12px}
+.kus__text>p{max-width:52ch}
+.kus__data{margin:22px 0 0;border-top:1px solid var(--hair)}
+.kus__data>div{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:10px 0;border-bottom:1px solid var(--hair)}
+.kus__data dt{color:var(--muted);font-size:.9rem;flex:none}
+.kus__data dd{margin:0;font-weight:600;font-size:.95rem;text-align:right}
+.kus__cena{margin:20px 0 0;font-size:.92rem}
+.kus__cena b{display:block;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;font-size:1.5rem;line-height:1.1;color:var(--ink);margin-bottom:4px}
+.kus__go{margin-top:24px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+
+/* ---- katalog: za co se připlácí ---------------------------------------
+   Odpověď na past, kterou by výřezy samy o sobě přinesly: kdyby na stránce
+   nezůstal jediný snímek v reálném prostředí, vypadalo by to vygenerovaně,
+   jen z opačné strany. Tohle jsou reálné fotky z natáčení 31. 8. a každá
+   nese cenu položky z konfigurátoru, takže obrázek dokazuje, nezdobí. */
+.dukaz{background:var(--soft);padding:clamp(40px,6vw,76px) 0}
+.dukaz h2{font-size:clamp(1.35rem,2.9vw,2rem);font-variation-settings:'wdth' 86,'opsz' 96}
+.dukaz__lead{max-width:58ch;margin-top:12px}
+.dukaz__rada{list-style:none;margin:clamp(26px,3.4vw,42px) 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,2.4vw,30px)}
+.dukaz__kus{background:var(--paper);display:flex;flex-direction:column}
+.dukaz__kus img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.dukaz__popis{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  padding:14px clamp(14px,1.6vw,20px) 0}
+.dukaz__popis b{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;text-transform:uppercase;font-size:1.02rem;letter-spacing:-.01em}
+.dukaz__popis span{font-weight:600;font-size:.95rem;white-space:nowrap}
+.dukaz__kus p{padding:6px clamp(14px,1.6vw,20px) clamp(16px,1.8vw,20px);font-size:.9rem}
+
+/* ---- katalog: co si musíte pohlídat sami ------------------------------ */
+.hlidat{background:var(--ink);color:var(--paper);padding:clamp(44px,6vw,80px) 0}
+.hlidat__in{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(26px,4vw,60px);align-items:start}
+.hlidat h2{color:var(--paper);font-size:clamp(1.35rem,2.9vw,2rem);font-variation-settings:'wdth' 86,'opsz' 96}
+.hlidat__uvod p{color:rgba(255,255,255,.72);margin-top:12px;max-width:34ch}
+.hlidat__seznam{margin:0;border-top:1px solid rgba(255,255,255,.2)}
+.hlidat__seznam>div{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.2)}
+.hlidat__seznam dt{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;
+  font-variation-settings:'wdth' 88;text-transform:uppercase;font-size:1rem;letter-spacing:-.01em;margin-bottom:5px}
+.hlidat__seznam dd{margin:0;color:rgba(255,255,255,.78);font-size:.95rem}
+.hlidat__pozn{grid-column:1/-1;color:rgba(255,255,255,.6);font-size:.88rem;
+  padding-top:clamp(18px,2.2vw,26px);max-width:70ch}
+
+@media(max-width:1100px){
+  .dukaz__rada{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dukaz__kus:last-child{grid-column:1/-1}
+  .dukaz__kus:last-child img{aspect-ratio:21/9}
+}
+@media(max-width:900px){
+  .kus,.kus--bezobrazku{grid-template-columns:1fr;gap:22px;padding:26px 0}
+  .kus--obraceny .kus__plat{order:0}
+  .kus__plat{aspect-ratio:4/3}
+  .kus__go .btn{width:100%}
+  .hlidat__in{grid-template-columns:1fr;gap:24px}
+}
+@media(max-width:620px){
+  .dukaz__rada{grid-template-columns:1fr}
+  .dukaz__kus:last-child img{aspect-ratio:16/10}
+  .kus__data>div{flex-direction:column;gap:2px}
+  .kus__data dd{text-align:left}
+}
+@media(prefers-reduced-motion:reduce){.kus__vyrez{transition:none}}

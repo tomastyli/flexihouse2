@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patička A — pás důkazů</title>
+<link rel="stylesheet" href="assets/flexi.css">
+<style>
+.dukaz{border-bottom:1.5px solid var(--hair);padding-bottom:clamp(28px,3.4vw,40px);margin-bottom:clamp(38px,4.6vw,58px)}
+.dukaz__in{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(24px,3vw,44px)}
+.dukaz__hodn{display:flex;align-items:center;gap:16px;padding-right:clamp(24px,3vw,44px);border-right:1.5px solid var(--hair)}
+.dukaz__hodn svg{width:30px;height:30px;flex:none}
+.dukaz__cislo{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 84;font-size:2.5rem;line-height:1;letter-spacing:-0.02em}
+.dukaz__hvezdy{display:flex;gap:2px;margin-bottom:5px}
+.dukaz__hvezdy svg{width:15px;height:15px;color:#f0a71b}
+.dukaz__popis{display:block;font-size:0.88rem;color:var(--muted)}
+.dukaz__hodn:hover .dukaz__popis{color:var(--ink)}
+.dukaz__zapisy{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.znak{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 16px;border:1.5px solid var(--hair);font-size:0.86rem;font-weight:600;color:var(--muted);transition:border-color .2s,color .2s}
+a.znak:hover{border-color:var(--ink);color:var(--ink)}
+.znak svg{width:17px;height:17px;flex:none}
+.znak--ceka{border-style:dashed;opacity:.55}
+.dukaz__soc{display:flex;gap:10px;margin-left:auto}
+.soc{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border:1.5px solid var(--hair);color:var(--ink);transition:background-color .2s,color .2s,border-color .2s}
+.soc svg{width:19px;height:19px}
+.soc:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+@media(max-width:760px){
+  .dukaz__hodn{border-right:0;padding-right:0;width:100%}
+  .dukaz__soc{margin-left:0}
+}
+</style>
+</head>
+<body style="margin:0">
+
+<section class="cta" style="padding:clamp(40px,5vw,64px) 0">
+  <div class="wrap cta__in">
+    <h2>Chcete znát cenu?</h2>
+    <div><p>Modrá sekce nad patičkou zůstává, aby byl vidět přechod.</p></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+
+    <div class="dukaz">
+      <div class="dukaz__in">
+        <a class="dukaz__hodn" href="#" data-placeholder="ano">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-2.7-.4-4H24v7.3h12.1c-.2 1.9-1.6 4.9-4.5 6.9l6.9 5.3c4.1-3.8 6.6-9.4 6.6-15.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.2 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1z"/></svg>
+          <span>
+            <span style="display:flex;align-items:center;gap:11px">
+              <span class="dukaz__cislo">4,9</span>
+              <span class="dukaz__hvezdy" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+              </span>
+            </span>
+            <span class="dukaz__popis">23 hodnocení na Googlu</span>
+          </span>
+        </a>
+
+        <div class="dukaz__zapisy">
+          <a class="znak znak--ceka" href="#" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            Firmy.cz
+          </a>
+          <span class="znak znak--ceka" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.4 3.4 8.2 8 9 4.6-.8 8-4.6 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            Prohlášení o shodě
+          </span>
+          <span class="znak znak--ceka" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"/></svg>
+            Certifikát
+          </span>
+        </div>
+
+        <div class="dukaz__soc">
+          <a class="soc" href="#" aria-label="Facebook" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 3.5h-2.2A3.8 3.8 0 0 0 9.5 7.3V10H7v3.2h2.5v7.3h3.3v-7.3h2.5l.5-3.2h-3V7.6c0-.8.4-1.2 1.2-1.2h1.5z"/></svg>
+          </a>
+          <a class="soc" href="#" aria-label="Instagram" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="16.9" cy="7.1" r="1.15" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="soc" href="#" aria-label="YouTube" data-placeholder="ano">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.4" y="5.4" width="19.2" height="13.2" rx="4"/><path d="m10.3 9.4 5 2.6-5 2.6z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot__in">
+      <div>
+        <span class="brand">
+          <svg viewBox="9 16 46 33" aria-hidden="true">
+            <path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/><path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/><path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/><path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/><path d="M 44.6 30.7 L 50.12 27.94 L 50.12 23.74 L 44.6 26.5 Z" fill="#eef2f4"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/><path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/><path d="M 36.365 36.2175 L 36.635 36.0825 L 36.635 25.4825 L 36.365 25.6175 Z" fill="#16202a"/><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/><path d="M 20 46 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/><path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/><path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.24 Z" fill="#eef2f4"/>
+          </svg>
+          Flexi House
+        </span>
+        <p class="foot__note">Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Praha, Litomyšl, Brno a odtud po celé ČR.</p>
+      </div>
+      <div>
+        <h3>Domy</h3>
+        <ul>
+          <li><a href="/flexi-house">Rozkládací dům</a></li>
+          <li><a href="/flexi-office">Flexi Office</a></li>
+          <li><a href="/katalog">Katalog</a></li>
+          <li><a href="/konfigurator">Konfigurátor</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Společnost</h3>
+        <ul>
+          <li><a href="/poptavka">Poptávka</a></li>
+          <li><a href="/caste-dotazy">Časté dotazy</a></li>
+          <li><a href="/stavebni-povoleni">Stavební povolení</a></li>
+          <li><a href="/celorocni-bydleni">Celoroční bydlení</a></li>
+          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
+          <li><a href="/podminky">Podmínky použití</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Kontakt</h3>
+        <ul>
+          <li><a class="foot__person" href="tel:+420607321543">Dan Prokeš<span>607 321 543</span></a></li>
+          <li><a class="foot__person" href="tel:+420730171909">Jan Prokeš<span>730 171 909</span></a></li>
+          <li><a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a></li>
+          <li class="foot__adr">Sokolovská 546<span>570 01 Litomyšl</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot__legal">
+      <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10 · Zapsáno v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 308049</span>
+      <span>Vytvořil <a class="foot__by" href="https://statly.cz/" target="_blank" rel="noopener">statly.cz</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
