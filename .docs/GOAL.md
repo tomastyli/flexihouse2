@@ -58,7 +58,7 @@ Zbývá: `assets/site.css` a `assets/home.css` smazat, až na nich nebude viset 
 |---|---|---|
 | `_navrh-D.html` | zdroj | zůstává jako zdroj, `index.html` z něj vychází |
 | `index.html` | **HOTOVO** | přepnuto na návrh D, doplněn canonical, OG a JSON-LD Organization, WebSite i LocalBusiness |
-| `flexi-house.html` | **HOTOVO** | detail s fotkou, texty, tabulkou parametrů, galerií šesti fotek, Product JSON-LD s cenou 480 000 |
+| `rozkladaci-dum.html` | **PŘESTAVĚNO 4. 9. 2026** | produktová šablona, výřezy s obtahem, výkres s kótami, 557 slov |
 | `flexi-office.html` | **HOTOVO** | kratší varianta téhož, skladovost 10 ks a cena 70 000 Kč zachovány, Product JSON-LD s inventoryLevel |
 | `katalog.html` | **HOTOVO** | tři produkty jako široké řádky, parametry v tabulce, ceny z konfigurátoru, JSON-LD ItemList a BreadcrumbList |
 | `konfigurator.html` | **HOTOVO** | nový vzhled ve `assets/flexi-konfigurator.css`, logika a ceny nedotčené, ověřeno proklikáním všech pěti kroků (480 000 → 500 000 Kč, rekapitulace se generuje). PDF se kreslí přímo přes jsPDF v brandové sazbě (Bricolage 800 + Instrument, paleta ink/blue), knihovna se načítá až na kliknutí. |
@@ -72,7 +72,7 @@ Zbývá: `assets/site.css` a `assets/home.css` smazat, až na nich nebude viset 
 
 1. ~~Krok 0, sdílený stylopis.~~ hotovo
 2. ~~`poptavka.html`~~ hotovo
-3. ~~`katalog.html` a `flexi-house.html`~~ hotovo
+3. ~~`katalog.html` a `rozkladaci-dum.html`~~ hotovo
 4. ~~`flexi-office.html`~~ hotovo
 5. ~~Právní stránky a 404~~ hotovo
 6. ~~`konfigurator.html`~~ hotovo

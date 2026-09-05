@@ -1,0 +1,12 @@
+<!doctype html><meta charset=utf-8><style>html,body{margin:0}#f{border:0}</style>
+<iframe id=f></iframe><pre id=out>PENDING</pre>
+<script>
+const P=new URLSearchParams(location.search),f=document.getElementById('f');
+f.style.width=P.get('w')+'px';f.style.height='26000px';f.src='/'+P.get('p');
+f.addEventListener('load',()=>{setTimeout(()=>{
+ const w=f.contentWindow;
+ const e=w.performance.getEntriesByType('resource').filter(r=>/\.(webp|jpg|png)$/.test(r.name.split('?')[0]))
+  .map(r=>({u:r.name.split('/').slice(-1)[0],kb:Math.round(r.transferSize/1024),d:Math.round(r.decodedBodySize/1024)}));
+ document.getElementById('out').textContent=JSON.stringify(e);
+},2500)});
+</script>
