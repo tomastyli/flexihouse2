@@ -323,7 +323,8 @@
 .film__kroky--foto img{border:5px solid #fff;box-shadow:0 16px 26px rgba(0,0,0,.42)}
 
 .pr-dva{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,40px);margin-top:clamp(24px,3.4vw,40px)}
-.pr-dva figure{margin:0;display:flex;flex-direction:column}
+.pr-dva figure{margin:0;display:flex;flex-direction:column;position:relative}
+.pr-dva__znac{position:absolute;right:0;top:0;background:var(--ink);color:#fff;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:600;padding:6px 12px}
 .pr-dva img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:var(--soft)}
 .pr-dva figcaption{margin-top:14px;padding-top:12px;border-top:2px solid var(--ink)}
 .pr-dva figcaption b{display:block;font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;text-transform:uppercase;font-size:.95rem;letter-spacing:.02em;color:var(--ink)}
