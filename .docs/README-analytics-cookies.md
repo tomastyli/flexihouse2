@@ -95,3 +95,23 @@ GA4 hlásilo nula konverzí ve všech kanálech. Obě byly odznačeny.
 
 GA4 nikdy neuvidí všechny poptávky, protože měří jen návštěvníky se souhlasem.
 Pravdivý počet je v D1 v tabulce `poptavky` a v `/admin`.
+
+## 8. Vlastní dimenze (bez nich je trychtýř nečitelný)
+Parametry událostí jsou v přehledech GA4 skryté, dokud se nezaregistrují jako
+vlastní dimenze. Bez toho přehled ukáže jen „`configurator_step`: 10 událostí"
+a rozpad na kroky 1 až 5 se nikde nezobrazí. Registrováno 6. 9. 2026
+v Administrátor → Zobrazení dat → Vlastní definice:
+
+| dimenze | parametr | k čemu |
+|---|---|---|
+| Krok konfigurátoru | `krok` | rozpad trychtýře na kroky 1 až 5 |
+| Zdroj formuláře | `form` | která cesta přinesla poptávku (poptávka / konfigurátor / poradce) |
+| Výsledek přeskočení | `vysledek` | jestli přeskočení dovedlo na formulář, nebo na chybějící volbu |
+| Stránka kontaktu | `location` | z jaké stránky vzešel klik na telefon nebo mail |
+
+**Nejsou zpětné.** Události poslané před registrací dimenzi v přehledech
+nemají. Když přibude nový parametr, který se má dát číst, musí se
+zaregistrovat hned, ne až se nasbírají data.
+
+Rozpad se čte v **Prozkoumat → Volný formulář**: dimenze „Krok konfigurátoru",
+metrika „Počet událostí", filtr Název události = `configurator_step`.
