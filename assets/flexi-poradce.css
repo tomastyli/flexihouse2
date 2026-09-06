@@ -160,7 +160,7 @@
   position:fixed;right:24px;bottom:24px;z-index:80;
   display:flex;align-items:center;gap:11px;
   height:56px;padding:0 20px 0 16px;
-  background:var(--ink);color:#fff;border:0;cursor:pointer;
+  background:var(--ink);color:#fff;border:0;border-radius:var(--r-btn,999px);cursor:pointer;
   font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
   font-weight:800;font-variation-settings:'wdth' 88;
   text-transform:uppercase;letter-spacing:0.06em;font-size:0.83rem;
