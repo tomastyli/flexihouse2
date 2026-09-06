@@ -7,6 +7,10 @@
 
   var STORAGE_KEY = 'fh_cookie_consent';
   var isPlaceholder = function (v) { return !v || /X{4,}/.test(v); };
+  var isOstra = function () {
+    var h = location.hostname;
+    return h === 'flexihouse.cz' || h === 'www.flexihouse.cz';
+  };
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
@@ -24,7 +28,7 @@
   var loaded = { ga: false };
 
   function loadGA() {
-    if (loaded.ga || isPlaceholder(CONFIG.gaId)) return;
+    if (loaded.ga || isPlaceholder(CONFIG.gaId) || !isOstra()) return;
     loaded.ga = true;
     var s = document.createElement('script');
     s.async = true;
@@ -32,6 +36,7 @@
     document.head.appendChild(s);
     gtag('js', new Date());
     gtag('config', CONFIG.gaId, { anonymize_ip: true });
+    try { document.dispatchEvent(new CustomEvent('fh:ga')); } catch (e) {}
   }
 
   function applyConsent(c) {

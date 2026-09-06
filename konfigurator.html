@@ -28,7 +28,7 @@
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/flexi.css?v=23">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=18">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=19">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -276,6 +276,42 @@ const TOTAL_STEPS = MODEL.steps.length + 1;
 const RECAP_INDEX = MODEL.steps.length;
 
 const state = { step: 0, sel: {}, km: 0 };
+
+const gaFronta = [];
+let gaZive = false;
+function gaPripravena() {
+  return !!(window.gtag && window.dataLayer && Array.prototype.some.call(window.dataLayer, a => a && a[0] === 'config'));
+}
+function propustFrontu() {
+  if (!gaPripravena()) return false;
+  gaZive = true;
+  while (gaFronta.length) { const u = gaFronta.shift(); window.gtag('event', u[0], u[1]); }
+  return true;
+}
+function udalost(nazev, params) {
+  const p = Object.assign({ model: modelKey }, params || {});
+  if (gaZive || propustFrontu()) { window.gtag('event', nazev, p); return; }
+  if (gaFronta.length < 40) gaFronta.push([nazev, p]);
+}
+document.addEventListener('fh:ga', propustFrontu);
+window.addEventListener('load', propustFrontu);
+
+const krokPoslan = {};
+function poslatKrok(idx) {
+  if (krokPoslan[idx]) return;
+  krokPoslan[idx] = true;
+  udalost('configurator_step', {
+    krok: idx + 1,
+    nazev: idx === RECAP_INDEX ? 'Rekapitulace a poptávka' : MODEL.steps[idx].title
+  });
+}
+let zapojen = false;
+function poslatZapojeni() {
+  if (zapojen) return;
+  zapojen = true;
+  udalost('configurator_engage', {});
+}
+
 const czk = new Intl.NumberFormat('cs-CZ');
 const fmtPrice = (n) => czk.format(n) + ' Kč';
 
@@ -437,15 +473,35 @@ function navHtml(si, isRecap) {
   const nextBtn = isRecap ? '' :
     '<button type="button" class="btn btn--green kf-next" data-idx="'+si+'">'+nextLbl
     + ' <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>';
+  const skip = (isRecap || si === 0) ? '' :
+    '<p class="kf-skip"><button type="button" class="kf-skip__btn">Přeskočit rovnou na nezávaznou poptávku</button></p>';
   return '<div class="kf-nav">'
     + '<button type="button" class="kf-nav__back"'+backDis+' data-idx="'+si+'">'
     + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zpět</button>'
-    + nextBtn + '</div>';
+    + nextBtn + '</div>' + skip;
+}
+
+function prvniNedokonceny() {
+  for (let i = 0; i < MODEL.steps.length; i++) { if (!stepComplete(i)) return i; }
+  return -1;
+}
+function skokNaFormular() {
+  const chybi = prvniNedokonceny();
+  udalost('configurator_skip_to_form', {
+    z_kroku: state.step + 1,
+    vysledek: chybi === -1 ? 'formular' : 'chybi_volba'
+  });
+  if (chybi !== -1) { goTo(chybi); validateStep(chybi); return; }
+  goTo(RECAP_INDEX);
+  const form = document.getElementById('leadForm');
+  if (form) requestAnimationFrame(() => form.scrollIntoView({ behavior:'smooth', block:'start' }));
 }
 
 elMain.addEventListener('click', (e) => {
   const opt = e.target.closest('.opt');
   if (opt) { selectOption(opt, true); return; }
+  const skip = e.target.closest('.kf-skip__btn');
+  if (skip) { skokNaFormular(); return; }
   const next = e.target.closest('.kf-next');
   if (next) { if (validateStep(state.step)) goTo(state.step + 1); return; }
   const back = e.target.closest('.kf-nav__back');
@@ -453,6 +509,7 @@ elMain.addEventListener('click', (e) => {
 });
 
 function selectOption(btn, odUzivatele) {
+  if (odUzivatele) poslatZapojeni();
   const gKey = btn.dataset.group, oId = btn.dataset.opt;
   const g = GROUPS[gKey];
   const cards = btn.closest('.kf-cards');
@@ -543,6 +600,7 @@ function goTo(idx) {
   });
   elFill.style.width = (idx / (TOTAL_STEPS - 1)) * 84 + '%';
   if (idx === RECAP_INDEX) buildRecapContent();
+  poslatKrok(idx);
   window.scrollTo({ top: 0, behavior:'smooth' });
 }
 
@@ -899,6 +957,7 @@ async function downloadPdf() {
     await loadPdfLib();
     const doc = buildPdfDoc();
     doc.save('Flexi-House-' + MODEL.name.replace(/\s+/g, '-') + '-konfigurace.pdf');
+    udalost('download_pdf', { form: 'konfigurator', cena: total() });
   } catch (e) {
     alert('PDF se nepodařilo připravit. Zkuste to prosím znovu, nebo nám konfiguraci rovnou odešlete.');
   } finally {
@@ -1053,7 +1112,7 @@ async function ulozKonfiguraci(btn) {
     const j = await res.json().catch(() => ({}));
     if (!res.ok || !j.ok) throw new Error(j.error || 'Uložení se nezdařilo.');
     zobrazKod(j.kod, j.odkaz);
-    if (window.gtag) gtag('event','save_configuration',{form:'konfigurator'});
+    udalost('save_configuration', { form: 'konfigurator', cena: total() });
   } catch (err) {
     const box = document.getElementById('kodBox');
     if (box) {
@@ -1174,7 +1233,7 @@ function bindForm() {
         method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('bad response');
-      if (window.gtag) gtag('event','generate_lead',{form:'konfigurator',value:1});
+      udalost('generate_lead', { form: 'konfigurator', value: 1 });
       status.className = 'form__status ok';
       status.textContent = 'Děkujeme! Poptávku i konfiguraci jsme přijali. Ozveme se do 24 hodin. Kopii jsme poslali na váš e-mail.';
       form.querySelector('.kf-actions').scrollIntoView({ behavior:'smooth', block:'center' });
@@ -1221,7 +1280,7 @@ const kodZUrl = (params.get('kod') || '').trim().toUpperCase();
 if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZUrl);
 </script>
 
-<script src="assets/cookies.js?v=9"></script>
+<script src="assets/cookies.js?v=10"></script>
 
 
 
