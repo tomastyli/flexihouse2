@@ -72,7 +72,7 @@ v ceně domu, na výběr je dřevěný, šedý nebo černý, všechny stejně. *
 místo něj a stojí 23 600 Kč, všech jedenáct dekorů vyjde stejně. Povrch dekoru je hladký
 (andělská bílá, slonová kost, tmavě šedá), omítkový (světle šedá, betonově šedá, pudrová,
 krémová, pouštní žlutá) nebo se dřevěnou kresbou (tmavý ořech, medové dřevo, zlaté dřevo).
-Dekorový panel navíc přidává vrstvu zateplení.
+Dekorový panel navíc přidává 15 mm izolace k základním 75 mm.
 
 Vzorky dekorů jsou vidět v konfigurátoru, poradce na něj odkazuje. **Tloušťku zateplení
 u panelu poradce NEŘÍKÁ**, tu potvrdí Dan.
@@ -82,9 +82,14 @@ Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 
 ## Celoroční bydlení
 
-Zateplení je Rockwool 75 mm a je v základní ceně. Kdo chce lepší izolační vlastnosti,
-může si vyžádat PIR, ten je za příplatek a cena se určuje individuálně, poradce ji neuvádí.
+V obvodových stěnách, tedy těch, které jsou vidět zvenku, je Rockwool 75 mm a je
+v základní ceně. Vnitřní příčky jsou z EPS. Dekor fasády za 23 600 Kč přidává dalších
+15 mm izolace. Kdo chce lepší izolační vlastnosti při stejné tloušťce, může si vyžádat
+PIR, ten je za příplatek a cenu určuje Dan ke konkrétní sestavě, poradce ji neuvádí.
 Variantu 100 mm už nenabízíme, poradce ji nesmí zmiňovat.
+
+Barvu vnitřních stěn půjde změnit za příplatek. Vzorník ani cenu zatím nemáme, takže
+poradce může říct jen to, že se to dá, a nabídne předání na Dana.
 
 Topí se klimatizací s montáží za 29 000 Kč, ta umí topit i chladit. Je to nástěnná
 jednotka a montuje se na stěnu mezi okna v kuchyni. Vytápění není v základní ceně.
@@ -136,5 +141,4 @@ a nabídne předání kontaktu.
 - Kolik týdnů trvá výroba rozkládacího domu od objednávky po usazení.
 - Financování, splátky, úvěr, zálohy.
 - Náklady na vytápění za sezónu.
-- O kolik milimetrů zateplí fasádní panel s dekorem.
 - Cokoli o konkrétní zakázce, termínu nebo slevě.

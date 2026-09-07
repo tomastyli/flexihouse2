@@ -21,3 +21,10 @@ podklady-3d/
 
 .dev.vars
 .docs/wrangler-dev.toml
+
+# Stažené stránky z Google Search Central, pracovní podklad.
+# Leží v kořeni, takže by je git add . nasadil na klientský web.
+/d.html
+/lsu.html
+/sp.html
+/q.html

@@ -48,7 +48,7 @@ p{margin:0;color:var(--muted)}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 .top{position:sticky;top:0;z-index:40;background:transparent;transition:background-color var(--dur-base) var(--ease-both),box-shadow var(--dur-base) var(--ease-both)}
-.top__in{display:flex;align-items:center;gap:30px;height:var(--nav-h);transition:height var(--dur-base) var(--ease-both)}
+.top__in{display:flex;align-items:center;gap:30px;height:var(--nav-h)}
 .top .brand,.top .nav a,.top .tel{transition:color var(--dur-base) var(--ease-both)}
 .top .btn--sm{transition:background-color var(--dur-base) var(--ease-both),border-color var(--dur-base) var(--ease-both),color var(--dur-base) var(--ease-both),background-size var(--dur-base) var(--ease-both)}
 .top .burger span,.top .burger span::before,.top .burger span::after{transition:background-color var(--dur-base) var(--ease-both)}
@@ -64,20 +64,12 @@ p{margin:0;color:var(--muted)}
 .top--pevna{background:rgba(255,255,255,.82);
   box-shadow:0 1px 0 var(--hair),0 2px 22px rgba(22,32,42,.08);
   backdrop-filter:saturate(1.7) blur(14px);-webkit-backdrop-filter:saturate(1.7) blur(14px)}
-.top--pevna .top__in{height:64px}
-.top--pevna .brand svg{width:42px}
-.brand svg{transition:width var(--dur-base) var(--ease-both)}
 .top:not(.top--pevna) .brand,.top:not(.top--pevna) .nav a,.top:not(.top--pevna) .tel{color:#fff}
 .top:not(.top--pevna) .nav a::after{background:#fff}
 .top:not(.top--pevna) .btn--sm{background-color:#fff;color:var(--ink);border-color:#fff;
   background-image:linear-gradient(var(--btn-fill),var(--btn-fill))}
 .top:not(.top--pevna) .btn--sm:hover{color:#fff}
-@media (max-width:700px){
-  .top__in,.brand svg{transition:none}
-  .top--pevna .top__in{height:var(--nav-h)}
-  .top--pevna .brand svg{width:47px}
-}
-@media (prefers-reduced-motion:reduce){.top,.top__in,.brand svg,.top .brand,.top .nav a,.top .tel,.top .burger span,.menu{transition:none}}
+@media (prefers-reduced-motion:reduce){.top,.top .brand,.top .nav a,.top .tel,.top .burger span,.menu{transition:none}}
 .top:not(.top--pevna) .burger span,
 .top:not(.top--pevna) .burger span::before,
 .top:not(.top--pevna) .burger span::after{background:#fff}
@@ -471,5 +463,4 @@ span.soc{color:rgba(22,32,42,.55)}
   .burger span::after{top:8px}
   .brand{font-size:1.16rem}
   .brand svg{width:54px}
-  .top--pevna .brand svg{width:46px}
 }
