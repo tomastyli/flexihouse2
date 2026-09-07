@@ -1,18 +1,28 @@
 (function(){
   var burger=document.querySelector('.burger'), menu=document.getElementById('menu');
   if(!burger||!menu) return;
-  function set(open){
-    menu.hidden=!open;
+  var casovac;
+  function set(open,hned){
+    clearTimeout(casovac);
     burger.setAttribute('aria-expanded',String(open));
     burger.setAttribute('aria-label',open?'Zavřít menu':'Otevřít menu');
     document.body.classList.toggle('is-locked',open);
+    if(open){
+      menu.hidden=false;
+      if(hned) menu.classList.add('je-otevrene');
+      else requestAnimationFrame(function(){ menu.classList.add('je-otevrene'); });
+    } else {
+      menu.classList.remove('je-otevrene');
+      if(hned) menu.hidden=true;
+      else casovac=setTimeout(function(){ menu.hidden=true; },260);
+    }
   }
-  set(false);
+  set(false,true);
   burger.setAttribute('aria-controls','menu');
   burger.addEventListener('click',function(){ set(menu.hidden); });
   menu.addEventListener('click',function(e){ if(e.target.closest('a')) set(false); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!menu.hidden) set(false); });
-  window.addEventListener('resize',function(){ if(window.innerWidth>640&&!menu.hidden) set(false); });
+  window.addEventListener('resize',function(){ if(window.innerWidth>640&&!menu.hidden) set(false,true); });
 })();
 
 (function(){
@@ -79,10 +89,13 @@
   if (!hlidac || !('IntersectionObserver' in window)) { hlavicka.classList.add('top--pevna'); return; }
   var odsazeni = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10) || 84;
   var mrtvaZona = 64;
+  var nadHranou = function (z) {
+    return z.rootBounds ? z.boundingClientRect.top <= z.rootBounds.top : z.boundingClientRect.top <= 0;
+  };
   new IntersectionObserver(function (zaznamy) {
-    if (!zaznamy[0].isIntersecting) hlavicka.classList.add('top--pevna');
+    if (!zaznamy[0].isIntersecting && nadHranou(zaznamy[0])) hlavicka.classList.add('top--pevna');
   }, { rootMargin: '-' + (odsazeni - 2) + 'px 0px 0px 0px' }).observe(hlidac);
   new IntersectionObserver(function (zaznamy) {
-    if (zaznamy[0].isIntersecting) hlavicka.classList.remove('top--pevna');
+    if (zaznamy[0].isIntersecting || !nadHranou(zaznamy[0])) hlavicka.classList.remove('top--pevna');
   }, { rootMargin: '-' + (odsazeni - 2 + mrtvaZona) + 'px 0px 0px 0px' }).observe(hlidac);
 })();

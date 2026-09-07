@@ -72,13 +72,12 @@ p{margin:0;color:var(--muted)}
 .top:not(.top--pevna) .btn--sm{background-color:#fff;color:var(--ink);border-color:#fff;
   background-image:linear-gradient(var(--btn-fill),var(--btn-fill))}
 .top:not(.top--pevna) .btn--sm:hover{color:#fff}
-.menu{top:var(--nav-h)}
 @media (max-width:700px){
   .top__in,.brand svg{transition:none}
   .top--pevna .top__in{height:var(--nav-h)}
   .top--pevna .brand svg{width:47px}
 }
-@media (prefers-reduced-motion:reduce){.top,.top__in,.brand svg,.top .brand,.top .nav a,.top .tel,.top .burger span{transition:none}}
+@media (prefers-reduced-motion:reduce){.top,.top__in,.brand svg,.top .brand,.top .nav a,.top .tel,.top .burger span,.menu{transition:none}}
 .top:not(.top--pevna) .burger span,
 .top:not(.top--pevna) .burger span::before,
 .top:not(.top--pevna) .burger span::after{background:#fff}
@@ -250,8 +249,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   .form__row{grid-template-columns:1fr}
 }
 
-.menu{position:fixed;inset:60px 0 0;z-index:39;background:var(--paper);padding:clamp(20px,5vw,34px) var(--pad) calc(env(safe-area-inset-bottom) + 28px);
-  display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
+.menu{position:fixed;inset:var(--nav-h) 0 0;z-index:39;background:var(--paper);padding:clamp(20px,5vw,34px) var(--pad) calc(env(safe-area-inset-bottom) + 28px);
+  display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;transform:translateY(-10px);
+  transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out)}
+.menu.je-otevrene{opacity:1;transform:none}
 .menu[hidden]{display:none}
 .menu a.menu__link{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 86;text-transform:uppercase;
   font-size:clamp(1.5rem,7vw,2rem);line-height:1.1;letter-spacing:-0.01em;padding:20px 0;border-bottom:1px solid var(--hair)}
@@ -261,6 +263,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .menu__tel{font-family:'Bricolage','BricolageNahrada',sans-serif;font-weight:800;font-variation-settings:'wdth' 88;font-size:1.2rem;letter-spacing:0.01em}
 .menu__tel small{display:block;font-family:'Instrument',sans-serif;font-weight:400;font-size:0.82rem;color:var(--muted);letter-spacing:0;margin-top:2px}
 body.is-locked{overflow:hidden}
+body.is-locked .fhp-launch,body.is-locked .fhp-bublina,body.is-locked .fhp-wid{display:none}
 .burger[aria-expanded="true"] span{background:transparent}
 .burger[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
 .burger[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
