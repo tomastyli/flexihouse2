@@ -28,7 +28,7 @@
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/flexi.css?v=35">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=2">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=19">
+<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=20">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
@@ -154,6 +154,15 @@
       </div>
     </div>
   </div>
+<div class="kf-foto" id="kfFoto" hidden>
+  <div class="kf-foto__pozadi" data-zavrit></div>
+  <div class="kf-foto__panel" role="dialog" aria-modal="true" aria-label="Fotka volby">
+    <button type="button" class="kf-foto__x" aria-label="Zavřít fotku" data-zavrit>&times;</button>
+    <img class="kf-foto__img" src="" alt="" width="1000" height="563">
+    <p class="kf-foto__popis"></p>
+    <p class="kf-foto__mikro">Fotka je z našeho domu, ne katalogový snímek. Provedení se může lišit podle sestavy.</p>
+  </div>
+</div>
 </main>
 
 
@@ -179,6 +188,7 @@ const I = {
   kitchen: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M8 3v6M8 14v3"/>',
   sun:     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
   sparkle: '<path d="M12 2l1.9 5.8L20 9l-5.8 1.9L12 17l-1.9-6.1L4 9l6.1-1.2z"/>',
+  info:    '<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
   check:   '<polyline points="20 6 9 17 4 12"/>'
 };
 function svg(name, w) {
@@ -218,10 +228,10 @@ function exteriorGroups() {
 function interiorGroups() {
   return [
     { key:'equipment', title:'Vybavení', type:'multi', required:false, hint:'Doporučujeme obojí, kliknutím lze odebrat', options:[
-      { id:'bath',    label:'Koupelna', desc:'Sprchový kout, umyvadlo, WC a obklady.', icon:'bath', price:30000, preset:true },
-      { id:'kitchen', label:'Kuchyňská linka', desc:'Linka s dřezem a místem pro spotřebiče.', icon:'kitchen', price:25000, preset:true },
-      { id:'floor',   label:'Podlaha', desc:'Podlahová krytina v celém domě.', icon:'layers', price:25000 },
-      { id:'drapes',  label:'Závěsy a záclony', desc:'Závěsy a záclony do všech oken.', icon:'window', price:20000 }
+      { id:'bath',    label:'Koupelna', desc:'Sprchový kout, umyvadlo, WC a obklady.', icon:'bath', price:30000, preset:true, foto:'koupelna' },
+      { id:'kitchen', label:'Kuchyňská linka', desc:'Linka s dřezem a místem pro spotřebiče.', icon:'kitchen', price:25000, preset:true, foto:'kuchyne' },
+      { id:'floor',   label:'Podlaha', desc:'Podlahová krytina v celém domě.', icon:'layers', price:25000, foto:'podlaha' },
+      { id:'drapes',  label:'Závěsy a záclony', desc:'Závěsy a záclony do všech oken.', icon:'window', price:20000, foto:'zavesy' }
     ]},
     { key:'utilities', title:'Elektroinstalace', type:'single', required:true, options:[
       { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:10000 }
@@ -235,8 +245,8 @@ function interiorGroups() {
 function addonGroup() {
   return [
     { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', kmFor:'transport', options:[
-      { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000 },
-      { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000 },
+      { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000, foto:'terasa' },
+      { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000, foto:'schody' },
       { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
       { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, vat:'incl', from:true },
       { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem. Kilometry se počítají tam i zpět, souprava se musí vrátit.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
@@ -379,11 +389,16 @@ MODEL.steps.forEach((step, si) => {
         + '<div class="opt__d">'+o.desc+'</div>'
         + (o.meta ? '<div class="opt__meta">'+svg('ruler',13)+o.meta+'</div>' : '')
         + '</div><div class="'+priceCls+'" data-price="'+g.key+':'+o.id+'">'+priceTxt+'</div>';
-      html += '<button type="button" class="opt'+(o.img ? ' opt--swatch' : '')+'" aria-pressed="false" data-group="'+g.key+'" data-opt="'+o.id+'">'
+      html += '<div class="opt-box">'
+        + '<button type="button" class="opt'+(o.img ? ' opt--swatch' : '')+'" aria-pressed="false" data-group="'+g.key+'" data-opt="'+o.id+'">'
         + (o.img
             ? check + '<img class="opt__img" src="'+o.img+'" alt="" loading="lazy" width="414" height="276"><span class="opt__pad">'+telo+'</span>'
             : telo)
-        + '</button>';
+        + '</button>'
+        + (o.foto
+            ? '<button type="button" class="opt__info" data-foto="'+o.foto+'" data-popis="'+o.label.replace(/"/g,'&quot;')+'" aria-label="Ukázat fotku: '+o.label.replace(/"/g,'&quot;')+'">'+svg('info',16)+'</button>'
+            : '')
+        + '</div>';
     });
     if (g.kmFor) {
       html += '</div><div class="kf-km" id="kfKm" hidden>'
@@ -497,6 +512,8 @@ function skokNaFormular() {
 }
 
 elMain.addEventListener('click', (e) => {
+  const ico = e.target.closest('.opt__info');
+  if (ico) { otevritFotku(ico); return; }
   const opt = e.target.closest('.opt');
   if (opt) { selectOption(opt, true); return; }
   const skip = e.target.closest('.kf-skip__btn');
@@ -505,6 +522,35 @@ elMain.addEventListener('click', (e) => {
   if (next) { if (validateStep(state.step)) goTo(state.step + 1); return; }
   const back = e.target.closest('.kf-nav__back');
   if (back && !back.hasAttribute('disabled')) { goTo(state.step - 1); return; }
+});
+
+var fotkaZpet = null;
+function otevritFotku(tlacitko) {
+  const most = document.getElementById('kfFoto');
+  if (!most) return;
+  const jmeno = tlacitko.dataset.foto;
+  fotkaZpet = tlacitko;
+  most.querySelector('.kf-foto__popis').textContent = tlacitko.dataset.popis;
+  const img = most.querySelector('.kf-foto__img');
+  img.src = 'img/konfigurator/' + jmeno + '-1000w.webp';
+  img.srcset = 'img/konfigurator/' + jmeno + '-640w.webp 640w, img/konfigurator/' + jmeno + '-1000w.webp 1000w';
+  img.alt = tlacitko.dataset.popis + ' v našem domě';
+  most.hidden = false;
+  requestAnimationFrame(function(){ most.classList.add('je-videt'); });
+  most.querySelector('.kf-foto__x').focus();
+}
+function zavritFotku() {
+  const most = document.getElementById('kfFoto');
+  if (!most || most.hidden) return;
+  most.classList.remove('je-videt');
+  setTimeout(function(){ most.hidden = true; }, 260);
+  if (fotkaZpet) { fotkaZpet.focus(); fotkaZpet = null; }
+}
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') zavritFotku();
+});
+document.addEventListener('click', function (e) {
+  if (e.target.closest('[data-zavrit]')) zavritFotku();
 });
 
 function selectOption(btn, odUzivatele) {
