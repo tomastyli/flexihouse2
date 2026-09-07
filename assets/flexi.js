@@ -78,7 +78,11 @@
   var hlidac = document.querySelector('.hero__hlidac');
   if (!hlidac || !('IntersectionObserver' in window)) { hlavicka.classList.add('top--pevna'); return; }
   var odsazeni = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10) || 84;
+  var mrtvaZona = 64;
   new IntersectionObserver(function (zaznamy) {
-    hlavicka.classList.toggle('top--pevna', !zaznamy[0].isIntersecting);
+    if (!zaznamy[0].isIntersecting) hlavicka.classList.add('top--pevna');
   }, { rootMargin: '-' + (odsazeni - 2) + 'px 0px 0px 0px' }).observe(hlidac);
+  new IntersectionObserver(function (zaznamy) {
+    if (zaznamy[0].isIntersecting) hlavicka.classList.remove('top--pevna');
+  }, { rootMargin: '-' + (odsazeni - 2 + mrtvaZona) + 'px 0px 0px 0px' }).observe(hlidac);
 })();

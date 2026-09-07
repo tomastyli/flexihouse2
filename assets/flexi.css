@@ -73,7 +73,11 @@ p{margin:0;color:var(--muted)}
   background-image:linear-gradient(var(--btn-fill),var(--btn-fill))}
 .top:not(.top--pevna) .btn--sm:hover{color:#fff}
 .menu{top:var(--nav-h)}
-@media (max-width:700px){.top__in,.brand svg{transition:none}}
+@media (max-width:700px){
+  .top__in,.brand svg{transition:none}
+  .top--pevna .top__in{height:var(--nav-h)}
+  .top--pevna .brand svg{width:47px}
+}
 @media (prefers-reduced-motion:reduce){.top,.top__in,.brand svg,.top .brand,.top .nav a,.top .tel,.top .burger span{transition:none}}
 .top:not(.top--pevna) .burger span,
 .top:not(.top--pevna) .burger span::before,
