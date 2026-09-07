@@ -57,8 +57,9 @@ je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou,
 | Montáž domku | od 30 000 Kč, podle náročnosti až 80 000 Kč |
 
 Doprava se počítá podle vzdálenosti z výroby na pozemek, proto ji bez znalosti místa
-nelze říct přesně. Sazba je 20 000 Kč plus 100 Kč za kilometr, a kilometry se počítají
-tam i zpátky, protože souprava se musí vrátit.
+nelze říct přesně. Sazba je 20 000 Kč plus 100 Kč za kilometr a kilometry se účtují
+tam i zpátky, protože souprava se musí vrátit. Na 100 km z výroby to dělá 40 000 Kč,
+na 300 km 80 000 Kč.
 
 Patky a montáž jsou cena od a konfigurátor s nimi počítá ve spodní hranici. Patky vyjdou
 podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na

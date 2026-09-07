@@ -26,7 +26,7 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=33">
+<link rel="stylesheet" href="assets/flexi.css?v=34">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=2">
 <link rel="stylesheet" href="assets/flexi-konfigurator.css?v=19">
 <script type="application/ld+json">
@@ -239,7 +239,7 @@ function addonGroup() {
       { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000 },
       { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
       { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, vat:'incl', from:true },
-      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
+      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem. Kilometry se počítají tam i zpět, souprava se musí vrátit.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
       { id:'assembly',   label:'Montáž domku', desc:'Rozložení a kompletace domu na pozemku. Podle náročnosti sestavení vyjde na 30 000 až 80 000 Kč.', icon:'tool', price:30000, vat:'incl', from:true }
     ]}
   ];
@@ -319,12 +319,13 @@ const VAT_TIP = 'Dům a jeho vybavení uvádíme bez DPH. Sazba DPH se řídí v
 
 function transportKm() { const n = Number(state.km); return isFinite(n) && n > 0 ? Math.round(n) : 0; }
 function transportOpt() { const g = GROUPS.addons; return g ? g.options.find(x => x.perKm) : null; }
-function optPrice(o) { return o.price + (o.perKm ? o.perKm * transportKm() : 0); }
+function ujeteKm() { return transportKm() * 2; }
+function optPrice(o) { return o.price + (o.perKm ? o.perKm * ujeteKm() : 0); }
 function optVat(o) { return o.vat === 'incl' ? 'incl' : 'excl'; }
 function optLabel(o) { return o.kod ? o.label + ' (' + o.kod + ')' : o.label; }
 function optPriceLabel(o) {
   if (o.cenaText) return o.cenaText;
-  if (o.perKm && transportKm() === 0) return '+ ' + fmtPrice(o.price) + ' + ' + o.perKm + ' Kč/km';
+  if (o.perKm && transportKm() === 0) return '+ ' + fmtPrice(o.price) + ' + ' + o.perKm + ' Kč/km tam i zpět';
   const p = optPrice(o);
   if (p <= 0) return 'V základní ceně';
   return '+ ' + (o.from ? 'od ' : '') + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '');
@@ -386,7 +387,7 @@ MODEL.steps.forEach((step, si) => {
     });
     if (g.kmFor) {
       html += '</div><div class="kf-km" id="kfKm" hidden>'
-        + '<label for="kfKmInput">Vzdálenost z výroby na pozemek (km)</label>'
+        + '<label for="kfKmInput">Vzdálenost z výroby na pozemek (km, jedním směrem)</label>'
         + '<input type="number" id="kfKmInput" min="0" max="900" step="10" inputmode="numeric" placeholder="např. 120">'
         + '<span class="kf-km__out" id="kfKmOut">Zadejte vzdálenost a doprava se dopočítá.</span>'
         + '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
@@ -558,7 +559,7 @@ function refreshDynamicPrices() {
     const km = transportKm();
     const t = transportOpt();
     out.textContent = km > 0 && t
-      ? 'Doprava ' + km + ' km: ' + fmtPrice(km * t.perKm) + ' + usazení ' + fmtPrice(t.price) + ' = ' + fmtPrice(t.price + km * t.perKm) + ' vč. DPH'
+      ? 'Doprava ' + km + ' km tam i zpět, tedy ' + ujeteKm() + ' km: ' + fmtPrice(ujeteKm() * t.perKm) + ' + usazení ' + fmtPrice(t.price) + ' = ' + fmtPrice(t.price + ujeteKm() * t.perKm) + ' vč. DPH'
       : 'Zadejte vzdálenost a doprava se dopočítá.';
   }
 }
@@ -903,7 +904,7 @@ function buildPdfDoc() {
   line('Dům a vybavení (bez DPH)', fmtPrice(T.net), true);
   if (T.gross > 0) line('Práce na pozemku (vč. DPH)', fmtPrice(T.gross), true);
   const TO = transportOpt();
-  if (transportKm() > 0 && TO) line('Z toho doprava, ' + transportKm() + ' km po ' + TO.perKm + ' Kč', fmtPrice(transportKm() * TO.perKm), false);
+  if (transportKm() > 0 && TO) line('Z toho doprava, ' + transportKm() + ' km tam i zpět po ' + TO.perKm + ' Kč', fmtPrice(ujeteKm() * TO.perKm), false);
   openSection = null;
   y += 9;
   room(70);
