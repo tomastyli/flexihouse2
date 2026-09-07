@@ -45,3 +45,14 @@
     }catch(e){ return ''; }
   };
 })();
+
+(function(){
+  var hlavicka = document.querySelector('.top');
+  if (!hlavicka) return;
+  var hlidac = document.querySelector('.hero__hlidac');
+  if (!hlidac || !('IntersectionObserver' in window)) { hlavicka.classList.add('top--pevna'); return; }
+  var odsazeni = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10) || 84;
+  new IntersectionObserver(function (zaznamy) {
+    hlavicka.classList.toggle('top--pevna', !zaznamy[0].isIntersecting);
+  }, { rootMargin: '-' + (odsazeni - 2) + 'px 0px 0px 0px' }).observe(hlidac);
+})();

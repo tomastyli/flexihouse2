@@ -27,7 +27,7 @@
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="img/flexi-house-rozkladaci.webp" imagesrcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w" imagesizes="(max-width:1280px) 100vw, 1280px" fetchpriority="high">
-<link rel="stylesheet" href="assets/flexi.css?v=23">
+<link rel="stylesheet" href="assets/flexi.css?v=25">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=1">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -83,20 +83,23 @@
 
 <main>
 <section class="hero">
+  <img class="hero__img" src="img/flexi-hero-tmavy-2560w.webp"
+       srcset="img/flexi-hero-tmavy-1000w.webp 1000w, img/flexi-hero-tmavy-1600w.webp 1600w, img/flexi-hero-tmavy-2560w.webp 2560w"
+       sizes="100vw" width="2560" height="1429" alt="Rozkládací modulární dům, Flexi Office a bistro kontejner" fetchpriority="high">
   <div class="wrap">
-    <h1>Modulární domy<br>vyrobené v hale<br><span>a dodané k vám.</span></h1>
-    <div class="hero__row">
-      <p>Dům vzniká pod střechou, na pozemek přijede složený v kontejneru a na místě se rozevře na hotové bydlení.</p>
-      <div class="hero__actions">
-        <a class="btn" href="#kontakt">Chci nezávaznou nabídku</a>
-        <a class="link" href="/konfigurator">Sestavit v konfigurátoru</a>
-      </div>
+    <h1>Modulární domy<br>pro bydlení i podnikání</h1>
+    <div class="hero__actions">
+      <a class="btn" href="#kontakt">Chci nezávaznou nabídku</a>
+      <a class="link" href="/konfigurator">Sestavit v konfigurátoru</a>
     </div>
   </div>
+  <div class="hero__hlidac" aria-hidden="true"></div>
 </section>
 
-<div class="wrap shot">
-  <img src="img/flexi-house-rozkladaci.webp" width="1400" height="800" alt="Rozkládací modulární dům Flexi House s terasou a posezením mezi stromy" fetchpriority="high" srcset="img/flexi-house-rozkladaci-480w.webp 480w, img/flexi-house-rozkladaci-800w.webp 800w, img/flexi-house-rozkladaci-1200w.webp 1200w, img/flexi-house-rozkladaci.webp 1400w" sizes="(max-width:1280px) 100vw, 1280px">
+<div class="wrap pas">
+  <div class="pas__k"><h3>Vyrobeno v hale</h3><p>Dům vzniká pod střechou, výrobu nezdrží počasí.</p></div>
+  <div class="pas__k"><h3>Rozevře se na místě</h3><p>Přijede složený v kontejneru, usazení zajistíme.</p></div>
+  <div class="pas__k"><h3>Doprava po celé ČR</h3><p>Vozíme kamkoli po republice z výroby na váš pozemek.</p></div>
 </div>
 
 <section class="wrap" id="domy" aria-labelledby="domy-h">
@@ -293,7 +296,7 @@
 </footer>
 
 <script src="assets/cookies.js?v=10" defer></script>
-<script src="assets/flexi.js?v=10" defer></script>
+<script src="assets/flexi.js?v=11" defer></script>
 <script src="assets/flexi-poradce.js?v=2" defer></script>
 </body>
 </html>
