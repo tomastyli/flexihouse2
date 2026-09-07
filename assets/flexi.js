@@ -47,6 +47,32 @@
 })();
 
 (function(){
+  var el=document.querySelectorAll('.fh-rv');
+  if(!el.length) return;
+  var vse=function(){ for(var i=0;i<el.length;i++) el[i].classList.add('je-videt'); };
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches){ vse(); return; }
+  var hnul=false;
+  var oznac=function(){ hnul=true; };
+  ['wheel','touchstart','keydown','pointerdown'].forEach(function(t){ addEventListener(t,oznac,{once:true,passive:true}); });
+  var io=new IntersectionObserver(function(zaznamy){
+    for(var i=0;i<zaznamy.length;i++){
+      var z=zaznamy[i];
+      if(!z.isIntersecting) continue;
+      if(!hnul) z.target.classList.add('bez-prechodu');
+      z.target.classList.add('je-videt');
+      io.unobserve(z.target);
+    }
+  },{threshold:0,rootMargin:'0px 0px -12% 0px'});
+  for(var j=0;j<el.length;j++) io.observe(el[j]);
+  addEventListener('focusin',function(u){
+    var s=u.target.closest?u.target.closest('.fh-rv'):null;
+    if(!s||s.classList.contains('je-videt')) return;
+    s.classList.add('bez-prechodu','je-videt');
+    io.unobserve(s);
+  });
+})();
+
+(function(){
   var hlavicka = document.querySelector('.top');
   if (!hlavicka) return;
   var hlidac = document.querySelector('.hero__hlidac');
