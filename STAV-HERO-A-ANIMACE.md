@@ -1,4 +1,4 @@
-# Stav k 7. 9. 2026, 03:15 (animace dopsané 7. 9. odpoledne)
+# Stav k 7. 9. 2026 (hero, animace, mobilní hlavička)
 
 ## Živé na flexihouse.cz
 
@@ -12,6 +12,7 @@ Commity z tohoto sezení, všechny nasazené a ověřené naostro:
 | `6af4ba8` | svislý obrázek pro mobil, hero 88 vh, bílý hamburger |
 | `6123b9e` | odkrývání sekcí: hodnoty podle motion.md, spolehlivé spouštění, fokus |
 | `51e3137` | lokální server umí rozsahové požadavky (přehrávání videa v náhledu) |
+| `90fee53` | mobilní hlavička, zaoblený poradce, výraznější odkrývání |
 
 ### Hero — jak je postavený
 
@@ -51,9 +52,48 @@ Změřeno headless Chrome proti živému webu: obnovení pozice, vstup s kotvou,
 redukovaný pohyb, vypnutý JS, tab přes 60 prvků, mobil 390 px. Scroll přes 11 sekcí
 drží medián 16,7 ms a p95 17,1 ms, žádný snímek nad 50 ms.
 
-**Známá odchylka od `motion.md`:** pravidlo 9 chce nejvýš jednu běžící animaci ve
+**Hodnoty zesíleny 7. 9. odpoledne:** 24 px a 420 ms Tomáš nevnímal vůbec, teď 40 px
+a 520 ms přes token `--dur-reveal`, mobil 28 px a 420 ms. Strop 24 px v `motion.md` padl,
+spec je přepsaný včetně důvodu a nové hranice okolo 48 px.
+
+**Známá odchylka od `motion.md`:** pravidlo 10 chce nejvýš jednu běžící animaci ve
 viewportu, na `celorocni-bydleni` se ale dvě sousední krátké sekce (Zateplení
 a Čím se v domě topí) překrývají. Čte se to jako jedna vlna, neřešeno.
+
+## Mobilní hlavička — opraveno a živé
+
+Tomáš hlásil blikání a bílý proužek nahoře. Byly to dvě nezávislé věci:
+
+- Proužek měl přesně 1 px. `.top` měla `border-bottom:1px solid transparent`, takže měřila
+  85 px, ale hero se pod ni vytahoval jen o 84. Vlas se přesunul do `box-shadow`.
+- Blikání dělal skok barvy: pozadí se prolínalo 340 ms, ale barva textu se překlápěla
+  okamžitě, takže tmavé logo chvíli leželo na tmavém heru. Barvy teď jedou stejným
+  přechodem jako pozadí. `backdrop-filter` z přechodu ven, rozměry hlavičky se na mobilu
+  neanimují.
+
+**Oscilaci se nepodařilo reprodukovat** (změna výšky okna u hranice = nula přepnutí).
+Kdyby blikalo dál, další krok je hystereze, ne další ladění barev.
+
+## Poradce
+
+Vznikl před tokeny zaoblení, byl hranatý celý kromě spouštěče. Teď panel a bubliny
+`--r-box`, karty a našeptávač `--r-ctl`, rychlé odpovědi a vstupy `--r-btn`. Na mobilu,
+kde je přes celou obrazovku, zaoblení nula.
+
+## Video v heru — ODLOŽENO, nenasazovat
+
+7. 9. Tomáš poslal referenci s videem jako uzavřenou zaoblenou kartou s tlačítkem přehrát
+a chtěl to takto, protože full-bleed varianta byla „moc velká". Postaveny dvě varianty
+v `_nahled-hero-video.html` (A text nad videem, B video vedle textu), placeholder je plakát
+z videa, video se stahuje až po kliknutí — při načtení jde po síti nula bajtů.
+
+**Tomáš to pak zamítl slovy „nech ji byt asi? vsak hero je nove ted".** Hero zůstává tmavý
+s obrázkem. Náhled i sady `img/flexi-video-plakat-*.webp` jsou netrackované, do produkce
+se nedostanou.
+
+**Kam to patří, až se video bude řešit znovu:** na homepage už JE prázdný slot
+`.film__ramec` s nápisem „Něco se chystá". Je to přesně ta zaoblená 16:9 karta, jen prázdná.
+Video tam jde vsadit i s klikacím plakátem, aniž by se sáhlo na hero.
 
 ## Otevřené drobnosti
 
