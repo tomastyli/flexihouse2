@@ -8,9 +8,12 @@ místo vymýšlení nových hodnot.
 Flexi House staví usazené modulární domy. Pohyb na webu má být stejný: klidný, těžký, dotažený
 do konce. Nic neposkakuje, nic nepruží, nic nerotuje. Prvek dosedne a zůstane.
 
-Praktický důsledek: krátká dráha (do 24 px), doběh bez zákmitu, žádný bounce ani elastic
-easing. Reveal sekcí jede na 24 px a 420 ms: dost na to, aby si toho člověk všiml, málo na to,
-aby čekal. Kratší dráha je pod prahem vnímání, delší už působí jako efekt.
+Praktický důsledek: krátká dráha, doběh bez zákmitu, žádný bounce ani elastic easing.
+
+Reveal sekcí jede na **40 px a 520 ms** (mobil 28 px a 420 ms). Původní hodnoty 24 px a 420 ms
+Tomáš 7. 9. 2026 zamítl slovy „vubec je nevidim“ — při běžné rychlosti scrollu se pohyb rozmaže
+a oko ho nezachytí. Strop 24 px z původního znění tím padá. Nahoru se dál nejde bez důvodu:
+nad zhruba 48 px začne sekce viditelně plachtit a čte se to jako efekt, ne jako dosednutí.
 
 ## Čtyři role
 
@@ -37,19 +40,23 @@ Patří do `:root` v `assets/flexi.css`. Web je dnes má rozeseté jako magické
   --dur-micro:180ms;
   --dur-base:260ms;
   --dur-slow:420ms;
+  --dur-reveal:520ms;
   --ease-out:cubic-bezier(.2,.7,.3,1);
   --ease-in:cubic-bezier(.4,0,1,1);
   --ease-both:cubic-bezier(.4,0,.2,1);
-  --lift:24px;
+  --lift:40px;
   --stagger:70ms;
 }
 ```
 
 - `--dur-micro` pro hover, focus, změnu barvy, přepnutí stavu ovládacího prvku.
-- `--dur-base` pro otevření modálu, přepnutí dekoru v konfigurátoru a reveal na mobilu.
-- `--dur-slow` pro reveal sekcí a pro přechod Zvenku/Uvnitř ve 3D. Nikde jinde.
+- `--dur-base` pro otevření modálu a přepnutí dekoru v konfigurátoru.
+- `--dur-slow` pro přechod Zvenku/Uvnitř ve 3D a pro reveal na mobilu. Nikde jinde.
+- `--dur-reveal` jen pro reveal sekcí na desktopu. Je to jediná hodnota nad 420 ms na webu
+  a je tam schválně, aby byl pohyb vidět.
 - `--ease-out` na vstupy a doběhy, `--ease-in` na mizení, `--ease-both` na obousměrné přepínače.
-- `--lift` je dráha reveal posunu, na mobilu 16 px. Nikdy víc než 24 px.
+- `--lift` je dráha reveal posunu, na mobilu 28 px. Přenastavuje se v media query,
+  ne natvrdo v pravidle.
 - Stagger max 4 prvky, zbytek skupiny naskočí s posledním.
 
 Obě existující křivky v CSS (`.2,.7,.3,1` a `.4,0,.2,1`) zůstávají, jen dostanou jméno.
@@ -111,11 +118,11 @@ Tohle na webu nebude, ani když o to zadání nepřímo říká:
    odkrývá dřív, než uživatel poprvé sáhne na kolečko, dotyk, klávesnici nebo ukazatel.
    Vázat to na první průchod observeru ani na `load` nestačí: Chrome obnovuje pozici
    scrollu až po nich, takže sekce, na které uživatel přistál, by se prolnula pod ním.
-10. Fokus nikdy nesmí skončit ve skryté sekci. Klávesnice se dostane do obsahu dřív než
-    scroll, takže `focusin` uvnitř `fh-rv` sekci odkryje okamžitě a bez přechodu.
-8. Na mobilu (< 768 px): stagger vypnout, reveal na `--dur-base` a 16 px, atmosférické
+8. Fokus nikdy nesmí skončit ve skryté sekci. Klávesnice se dostane do obsahu dřív než
+   scroll, takže `focusin` uvnitř `fh-rv` sekci odkryje okamžitě a bez přechodu.
+9. Na mobilu (< 768 px): stagger vypnout, reveal na `--dur-slow` a 28 px, atmosférické
    animace nechat jen tam, kde nestojí výkon.
-9. Nikdy víc než jedna běžící animace v jednom viewportu.
+10. Nikdy víc než jedna běžící animace v jednom viewportu.
 
 ## Šablona pro zadání jedné animace
 
@@ -150,7 +157,7 @@ PROČ: role příběh, uživateli to říká "Pokračuj dál, tohle patří k so
 
 Z: opacity 0, translateY(var(--lift))
 Do: opacity 1, translateY(0)
-Duration: var(--dur-slow)
+Duration: var(--dur-reveal)
 Easing: var(--ease-out)
 Stagger: žádný, sekce je jeden celek
 
@@ -158,7 +165,7 @@ Omezení:
 - První sekce a cokoliv nad ohybem se neanimuje.
 - Nadpis se animuje spolu se sekcí, ne zvlášť.
 - Výchozí stav v CSS je viditelný, skrývá až js-reveal.
-- Mobil: duration var(--dur-base), posun 16px.
+- Mobil: duration var(--dur-slow), posun 28px.
 - prefers-reduced-motion: sekce viditelné okamžitě.
 ```
 
@@ -175,7 +182,7 @@ Nech: hover a focus na klikacím, jeden reveal na sekci obsahových stránek, st
 v konfigurátoru, existující pin-drop a film-tecka.
 
 Zruš: cokoliv nad ohybem, animace na body textu, parallax, animované pozadí, stagger
-přes 4 prvky, cokoliv s duration nad 420 ms, magické hodnoty mimo tokeny.
+přes 4 prvky, cokoliv s duration nad 420 ms kromě reveal sekcí, magické hodnoty mimo tokeny.
 
 Vrať seznam: co jsi odstranil a proč, co jsi nechal a jakou to má roli.
 ```
