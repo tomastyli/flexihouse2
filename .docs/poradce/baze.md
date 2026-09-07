@@ -16,7 +16,7 @@ Kontakt: Dan Prokeš, 607 321 543, info@flexihouse.cz. Druhý kontakt Jan Proke�
 
 ## Co nabízíme
 
-**Flexi House**, rozkládací dům. Základní cena 400 000 Kč, k ní je v každé sestavě povinná elektroinstalace 5 000 Kč, takže nejnižší dosažitelná cena je 405 000 Kč bez DPH. Navenek uvádíme **od 405 000 Kč bez DPH**, aby web nesliboval cenu, kterou konfigurátor neumí.
+**Flexi House**, rozkládací dům. Základní cena je **400 000 Kč bez DPH za hrubou stavbu** a tak ji uvádíme i navenek. Elektroinstalace v ní není, je to příplatek 10 000 Kč.
 Rozložený má 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa v základní ceně NENÍ, je to
 příplatek 40 000 Kč. Dispozice jsou dvě ložnice,
 obývací prostor s kuchyňským koutem a koupelna.
@@ -44,12 +44,13 @@ je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou,
 | Dekor fasády místo základního obkladu | 23 600 Kč, všech jedenáct dekorů stejně |
 | Reflexní skla, galvanizované zasklení | teď bez příplatku, akce |
 | Koupelna | 30 000 Kč |
-| Kuchyňská linka | 10 000 Kč |
-| Elektroinstalace | 5 000 Kč |
-| Zateplení 100 mm místo 75 mm | 30 000 Kč |
+| Kuchyňská linka | 25 000 Kč |
+| Elektroinstalace | 10 000 Kč |
 | Klimatizace s montáží | 29 000 Kč |
 | Terasa | 40 000 Kč |
 | Vstupní schody | 26 661 Kč |
+| Podlaha | 25 000 Kč |
+| Závěsy a záclony | 20 000 Kč |
 | Sítě do oken | 10 000 Kč včetně DPH |
 | Betonové patky | od 50 000 Kč, podle podloží až 90 000 Kč |
 | Doprava na místo a usazení | 20 000 Kč a k tomu 100 Kč za kilometr |
@@ -79,9 +80,9 @@ Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 
 ## Celoroční bydlení
 
-Zateplení 75 mm je v základní ceně. Pro trvalé bydlení je zimní varianta 100 mm
-za 30 000 Kč. Topí se klimatizací s montáží za 29 000 Kč, ta umí topit i chladit.
-Vytápění není v základní ceně. Kamna už v nabídce nejsou.
+Zateplení je PIR 75 mm a je v základní ceně. Silnější variantu 100 mm už nenabízíme,
+poradce ji nesmí zmiňovat ani nabízet. Topí se klimatizací s montáží za 29 000 Kč,
+ta umí topit i chladit. Vytápění není v základní ceně. Kamna už v nabídce nejsou.
 
 ## Co neděláme
 

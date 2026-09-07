@@ -34,10 +34,9 @@ typ: tabulka
 
 | Položka | Cena bez DPH |
 | Elektroinstalace (v každé sestavě) | 5 000 Kč |
-| Kuchyňská linka | 10 000 Kč |
+| Kuchyňská linka | 25 000 Kč |
 | Koupelna, sprchový kout a WC | 30 000 Kč |
 | Klimatizace s montáží, topí i chladí | 29 000 Kč |
-| Zimní zateplení 100 mm místo 75 mm | 30 000 Kč |
 | Terasa | 40 000 Kč |
 | Vstupní schody | 26 661 Kč |
 | Dekor fasády, 11 provedení místo obkladu | 23 600 Kč |

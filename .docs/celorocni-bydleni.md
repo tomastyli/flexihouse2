@@ -15,7 +15,6 @@ Celoroční verze proto není to, co odjede z haly. Je to jiná sestava plus př
 typ: tabulka
 
 | Položka | Poznámka | Cena bez DPH |
-| Zateplení 100 mm místo 75 mm | volí se při objednávce, u hotového domu už to nezměníte | 30 000 Kč |
 | Klimatizace s montáží | jediný zdroj tepla v nabídce, topí i chladí | 29 000 Kč |
 | Elektroinstalace | zásuvky, světla, jištění; konfigurátor ji počítá do každé sestavy | 5 000 Kč |
 | Koupelna | sprchový kout, umyvadlo, WC, obklady | 30 000 Kč |
@@ -23,7 +22,7 @@ typ: tabulka
 | Krytá terasa | stíní prosklenou stranu | 40 000 Kč |
 | Vstupní schody | k domu na patkách | 26 661 Kč |
 
-Zateplení 75 mm zvládne mírné klima. Kdo počítá se zimou, ať volí 100 mm rovnou. Kamna, krb ani kotel nedodáváme. Kdo si topení pořizuje sám, ať se ozve předem.
+Zateplení je PIR 75 mm a je v základní ceně. Silnější variantu 100 mm už nenabízíme. Kamna, krb ani kotel nedodáváme. Kdo si topení pořizuje sám, ať se ozve předem.
 
 ## Kolik stojí topit, nevíme
 typ: text

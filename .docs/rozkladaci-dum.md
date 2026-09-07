@@ -24,7 +24,6 @@ Elektroinstalace, je v každé sestavě | 5 000 Kč
 Kuchyňská linka | 10 000 Kč
 Koupelna | 30 000 Kč
 Klimatizace s montáží, topí i chladí | 29 000 Kč
-Zateplení 100 mm | 30 000 Kč
 Terasa | 40 000 Kč
 Vstupní schody | 26 661 Kč
 Dekor fasády místo obkladu | 23 600 Kč

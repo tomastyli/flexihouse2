@@ -69,7 +69,7 @@ je horší než žádná a přitáhne poptávky, které nejdou obsloužit.
 **Stav:** ŽIVÉ od 3. 9. 2026.
 **Objem:** 590/měs, konkurence vysoká.
 **Z báze smíme:** zateplení 75 mm v základu stačí na mírné klima, pro trvalé bydlení
-100 mm za 30 000 Kč, topí se klimatizací s tepelným čerpadlem za 29 000 Kč, ta umí topit
+PIR 75 mm v základní ceně, topí se klimatizací s tepelným čerpadlem za 29 000 Kč, ta umí topit
 i chladit, vytápění není v základní ceně, kamna už v nabídce nejsou.
 **Blokuje:** náklady na vytápění za sezónu jsou pod NEVÍME. Stránka o celoročním bydlení,
 která neřekne, kolik stojí topení, je nekompletní. **Zeptat se Dana dřív, než se začne psát.**
