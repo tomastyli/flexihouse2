@@ -83,9 +83,14 @@
 
 <main>
 <section class="hero">
-  <img class="hero__img" src="img/flexi-hero-tmavy-2560w.webp"
-       srcset="img/flexi-hero-tmavy-1000w.webp 1000w, img/flexi-hero-tmavy-1600w.webp 1600w, img/flexi-hero-tmavy-2560w.webp 2560w"
-       sizes="100vw" width="2560" height="1429" alt="Rozkládací modulární dům, Flexi Office a bistro kontejner" fetchpriority="high">
+  <picture>
+    <source media="(max-width:700px)" type="image/webp"
+            srcset="img/flexi-hero-mobil-600w.webp 600w, img/flexi-hero-mobil-800w.webp 800w, img/flexi-hero-mobil-1200w.webp 1200w"
+            sizes="100vw">
+    <img class="hero__img" src="img/flexi-hero-tmavy-2560w.webp"
+         srcset="img/flexi-hero-tmavy-1000w.webp 1000w, img/flexi-hero-tmavy-1600w.webp 1600w, img/flexi-hero-tmavy-2560w.webp 2560w"
+         sizes="100vw" width="2560" height="955" alt="Rozkládací modulární dům, Flexi Office a bistro kontejner" fetchpriority="high">
+  </picture>
   <div class="wrap">
     <h1>Modulární domy<br>pro bydlení i podnikání</h1>
     <div class="hero__actions">
