@@ -26,7 +26,7 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=32">
+<link rel="stylesheet" href="assets/flexi.css?v=33">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=2">
 <link rel="stylesheet" href="assets/flexi-konfigurator.css?v=19">
 <script type="application/ld+json">
@@ -228,7 +228,7 @@ function interiorGroups() {
     ]},
     { key:'heating', title:'Vytápění', type:'single', required:true, options:[
       { id:'none',  label:'Bez vytápění', desc:'Dům dodáme bez topného zdroje, doplníte ho sami.', icon:'flame', price:0 },
-      { id:'ac',    label:'Klimatizace s montáží', desc:'Topí i chladí, nízké provozní náklady.', icon:'flame', price:29000, badge:'Doporučeno' }
+      { id:'ac',    label:'Klimatizace s montáží', desc:'Nástěnná jednotka mezi okna v kuchyni. Topí i chladí, nízké provozní náklady.', icon:'flame', price:29000, badge:'Doporučeno' }
     ]}
   ];
 }
@@ -236,7 +236,7 @@ function addonGroup() {
   return [
     { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', kmFor:'transport', options:[
       { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000 },
-      { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:26661 },
+      { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000 },
       { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
       { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, vat:'incl', from:true },
       { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
@@ -251,7 +251,7 @@ const MODELS = {
     title: 'Konfigurátor modulárního domu | Flexi House',
     accent: 'dům na míru',
     base: 400000,
-    baseIncludes: ['Hliníková okna s dvojskly', 'Vstupní dveře', 'Fasádní obklad', 'Zateplení PIR 75 mm'],
+    baseIncludes: ['Hliníková okna s dvojskly', 'Vstupní dveře', 'Fasádní obklad', 'Zateplení Rockwool 75 mm'],
     tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
     steps: [
       { title:'Dispozice a velikost', micro:'Rozložený dům má vnější rozměr 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa je příplatek, najdete ji v doplňcích.', groups:[

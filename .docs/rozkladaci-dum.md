@@ -25,7 +25,7 @@ Kuchyňská linka | 10 000 Kč
 Koupelna | 30 000 Kč
 Klimatizace s montáží, topí i chladí | 29 000 Kč
 Terasa | 40 000 Kč
-Vstupní schody | 26 661 Kč
+Vstupní schody | 23 000 Kč
 Dekor fasády místo obkladu | 23 600 Kč
 Sedlová střecha | 90 000 Kč
 

@@ -48,7 +48,7 @@ je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou,
 | Elektroinstalace | 10 000 Kč |
 | Klimatizace s montáží | 29 000 Kč |
 | Terasa | 40 000 Kč |
-| Vstupní schody | 26 661 Kč |
+| Vstupní schody | 23 000 Kč |
 | Podlaha | 25 000 Kč |
 | Závěsy a záclony | 20 000 Kč |
 | Sítě do oken | 10 000 Kč včetně DPH |
@@ -57,7 +57,8 @@ je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou,
 | Montáž domku | od 30 000 Kč, podle náročnosti až 80 000 Kč |
 
 Doprava se počítá podle vzdálenosti z výroby na pozemek, proto ji bez znalosti místa
-nelze říct přesně. Sazba je 20 000 Kč plus 100 Kč za kilometr.
+nelze říct přesně. Sazba je 20 000 Kč plus 100 Kč za kilometr, a kilometry se počítají
+tam i zpátky, protože souprava se musí vrátit.
 
 Patky a montáž jsou cena od a konfigurátor s nimi počítá ve spodní hranici. Patky vyjdou
 podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na
@@ -80,9 +81,18 @@ Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 
 ## Celoroční bydlení
 
-Zateplení je PIR 75 mm a je v základní ceně. Silnější variantu 100 mm už nenabízíme,
-poradce ji nesmí zmiňovat ani nabízet. Topí se klimatizací s montáží za 29 000 Kč,
-ta umí topit i chladit. Vytápění není v základní ceně. Kamna už v nabídce nejsou.
+Zateplení je Rockwool 75 mm a je v základní ceně. Kdo chce lepší izolační vlastnosti,
+může si vyžádat PIR, ten je za příplatek a cena se určuje individuálně, poradce ji neuvádí.
+Variantu 100 mm už nenabízíme, poradce ji nesmí zmiňovat.
+
+Topí se klimatizací s montáží za 29 000 Kč, ta umí topit i chladit. Je to nástěnná
+jednotka a montuje se na stěnu mezi okna v kuchyni. Vytápění není v základní ceně.
+Kamna už v nabídce nejsou.
+
+## Životnost a záruka
+
+Životnost stavby je 25 let při správné údržbě. Záruka je 2 roky.
+Požární odolnost doložit neumíme, na tu se poradce nesmí vyjadřovat.
 
 ## Co neděláme
 
@@ -124,7 +134,6 @@ a nabídne předání kontaktu.
 
 - Kolik týdnů trvá výroba rozkládacího domu od objednávky po usazení.
 - Financování, splátky, úvěr, zálohy.
-- Záruka, délka a rozsah.
 - Náklady na vytápění za sezónu.
 - O kolik milimetrů zateplí fasádní panel s dekorem.
 - Cokoli o konkrétní zakázce, termínu nebo slevě.

@@ -20,9 +20,9 @@ typ: tabulka
 | Koupelna | sprchový kout, umyvadlo, WC, obklady | 30 000 Kč |
 | Kuchyňská linka | s dřezem a místem pro spotřebiče | 10 000 Kč |
 | Krytá terasa | stíní prosklenou stranu | 40 000 Kč |
-| Vstupní schody | k domu na patkách | 26 661 Kč |
+| Vstupní schody | k domu na patkách | 23 000 Kč |
 
-Zateplení je PIR 75 mm a je v základní ceně. Silnější variantu 100 mm už nenabízíme. Kamna, krb ani kotel nedodáváme. Kdo si topení pořizuje sám, ať se ozve předem.
+Zateplení je Rockwool 75 mm a je v základní ceně. Silnější variantu 100 mm už nenabízíme. Kamna, krb ani kotel nedodáváme. Kdo si topení pořizuje sám, ať se ozve předem.
 
 ## Kolik stojí topit, nevíme
 typ: text

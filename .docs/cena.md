@@ -38,7 +38,7 @@ typ: tabulka
 | Koupelna, sprchový kout a WC | 30 000 Kč |
 | Klimatizace s montáží, topí i chladí | 29 000 Kč |
 | Terasa | 40 000 Kč |
-| Vstupní schody | 26 661 Kč |
+| Vstupní schody | 23 000 Kč |
 | Dekor fasády, 11 provedení místo obkladu | 23 600 Kč |
 | Sedlová střecha místo ploché | 90 000 Kč |
 | Reflexní zasklení, teď bez příplatku | 0 Kč |
