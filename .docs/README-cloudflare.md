@@ -107,6 +107,19 @@ novými. Před zásahem si stáhnout GET stejné adresy jako zálohu.
   `.wrangler/state/v3/d1/miniflare-D1DatabaseObject/` a naliješ do něj
   `.docs/schema.sql` přes `sqlite3`
 
+### Newsletter (8. 9. 2026)
+- [x] Migrace `.docs/migrace-02-newsletter.sql` nalitá do ostré D1 `flexihouse`
+- [x] `/api/newsletter` (přihlášení) a `/api/odhlasit` (odhlášení) nasazené
+- [x] Stránka `/odhlasit`, noindex, kód posílá až z JS, GET na endpoint vrací 404
+- [x] Ověřeno naostro celým kolečkem, testovací řádek uklizený
+- [ ] Double opt-in, zatím se adresa ukládá rovnou
+- [ ] Odesílač zpráv. Odkaz na odhlášení musí být
+      `https://flexihouse.cz/odhlasit?kod=<odhlasovaci_kod>` z tabulky `newsletter`
+
+**Pozor na účet:** projekt běží pod Danovým účtem, ne pod Tomášovým. Wrangler proto
+potřebuje `CLOUDFLARE_ACCOUNT_ID=3d2387ff6d1be6ec4a82d28b306b42bb`, jinak `d1 list`
+ukáže cizí databáze a `flexihouse` mezi nimi není.
+
 ### Checklist pro přehled poptávek
 - [x] D1 binding `DB` přidaný (Production; Preview vědomě ne)
 - [x] `ADMIN_PASSWORD` a `ADMIN_SECRET` přidané jako secrets
