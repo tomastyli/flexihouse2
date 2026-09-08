@@ -3,7 +3,7 @@
 
   var CONFIG = {
     gaId: 'G-B9WNLFF5FR',
-    pixelId: '2153333688859110'
+    pixelId: '1742864286991937'
   };
 
   var STORAGE_KEY = 'fh_cookie_consent';
