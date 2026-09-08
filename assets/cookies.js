@@ -54,6 +54,25 @@
     try { document.dispatchEvent(new CustomEvent('fh:pixel')); } catch (e) {}
   }
 
+  var MAPA = {
+    generate_lead:      { typ: 'track',       nazev: 'Lead' },
+    contact_phone:      { typ: 'track',       nazev: 'Contact' },
+    contact_email:      { typ: 'track',       nazev: 'Contact' },
+    configurator_start: { typ: 'track',       nazev: 'CustomizeProduct' },
+    save_configuration: { typ: 'trackCustom', nazev: 'SaveConfiguration' },
+    download_pdf:       { typ: 'trackCustom', nazev: 'DownloadPdf' },
+    lead_form_open:     { typ: 'trackCustom', nazev: 'LeadFormOpen' }
+  };
+
+  window.fhPixel = function (nazev, params) {
+    try {
+      if (!loaded.pixel || !window.fbq) return;
+      var m = MAPA[nazev];
+      if (!m) return;
+      window.fbq(m.typ, m.nazev, params || {});
+    } catch (e) {}
+  };
+
   function applyConsent(c) {
     gtag('consent', 'update', {
       analytics_storage: c.analytics ? 'granted' : 'denied',

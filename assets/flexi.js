@@ -26,7 +26,10 @@
 })();
 
 (function(){
-  function send(name,params){ if(window.gtag) window.gtag('event',name,params||{}); }
+  function send(name,params){
+    if(window.gtag) window.gtag('event',name,params||{});
+    if(window.fhPixel) window.fhPixel(name,params);
+  }
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[href]');
     if(!a) return;

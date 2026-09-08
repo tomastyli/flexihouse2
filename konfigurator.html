@@ -298,6 +298,8 @@ function propustFrontu() {
 }
 function udalost(nazev, params) {
   const p = Object.assign({ model: modelKey }, params || {});
+  // pixel nečeká na GA4, jinak by ho minul každý, kdo povolí reklamu a ne analytiku
+  if (window.fhPixel) window.fhPixel(nazev, p);
   if (gaZive || propustFrontu()) { window.gtag('event', nazev, p); return; }
   if (gaFronta.length < 40) gaFronta.push([nazev, p]);
 }
@@ -1325,7 +1327,7 @@ const kodZUrl = (params.get('kod') || '').trim().toUpperCase();
 if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZUrl);
 </script>
 
-<script src="assets/cookies.js?v=12"></script>
+<script src="assets/cookies.js?v=13"></script>
 
 
 
@@ -1418,7 +1420,7 @@ if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZU
     </div>
   </div>
 </footer>
-<script src="assets/flexi.js?v=14" defer></script>
-<script src="assets/flexi-poradce.js?v=2" defer></script>
+<script src="assets/flexi.js?v=15" defer></script>
+<script src="assets/flexi-poradce.js?v=3" defer></script>
 </body>
 </html>

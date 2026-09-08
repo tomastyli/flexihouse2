@@ -161,6 +161,7 @@
       var j=await r.json().catch(function(){return{}});
       if(r.ok&&j.ok){
         if(window.gtag) gtag('event','generate_lead',{form:'poptavka',value:1});
+        if(window.fhPixel) window.fhPixel('generate_lead',{form:'poptavka'});
         f.innerHTML='<div class="done"><h2>Máme to</h2><p>Poptávku jsme přijali a ozveme se do 24 hodin. Potvrzení jsme poslali i na váš e-mail.</p><a class="btn btn--out" href="/katalog">Zpět na domy</a></div>';
         return;
       }
@@ -331,8 +332,8 @@
   </div>
 </footer>
 
-<script src="assets/cookies.js?v=12" defer></script>
-<script src="assets/flexi.js?v=14" defer></script>
-<script src="assets/flexi-poradce.js?v=2" defer></script>
+<script src="assets/cookies.js?v=13" defer></script>
+<script src="assets/flexi.js?v=15" defer></script>
+<script src="assets/flexi-poradce.js?v=3" defer></script>
 </body>
 </html>
