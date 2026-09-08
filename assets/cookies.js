@@ -2,7 +2,8 @@
   'use strict';
 
   var CONFIG = {
-    gaId: 'G-B9WNLFF5FR'
+    gaId: 'G-B9WNLFF5FR',
+    pixelId: '2153333688859110'
   };
 
   var STORAGE_KEY = 'fh_cookie_consent';
@@ -25,7 +26,7 @@
     wait_for_update: 500
   });
 
-  var loaded = { ga: false };
+  var loaded = { ga: false, pixel: false };
 
   function loadGA() {
     if (loaded.ga || isPlaceholder(CONFIG.gaId) || !isOstra()) return;
@@ -39,14 +40,29 @@
     try { document.dispatchEvent(new CustomEvent('fh:ga')); } catch (e) {}
   }
 
+  function loadPixel() {
+    if (loaded.pixel || isPlaceholder(CONFIG.pixelId) || !isOstra()) return;
+    loaded.pixel = true;
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('init', CONFIG.pixelId);
+    window.fbq('track', 'PageView');
+    try { document.dispatchEvent(new CustomEvent('fh:pixel')); } catch (e) {}
+  }
+
   function applyConsent(c) {
     gtag('consent', 'update', {
       analytics_storage: c.analytics ? 'granted' : 'denied',
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied'
+      ad_storage: c.marketing ? 'granted' : 'denied',
+      ad_user_data: c.marketing ? 'granted' : 'denied',
+      ad_personalization: c.marketing ? 'granted' : 'denied'
     });
     if (c.analytics) loadGA();
+    if (c.marketing) loadPixel();
   }
 
   function save(c) {
@@ -110,7 +126,7 @@
     root.innerHTML =
       '<div class="fh-cc__panel">' +
         '<p class="fh-cc__t">Respektujeme vaše soukromí</p>' +
-        '<p class="fh-cc__p">Používáme cookies pro fungování webu a s vaším souhlasem také pro anonymní měření návštěvnosti (Google Analytics). Reklamní cookies nenasazujeme. Více v <a href="zasady-ochrany-soukromi.html">zásadách ochrany soukromí</a>.</p>' +
+        '<p class="fh-cc__p">Používáme cookies pro fungování webu a s vaším souhlasem také pro měření návštěvnosti (Google Analytics) a pro reklamu (Meta Pixel). Bez souhlasu se nenačte ani jedno. Více v <a href="zasady-ochrany-soukromi.html">zásadách ochrany soukromí</a>.</p>' +
         '<div class="fh-cc__settings" id="fhccSettings">' +
           '<div class="fh-cc__row">' +
             '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Nezbytné</div><div class="fh-cc__row-d">Potřebné pro základní fungování webu. Vždy aktivní.</div></div>' +
@@ -119,6 +135,10 @@
           '<div class="fh-cc__row">' +
             '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Analytické</div><div class="fh-cc__row-d">Google Analytics 4: anonymní měření návštěvnosti.</div></div>' +
             '<label class="fh-cc__sw"><input type="checkbox" id="fhccAnalytics"><span></span></label>' +
+          '</div>' +
+          '<div class="fh-cc__row">' +
+            '<div class="fh-cc__row-txt"><div class="fh-cc__row-t">Reklamní</div><div class="fh-cc__row-d">Meta Pixel: měření reklamy na Facebooku a Instagramu.</div></div>' +
+            '<label class="fh-cc__sw"><input type="checkbox" id="fhccMarketing"><span></span></label>' +
           '</div>' +
         '</div>' +
         '<div class="fh-cc__actions">' +
@@ -130,22 +150,23 @@
     document.body.appendChild(root);
 
     var elA = root.querySelector('#fhccAnalytics');
+    var elM = root.querySelector('#fhccMarketing');
     var existing = read();
-    if (existing) { elA.checked = !!existing.analytics; }
+    if (existing) { elA.checked = !!existing.analytics; elM.checked = !!existing.marketing; }
 
     root.querySelector('#fhccToggle').addEventListener('click', function () {
       root.classList.toggle('open');
       this.textContent = root.classList.contains('open') ? 'Skrýt nastavení' : 'Nastavení';
     });
     root.querySelector('#fhccAccept').addEventListener('click', function () {
-      save({ analytics: true }); hide();
+      save({ analytics: true, marketing: true }); hide();
     });
     root.querySelector('#fhccReject').addEventListener('click', function () {
-      save({ analytics: false }); hide();
+      save({ analytics: false, marketing: false }); hide();
     });
     root.addEventListener('change', function (e) {
-      if (e.target === elA) {
-        save({ analytics: elA.checked });
+      if (e.target === elA || e.target === elM) {
+        save({ analytics: elA.checked, marketing: elM.checked });
       }
     });
 
@@ -157,6 +178,7 @@
     var existing = read();
     if (existing) {
       var a = root.querySelector('#fhccAnalytics'); if (a) a.checked = !!existing.analytics;
+      var m = root.querySelector('#fhccMarketing'); if (m) m.checked = !!existing.marketing;
     }
   }
   function hide() { if (root) { root.classList.remove('show'); root.classList.remove('open'); var t = root.querySelector('#fhccToggle'); if (t) t.textContent = 'Nastavení'; } }
