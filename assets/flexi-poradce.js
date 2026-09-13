@@ -531,7 +531,8 @@
     launch = document.createElement('button');
     launch.className = 'fhp-launch';
     launch.type = 'button';
-    launch.innerHTML = ZNACKA + 'Zeptat se';
+    launch.setAttribute('aria-label', 'Zeptat se poradce');
+    launch.innerHTML = ZNACKA + '<span class="fhp-launch__t">Zeptat se</span>';
 
     wid = document.createElement('section');
     wid.className = 'fhp-wid';

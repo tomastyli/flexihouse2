@@ -102,3 +102,32 @@
     if (zaznamy[0].isIntersecting || !nadHranou(zaznamy[0])) hlavicka.classList.remove('top--pevna');
   }, { rootMargin: '-' + (odsazeni - 2 + mrtvaZona) + 'px 0px 0px 0px' }).observe(hlidac);
 })();
+
+(function(){
+  var hlavicka=document.querySelector('.top');
+  if(!hlavicka) return;
+  var spoust=hlavicka.querySelector('.md__spoust'), panel=hlavicka.querySelector('.md__panel');
+  if(!spoust||!panel) return;
+  var siroko=window.matchMedia('(min-width:901px)');
+  var jemny=window.matchMedia('(hover:hover) and (pointer:fine)');
+  var skupina=[spoust.parentNode,panel], cas;
+  function set(open){
+    clearTimeout(cas);
+    if(open&&!siroko.matches) return;
+    hlavicka.classList.toggle('je-otevrena',open);
+    spoust.setAttribute('aria-expanded',String(open));
+  }
+  function odloz(open,ms){ clearTimeout(cas); cas=setTimeout(function(){ set(open); },ms); }
+  skupina.forEach(function(el){
+    el.addEventListener('mouseenter',function(){ if(jemny.matches) odloz(true,90); });
+    el.addEventListener('mouseleave',function(){ if(jemny.matches) odloz(false,180); });
+    el.addEventListener('focusin',function(){ set(true); });
+    el.addEventListener('focusout',function(e){
+      if(!skupina.some(function(x){ return x.contains(e.relatedTarget); })) set(false);
+    });
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&hlavicka.classList.contains('je-otevrena')){ set(false); spoust.focus(); }
+  });
+  siroko.addEventListener('change',function(){ if(!siroko.matches) set(false); });
+})();

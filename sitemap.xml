@@ -25,6 +25,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://flexihouse.cz/dum-na-miru</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://flexihouse.cz/poptavka</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>

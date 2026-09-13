@@ -31,7 +31,7 @@
 .fhp-wid__id b{
   display:block;
   font-family:'Archivo','Instrument Sans',sans-serif;
-  font-weight:800;font-variation-settings:'wdth' 116;
+  font-weight:800;
   text-transform:uppercase;letter-spacing:0.04em;font-size:0.79rem;
 }
 .fhp-wid__id small{display:flex;align-items:baseline;gap:7px;font-size:0.72rem;line-height:1.35;color:var(--muted);margin-top:3px}
@@ -116,8 +116,8 @@
 .fhp-lead input:focus{border-color:var(--ink);outline:none}
 .fhp-lead button{
   height:46px;background:var(--ink);color:#fff;border:0;border-radius:var(--r-btn);cursor:pointer;
-  font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
-  font-weight:800;font-variation-settings:'wdth' 88;
+  font-family:'Archivo','ArchivoNahrada',sans-serif;
+  font-weight:800;
   text-transform:uppercase;letter-spacing:0.07em;font-size:0.8rem;
 }
 .fhp-lead button:hover{background:var(--blue)}
@@ -165,8 +165,8 @@
   display:flex;align-items:center;gap:11px;
   height:56px;padding:0 20px 0 16px;
   background:var(--ink);color:#fff;border:0;border-radius:var(--r-btn,999px);cursor:pointer;
-  font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
-  font-weight:800;font-variation-settings:'wdth' 88;
+  font-family:'Archivo','ArchivoNahrada',sans-serif;
+  font-weight:800;
   text-transform:uppercase;letter-spacing:0.06em;font-size:0.83rem;
   box-shadow:0 14px 34px rgba(22,32,42,.26);
 }
@@ -177,7 +177,8 @@
 @media (max-width:560px){
   .fhp-wid{right:0;bottom:0;left:0;top:0;width:100%;max-width:none;height:100%;border:0;border-radius:0;transform-origin:bottom center}
   .fhp-wid.is-shut{opacity:1;transform:translateY(100%)}
-  .fhp-launch{right:16px;bottom:16px}
+  .fhp-launch{right:16px;bottom:16px;width:56px;padding:0;justify-content:center;gap:0}
+  .fhp-launch__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .fhp-chip{min-height:48px;padding:10px 15px}
   .fhp-nap__list li{min-height:48px;display:flex;align-items:center;padding:10px 14px}
   .fhp-nap__list{max-height:240px}
@@ -211,7 +212,8 @@
 }
 .fhp-bublina__x:hover{color:var(--ink)}
 @media (max-width:560px){
-  .fhp-bublina{right:16px;left:16px;bottom:84px;max-width:none}
+  .fhp-bublina{right:16px;left:auto;bottom:84px;max-width:232px}
+  .fhp-bublina__x{width:32px;height:32px;margin:-8px -8px 0 0}
 }
 @media (prefers-reduced-motion:reduce){
   .fhp-bublina{transition:none}

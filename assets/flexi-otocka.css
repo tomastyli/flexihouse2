@@ -1,0 +1,49 @@
+/* Otočka domu z předrenderovaných snímků z Blenderu.
+   Používá ji hero produktové stránky i konfigurátor, proto má vlastní soubor
+   a neutrální třídy. Kam se scéna posadí a jak je velká, řeší stránka:
+   hostitel musí být polohovaný, uvnitř se všechno kreslí absolutně.
+
+   Poměr hostitele musí zůstat aspoň 1,3. Dům i s odleskem zabírá 11,9 až
+   88,6 % šířky snímku (změřeno na 24 úhlech čtyř kombinací) a object-fit:
+   cover krájí tu stranu, která přebývá. Při 1,3 zbývá vidět 81 % šířky,
+   tedy ještě s rezervou; ve vyšším a užším okně už dům přichází o roh. */
+.fo{opacity:0;transition:opacity 500ms var(--ease-both,ease)}
+.fo.je-pripravena{opacity:1;cursor:grab;touch-action:pan-y;
+  user-select:none;-webkit-user-select:none}
+.fo.je-tazena{cursor:grabbing}
+.fo.ma-kurzor,.fo.ma-kurzor *{cursor:none}
+
+.fo__snimky{position:absolute;inset:0}
+.fo__snimky img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center 78%;opacity:0;-webkit-user-drag:none;user-select:none}
+.fo__snimky img.je-videt{opacity:1}
+
+.fo__nacita{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  margin:0;padding:8px 16px;border-radius:999px;font-size:.85rem;color:#fff;
+  background:rgba(12,20,26,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+/* Lišta je zároveň ukazatel úhlu i posuvník. */
+.fo__lista{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;
+  width:min(360px,42vw);height:3px;border-radius:999px;background:rgba(255,255,255,.26);
+  cursor:pointer;touch-action:none;transition:height 160ms var(--ease-both,ease)}
+.fo__lista::before{content:"";position:absolute;inset:-14px -8px}
+.fo__lista:hover,.fo__lista.je-tazena,.fo__lista:focus-visible{height:6px}
+.fo__lista:focus-visible{outline:2px solid #fff;outline-offset:6px}
+.fo__lista-i{display:block;height:100%;width:2.8%;border-radius:999px;background:#fff}
+
+/* Vlastní kurzor místo šipky. Jede jen na myši, proto visí na body a ne
+   ve scéně: musí se hýbat i nad překryvy. */
+.fo__kurzor{position:fixed;left:0;top:0;z-index:60;pointer-events:none;
+  width:62px;height:62px;border-radius:50%;display:grid;place-items:center;gap:0;
+  color:#fff;background:rgba(12,20,26,.44);border:1px solid rgba(255,255,255,.34);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  opacity:0;transition:opacity 180ms var(--ease-both,ease),
+    width 160ms var(--ease-both,ease),height 160ms var(--ease-both,ease)}
+.fo__kurzor.je-videt{opacity:1}
+.fo__kurzor.je-stisk{width:52px;height:52px;background:rgba(12,20,26,.66)}
+.fo__kurzor svg{grid-area:1/1;width:26px;height:26px;transform:translateY(-6px)}
+.fo__kurzor span{grid-area:1/1;font-family:'Archivo','ArchivoNahrada',sans-serif;
+  font-weight:700;font-size:.6rem;letter-spacing:.04em;transform:translateY(13px)}
+
+@media (prefers-reduced-motion:reduce){.fo,.fo__kurzor{transition:none}}
+@media (max-width:700px){.fo__kurzor{display:none}}
