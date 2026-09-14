@@ -77,10 +77,13 @@
 
 /* Odkaz na první sekci pod herem. Drží se vlevo, posuvník otočky zůstává
    uprostřed: nejužší okno, kde je posuvník vidět, je 701 px a mezi nimi tam
-   zbývá 42 px. Pod 701 px posuvník mizí s otočkou. */
+   zbývá 32 px. Pod 701 px posuvník mizí s otočkou. */
 .pr-hero.je-3d .pr-hero__mikro{text-wrap:balance}
 .pr-hero__dal{position:absolute;left:0;right:0;bottom:clamp(18px,2.4vh,26px);z-index:3;
   font-size:.82rem;color:rgba(255,255,255,.78);pointer-events:none}
+/* .wrap je uvnitř span, a na inline elementu max-width ani margin:auto nedělají nic.
+   Bez tohohle řádku visel odkaz u levého okraje: na 1920 px o 320 px vlevo od drobečků. */
+.pr-hero__dal .wrap{display:flex}
 .pr-hero__dal a{display:inline-flex;align-items:center;gap:9px;color:inherit;
   text-decoration:none;pointer-events:auto;padding:6px 0}
 .pr-hero__dal svg{width:15px;height:15px;flex:none;opacity:.6;
