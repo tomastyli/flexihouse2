@@ -343,7 +343,17 @@
 
 /* Na mobilu se sada nenačítá: je to 36 snímků navíc a tažení by na dotyku
    bralo svislé posouvání stránky. Zůstane statická fotka. */
-@media (max-width:700px){.pr-hero__spin{display:none}}
+/* Otočka se vypíná nejen na mobilu. Na tabletu na výšku je hero skoro čtvercové
+   a cover ořízne dům po stranách: změřeno na 768x1024, 820x1180 a 900x1200.
+   Tam nastoupí snímek na výšku, který je pro takový tvar vyrenderovaný. */
+@media (max-width:700px), (max-width:920px) and (max-aspect-ratio:1/1){
+  .pr-hero__spin{display:none}}
+
+/* Na tabletu na výšku je hero skoro čtvercové a ze snímku na výšku je vidět
+   jen úzký pruh. Při 78 % vyjde střecha pod nadpis: změřeno -79 px na 768x1024,
+   -121 na 820x1180 a -186 na 900x1200. 52 % posune dům dolů pod text. */
+@media (min-width:701px) and (max-width:920px) and (max-aspect-ratio:1/1){
+  .pr-hero.je-3d .pr-hero__foto{object-position:center 52%}}
 
 /* Grafický půdorys. Kresba nese informaci sama: kóty po obvodu a popisky
    v místnostech. Byl tu i řádek „statistik“ pod plánem, ale to je zakázaný

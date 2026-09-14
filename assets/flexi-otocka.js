@@ -25,14 +25,25 @@
   // textur při otáčení.
   var SADY = {
     hero: {
-      pocet: 36, verze: '?v=4',
-      tiery: [{ cesta: 'img/hero-otocka/', w: 1920, h: 800 },
-              { cesta: 'img/hero-otocka-l/', w: 2400, h: 1000 }]
+      pocet: 36, verze: '?v=9',
+      tiery: [{ cesta: 'img/hero-otocka/', w: 1200, h: 675 },
+              { cesta: 'img/hero-otocka-l/', w: 3000, h: 1688 }]
+    },
+    office: {
+      pocet: 36, verze: '?v=1',
+      tiery: [{ cesta: 'img/office-otocka/', w: 1664, h: 936 },
+              { cesta: 'img/office-otocka-l/', w: 3000, h: 1688 }]
     },
     konfig: {
       pocet: 24, verze: '',
       tiery: [{ cesta: 'img/otocka-s/', w: 1200, h: 750 },
               { cesta: 'img/otocka/', w: 2400, h: 1500 }]
+    },
+    // Interiér není otočka, na každé místo a kombinaci je jeden snímek.
+    interier: {
+      pocet: 1, verze: '',
+      tiery: [{ cesta: 'img/interier-s/', w: 1200, h: 903 },
+              { cesta: 'img/interier/', w: 2400, h: 1805 }]
     }
   };
 
@@ -41,7 +52,10 @@
   // znovunačtení stojí desítky milisekund, protože snímky drží HTTP cache.
   var STROP = 2;
 
-  var uzke = global.matchMedia('(max-width:700px)');
+  // Musí sedět s pravidlem v produkt.css, které otočku schovává. Když se
+  // rozešly, tablet na výšku si stáhl 36 snímků pro nic: CSS je skrylo,
+  // ale JS o tom nevědělo.
+  var uzke = global.matchMedia('(max-width:700px), (max-width:920px) and (max-aspect-ratio:1/1)');
   var setrny = !!(navigator.connection && navigator.connection.saveData);
   var pomale = !!(navigator.connection
     && /^(slow-)?2g$|^3g$/.test(navigator.connection.effectiveType || ''));
@@ -85,7 +99,12 @@
   function vyberTier(s) {
     var d = global.devicePixelRatio || 1;
     var strop = (setrny || pomale) ? 0 : s.tiery.length - 1;
-    var w = box.clientWidth * d, h = box.clientHeight * d;
+    // Scéna nemusí mít v okamžiku výběru ještě výšku: hero ji bere z textu,
+    // který čeká na písmo. Při nule prošly obě podmínky jako splněné a vybrala
+    // se nejmenší sada, takže se hero na Retině roztahovalo a vypadalo měkce.
+    // Náhradou je šířka okna, ta je známá vždycky.
+    var w = (box.clientWidth || document.documentElement.clientWidth) * d;
+    var h = (box.clientHeight || Math.round(document.documentElement.clientWidth / 1.7)) * d;
     var i = 0;
     while (i < strop && (s.tiery[i].w < w || s.tiery[i].h < h)) i++;
     return s.tiery[i];
@@ -96,14 +115,60 @@
     return ((Math.round(uhel / (360 / n)) % n) + n) % n;
   }
 
+  // Okno dekódovaných snímků. Dekódovat všech 36 najednou znamená u sady
+  // 3000 x 1688 celých 695 MB bitmap; prohlížeč je začne zahazovat a znovu
+  // dekódovat, což je přesně to poskakování textur. Patnáct snímků kolem
+  // aktuálního úhlu stačí na plynulé otáčení a vejde se do 305 MB.
+  // U malé sady se neokénkuje, ta se do paměti vejde celá.
+  function zajisti(s, i) {
+    var n = s.pocet, w = s.okno;
+    if (w >= n) {
+      for (var a = 0; a < n; a++) pripoj(s, a);
+      return;
+    }
+    for (var k = -w; k <= w; k++) pripoj(s, ((i + k) % n + n) % n);
+    for (var j = 0; j < n; j++) {
+      var d = Math.abs(j - i);
+      d = Math.min(d, n - d);
+      if (d > w && s.prvky[j]) {
+        s.prvky[j].remove();
+        s.prvky[j] = null;
+        s.hotovo[j] = false;
+      }
+    }
+  }
+
+  function pripoj(s, j) {
+    if (s.prvky[j]) return;
+    var im = new Image();
+    im.alt = '';
+    // Obrázky jdou v prohlížeči chytit a přetáhnout jako soubor. Tažení se
+    // tím přeruší v půlce a otočka se zasekne, proto je to vypnuté.
+    im.draggable = false;
+    im.src = s.adresy[j];
+    snimky.appendChild(im);
+    s.prvky[j] = im;
+    dekoduj(im).then(function () {
+      s.hotovo[j] = true;
+      // Když se mezitím dotočilo přesně sem, teprve teď je co ukázat.
+      if (aktivni === s.klic && index() === j) ukaz();
+    });
+  }
+
   function ukaz() {
-    if (!nactene[aktivni]) return;
+    var s = nactene[aktivni];
+    if (!s) return;
     var i = index();
-    for (var k in nactene) {
-      if (!Object.prototype.hasOwnProperty.call(nactene, k)) continue;
-      var s = nactene[k];
-      for (var j = 0; j < s.length; j++) {
-        s[j].classList.toggle('je-videt', k === aktivni && j === i);
+    zajisti(s, i);
+    // Dokud není nový snímek dekódovaný, drží se ten předchozí. Skrýt ho
+    // dřív znamená černé bliknutí uprostřed tažení.
+    if (s.hotovo[i] && s.prvky[i]) {
+      for (var k in nactene) {
+        if (!Object.prototype.hasOwnProperty.call(nactene, k)) continue;
+        var t = nactene[k];
+        for (var j = 0; j < t.pocet; j++) {
+          if (t.prvky[j]) t.prvky[j].classList.toggle('je-videt', k === aktivni && j === i);
+        }
       }
     }
     var st = Math.round(i * (360 / pocet));
@@ -136,7 +201,7 @@
       while (i < poradi.length && poradi[i] === aktivni) i++;
       if (i >= poradi.length) break;
       var stary = poradi.splice(i, 1)[0];
-      nactene[stary].forEach(function (im) { im.remove(); });
+      nactene[stary].prvky.forEach(function (im) { if (im) im.remove(); });
       delete nactene[stary];
     }
   }
@@ -150,25 +215,34 @@
       poradi.push(klic);
       return Promise.resolve(klic);
     }
-    var zaklad = tier.cesta + (kombinace ? kombinace + '/' : '');
-    var pole = [], cekani = [];
-    for (var i = 0; i < s.pocet; i++) {
-      var im = new Image();
-      im.alt = '';
-      // Obrázky jdou v prohlížeči chytit a přetáhnout jako soubor. Tažení se
-      // tím přeruší v půlce a otočka se zasekne, proto je to vypnuté.
-      im.draggable = false;
-      im.src = zaklad + String(i).padStart(2, '0') + '.webp' + s.verze;
-      snimky.appendChild(im);
-      pole.push(im);
-      cekani.push(dekoduj(im));
+    // Otočka je číslovaná řada ve složce, interiér jeden pojmenovaný soubor.
+    var adresy = [];
+    if (s.pocet === 1) adresy.push(tier.cesta + kombinace + '.webp' + s.verze);
+    else {
+      // Hero žádnou kombinaci nemá, čísla leží rovnou ve složce. Bez téhle
+      // pojistky vyjde cesta "hero-otocka/null/00.webp" a otočka se nenačte.
+      var pod = kombinace ? kombinace + '/' : '';
+      for (var a = 0; a < s.pocet; a++) {
+        adresy.push(tier.cesta + pod + String(a).padStart(2, '0') + '.webp' + s.verze);
+      }
     }
-    nactene[klic] = pole;
+    var sada = {
+      klic: klic, adresy: adresy, pocet: adresy.length,
+      prvky: new Array(adresy.length), hotovo: new Array(adresy.length),
+      // Okno se zapíná až u velkých snímků. Malá sada se vejde celá.
+      okno: (tier.w * tier.h > 3000000) ? 7 : adresy.length
+    };
+    nactene[klic] = sada;
     poradi.push(klic);
     uvolni();
-    // Čekat na všechny by znamenalo mrtvou vteřinu navíc. Prvních osm pokryje
-    // první pohyb rukou, zbytek se dodekóduje na pozadí.
-    return Promise.all(cekani.slice(0, 8)).then(function () { return klic; });
+    // Čekat na všechny by znamenalo mrtvou vteřinu navíc. Prvních pár pokryje
+    // první pohyb rukou, zbytek se dodekóduje, jak se úhel posouvá.
+    zajisti(sada, 0);
+    var cekani = [];
+    for (var b = 0; b < Math.min(6, sada.pocet); b++) {
+      if (sada.prvky[b]) cekani.push(dekoduj(sada.prvky[b]));
+    }
+    return Promise.all(cekani).then(function () { return klic; });
   }
 
   // Poslední požadavek vyhrává. Bez toho by sada, o kterou se požádalo dřív,
@@ -192,7 +266,7 @@
   // dům šel obejít jedním pohybem.
   var start = 0, startUhel = 0;
   box.addEventListener('pointerdown', function (e) {
-    if (!aktivni) return;
+    if (!aktivni || box.classList.contains('je-statika')) return;
     tahnu = true; start = e.clientX; startUhel = uhel;
     box.classList.add('je-tazena');
     if (box.setPointerCapture) box.setPointerCapture(e.pointerId);
@@ -258,6 +332,7 @@
     }
     box.addEventListener('pointerenter', function (e) {
       if (e.pointerType !== 'mouse' || !aktivni) return;
+      if (box.classList.contains('je-statika')) return;
       vidim = true; kam(e); k.classList.add('je-videt');
     });
     box.addEventListener('pointermove', function (e) { if (vidim) kam(e); });
@@ -277,6 +352,7 @@
     // aby volající poznal, kdy je sada opravdu vidět.
     kombinace: function (klic) {
       box.hidden = false;
+      box.classList.remove('je-statika');
       var cekani = global.setTimeout(function () { hlaska.hidden = false; }, 260);
       return prepni('konfig', klic).then(function (k) {
         global.clearTimeout(cekani);
@@ -284,7 +360,18 @@
         return k;
       });
     },
-    // Pohled dovnitř si scénu přebírá živé 3D, snímky musí pryč.
+    // Pohled dovnitř je jeden snímek, netočí se. Lišta i kurzor 360 zmizí.
+    interier: function (klic) {
+      box.hidden = false;
+      var cekani = global.setTimeout(function () { hlaska.hidden = false; }, 260);
+      box.classList.add('je-statika');
+      kurzorPryc();
+      return prepni('interier', klic).then(function (k) {
+        global.clearTimeout(cekani);
+        hlaska.hidden = true;
+        return k;
+      });
+    },
     schovej: function () {
       box.hidden = true;
       kurzorPryc();
@@ -296,11 +383,15 @@
   // o LCP. Na mobilu a v úsporném režimu dat se nenačítá vůbec: je to 36
   // snímků navíc a tažení by na dotyku bralo svislé posouvání stránky.
   // Konfigurátor si sadu vyžádá sám, ten tuhle bránu nemá.
+  // Otočka v heru se spouští sama. Konfigurátor a interiér si o sadu říkají
+  // až podle toho, co si člověk naklikal, proto se tady nestartují.
+  var samostatne = { hero: 1, office: 1 };
+  var sada = host.dataset.sada;
   function startHero() {
     if (uzke.matches || setrny) return;
-    prepni('hero', null);
+    prepni(sada, null);
   }
-  if (host.dataset.sada === 'hero') {
+  if (samostatne[sada]) {
     if (document.readyState === 'complete') startHero();
     else global.addEventListener('load', startHero);
   }

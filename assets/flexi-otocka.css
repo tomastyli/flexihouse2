@@ -12,6 +12,9 @@
   user-select:none;-webkit-user-select:none}
 .fo.je-tazena{cursor:grabbing}
 .fo.ma-kurzor,.fo.ma-kurzor *{cursor:none}
+/* Pohled dovnitř je jeden snímek: netočí se, tak zmizí lišta i kurzor 360. */
+.fo.je-statika,.fo.je-statika *{cursor:default}
+.fo.je-statika .fo__lista{display:none}
 
 .fo__snimky{position:absolute;inset:0}
 .fo__snimky img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
