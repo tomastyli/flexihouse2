@@ -39,9 +39,13 @@
 .pr-hero.je-3d{border-radius:0 0 clamp(22px,3vw,34px) clamp(22px,3vw,34px)}
 .pr-hero.je-3d .pr-hero__in{padding-top:calc(var(--nav-h) - 24px);
   padding-bottom:clamp(88px,11vh,124px);min-height:calc(100svh - var(--nav-h))}
+/* Stránka jede na starší flexi.css, kde mají nadpisy v heru verzálky.
+   Rozkládací dům je nemá a Tomáš je nechce, takže se tu ruší ručně.
+   Písmo zůstává Bricolage, Archivo přijde až s přechodem zbytku webu. */
+.pr-hero.je-3d h1,.pr-hero.je-3d h1 span{text-transform:none}
 .pr-hero.je-3d h1{font-weight:600}
 .pr-hero.je-3d h1 span{font-size:.31em;margin-top:.8em;color:#fff;
-  font-family:'Instrument',system-ui,sans-serif;font-weight:400;letter-spacing:-.045em}
+  font-family:'Instrument',system-ui,sans-serif;font-weight:400;letter-spacing:-.02em}
 @media (max-width:700px){
   .pr-hero.je-3d .pr-hero__in{padding-top:calc(var(--nav-h) + 30px)}
   .pr-hero.je-3d h1 span{font-size:.4em}}
