@@ -26,14 +26,49 @@
 <link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/flexi-office.webp" imagesrcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(min-width:921px)" href="img/office-hero-1800w.webp" imagesrcset="img/office-hero-1200w.webp 1200w, img/office-hero-1800w.webp 1800w, img/office-hero-2400w.webp 2400w, img/office-hero-3000w.webp 3000w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(max-width:920px)" href="img/office-hero-mobil-1200w.webp" imagesrcset="img/office-hero-mobil-600w.webp 600w, img/office-hero-mobil-900w.webp 900w, img/office-hero-mobil-1200w.webp 1200w, img/office-hero-mobil-1500w.webp 1500w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=35">
 <link rel="stylesheet" href="assets/produkt.css?v=2">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=2">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","@id":"https://flexihouse.cz/flexi-office#faq","mainEntity":[{"@type":"Question","name":"Je 100 000 Kč nájem?","acceptedAnswer":{"@type":"Answer","text":"Kupní cena bez DPH. Kontejner je váš, jde ho přestěhovat i prodat dál."}},{"@type":"Question","name":"Je to stavební buňka?","acceptedAnswer":{"@type":"Answer","text":"Tak se jim říká. Tahle je nová, ne odsloužená ze stavby."}},{"@type":"Question","name":"Vypadá jako zahradní domek?","acceptedAnswer":{"@type":"Answer","text":"Ne, je to bílý kvádr s tmavým rámem. Na zahradě si to rozmyslete dopředu."}}]}
 </script>
-<style>figure,figcaption,dl,dd{margin:0}</style>
+<style>figure,figcaption,dl,dd{margin:0}
+.btn{border-radius:14px}
+.pr-hero.je-3d{border-radius:0 0 clamp(22px,3vw,34px) clamp(22px,3vw,34px)}
+.pr-hero.je-3d .pr-hero__in{padding-top:calc(var(--nav-h) - 24px);
+  padding-bottom:clamp(88px,11vh,124px);min-height:calc(100svh - var(--nav-h))}
+.pr-hero.je-3d h1{font-weight:600}
+.pr-hero.je-3d h1 span{font-size:.31em;margin-top:.8em;color:#fff;
+  font-family:'Instrument',system-ui,sans-serif;font-weight:400;letter-spacing:-.045em}
+@media (max-width:700px){
+  .pr-hero.je-3d .pr-hero__in{padding-top:calc(var(--nav-h) + 30px)}
+  .pr-hero.je-3d h1 span{font-size:.4em}}
+.pr-hero.je-3d .pr-hero__kde{position:absolute;top:calc(var(--nav-h) + 10px);bottom:auto;
+  left:0;right:0;z-index:3;max-width:none;text-align:left;font-size:.82rem;
+  color:rgba(255,255,255,.78)}
+.pr-hero.je-3d .pr-hero__kde .wrap{display:flex;align-items:center;gap:7px}
+.pr-hero__sip{width:12px;height:12px;flex:none;opacity:.5}
+.pr-hero.je-3d .pr-hero__mikro{text-wrap:balance}
+.pr-hero__dal{position:absolute;left:0;right:0;bottom:clamp(18px,2.4vh,26px);z-index:3;
+  font-size:.82rem;color:rgba(255,255,255,.78);pointer-events:none}
+.pr-hero__dal .wrap{display:flex}
+.pr-hero__dal a{display:inline-flex;align-items:center;gap:9px;color:inherit;
+  text-decoration:none;pointer-events:auto;padding:6px 0}
+.pr-hero__dal svg{width:15px;height:15px;flex:none;opacity:.6;
+  animation:dolu 2.6s var(--ease-both,ease) infinite}
+.pr-hero__dal a:hover svg{opacity:1}
+#cokoumi{scroll-margin-top:var(--nav-h)}
+.pr-hero.je-3d .pr-hero__foto{object-position:center 84%}
+/* Kontejner je bílý, takže mikrotext pod tlačítkem na něm měl 3,77:1.
+   Spodní přechod proto jde níž a hloub než na rozkládacím domě: od 66 % na
+   0,42 a 0,56 u dna, čímž vyjde nejhůř 4,88. */
+.pr-hero.je-3d .pr-hero__stin{background:
+  linear-gradient(to bottom,rgba(8,16,21,.72) 0,rgba(8,16,21,.5) 26%,rgba(8,16,21,.12) 46%,
+    rgba(8,16,21,0) 62%,rgba(8,16,21,0) 66%,rgba(8,16,21,.42) 84%,rgba(8,16,21,.56) 100%)}
+@keyframes dolu{0%,72%,100%{transform:translateY(0)}36%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){.pr-hero__dal svg{animation:none}}</style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"Flexi Office, kancelářský kontejner","description":"Kancelářský kontejner na práci. Deset kusů skladem, dodání několik dní od objednávky.","brand":{"@type":"Brand","name":"Flexi House"},"url":"https://flexihouse.cz/flexi-office","image":"https://flexihouse.cz/img/flexi-office.webp","offers":{"@type":"AggregateOffer","lowPrice":"100000","priceCurrency":"CZK","offerCount":10,"valueAddedTaxIncluded":false,"availability":"https://schema.org/InStock","seller":{"@type":"Organization","name":"WINstores, s.r.o."},"url":"https://flexihouse.cz/flexi-office","itemCondition":"https://schema.org/NewCondition"},"@id":"https://flexihouse.cz/flexi-office#product","sku":"FH-OFFICE"}
 </script>
@@ -73,33 +108,43 @@
 </header>
 <main>
 
-<section class="pr-hero">
-  <img class="pr-hero__foto" src="img/flexi-office.webp" width="1376" height="768"
-    fetchpriority="high" decoding="async"
-    alt="Kancelářský kontejner Flexi Office, bílý kvádr s tmavým rámem a otevřenými dveřmi"
-    srcset="img/flexi-office-480w.webp 480w, img/flexi-office-800w.webp 800w, img/flexi-office-1200w.webp 1200w, img/flexi-office.webp 1376w"
-    sizes="100vw">
+<section class="pr-hero je-3d">
+  <picture>
+  <source media="(max-width:700px), (max-width:920px) and (max-aspect-ratio:1/1)" type="image/webp"
+            srcset="img/office-hero-mobil-600w.webp 600w, img/office-hero-mobil-900w.webp 900w, img/office-hero-mobil-1200w.webp 1200w, img/office-hero-mobil-1500w.webp 1500w"
+            sizes="100vw">
+    <img class="pr-hero__foto" src="img/office-hero-1800w.webp" width="3000" height="2110"
+    srcset="img/office-hero-1200w.webp 1200w, img/office-hero-1800w.webp 1800w, img/office-hero-2400w.webp 2400w, img/office-hero-3000w.webp 3000w"
+    sizes="100vw" fetchpriority="high" decoding="async"
+    alt="Kancelářský kontejner Flexi Office, bílý kvádr s tmavým ocelovým rámem, dveřmi a mřížovaným oknem">
+  </picture>
   <div class="pr-hero__stin"></div>
+  <nav class="pr-hero__kde" aria-label="Drobečková navigace"><span class="wrap">
+    <a href="/">Domů</a>
+    <svg class="pr-hero__sip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    <a href="/katalog">Katalog</a>
+    <svg class="pr-hero__sip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    <span aria-current="page">Flexi Office</span>
+  </span></nav>
   <div class="pr-hero__in">
-    <div class="wrap">
-      <p class="pr-hero__kde"><a href="/">Domů</a> / <a href="/katalog">Katalog</a> / <span aria-current="page">Flexi Office</span></p>
+    <div class="pr-hero__text">
+      <h1>Kancelářský kontejner<span class="pr-hero__cena">od&nbsp;100&nbsp;000&nbsp;Kč bez&nbsp;DPH</span></h1>
     </div>
-    <div class="wrap">
-      <h1>Kancelářský kontejner</h1>
-      <p>Jedna bílá místnost na&nbsp;práci. Deset kusů máme skladem v&nbsp;Litomyšli,
-        od&nbsp;objednávky k&nbsp;odvozu je&nbsp;to několik dní.</p>
-      <p class="pr-hero__cena">od&nbsp;100&nbsp;000&nbsp;Kč bez&nbsp;DPH
-        <small>Kupní cena, ne&nbsp;nájem. Doprava, patky a&nbsp;montáž se&nbsp;počítají zvlášť.</small></p>
-      <div class="pr-hero__go">
-        <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
-        <a class="link" href="/rozkladaci-dum">Nebo rozkládací dům</a>
-      </div>
+    <div class="pr-hero__spod">
+      <div class="pr-hero__go"><a class="btn" href="/poptavka">Chci nezávaznou nabídku</a></div>
+      <p class="pr-hero__mikro">Jedna bílá místnost na&nbsp;práci, skladem v&nbsp;Litomyšli.
+        Kupní cena, ne&nbsp;nájem.</p>
     </div>
   </div>
+  <div class="pr-hero__dal"><span class="wrap">
+    <a href="#cokoumi">Co kontejner umí
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v13"/><path d="m5.5 12.5 6.5 6.5 6.5-6.5"/></svg>
+    </a>
+  </span></div>
 </section>
 
 
-<section class="pr-blok" aria-labelledby="dva-h">
+<section class="pr-blok" id="cokoumi" aria-labelledby="dva-h">
   <div class="wrap">
     <h2 class="pr-h" id="dva-h">Nevyrábí se, jen naloží</h2>
     <p class="pr-lead">Rozkládací dům se&nbsp;staví na&nbsp;zakázku. Kancelář stojí v&nbsp;hale hotová. Proto u&nbsp;ní umíme mluvit o&nbsp;dnech, ne&nbsp;o&nbsp;termínu v&nbsp;nabídce.</p>
