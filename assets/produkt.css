@@ -333,13 +333,24 @@
    Konfigurátor má vlastní celoobrazovkovou stránku /konfigurator, hero na něj
    jen odkazuje. */
 .pr-hero.je-3d{overflow:hidden}
+/* Pod snímky leží stejné modré studio, jaké má render. Dokud se hero nenačte,
+   svítí přes celou obrazovku podklad .pr-hero, a ten je --ink, tedy skoro
+   černý. Vznikl z toho tmavý blesk, než dorazil obrázek. Hodnoty jsou
+   odečtené z levého okraje snímku otočky, kde je pozadí čisté. */
+.pr-hero.je-3d{background:linear-gradient(180deg,
+  #aac1cc 0%, #b1c7cf 25%, #b5cad3 48%, #b3c8d1 60%,
+  #81a1ad 75%, #466a79 90%, #3a5d6a 100%)}
 .pr-hero.je-3d .pr-hero__foto{z-index:0;object-position:center 78%}
 .pr-hero__spin{position:absolute;inset:0;z-index:0}
 
 /* Přechod drží jen horní pruh, kde leží nadpis. Přes dům nesmí, jinak se
-   ztratí odraz v podlaze i kresba fasády. */
+   ztratí odraz v podlaze i kresba fasády.
+   Druhý pruh nastupuje pod domem a kryje mikrotext pod tlačítkem. Věta je
+   v 82% bílé a na nezatmavené podlaze měla 3,82:1, AA chce 4,5. Nábeh od
+   70 % na 0,30 a 0,46 u dna vyjde nejhůř 4,89 při plné výšce hera. */
 .pr-hero.je-3d .pr-hero__stin{background:
-  linear-gradient(to bottom,rgba(8,16,21,.72) 0,rgba(8,16,21,.5) 26%,rgba(8,16,21,.12) 46%,rgba(8,16,21,0) 62%)}
+  linear-gradient(to bottom,rgba(8,16,21,.72) 0,rgba(8,16,21,.5) 26%,rgba(8,16,21,.12) 46%,
+    rgba(8,16,21,0) 62%,rgba(8,16,21,0) 70%,rgba(8,16,21,.30) 84%,rgba(8,16,21,.46) 100%)}
 
 /* Na mobilu se sada nenačítá: je to 36 snímků navíc a tažení by na dotyku
    bralo svislé posouvání stránky. Zůstane statická fotka. */
@@ -454,7 +465,10 @@
 .pr-hero.je-3d h1 span{display:block;font-size:.3em;letter-spacing:.01em;font-weight:600;
   color:rgba(255,255,255,.9);margin-top:.7em}
 .pr-hero.je-3d .btn{background-color:#fff;color:var(--ink);border-color:#fff}
-.pr-hero__mikro{font-size:.9rem;color:rgba(255,255,255,.82);margin:0;max-width:44ch}
+/* Plná bílá, ne 82 %. Věta leží na nejsvětlejším místě renderu a v 82 %
+   měla 4,07:1, pod hranicí AA. Samotné ztmavení pozadí by ji muselo dohnat
+   tak silně, že by potopilo odraz domu v podlaze. */
+.pr-hero__mikro{font-size:.9rem;color:#fff;margin:0;max-width:44ch}
 .pr-hero.je-3d .pr-hero__go{display:flex;justify-content:center}
 
 .pr-hero__in a,.pr-hero__in button,.pr-hero__in select,.pr-hero__kde a{pointer-events:auto}

@@ -392,7 +392,12 @@
     prepni(sada, null);
   }
   if (samostatne[sada]) {
-    if (document.readyState === 'complete') startHero();
-    else global.addEventListener('load', startHero);
+    // Čekalo se na `load`, tedy až doběhne všechno včetně patičky, a otočka
+    // naskakovala pozdě. Statický snímek v heru je přitom stejný záběr jako
+    // první snímek otočky a má preload s fetchpriority=high, takže o LCP
+    // nesoutěží: než se stihne stáhnout jeden snímek otočky, hero už stojí.
+    // Proto se startuje hned, jak je DOM hotový.
+    if (document.readyState !== 'loading') startHero();
+    else document.addEventListener('DOMContentLoaded', startHero);
   }
 }(window));
