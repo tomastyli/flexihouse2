@@ -18,6 +18,10 @@ _pfp.html
 
 # podklady pro 3D — nepatří na web
 podklady-3d/
+# Zdroje pro Blender, stejně jako podklady-3d. Cloudflare Pages servíruje
+# i podtržítkové cesty, takže commitem by se .blend soubory a rendery
+# staly veřejně stažitelné na flexihouse.cz/_3d-zdroj/.
+_3d-zdroj/
 
 .dev.vars
 .docs/wrangler-dev.toml

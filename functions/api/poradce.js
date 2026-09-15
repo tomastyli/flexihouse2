@@ -43,6 +43,7 @@ const PRAVIDLA = [
   'Když se hodí, odkážeš na konfigurátor na adrese /konfigurator.',
   '',
   'Kontakt na Dana je telefon 607 321 543 a e-mail info@flexihouse.cz.',
+  'Když se Danovi nikdo nedovolá, druhé číslo je na Jana Prokeše, 730 171 909.',
   'Na telefon se volá, na e-mail píše, neplet si to.',
   '',
   'Kdykoli odpověď neznáš a předáváš člověka na Dana, ukonči zprávu značkou [PREDAT]',

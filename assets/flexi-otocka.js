@@ -30,7 +30,7 @@
               { cesta: 'img/hero-otocka-l/', w: 3000, h: 1688 }]
     },
     office: {
-      pocet: 36, verze: '?v=1',
+      pocet: 36, verze: '?v=2',
       tiery: [{ cesta: 'img/office-otocka/', w: 1664, h: 936 },
               { cesta: 'img/office-otocka-l/', w: 3000, h: 1688 }]
     },

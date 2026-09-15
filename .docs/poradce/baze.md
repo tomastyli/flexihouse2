@@ -9,31 +9,33 @@ Po každé úpravě pustit i `node .docs/poradce/sestav-bazi.mjs`.
 
 ## Firma
 
-Flexi House vyrábí modulární a kontejnerové domy. Dům vzniká v hale, na pozemek přijede
+Flexi House dodává modulární a kontejnerové domy. Dům vzniká v hale, na pozemek přijede
 složený v kontejneru a na místě se rozevře.
 
 Kontakt: Dan Prokeš, 607 321 543, info@flexihouse.cz. Druhý kontakt Jan Prokeš, 730 171 909.
 
 ## Co nabízíme
 
-**Flexi House**, rozkládací dům. Základní cena je **400 000 Kč bez DPH za hrubou stavbu** a tak ji uvádíme i navenek. Elektroinstalace v ní není, je to příplatek 10 000 Kč.
+**Flexi House**, rozkládací dům. Základní cena je **399 000 Kč bez DPH** a tak ji uvádíme i navenek. Je v ní hrubá stavba i elektroinstalace, elektroinstalace se od 11. 9. 2026 nepřipočítává zvlášť.
 Rozložený má 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa v základní ceně NENÍ, je to
 příplatek 40 000 Kč. Dispozice jsou dvě ložnice,
 obývací prostor s kuchyňským koutem a koupelna.
 
-**Flexi Office**, kancelářský kontejner od 70 000 Kč. Deset kusů je skladem (Tomáš 6. 9. 2026: psát „skladem“, ne „objednáno“).
+**Flexi Office**, kancelářský kontejner od 100 000 Kč. Deset kusů je skladem (Tomáš 6. 9. 2026: psát „skladem“, ne „objednáno“).
+Vnější rozměry 5,83 × 2,48 m, výška 2,53 m, podlahová plocha 12,8 m² (od Tomáše 15. 9. 2026).
+Tloušťku izolace u Office poradce NEŘÍKÁ, ta není potvrzená.
 
 **Dům na míru**, sestava z modulů podle zadání zákazníka. Cena vychází ze zadání,
 nedá se odhadnout dopředu. Vede na poptávku.
 
-## Co je a co není v základní ceně 400 000 Kč
+## Co je a co není v základní ceně 399 000 Kč
 
 V ceně je nosná konstrukce, hliníková okna s izolačními dvojskly, dveře, fasádní obklad
-(dřevěný, šedý nebo černý) a zateplení 75 mm.
+(dřevěný, šedý nebo černý), zateplení 75 mm a elektroinstalace.
 
 **Pozor, tohle v základní ceně NENÍ a hodně lidí to čeká:** kuchyňská linka, koupelna,
-elektroinstalace, vytápění, terasa, doprava, montáž ani příprava pozemku. Základní cena
-je hrubá stavba. Když se někdo ptá na cenu, tohle je potřeba říct rovnou, ne až v nabídce.
+vytápění, terasa, doprava, montáž ani příprava pozemku. Základní cena
+je hrubá stavba s elektroinstalací. Když se někdo ptá na cenu, tohle je potřeba říct rovnou, ne až v nabídce.
 
 ## Příplatky
 
