@@ -3,57 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.className+=" js-reveal"</script>
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="icon" href="/favicon.svg?v=10" type="image/svg+xml">
 <link rel="icon" href="/favicon-96.png?v=10" type="image/png" sizes="96x96">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=10">
 <link rel="manifest" href="/site.webmanifest?v=10">
-<title>Jak probíhá dodání modulárního domu | Flexi House</title>
-<link rel="canonical" href="https://flexihouse.cz/jak-to-probiha">
+<title>Kontakt | Flexi House</title>
+<link rel="canonical" href="https://flexihouse.cz/kontakt">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flexi House">
 <meta property="og:locale" content="cs_CZ">
-<meta property="og:title" content="Jak probíhá dodání modulárního domu">
-<meta property="og:description" content="Od poptávky po předání na pozemku. Co uděláme my, co zůstává na vás a kolik stojí doprava, patky a montáž.">
-<meta property="og:url" content="https://flexihouse.cz/jak-to-probiha">
+<meta property="og:title" content="Kontakt na Flexi House">
+<meta property="og:description" content="Telefon, e-mail a fakturační údaje. Zavoláme zpátky a na poptávku odpovídáme do 24 hodin.">
+<meta property="og:url" content="https://flexihouse.cz/kontakt">
 <meta property="og:image" content="https://flexihouse.cz/img/og/og-rozkladaci.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Od poptávky po dům usazený na patkách. U každého kroku píšeme, co děláme my a co si zařizujete sami. Nabídku posíláme do 24 hodin.">
+<meta name="description" content="Kontakt na Flexi House: Dan Prokeš 607 321 543, Jan Prokeš 730 171 909, info@flexihouse.cz. Modulární domy vozíme po celé České republice.">
 <link rel="preload" href="fonts/archivo2-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/archivo2-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/flexi-house-slozeny.webp" imagesrcset="img/flexi-house-slozeny-480w.webp 480w, img/flexi-house-slozeny-800w.webp 800w, img/flexi-house-slozeny-1200w.webp 1200w, img/flexi-house-slozeny.webp 1400w" imagesizes="(max-width:900px) 150vw, 100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=53">
-<link rel="stylesheet" href="assets/produkt.css?v=47">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
-<style>figure,figcaption,dl,dd{margin:0}
-.jp-a{border-bottom:1px solid var(--blue);transition:color .18s,border-color .18s}
-.jp-fotopozn{color:rgba(255,255,255,.7);margin-top:clamp(16px,2.2vw,22px)}
-.pr-pribeh .jp-a{border-bottom-color:rgba(255,255,255,.6)}
-.pr-pribeh a:focus-visible{outline-color:#fff}
-.jp-kroky{margin-top:clamp(24px,3.4vw,38px)}
-.jp-krok{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);
-  gap:clamp(6px,3vw,56px);padding:clamp(22px,3vw,32px) 0;border-top:1px solid var(--hair)}
-.jp-krok:first-child{border-top:2px solid var(--ink)}
-.jp-krok:last-child{border-bottom:1px solid var(--hair)}
-.jp-krok h3{font-size:clamp(1.1rem,2.1vw,1.45rem);
-  line-height:1.04;margin:0}
-.jp-krok p{max-width:58ch}
-.jp-pod{margin-top:clamp(18px,2.4vw,26px)}
-.jp-foto{margin-top:clamp(22px,3vw,34px)}
-.jp-foto img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;background:var(--soft)}
-.jp-foto figcaption{font-size:.83rem;color:var(--muted);padding-top:8px}
-@media (hover:hover) and (pointer:fine){.jp-a:hover{color:var(--blue)}
-  .pr-pribeh .jp-a:hover{color:#fff;border-bottom-color:#fff}}
-@media (max-width:900px){.jp-krok{grid-template-columns:1fr;gap:8px}
-  .jp-foto img{aspect-ratio:16/9}}
+<style>
+.kthero{position:relative;overflow:hidden;border-radius:var(--r-box);background:var(--ink);
+  isolation:isolate;margin-top:clamp(14px,2vw,22px)}
+.kthero__foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%}
+.kthero__stin{position:absolute;inset:0;background:rgba(22,32,42,.52)}
+.kthero__in{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;min-height:clamp(158px,20vh,220px);padding:clamp(22px,3vw,30px) clamp(16px,4vw,32px);text-align:center}
+.kthero__kde{font-size:.85rem;color:rgba(255,255,255,.88)}
+.kthero__kde a{border-bottom:1px solid transparent}
+.kthero__kde a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.5)}
+.kthero__kde [aria-current]{color:#fff;font-weight:600}
+.kthero h1{color:#fff;margin:0;font-size:clamp(1.9rem,4.6vw,3.2rem);letter-spacing:-0.02em;line-height:1.05}
+.kthero a:focus-visible{outline-color:#fff}
+.kt-blok{padding-block:clamp(44px,6vw,86px)}
+.kt-ton{background:var(--soft)}
+.kt-h{font-family:'Archivo','ArchivoNahrada',sans-serif;font-weight:700;
+  font-size:clamp(1.55rem,3.4vw,2.5rem);line-height:1.12;letter-spacing:-0.015em;margin:0 0 10px}
+.kt-uvod{color:var(--muted);max-width:56ch;margin:0 0 clamp(26px,3.4vw,40px)}
+.kt-lidi{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(14px,2vw,22px)}
+.kt-osoba{background:#fff;border:1px solid var(--hair);border-radius:4px;
+  padding:clamp(22px,2.6vw,30px);display:flex;flex-direction:column;gap:6px}
+.kt-ton .kt-osoba{background:#fff}
+.kt-osoba b{font-family:'Archivo','ArchivoNahrada',sans-serif;font-weight:700;font-size:1.12rem;letter-spacing:-0.005em}
+.kt-osoba small{color:var(--muted);font-size:0.92rem}
+.kt-cislo{font-family:'Archivo','ArchivoNahrada',sans-serif;font-weight:700;
+  font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.02em;margin-top:8px;display:inline-block;
+  transition:color .18s}
+.kt-cislo:hover{color:var(--blue)}
+.kt-dve{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start}
+.kt-dve h2{font-family:'Archivo','ArchivoNahrada',sans-serif;font-weight:700;
+  font-size:clamp(1.2rem,2.2vw,1.5rem);letter-spacing:-0.01em;margin:0 0 12px}
+.kt-dve p{margin:0 0 14px;max-width:52ch;color:var(--muted)}
+.kt-dve p:last-child{margin-bottom:0}
+.kt-mail{font-family:'Archivo','ArchivoNahrada',sans-serif;font-weight:700;
+  font-size:clamp(1.15rem,2.4vw,1.6rem);letter-spacing:-0.015em;word-break:break-word;
+  border-bottom:2px solid var(--blue);transition:color .18s}
+.kt-mail:hover{color:var(--blue)}
+.kt-udaje{margin:0;color:var(--muted);font-size:0.95rem;line-height:1.75}
+.kt-udaje b{color:var(--ink);font-weight:600}
+.kt-go{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:clamp(24px,3vw,34px)}
+@media (max-width:760px){
+  .kt-dve{grid-template-columns:1fr;gap:clamp(30px,6vw,40px)}
+}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Flexi House","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Jak to probíhá"}]},{"@type":"WebPage","name":"Jak probíhá dodání modulárního domu | Flexi House","url":"https://flexihouse.cz/jak-to-probiha","description":"Od poptávky po dům usazený na patkách. U každého kroku píšeme, co děláme my a co si zařizujete sami. Nabídku posíláme do 24 hodin.","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Flexi House","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Kontakt"}]},{"@type":"ContactPage","name":"Kontakt | Flexi House","url":"https://flexihouse.cz/kontakt","description":"Telefon, e-mail a fakturační údaje Flexi House.","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}}]}</script>
 </head>
 <body>
 
@@ -97,13 +116,13 @@
           </a>
           <a class="kontakt__os" href="tel:+420730171909">
             <span class="kontakt__jm">Jan Prokeš</span>
-            <span class="kontakt__role">Prodej, nabídky, doprava a montáž</span>
+            <span class="kontakt__role">Doprava a montáž</span>
             <span class="kontakt__cis">730 171 909</span>
           </a>
           <span class="kontakt__adr">Sokolovská 612, Litomyšl</span>
         </div>
       </div>
-      <a class="btn btn--sm" href="/poptavka">Chci nabídku</a>
+      <a class="btn btn--sm" href="#kontakt">Chci nabídku</a>
       <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
     </div>
   </div>
@@ -147,209 +166,91 @@
   <a class="menu__link" href="/kontakt">Kontakt</a>
   <div class="menu__end">
     <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, prodej a nabídky</small></a>
-    <a class="menu__tel" href="tel:+420730171909">730 171 909<small>Jan Prokeš, prodej, nabídky, doprava a montáž</small></a>
+    <a class="menu__tel" href="tel:+420730171909">730 171 909<small>Jan Prokeš, doprava a montáž</small></a>
     <p class="menu__adr">Sokolovská 612, Litomyšl</p>
     <a class="btn" href="/poptavka">Chci nabídku</a>
   </div>
 </div>
+
 <main>
-
-<section class="pr-hero">
-  <img class="pr-hero__foto" src="img/flexi-house-slozeny.webp" width="1400" height="788"
-    fetchpriority="high" decoding="async"
-    alt="Náš dům složený na převoz, plechové stěny a prosklené dveře v černém rámu, stojí na zpevněné ploše"
-    srcset="img/flexi-house-slozeny-480w.webp 480w, img/flexi-house-slozeny-800w.webp 800w, img/flexi-house-slozeny-1200w.webp 1200w, img/flexi-house-slozeny.webp 1400w"
-    sizes="(max-width:900px) 150vw, 100vw">
-  <div class="pr-hero__stin"></div>
-  <div class="pr-hero__in">
-    <div class="wrap">
-      <p class="pr-hero__kde"><a href="/">Domů</a> / <span aria-current="page">Jak to probíhá</span></p>
-    </div>
-    <div class="wrap">
-      <h1>Jak probíhá dodání modulárního domu</h1>
-      <p>Od&nbsp;první poptávky po&nbsp;dům usazený na&nbsp;patkách. U&nbsp;každého kroku
-        je napsané, co uděláme my a&nbsp;co zůstává na&nbsp;vás.</p>
-      <p class="pr-hero__cena">Nabídka do&nbsp;24&nbsp;hodin
-        <small>Termín výroby v&nbsp;ní potvrdíme podle vaší sestavy. Dopředu ho neuvádíme.</small></p>
-      <div class="pr-hero__go">
-        <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
-        <a class="link" href="/konfigurator">Spočítat svoji sestavu</a>
-      </div>
+<div class="wrap">
+  <div class="kthero">
+    <img class="kthero__foto" src="img/realne/terasa-pod-840h.webp" width="1260" height="840" fetchpriority="high" decoding="async"
+      alt="Pohled podél kryté terasy našeho domu pod přesahem střechy"
+      srcset="img/realne/terasa-pod-560h.webp 840w, img/realne/terasa-pod-840h.webp 1260w" sizes="(max-width:1280px) 94vw, 1200px">
+    <div class="kthero__stin" aria-hidden="true"></div>
+    <div class="kthero__in">
+      <nav class="kthero__kde" aria-label="Drobečková navigace">
+        <a href="/">Domů</a> / <span aria-current="page">Kontakt</span>
+      </nav>
+      <h1 id="h1">Kontakt</h1>
     </div>
   </div>
-</section>
+</div>
 
-<section class="pr-blok">
+<section class="kt-blok" aria-labelledby="lidi-h">
   <div class="wrap">
-    <h2 class="pr-h">Než dům začne vznikat</h2>
-    <p class="pr-lead">Tři kroky, které jsou na&nbsp;řadě dřív, než se&nbsp;do&nbsp;haly pošle
-      zadání. Nic z&nbsp;toho vás k&nbsp;ničemu nezavazuje.</p>
-    <div class="jp-kroky">
-      <div class="jp-krok">
-        <h3>Poptávka</h3>
-        <p>Stačí pár vět a&nbsp;číslo, na&nbsp;kterém vás zastihneme. Napište adresu
-          nebo katastrální číslo pozemku, k&nbsp;čemu má dům sloužit a&nbsp;jestli už&nbsp;víte,
-          jaké chcete vybavení. Ozveme se&nbsp;telefonem nebo mailem a&nbsp;na&nbsp;zbytek
-          se&nbsp;doptáme.</p>
+    <h2 class="kt-h" id="lidi-h">Komu voláte</h2>
+    <p class="kt-uvod">Zavolejte nebo napište. Na&nbsp;poptávku odpovídáme do&nbsp;24&nbsp;hodin
+      a&nbsp;zvedáme to my dva, bez&nbsp;přepojování. Když se&nbsp;nedovoláte, voláme zpátky.</p>
+    <div class="kt-lidi">
+      <div class="kt-osoba">
+        <b>Dan Prokeš</b>
+        <small>Prodej a&nbsp;nabídky</small>
+        <a class="kt-cislo" href="tel:+420607321543">607&nbsp;321&nbsp;543</a>
       </div>
-      <div class="jp-krok">
-        <h3>Konfigurace</h3>
-        <p>Sestavu si naklikáte v&nbsp;<a class="jp-a" href="/konfigurator">konfigurátoru</a>,
-          projít ji spolu po&nbsp;telefonu jde taky. Vybírá se&nbsp;střecha, fasáda, zasklení,
-          zateplení, vytápění a&nbsp;vybavení, dispozice je jedna. Elektroinstalaci
-          za&nbsp;10&nbsp;000&nbsp;Kč počítáme do&nbsp;každé sestavy, přičte se&nbsp;tedy
-          i&nbsp;k&nbsp;nejlevnější variantě. Hotovou sestavu si na&nbsp;konci stáhnete v&nbsp;PDF
-          a&nbsp;můžete ji poslat s&nbsp;poptávkou.</p>
+      <div class="kt-osoba">
+        <b>Jan Prokeš</b>
+        <small>Prodej, nabídky, doprava a&nbsp;montáž</small>
+        <a class="kt-cislo" href="tel:+420730171909">730&nbsp;171&nbsp;909</a>
       </div>
-      <div class="jp-krok">
-        <h3>Cenová nabídka</h3>
-        <p>V&nbsp;nabídce je dům, vybavení, doprava na&nbsp;vaši adresu, patky, montáž
-          a&nbsp;termín dodání. Posíláme ji do&nbsp;24&nbsp;hodin od&nbsp;poptávky. Číslo
-          z&nbsp;konfigurátoru je orientační, konečnou cenu potvrzuje Dan Prokeš až&nbsp;v&nbsp;nabídce.
-          Když v&nbsp;ní chcete něco jinak, přepočítáme ji.</p>
-      </div>
-    </div>
-    <div class="pr-pas">
-      <b>Do 24 hodin</b>
-      <span>od&nbsp;poptávky posíláme nabídku. Kolik týdnů zabere výroba, dopředu neuvádíme
-        ani orientačně. Termín potvrzujeme až&nbsp;na&nbsp;konkrétní sestavu.</span>
     </div>
   </div>
 </section>
 
-<section class="pr-blok fh-rv" aria-labelledby="dva-h">
-  <div class="wrap">
-    <h2 class="pr-h" id="dva-h">Z haly na váš pozemek</h2>
-    <p class="pr-lead">Rozkládací dům se&nbsp;staví na&nbsp;zakázku podle odsouhlasené sestavy. <a class="jp-a" href="/flexi-office">Flexi Office</a> máme skladem, odjíždí během několika dní od&nbsp;objednávky. Na&nbsp;pozemek dorazí dům složený, jeřáb ho usadí na&nbsp;betonové patky a&nbsp;křídla se&nbsp;rozklopí.</p>
-    <div class="pr-dva">
-      <figure>
-        <img src="img/flexi-house-slozeny.webp" width="1400" height="788" loading="lazy" decoding="async"
-          alt="Náš dům složený na šířku 2,20 metru na pozemku, připravený k rozklopení"
-          srcset="img/flexi-house-slozeny-480w.webp 480w, img/flexi-house-slozeny-800w.webp 800w, img/flexi-house-slozeny-1200w.webp 1200w, img/flexi-house-slozeny.webp 1400w"
-          sizes="(max-width:760px) 100vw, (max-width:1280px) 46vw, 600px">
-        <figcaption><b>Takhle dorazí</b><span>2,20 × 5,90 m, vejde se na běžný návěs</span></figcaption>
-      </figure>
-      <figure>
-        <img src="img/dum-rozlozeny-venku.webp" width="2000" height="1250" loading="lazy" decoding="async"
-          alt="Náš rozložený dům Flexi House s dřevěnou fasádou a krytou terasou, zvenku"
-          srcset="img/dum-rozlozeny-venku-480w.webp 480w, img/dum-rozlozeny-venku-800w.webp 800w, img/dum-rozlozeny-venku-1200w.webp 1200w, img/dum-rozlozeny-venku.webp 2000w"
-          sizes="(max-width:760px) 100vw, (max-width:1280px) 46vw, 600px">
-        <figcaption><b>Takhle stojí</b><span>rozklopený a usazený na betonových patkách</span></figcaption>
-      </figure>
-    </div>
-    <p class="pr-mikro pr-dva__pozn">Obě fotky jsou naše domy, ne&nbsp;katalogové snímky výrobce. Složený v&nbsp;dekoru oranžová, rozložený v&nbsp;dekoru dřevo.</p>
-  </div>
-</section>
-
-<section class="pr-blok pr-ton fh-rv">
-  <div class="wrap">
-    <h2 class="pr-h">Na místě a při předání</h2>
-    <p class="pr-lead">Rozložený dům měří 6,32&nbsp;×&nbsp;5,90&nbsp;m a&nbsp;uvnitř má zhruba
-      30&nbsp;m² obytné plochy, vnější půdorys vychází na&nbsp;37,3&nbsp;m². Úřad ale počítá
-      zastavěnou plochu a&nbsp;do&nbsp;té patří i&nbsp;krytá terasa, takže číslo pro&nbsp;úřad
-      je vyšší. Rozebírá to stránka <a class="jp-a" href="/stavebni-povoleni">stavební povolení</a>.</p>
-    <div class="pr-sloupce">
-      <div>
-        <p class="pr-nadpisek">Uděláme my</p>
-        <ul class="pr-seznam">
-          <li><span>Vybetonujeme patky</span></li>
-          <li><span>Dovezeme dům a usadíme ho jeřábem</span></li>
-          <li><span>Rozklopíme křídla a dům smontujeme</span></li>
-          <li><span>Předáme vám dům na místě</span></li>
-        </ul>
-      </div>
-      <div>
-        <p class="pr-nadpisek">Uděláte vy</p>
-        <ul class="pr-seznam">
-          <li><span>Ukážete, kde přesně má dům stát</span></li>
-          <li><span>U předání budete vy nebo váš zástupce</span></li>
-          <li><span>Řeknete hned, co je jinak</span></li>
-        </ul>
-      </div>
-    </div>
-    <figure class="jp-foto">
-      <img src="img/terasa-detail.webp" width="2000" height="1126" loading="lazy" decoding="async"
-        alt="Prkna terasy s dřevěnou kresbou, přes ně padá stín zábradlí"
-        srcset="img/terasa-detail-480w.webp 480w, img/terasa-detail-800w.webp 800w, img/terasa-detail-1200w.webp 1200w, img/terasa-detail.webp 2000w"
-        sizes="(max-width:1240px) 100vw, 1160px">
-      <figcaption>Terasa na naší realizaci. V základní ceně domu není, stejně jako vstupní schody.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="pr-blok fh-rv">
-  <div class="wrap">
-    <h2 class="pr-h">Co stojí práce na pozemku</h2>
-    <p class="pr-lead">Doprava, patky ani montáž v&nbsp;ceně domu nejsou. Účtují se&nbsp;zvlášť
-      a&nbsp;dohromady vyjdou na&nbsp;100&nbsp;000 až&nbsp;190&nbsp;000&nbsp;Kč včetně&nbsp;DPH,
-      bez ujetých kilometrů. Vzdálenost z&nbsp;Prahy na&nbsp;pozemek zadáte
-      v&nbsp;<a class="jp-a" href="/konfigurator">konfigurátoru</a> a&nbsp;dopravu si spočítáte sami.</p>
-    <table class="pr-tab">
-      <tbody>
-        <tr><th scope="row">Doprava a usazení, z Prahy na váš pozemek</th><td>20 000 Kč a 100 Kč za kilometr</td></tr>
-        <tr><th scope="row">Betonové patky, podle podloží a počtu</th><td>50 000 až 90 000 Kč</td></tr>
-        <tr><th scope="row">Montáž domku, podle náročnosti sestavení</th><td>30 000 až 80 000 Kč</td></tr>
-      </tbody>
-    </table>
-    <p class="pr-mikro jp-pod">Práce na&nbsp;pozemku uvádíme včetně&nbsp;DPH, dům a&nbsp;vybavení
-      bez&nbsp;DPH. Nesčítejte oba režimy do&nbsp;jednoho čísla. Sazba se&nbsp;řídí využitím stavby,
-      potvrdíme ji v&nbsp;nabídce. Konfigurátor počítá u&nbsp;patek a&nbsp;montáže spodní hranici,
-      přesné číslo dáme, až&nbsp;uvidíme pozemek. Celý rozpis má
-      <a class="jp-a" href="/cena">ceník</a>, jednotlivé položky
-      <a class="jp-a" href="/rozkladaci-dum">stránka domu</a>.</p>
-  </div>
-</section>
-
-<section class="pr-blok pr-blok--tesny pr-ton fh-rv">
-  <div class="wrap">
-    <div class="pr-primo">
-      <div>
-        <h2 class="pr-h">Co si zařizujete sami</h2>
-        <ul>
-          <li>Povolení nebo ohlášení. Papíry na úřadě zůstávají na vás a závazně odpoví jen váš stavební úřad.</li>
-          <li>Vodu, elektřinu a odpad dovedené k místu usazení. Připojení domu na sítě neděláme.</li>
-          <li>Rovnou plochu a příjezd pro nákladní auto s jeřábem.</li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="pr-h">Co dopředu neslíbíme</h2>
-        <ul>
-          <li>Kolik týdnů trvá výroba. Termín potvrzujeme až v nabídce na konkrétní sestavu.</li>
-          <li>Financování, splátky a zálohy. Na tyhle otázky odpoví Dan Prokeš na <a class="jp-a" href="tel:+420607321543">607&nbsp;321&nbsp;543</a>, na web je nepíšeme.</li>
-          <li>Záruku a její rozsah. Stejně tak.</li>
-        </ul>
-      </div>
-    </div>
-    <p class="pr-mikro jp-pod">Otázky, které dostáváme po&nbsp;telefonu nejčastěji, jsou
-      v&nbsp;<a class="jp-a" href="/caste-dotazy">častých dotazech</a>.</p>
-  </div>
-</section>
-
-<section class="pr-cta fh-rv">
-  <img class="vyrez vyrez--obtah pr-cta__vyrez" src="img/vyrez/nas-slozeny-obtah.webp" width="620" height="507"
-    loading="lazy" decoding="async" alt="" aria-hidden="true"
-    srcset="img/vyrez/nas-slozeny-obtah-400w.webp 400w, img/vyrez/nas-slozeny-obtah-600w.webp 600w, img/vyrez/nas-slozeny-obtah.webp 620w"
-    sizes="46vw">
-  <div class="wrap pr-cta__in">
+<section class="kt-blok kt-ton" aria-labelledby="mail-h">
+  <div class="wrap kt-dve">
     <div>
-      <h2 class="pr-h">Jak by to vyšlo u vás?</h2>
-      <p>Napište, kde pozemek je a&nbsp;k&nbsp;čemu dům potřebujete. Nabídku pošleme
-        do&nbsp;24&nbsp;hodin i&nbsp;s&nbsp;cenou dopravy, patek a&nbsp;montáže.</p>
-      <p class="pr-cta__kontakt">
-        <a href="tel:+420607321543">Dan Prokeš, 607&nbsp;321&nbsp;543</a>
-        <a href="tel:+420730171909">Jan Prokeš, 730&nbsp;171&nbsp;909</a>
-        <a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a>
+      <h2 id="mail-h">Napsat e-mail</h2>
+      <p>Pošlete obec, kam má dům přijet, a&nbsp;na&nbsp;co ho potřebujete. Vrátíme se s&nbsp;cenou včetně dopravy.</p>
+      <a class="kt-mail" href="mailto:info@flexihouse.cz">info@flexihouse.cz</a>
+    </div>
+    <div>
+      <h2>Kam vozíme</h2>
+      <p>Po&nbsp;celé České republice. Kilometry se&nbsp;počítají z&nbsp;Prahy, přesnou částku uvidíte
+        v&nbsp;<a class="link" href="/konfigurator">konfigurátoru</a> nebo vám ji spočítáme do&nbsp;nabídky.</p>
+      <p>Dům přijede hotový, usazení na&nbsp;patky zabere jeden den. Podrobnosti jsou
+        v&nbsp;<a class="link" href="/doprava-a-montaz">dopravě a&nbsp;montáži</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="kt-blok" aria-labelledby="firma-h">
+  <div class="wrap kt-dve">
+    <div>
+      <h2 id="firma-h">Fakturační údaje</h2>
+      <p class="kt-udaje">
+        <b>WINstores, s.r.o.</b><br>
+        Korunní 2569/108, Vinohrady<br>
+        101 00 Praha 10<br><br>
+        IČO 07836929<br>
+        DIČ CZ07836929<br><br>
+        Zapsáno v&nbsp;obchodním rejstříku u&nbsp;Městského soudu v&nbsp;Praze, oddíl C, vložka 308049.
       </p>
     </div>
-    <div class="pr-cta__go">
-      <a class="btn" href="/poptavka">Chci nezávaznou nabídku</a>
-      <a class="btn btn--out" href="/konfigurator">Spočítat svoji sestavu</a>
-      <span class="pr-mikro">Nezávazně, nabídka je zdarma.</span>
+    <div>
+      <h2>Chcete cenu na&nbsp;svůj pozemek?</h2>
+      <p>Poskládejte si dům v&nbsp;konfigurátoru a&nbsp;cenu uvidíte hned, bez registrace.
+        Nebo nám napište a&nbsp;spočítáme ji za&nbsp;vás.</p>
+      <div class="kt-go">
+        <a class="btn" href="/konfigurator">Sestavit si dům</a>
+        <a class="link" href="/poptavka">Poslat poptávku</a>
+      </div>
     </div>
   </div>
 </section>
-
 </main>
+
 <footer class="foot">
   <div class="wrap">
     <div class="foot__in">
@@ -418,7 +319,8 @@
 </footer>
 
 <script src="assets/cookies.js?v=13" defer></script>
-<script src="assets/flexi.js?v=26" defer></script>
+<script src="assets/flexi.js?v=25" defer></script>
 <script src="assets/flexi-poradce.js?v=10" defer></script>
+
 </body>
 </html>
