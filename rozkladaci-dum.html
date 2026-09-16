@@ -31,7 +31,7 @@
 <link rel="preload" as="image" media="(max-width:920px)" href="img/kf-hero-teak-mobil-1200w.webp" imagesrcset="img/kf-hero-teak-mobil-600w.webp 600w, img/kf-hero-teak-mobil-900w.webp 900w, img/kf-hero-teak-mobil-1200w.webp 1200w, img/kf-hero-teak-mobil-1500w.webp 1500w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/flexi.css?v=51">
 <link rel="stylesheet" href="assets/produkt.css?v=47">
-<link rel="stylesheet" href="assets/domov.css?v=55">
+<link rel="stylesheet" href="assets/domov.css?v=56">
 <link rel="stylesheet" href="assets/flexi-otocka.css?v=2">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
 <script type="application/ld+json">
@@ -187,18 +187,14 @@
 .pasfoto__sip--vlevo{left:clamp(10px,1.4vw,18px)}
 .pasfoto__sip--vpravo{right:clamp(10px,1.4vw,18px)}
 .pasfoto__sip[disabled]{opacity:0;pointer-events:none}
-.pasfoto__tecky{position:absolute;left:50%;bottom:clamp(12px,1.6vw,20px);transform:translateX(-50%);
-  z-index:1;display:flex;gap:24px;padding:6px 8px;
-  filter:drop-shadow(0 1px 3px rgba(9,17,29,.55))}
-.pasfoto__tecka{position:relative;width:6px;height:6px;padding:0;border:0;border-radius:50%;cursor:pointer;
-  background:rgba(255,255,255,.42);transition:background var(--dur-micro)}
-.pasfoto__tecka[aria-selected="true"]{background:rgba(255,255,255,.92)}
-.pasfoto__tecka:hover{background:rgba(255,255,255,.7)}
+.pasfoto__stopa{position:absolute;left:50%;bottom:clamp(12px,1.6vw,20px);transform:translateX(-50%);
+  z-index:1;width:clamp(140px,16vw,240px);height:3px;border-radius:2px;overflow:hidden;
+  background:rgba(255,255,255,.42);filter:drop-shadow(0 1px 3px rgba(9,17,29,.55))}
+.pasfoto__bezec{display:block;width:24px;height:100%;border-radius:2px;background:rgba(255,255,255,.92)}
 @media (max-width:760px){
   .pasfoto__sip{display:none}
   .pasfoto__kus img{height:clamp(200px,54vw,300px)}
-  .pasfoto__tecky{gap:24px;padding:12px 16px}
-  .pasfoto__tecka::after{content:"";position:absolute;inset:-11px}
+  .pasfoto__stopa{width:clamp(120px,34vw,180px)}
 }
 .rui__pod--nad{margin-bottom:-4px;color:var(--ink);font-weight:600}
 
@@ -369,74 +365,134 @@
   </div>
   <div class="pasfoto__ram">
     <div class="pasfoto__pas" id="pasfoto-pas" tabindex="0" role="group" aria-label="Fotky domu, posuvné">
-      <figure class="pasfoto__kus">
-        <img src="img/realne/dvere-560h.webp" width="373" height="560" loading="lazy" decoding="async"
-             alt="Prosklené dvoukřídlé dveře domu z kryté terasy"
-             srcset="img/realne/dvere-560h.webp 373w, img/realne/dvere-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/obyvak-linka-560h.webp" width="840" height="560" loading="lazy" decoding="async"
-             alt="Obytný prostor domu s kuchyňskou linkou a dvěma okny"
-             srcset="img/realne/obyvak-linka-560h.webp 840w, img/realne/obyvak-linka-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/kavovar-560h.webp" width="996" height="560" loading="lazy" decoding="async"
-             alt="Kávovar a šálky na pracovní desce kuchyňské linky"
-             srcset="img/realne/kavovar-560h.webp 996w, img/realne/kavovar-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/koupelna-560h.webp" width="420" height="560" loading="lazy" decoding="async"
-             alt="Koupelna se sprchovým koutem, umyvadlem a toaletou"
-             srcset="img/realne/koupelna-560h.webp 420w, img/realne/koupelna-840h.webp 630w" sizes="(max-width:900px) 38vw, 373px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/terasa-pod-560h.webp" width="840" height="560" loading="lazy" decoding="async"
-             alt="Pohled podél kryté terasy pod přesahem střechy"
-             srcset="img/realne/terasa-pod-560h.webp 840w, img/realne/terasa-pod-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/drez-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
-             alt="Nerezový dřez s vysokou baterií zblízka"
-             srcset="img/realne/drez-detail-560h.webp 996w, img/realne/drez-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/okno-obklad-560h.webp" width="373" height="560" loading="lazy" decoding="async"
-             alt="Okno v dřevěném obkladu fasády proti obloze"
-             srcset="img/realne/okno-obklad-560h.webp 373w, img/realne/okno-obklad-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/obyvak-560h.webp" width="840" height="560" loading="lazy" decoding="async"
-             alt="Obývací část domu s pohovkou a konferenčním stolkem"
-             srcset="img/realne/obyvak-560h.webp 840w, img/realne/obyvak-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/sprcha-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
-             alt="Detail sprchové baterie na obkladu"
-             srcset="img/realne/sprcha-detail-560h.webp 996w, img/realne/sprcha-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/prkna-detail-560h.webp" width="840" height="560" loading="lazy" decoding="async"
-             alt="Prkna kryté terasy zblízka"
-             srcset="img/realne/prkna-detail-560h.webp 840w, img/realne/prkna-detail-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/pohovka-detail-560h.webp" width="995" height="560" loading="lazy" decoding="async"
-             alt="Detail čalouněné pohovky s polštáři"
-             srcset="img/realne/pohovka-detail-560h.webp 995w, img/realne/pohovka-detail-840h.webp 1492w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-      <figure class="pasfoto__kus">
-        <img src="img/realne/kuchyne-560h.webp" width="840" height="560" loading="lazy" decoding="async"
-             alt="Kuchyňská linka s dřezem a pracovní deskou"
-             srcset="img/realne/kuchyne-560h.webp 840w, img/realne/kuchyne-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
-      </figure>
-    </div>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/dvere-560h.webp" width="373" height="560" loading="lazy" decoding="async"
+               alt="Prosklené dvoukřídlé dveře domu z kryté terasy"
+               srcset="img/realne/dvere-560h.webp 373w, img/realne/dvere-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/obyvak-linka-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Obytný prostor domu s kuchyňskou linkou a dvěma okny"
+               srcset="img/realne/obyvak-linka-560h.webp 840w, img/realne/obyvak-linka-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/kuchyne-celek-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Kuchyňský kout se dvěma okny a stropním světlem"
+               srcset="img/realne/kuchyne-celek-560h.webp 840w, img/realne/kuchyne-celek-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/kavovar-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+               alt="Kávovar a šálky na pracovní desce kuchyňské linky"
+               srcset="img/realne/kavovar-560h.webp 996w, img/realne/kavovar-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/drez-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+               alt="Nerezový dřez s vysokou baterií zblízka"
+               srcset="img/realne/drez-detail-560h.webp 996w, img/realne/drez-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/kuchyne-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Kuchyňská linka s dřezem a pracovní deskou"
+               srcset="img/realne/kuchyne-560h.webp 840w, img/realne/kuchyne-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/koupelna-560h.webp" width="420" height="560" loading="lazy" decoding="async"
+               alt="Koupelna se sprchovým koutem, umyvadlem a toaletou"
+               srcset="img/realne/koupelna-560h.webp 420w, img/realne/koupelna-840h.webp 630w" sizes="(max-width:900px) 38vw, 373px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/sprcha-hlavice-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+               alt="Dešťová sprchová hlavice ve sprchovém koutu zblízka"
+               srcset="img/realne/sprcha-hlavice-560h.webp 996w, img/realne/sprcha-hlavice-840h.webp 1493w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/sprchovy-kout-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Sprchová souprava s dešťovou hlavicí a okno v koupelně"
+               srcset="img/realne/sprchovy-kout-560h.webp 840w, img/realne/sprchovy-kout-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/sprcha-tyc-560h.webp" width="373" height="560" loading="lazy" decoding="async"
+               alt="Ruční sprcha na chromované tyči"
+               srcset="img/realne/sprcha-tyc-560h.webp 373w, img/realne/sprcha-tyc-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/sprcha-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+               alt="Detail sprchové baterie na obkladu"
+               srcset="img/realne/sprcha-detail-560h.webp 996w, img/realne/sprcha-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/umyvadlo-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Keramické umyvadlo se skříňkou a stojánkovou baterií"
+               srcset="img/realne/umyvadlo-560h.webp 840w, img/realne/umyvadlo-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/zrcadlova-skrinka-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Zrcadlová skříňka s poličkami nad umyvadlem"
+               srcset="img/realne/zrcadlova-skrinka-560h.webp 840w, img/realne/zrcadlova-skrinka-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/wc-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Toaleta a skříňka s umyvadlem vedle sprchového koutu"
+               srcset="img/realne/wc-560h.webp 840w, img/realne/wc-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/obyvak-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Obývací část domu s pohovkou a konferenčním stolkem"
+               srcset="img/realne/obyvak-560h.webp 840w, img/realne/obyvak-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/pohovka-detail-560h.webp" width="995" height="560" loading="lazy" decoding="async"
+               alt="Detail čalouněné pohovky s polštáři"
+               srcset="img/realne/pohovka-detail-560h.webp 995w, img/realne/pohovka-detail-840h.webp 1492w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/obyvak-stolek-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Pohovka a konferenční stolek mezi dvěma okny"
+               srcset="img/realne/obyvak-stolek-560h.webp 840w, img/realne/obyvak-stolek-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/okno-zaves-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Okno se záclonou a závěsem staženým sponou"
+               srcset="img/realne/okno-zaves-560h.webp 840w, img/realne/okno-zaves-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/podlaha-koberec-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+               alt="Dřevěná podlaha a okraj koberce zblízka"
+               srcset="img/realne/podlaha-koberec-560h.webp 996w, img/realne/podlaha-koberec-840h.webp 1493w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/interier-prazdny-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Prázdný interiér domu se dvěma okny a dřevěnou podlahou"
+               srcset="img/realne/interier-prazdny-560h.webp 840w, img/realne/interier-prazdny-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/vstupni-dvere-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Otevřené vstupní dveře s bezpečnostním zámkem"
+               srcset="img/realne/vstupni-dvere-560h.webp 840w, img/realne/vstupni-dvere-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/terasa-pod-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Pohled podél kryté terasy pod přesahem střechy"
+               srcset="img/realne/terasa-pod-560h.webp 840w, img/realne/terasa-pod-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/prkna-detail-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+               alt="Prkna kryté terasy zblízka"
+               srcset="img/realne/prkna-detail-560h.webp 840w, img/realne/prkna-detail-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+        </figure>
+        <figure class="pasfoto__kus">
+          <img src="img/realne/okno-obklad-560h.webp" width="373" height="560" loading="lazy" decoding="async"
+               alt="Okno v dřevěném obkladu fasády proti obloze"
+               srcset="img/realne/okno-obklad-560h.webp 373w, img/realne/okno-obklad-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
+        </figure>
+      </div>
     <button class="pasfoto__sip pasfoto__sip--vlevo" type="button" data-smer="-1" aria-label="Předchozí fotky">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
     </button>
     <button class="pasfoto__sip pasfoto__sip--vpravo" type="button" data-smer="1" aria-label="Další fotky">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
     </button>
-    <div class="pasfoto__tecky" id="pasfoto-tecky" role="tablist" aria-label="Přeskočit na fotku"></div>
+    <div class="pasfoto__stopa" id="pasfoto-stopa" aria-hidden="true"><span class="pasfoto__bezec"></span></div>
   </div>
 </section>
 <section class="holy fh-rv" aria-label="Co je v ceně">
@@ -824,7 +880,8 @@
     var puvodni = [].slice.call(pas.children);
     var pocet = puvodni.length;
     var klid = matchMedia('(prefers-reduced-motion: reduce)');
-    var tecky = document.getElementById('pasfoto-tecky');
+    var stopa = document.getElementById('pasfoto-stopa');
+    var bezec = stopa ? stopa.firstElementChild : null;
     var sirkaSady = 0, stojiDo = 0, casovac = null;
     var PRODLEVA = 3800;   // jak dlouho stojí na jedné fotce
 
@@ -859,30 +916,24 @@
     function jdi(kam, hladce) {
       var lap = Math.floor(pas.scrollLeft / sirkaSady) * sirkaSady;
       pas.scrollTo({ left: lap + kam, behavior: (hladce && !klid.matches) ? 'smooth' : 'auto' });
-      setTimeout(function () { srovnej(); oznacTecku(); }, 800);
+      setTimeout(function () { srovnej(); posunBezec(); }, 800);
     }
 
     function posun(smer) {
+      if (!sirkaSady) zmerSadu();
       if (!sirkaSady) return;
       var i = indexTed() + smer;
       if (i < 0) { pas.scrollLeft += sirkaSady; i = pocet - 1; }
       jdi(odsazeni(i), true);
     }
 
-    puvodni.forEach(function (k, i) {
-      var b = document.createElement('button');
-      b.className = 'pasfoto__tecka';
-      b.type = 'button';
-      b.setAttribute('role', 'tab');
-      b.setAttribute('aria-label', 'Fotka ' + (i + 1) + ' ze ' + pocet);
-      b.addEventListener('click', function () { pozdrz(); jdi(odsazeni(i), true); });
-      tecky.appendChild(b);
-    });
-    var seznamTecek = [].slice.call(tecky.children);
-
-    function oznacTecku() {
-      var akt = indexTed();
-      seznamTecek.forEach(function (b, i) { b.setAttribute('aria-selected', i === akt ? 'true' : 'false'); });
+    function posunBezec() {
+      if (!bezec || !sirkaSady) return;
+      var celek = stopa.getBoundingClientRect().width;
+      var sirkaBezce = Math.max(24, Math.min(celek, celek * pas.clientWidth / sirkaSady));
+      var x = ((pas.scrollLeft % sirkaSady) + sirkaSady) % sirkaSady;
+      bezec.style.width = sirkaBezce + 'px';
+      bezec.style.transform = 'translateX(' + (x / sirkaSady) * (celek - sirkaBezce) + 'px)';
     }
 
     function pozdrz() { stojiDo = performance.now() + 6000; }
@@ -897,14 +948,14 @@
       b.addEventListener('click', function () { pozdrz(); posun(+b.dataset.smer); });
     });
 
-    pas.addEventListener('scroll', oznacTecku, { passive: true });
+    pas.addEventListener('scroll', posunBezec, { passive: true });
     ['pointerdown', 'wheel', 'touchstart'].forEach(function (u) {
       pas.addEventListener(u, pozdrz, { passive: true });
     });
 
-    window.addEventListener('resize', function () { zmerSadu(); oznacTecku(); });
-    window.addEventListener('load', function () { zmerSadu(); oznacTecku(); });
-    zmerSadu(); oznacTecku();
+    window.addEventListener('resize', function () { zmerSadu(); posunBezec(); });
+    window.addEventListener('load', function () { zmerSadu(); posunBezec(); });
+    zmerSadu(); posunBezec();
     if (!klid.matches) casovac = setInterval(tik, PRODLEVA);
   }
 })();
