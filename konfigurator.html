@@ -21,19 +21,20 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="description" content="Sestavte si modulární dům krok po kroku. U každé volby rovnou vidíte, o kolik se cena hne, a nabídku pošleme do 24 hodin.">
-<link rel="preload" href="fonts/bricolage-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/bricolage-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="description" content="Sestavte si modulární dům: střecha, fasáda, vybavení i doplňky. Dům se otáčí, u každé volby rovnou vidíte, o kolik se cena hne, a nabídku pošleme do 24 hodin.">
+<link rel="preload" href="fonts/archivo2-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo2-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=35">
-<link rel="stylesheet" href="assets/flexi-poradce.css?v=2">
-<link rel="stylesheet" href="assets/flexi-konfigurator.css?v=20">
+<link rel="stylesheet" href="assets/flexi.css?v=50">
+<link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
+<link rel="stylesheet" href="assets/flexi-konfig-a.css?v=1">
+<link rel="stylesheet" href="assets/flexi-otocka.css?v=2">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Konfigurátor","item":"https://flexihouse.cz/konfigurator"}]}
 </script>
 </head>
-<body>
+<body class="kv-cely">
 
 <header class="top">
   <div class="wrap top__in">
@@ -55,7 +56,9 @@
       Flexi House
     </a>
     <nav class="nav" aria-label="Hlavní">
-      <a href="/katalog">Domy</a>
+      <span class="md">
+        <a class="md__spoust" href="/katalog" aria-expanded="false" aria-controls="md-domy">Domy</a>
+      </span>
       <a href="/konfigurator" aria-current="page">Konfigurátor</a>
       <a href="/poptavka">Poptávka</a>
     </nav>
@@ -63,6 +66,38 @@
       <a class="tel" href="tel:+420607321543">607 321 543</a>
       <a class="btn btn--sm" href="/poptavka">Chci nabídku</a>
       <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
+    </div>
+  </div>
+
+  <div class="md__panel" id="md-domy">
+    <div class="md__in">
+        <a class="md__dum" href="/rozkladaci-dum">
+          <img src="/img/katalog/dum-800w.webp" width="800" height="433" alt="Rozkládací modulární dům s krytou terasou" loading="lazy" fetchpriority="low"
+               srcset="/img/katalog/dum-480w.webp 480w, /img/katalog/dum-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
+          <span class="md__nadpis">Rozkládací dům</span>
+          <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+        </a>
+        <a class="md__dum" href="/flexi-office">
+          <img src="/img/katalog/office-800w.webp" width="800" height="621" alt="Kancelářský kontejner" loading="lazy" fetchpriority="low"
+               srcset="/img/katalog/office-480w.webp 480w, /img/katalog/office-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
+          <span class="md__nadpis">Kancelářský kontejner</span>
+          <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+        </a>
+        <a class="md__dum" href="/poptavka">
+          <img src="/img/katalog/bistro-800w.webp" width="800" height="510" alt="Bistro kontejner s výdejním okénkem" loading="lazy" fetchpriority="low"
+               srcset="/img/katalog/bistro-480w.webp 480w, /img/katalog/bistro-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
+          <span class="md__nadpis">Bistro kontejner</span>
+          <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+        </a>
+        <a class="md__dum" href="/dum-na-miru">
+          <img src="/img/katalog/namiru-800w.webp" width="800" height="571" alt="Dvoupodlažní sestava kontejnerů" loading="lazy" fetchpriority="low"
+               srcset="/img/katalog/namiru-480w.webp 480w, /img/katalog/namiru-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
+          <span class="md__nadpis">Dům na míru</span>
+          <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+        </a>
+      <div class="md__pata">
+        <a class="link" href="/katalog">Prohlédnout celý katalog</a>
+      </div>
     </div>
   </div>
 </header>
@@ -76,1315 +111,120 @@
   </div>
 </div>
 
+<main>
+<div class="kva">
+<h1 class="vh">Sestavte si modulární dům Flexi House</h1>
+<div class="ap">
 
-
-
-
-
-
-<main class="kf">
-  <div class="wrap">
-    <div class="kf__head">
-      <h1 id="kfTitle">Sestavte si <span class="accent">dům na míru</span></h1>
-      <p id="kfTagline">Rozkládací dům s terasou. Projděte 5 kroků a my vám připravíme nezávaznou nabídku přesně podle vaší konfigurace. Ceny jsou orientační, finální nabídku připravíme na míru.</p>
-      <form class="kf-obnova" id="kfObnova">
-        <label for="kfKod">Máte kód uložené konfigurace?</label>
-        <div class="kf-obnova__row">
-          <input type="text" id="kfKod" name="kod" placeholder="FH-XXXXXX" autocomplete="off" spellcheck="false" maxlength="9" aria-describedby="kfObnovaErr">
-          <button type="submit" class="btn btn--ghost">Načíst</button>
-        </div>
-        <p class="kf-obnova__err" id="kfObnovaErr" role="status"></p>
-      </form>
+  <div class="sc" id="scena" role="group" aria-label="Pohled na dům">
+    <div class="sc__vrstva plan" id="vrPlan">
+      <img src="img/pudorys/rozkladaci-1600w.webp" width="1600" height="1495" alt="Půdorys rozloženého domu se dvěma ložnicemi, koupelnou a obývacím prostorem s kuchyňským koutem">
+    </div>
+    <div class="sc__vrstva spin" id="vrSpin" data-otocka data-sada="konfig"></div>
+    <div class="sc__vrstva pano" id="vrPano">
+      <div class="pano__host" id="panoHost"></div>
     </div>
 
-    <div class="kf-progress">
-      <div class="kf-steps" id="kfSteps">
-        <div class="kf-steps__fill" id="kfStepsFill"></div>
-        <div class="kf-step-pill" data-idx="0"><div class="kf-step-pill__dot">1</div><div class="kf-step-pill__lbl">Velikost</div></div>
-        <div class="kf-step-pill" data-idx="1"><div class="kf-step-pill__dot">2</div><div class="kf-step-pill__lbl">Exteriér</div></div>
-        <div class="kf-step-pill" data-idx="2"><div class="kf-step-pill__dot">3</div><div class="kf-step-pill__lbl">Interiér</div></div>
-        <div class="kf-step-pill" data-idx="3"><div class="kf-step-pill__dot">4</div><div class="kf-step-pill__lbl">Doplňky</div></div>
-        <div class="kf-step-pill" data-idx="4"><div class="kf-step-pill__dot">5</div><div class="kf-step-pill__lbl">Rekapitulace</div></div>
-      </div>
-    </div>
 
-    <div class="kf__layout">
-      <aside class="kf-stage">
-        <div class="kf-viz" id="kfViz">
-          <div class="kf-viz__stage">
-            <canvas class="kf-viz__canvas" id="kfCanvas" data-vyska="ramec" width="900" height="620"></canvas>
-          </div>
-          <div class="kf-viz__bar">
-            <div class="kf-viz__prep" role="group" aria-label="Pohled na dům">
-              <button type="button" class="kf-viz__btn is-on" data-pohled="ven" aria-pressed="true">Zvenku</button>
-              <button type="button" class="kf-viz__btn" data-pohled="dovnitr" aria-pressed="false">Uvnitř</button>
-            </div>
-            <label class="kf-viz__misto" id="kfMistoBox" hidden>
-              <span>Místo</span>
-              <select id="kfMisto"></select>
-            </label>
-            <button type="button" class="kf-viz__zoom" id="kfZoom" aria-pressed="false">
-              <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5.5 1H1v4.5M8.5 13H13V8.5M13 5.5V1H8.5M1 8.5V13h4.5"/></svg>
-              <span id="kfZoomLbl">Zvětšit</span>
-            </button>
-          </div>
-          <p class="kf-viz__note"><span class="kf-viz__hint" id="kfHint">Tažením otočíte.</span> Náhled je orientační. Rozměry a rozmístění oken zpřesňujeme podle výrobní dokumentace.</p>
-        </div>
-      </aside>
-
-      <div class="kf-choices">
-        <div class="kf__main" id="kfMain"></div>
-
-        <div class="kf-summary">
-          <div class="kf-summary__head">
-            <div class="kf-summary__model" id="sumModel">Flexi House</div>
-            <div class="kf-summary__sub" id="sumSub">Vaše konfigurace</div>
-          </div>
-          <div class="kf-summary__body" id="sumBody">
-            <div class="kf-sum-empty">Zatím nic nevybráno. Začněte krokem 1.</div>
-          </div>
-          <div class="kf-summary__total">
-            <div class="kf-total-row">
-              <span class="kf-total-row__lbl">Orientační cena celkem <span id="sumVatSlot"></span></span>
-              <span class="kf-total-row__val" id="sumTotal">–</span>
-            </div>
-            <p class="kf-summary__note" id="sumNote">Dům a vybavení bez DPH, práce na pozemku včetně DPH. Finální cenu potvrdíme v nabídce.</p>
-          </div>
-        </div>
+    <div class="coach" id="coach" aria-hidden="true">
+      <div class="coach__in">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9 3 12l3 3"/><path d="m18 9 3 3-3 3"/><path d="M3 12h18"/>
+        </svg>
+        <p><b id="coachNadpis"></b><span id="coachText"></span></p>
       </div>
     </div>
   </div>
-<div class="kf-foto" id="kfFoto" hidden>
-  <div class="kf-foto__pozadi" data-zavrit></div>
-  <div class="kf-foto__panel" role="dialog" aria-modal="true" aria-label="Fotka volby">
-    <button type="button" class="kf-foto__x" aria-label="Zavřít fotku" data-zavrit>&times;</button>
-    <img class="kf-foto__img" src="" alt="" width="1000" height="563">
-    <p class="kf-foto__popis"></p>
-    <p class="kf-foto__mikro">Fotka je z našeho domu, ne katalogový snímek. Provedení se může lišit podle sestavy.</p>
-  </div>
+
+    <div class="karta" id="karta">
+      <div class="mapa" id="mapa" hidden>
+        <div class="mapa__plan">
+          <img src="img/pudorys/rozkladaci-1600w.webp" width="1600" height="1495" alt="" aria-hidden="true">
+          <i class="klin" id="klin" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="karta__text">
+        <p class="karta__nadpis" id="kartaNadpis"></p>
+        <p class="karta__radek" id="kartaRadek"></p>
+      </div>
+    </div>
+
+  <aside class="pn">
+    <header class="pn__hlava">
+      <div class="znacka">
+        <svg viewBox="9 16 46 33" aria-hidden="true">
+          <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
+          <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
+          <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
+          <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
+          <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
+          <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
+          <path d="M 33.62 37.59 L 39.38 34.71 L 39.38 24.11 L 33.62 26.99 Z" fill="#eef2f4"/>
+          <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
+          <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
+          <path d="M 20 46 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
+          <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
+          <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
+        </svg>
+        <span>Flexi House</span>
+      </div>
+      <ol class="postup" id="postup"></ol>
+      <p class="postup__text" id="postupText"></p>
+    </header>
+
+    <div class="pn__telo" id="telo"></div>
+
+    <footer class="pn__pata">
+      <div class="soucet">
+        <span class="soucet__popis" id="soucetPopis">Zatím vychází</span>
+        <b class="soucet__cena" id="soucetCena">399 000 Kč</b>
+      </div>
+      <p class="pozn" id="pozn"></p>
+      <div class="akce">
+        <button type="button" class="btn btn--vedlejsi" id="btnZpet">Zpět</button>
+        <button type="button" class="btn btn--hlavni" id="btnDal">
+          Pokračovat
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </footer>
+  </aside>
+</div>
+
+<p class="vh" role="status" aria-live="polite" id="hlaseni"></p>
 </div>
 </main>
 
-
-
-
-<script src="assets/flexi-3d.js?v=17"></script>
-<script>
-const I = {
-  home:    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
-  ruler:   '<path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0l-4.6-4.6a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/><path d="m7.5 10.5 2 2M11 7l2 2M14.5 3.5l2 2"/>',
-  roof:    '<path d="M2 12l10-8 10 8"/><path d="M5 10v10h14V10"/>',
-  layers:  '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
-  window:  '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/>',
-  thermo:  '<path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/>',
-  plug:    '<path d="M12 2v6M8 8V4M16 8V4"/><path d="M6 8h12v4a6 6 0 0 1-12 0z"/><path d="M12 18v4"/>',
-  flame:   '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
-  bath:    '<path d="M4 12V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2"/><path d="M2 12h20v3a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 19v2M18 19v2"/>',
-  deck:    '<path d="M2 20h20M4 20V9M20 20V9M2 9h20l-3-4H5L2 9z"/>',
-  stairs:  '<path d="M3 20h5v-4h4v-4h4V8h5"/><path d="M3 20v-2"/>',
-  truck:   '<rect x="1" y="6" width="13" height="11" rx="1"/><path d="M14 9h4l3 3v5h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
-  tool:    '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
-  doc:     '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
-  kitchen: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M8 3v6M8 14v3"/>',
-  sun:     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/>',
-  sparkle: '<path d="M12 2l1.9 5.8L20 9l-5.8 1.9L12 17l-1.9-6.1L4 9l6.1-1.2z"/>',
-  info:    '<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>',
-  check:   '<polyline points="20 6 9 17 4 12"/>'
-};
-function svg(name, w) {
-  w = w || 22;
-  return '<svg width="'+w+'" height="'+w+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(I[name]||I.home)+'</svg>';
-}
-
-function exteriorGroups() {
-  return [
-    { key:'roof', title:'Střecha', type:'single', required:true, options:[
-      { id:'flat',  label:'Plochá střecha', desc:'Moderní minimalistický vzhled. Součást základní ceny.', icon:'roof', price:0 },
-      { id:'gable', label:'Sedlová střecha', desc:'Klasický tvar, lepší odvod vody i sněhu.', icon:'roof', price:90000 }
-    ]},
-    { key:'facade', title:'Fasáda', type:'single', required:true, swatch:true,
-      hint:'základní obklad je v ceně, dekor fasády se připlácí a navíc zatepluje', options:[
-      { id:'wood',  label:'Dřevěný obklad', desc:'Základní obklad, přírodní odstín dřeva.', img:'img/fasada/zaklad-drevo.webp', price:0, badge:'Oblíbené' },
-      { id:'grey',  label:'Šedý obklad', desc:'Základní obklad, tlumená šedá.', img:'img/fasada/zaklad-seda.webp', price:0 },
-      { id:'black', label:'Černý obklad', desc:'Základní obklad, výrazná tmavá.', img:'img/fasada/zaklad-cerna.webp', price:0 },
-      { id:'pz-101', label:'Andělská bílá', desc:'Dekor fasády, hladký panel, PZ-101.', img:'img/fasada/pz-101.webp', dekor:true, kod:'PZ-101', price:23600 },
-      { id:'pz-102', label:'Slonová kost', desc:'Dekor fasády, hladký panel, PZ-102.', img:'img/fasada/pz-102.webp', dekor:true, kod:'PZ-102', price:23600 },
-      { id:'pz-201', label:'Tmavě šedá', desc:'Dekor fasády, hladký panel, PZ-201.', img:'img/fasada/pz-201.webp', dekor:true, kod:'PZ-201', price:23600 },
-      { id:'tz-202', label:'Světle šedá', desc:'Dekor fasády, omítkový povrch, TZ-202.', img:'img/fasada/tz-202.webp', dekor:true, kod:'TZ-202', price:23600 },
-      { id:'tz-201', label:'Betonově šedá', desc:'Dekor fasády, omítkový povrch, TZ-201.', img:'img/fasada/tz-201.webp', dekor:true, kod:'TZ-201', price:23600 },
-      { id:'tz-501', label:'Pudrová', desc:'Dekor fasády, omítkový povrch, TZ-501.', img:'img/fasada/tz-501.webp', dekor:true, kod:'TZ-501', price:23600 },
-      { id:'tz-504', label:'Krémová', desc:'Dekor fasády, omítkový povrch, TZ-504.', img:'img/fasada/tz-504.webp', dekor:true, kod:'TZ-504', price:23600 },
-      { id:'tz-502', label:'Pouštní žlutá', desc:'Dekor fasády, omítkový povrch, TZ-502.', img:'img/fasada/tz-502.webp', dekor:true, kod:'TZ-502', price:23600 },
-      { id:'mz-0302', label:'Tmavý ořech', desc:'Dekor fasády, dřevěná kresba, MZ-0302.', img:'img/fasada/mz-0302.webp', dekor:true, kod:'MZ-0302', price:23600 },
-      { id:'mz-8043', label:'Medové dřevo', desc:'Dekor fasády, dřevěná kresba, MZ-8043.', img:'img/fasada/mz-8043.webp', dekor:true, kod:'MZ-8043', price:23600 },
-      { id:'mz-0301', label:'Zlaté dřevo', desc:'Dekor fasády, dřevěná kresba, MZ-0301.', img:'img/fasada/mz-0301.webp', dekor:true, kod:'MZ-0301', price:23600 }
-    ]},
-    { key:'glazing', title:'Zasklení oken', type:'single', required:true, options:[
-      { id:'clear',  label:'Čirá dvojskla', desc:'Hliníkové rámy, izolační dvojsklo. V základní ceně.', icon:'window', price:0 },
-      { id:'mirror', label:'Reflexní skla', desc:'Galvanizované zasklení. Za denního světla působí zvenku jako zrcadlo, zevnitř vidíte ven.', icon:'sun', price:0, cenaText:'Teď bez příplatku', badge:'Akce' }
-    ]}
-  ];
-}
-function interiorGroups() {
-  return [
-    { key:'equipment', title:'Vybavení', type:'multi', required:false, hint:'Doporučujeme obojí, kliknutím lze odebrat', options:[
-      { id:'bath',    label:'Koupelna', desc:'Sprchový kout, umyvadlo, WC a obklady.', icon:'bath', price:30000, preset:true, foto:'koupelna' },
-      { id:'kitchen', label:'Kuchyňská linka', desc:'Linka s dřezem a místem pro spotřebiče.', icon:'kitchen', price:25000, preset:true, foto:'kuchyne' },
-      { id:'floor',   label:'Podlaha', desc:'Podlahová krytina v celém domě.', icon:'layers', price:25000, foto:'podlaha' },
-      { id:'drapes',  label:'Závěsy a záclony', desc:'Závěsy a záclony do všech oken.', icon:'window', price:20000, foto:'zavesy' }
-    ]},
-    { key:'utilities', title:'Elektroinstalace', type:'single', required:true, options:[
-      { id:'elec', label:'Elektroinstalace', desc:'Zásuvky, světla, jištění. Připraveno k zapojení.', icon:'plug', price:10000 }
-    ]},
-    { key:'heating', title:'Vytápění', type:'single', required:true, options:[
-      { id:'none',  label:'Bez vytápění', desc:'Dům dodáme bez topného zdroje, doplníte ho sami.', icon:'flame', price:0 },
-      { id:'ac',    label:'Klimatizace s montáží', desc:'Nástěnná jednotka mezi okna v kuchyni. Topí i chladí, nízké provozní náklady.', icon:'flame', price:29000, badge:'Doporučeno' }
-    ]}
-  ];
-}
-function addonGroup() {
-  return [
-    { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', kmFor:'transport', options:[
-      { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000, foto:'terasa' },
-      { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000, foto:'schody' },
-      { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
-      { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, vat:'incl', from:true },
-      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem. Kilometry se počítají tam i zpět, souprava se musí vrátit.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
-      { id:'assembly',   label:'Montáž domku', desc:'Rozložení a kompletace domu na pozemku. Podle náročnosti sestavení vyjde na 30 000 až 80 000 Kč.', icon:'tool', price:30000, vat:'incl', from:true }
-    ]}
-  ];
-}
-
-const MODELS = {
-  flexihouse: {
-    name: 'Flexi House',
-    title: 'Konfigurátor modulárního domu | Flexi House',
-    accent: 'dům na míru',
-    base: 400000,
-    baseIncludes: ['Hliníková okna s dvojskly', 'Vstupní dveře', 'Fasádní obklad', 'Zateplení Rockwool 75 mm'],
-    tagline: 'Rozkládací dům s terasou. Projděte 5 kroků, vyberte vybavení a my vám připravíme nezávaznou nabídku na míru. Ceny jsou orientační, finální nabídku připravíme na míru.',
-    steps: [
-      { title:'Dispozice a velikost', micro:'Rozložený dům má vnější rozměr 6,32 × 5,90 m, uvnitř zhruba 30 m². Krytá terasa je příplatek, najdete ji v doplňcích.', groups:[
-        { key:'size', title:'Dispozice', type:'single', required:true, options:[
-          { id:'b2', label:'2 ložnice', desc:'Obývací prostor s kuchyňským koutem, koupelna a 2 ložnice.', icon:'home', meta:'~30 m² · 6,3 × 5,9 m', price:0 }
-        ]}
-      ]},
-      { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha, fasáda a zasklení. Základní obklad, okna i dveře jsou v ceně, dekor fasády je příplatek.', groups: exteriorGroups() },
-      { title:'Interiér a technologie', micro:'Vybavení, izolace, elektroinstalace a vytápění. Ceny jsou bez DPH, u klimatizace je v ceně i montáž.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné. Doprava, usazení, patky a montáž jsou práce na pozemku, u nich uvádíme ceny včetně DPH. Připojení na sítě ani vyřízení povolení neděláme.', groups: addonGroup() }
-    ]
-  }
-};
-
-const params = new URLSearchParams(location.search);
-const modelKey = MODELS[params.get('model')] ? params.get('model') : 'flexihouse';
-const MODEL = MODELS[modelKey];
-
-const TOTAL_STEPS = MODEL.steps.length + 1;
-const RECAP_INDEX = MODEL.steps.length;
-
-const state = { step: 0, sel: {}, km: 0 };
-
-const gaFronta = [];
-let gaZive = false;
-function gaPripravena() {
-  return !!(window.gtag && window.dataLayer && Array.prototype.some.call(window.dataLayer, a => a && a[0] === 'config'));
-}
-function propustFrontu() {
-  if (!gaPripravena()) return false;
-  gaZive = true;
-  while (gaFronta.length) { const u = gaFronta.shift(); window.gtag('event', u[0], u[1]); }
-  return true;
-}
-function udalost(nazev, params) {
-  const p = Object.assign({ model: modelKey }, params || {});
-  // pixel nečeká na GA4, jinak by ho minul každý, kdo povolí reklamu a ne analytiku
-  if (window.fhPixel) window.fhPixel(nazev, p);
-  if (gaZive || propustFrontu()) { window.gtag('event', nazev, p); return; }
-  if (gaFronta.length < 40) gaFronta.push([nazev, p]);
-}
-document.addEventListener('fh:ga', propustFrontu);
-window.addEventListener('load', propustFrontu);
-
-const krokPoslan = {};
-function poslatKrok(idx) {
-  if (krokPoslan[idx]) return;
-  krokPoslan[idx] = true;
-  udalost('configurator_step', {
-    krok: idx + 1,
-    nazev: idx === RECAP_INDEX ? 'Rekapitulace a poptávka' : MODEL.steps[idx].title
-  });
-}
-let zapojen = false;
-function poslatZapojeni() {
-  if (zapojen) return;
-  zapojen = true;
-  udalost('configurator_engage', {});
-}
-
-const czk = new Intl.NumberFormat('cs-CZ');
-const fmtPrice = (n) => czk.format(n) + ' Kč';
-
-const SUM_NOTE = 'Dům a vybavení bez DPH, práce na pozemku včetně DPH. Finální cenu potvrdíme v nabídce.';
-const FROM_NOTE = 'U položek s „od“ počítáme spodní hranici: patky vyjdou na 50 000 až 90 000 Kč, montáž na 30 000 až 80 000 Kč podle pozemku.';
-const VAT_TIP = 'Dům a jeho vybavení uvádíme bez DPH. Sazba DPH se řídí využitím stavby, potvrdíme ji v nabídce. Doprava, usazení, patky, montáž a sítě do oken už DPH obsahují.';
-
-function transportKm() { const n = Number(state.km); return isFinite(n) && n > 0 ? Math.round(n) : 0; }
-function transportOpt() { const g = GROUPS.addons; return g ? g.options.find(x => x.perKm) : null; }
-function ujeteKm() { return transportKm() * 2; }
-function optPrice(o) { return o.price + (o.perKm ? o.perKm * ujeteKm() : 0); }
-function optVat(o) { return o.vat === 'incl' ? 'incl' : 'excl'; }
-function optLabel(o) { return o.kod ? o.label + ' (' + o.kod + ')' : o.label; }
-function optPriceLabel(o) {
-  if (o.cenaText) return o.cenaText;
-  if (o.perKm && transportKm() === 0) return '+ ' + fmtPrice(o.price) + ' + ' + o.perKm + ' Kč/km tam i zpět';
-  const p = optPrice(o);
-  if (p <= 0) return 'V základní ceně';
-  return '+ ' + (o.from ? 'od ' : '') + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '');
-}
-function vatInfoHtml(id) {
-  return '<span class="kf-vat" data-vat-info>'
-    + '<button type="button" class="kf-info" id="'+id+'" aria-label="Jak je to s DPH" aria-expanded="false">i</button>'
-    + '<span class="kf-tip" role="note">'+VAT_TIP+'</span></span>';
-}
-
-const GROUPS = {};
-MODEL.steps.forEach(s => s.groups.forEach(g => { GROUPS[g.key] = g; }));
-
-const elMain = document.getElementById('kfMain');
-const elSteps = document.getElementById('kfSteps');
-const elFill = document.getElementById('kfStepsFill');
-const elSumBody = document.getElementById('sumBody');
-const elSumTotal = document.getElementById('sumTotal');
-
-document.getElementById('kfTitle').innerHTML = 'Sestavte si <span class="accent">' + MODEL.accent + '</span>';
-document.getElementById('kfTagline').textContent = MODEL.tagline;
-document.getElementById('sumModel').textContent = MODEL.name;
-if (MODEL.title) document.title = MODEL.title;
-
-Array.from(elSteps.querySelectorAll('.kf-step-pill')).forEach((pill, i) => {
-  if (i >= TOTAL_STEPS) { pill.remove(); return; }
-  pill.addEventListener('click', () => { if (i <= maxReached()) goTo(i); });
-});
-
-MODEL.steps.forEach((step, si) => {
-  const panel = document.createElement('section');
-  panel.className = 'kf-panel';
-  panel.dataset.idx = si;
-  let html = '<div class="kf-panel__head">'
-    + '<div class="kf-panel__step">Krok '+(si+1)+' z '+TOTAL_STEPS+'</div>'
-    + '<h2>'+step.title+'</h2>'
-    + '<p>'+step.micro+'</p></div>';
-
-  step.groups.forEach(g => {
-    html += '<div class="kf-group" data-group="'+g.key+'">'
-      + '<div class="kf-group__head"><span class="kf-group__title">'+g.title+'</span>'
-      + (g.hint ? '<span class="kf-group__hint">'+g.hint+'</span>' : (g.type==='multi'?'<span class="kf-group__hint">volitelné</span>':''))
-      + '</div><div class="kf-cards'+(g.swatch ? ' kf-cards--swatch' : '')+'">';
-    g.options.forEach(o => {
-      const priceTxt = optPriceLabel(o);
-      const priceCls = (o.price > 0 || o.perKm) ? 'opt__price' : 'opt__price is-incl';
-      const check = '<span class="opt__check">'+svg('check',14)+'</span>';
-      const telo = (o.badge ? '<span class="opt__badge">'+o.badge+'</span>' : '')
-        + (o.img ? '' : '<div class="opt__top"><span class="opt__icon">'+svg(o.icon)+'</span>'+check+'</div>')
-        + '<div class="opt__body"><div class="opt__t">'+o.label+'</div>'
-        + '<div class="opt__d">'+o.desc+'</div>'
-        + (o.meta ? '<div class="opt__meta">'+svg('ruler',13)+o.meta+'</div>' : '')
-        + '</div><div class="'+priceCls+'" data-price="'+g.key+':'+o.id+'">'+priceTxt+'</div>';
-      html += '<div class="opt-box">'
-        + '<button type="button" class="opt'+(o.img ? ' opt--swatch' : '')+'" aria-pressed="false" data-group="'+g.key+'" data-opt="'+o.id+'">'
-        + (o.img
-            ? check + '<img class="opt__img" src="'+o.img+'" alt="" loading="lazy" width="414" height="276"><span class="opt__pad">'+telo+'</span>'
-            : telo)
-        + '</button>'
-        + (o.foto
-            ? '<button type="button" class="opt__info" data-foto="'+o.foto+'" data-popis="'+o.label.replace(/"/g,'&quot;')+'" aria-label="Ukázat fotku: '+o.label.replace(/"/g,'&quot;')+'">'+svg('info',16)+'</button>'
-            : '')
-        + '</div>';
-    });
-    if (g.kmFor) {
-      html += '</div><div class="kf-km" id="kfKm" hidden>'
-        + '<label for="kfKmInput">Vzdálenost z Prahy na pozemek (km, jedním směrem)</label>'
-        + '<input type="number" id="kfKmInput" min="0" max="900" step="10" inputmode="numeric" placeholder="např. 120">'
-        + '<span class="kf-km__out" id="kfKmOut">Zadejte vzdálenost a doprava se dopočítá.</span>'
-        + '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
-      return;
-    }
-    html += '</div><div class="kf-group__err">Vyberte prosím jednu možnost.</div></div>';
-  });
-
-  html += navHtml(si);
-  panel.innerHTML = html;
-  elMain.appendChild(panel);
-});
-
-(function buildRecap() {
-  const panel = document.createElement('section');
-  panel.className = 'kf-panel';
-  panel.dataset.idx = RECAP_INDEX;
-  panel.innerHTML =
-    '<div class="kf-panel__head">'
-    + '<div class="kf-panel__step">Krok '+TOTAL_STEPS+' z '+TOTAL_STEPS+'</div>'
-    + '<h2>Rekapitulace a poptávka</h2>'
-    + '<p>Zkontrolujte konfiguraci, stáhněte si ji v PDF a pošlete nezávaznou poptávku.</p></div>'
-    + '<div class="kf-recap-layout">'
-    + '  <div>'
-    + '    <div class="kf-recap-grid" id="recapGrid"></div>'
-    + '    <div class="kf-recap-card" style="margin-top:14px">'
-    + '      <div class="kf-recap-line"><span class="kf-recap-line__k">Dům a vybavení (bez DPH)</span>'
-    + '      <span class="kf-recap-line__v" id="recapNet">–</span></div>'
-    + '      <div class="kf-recap-line" id="recapGrossLine"><span class="kf-recap-line__k">Práce na pozemku (vč. DPH)</span>'
-    + '      <span class="kf-recap-line__v" id="recapGross">–</span></div>'
-    + '      <div class="kf-recap-line kf-recap-line--total"><span class="kf-recap-line__k">Orientační cena celkem <span id="recapVatSlot"></span></span>'
-    + '      <span class="kf-recap-line__v" style="font-size:1.15rem" id="recapTotal">–</span></div>'
-    + '      <p class="kf-summary__note" id="recapNote" hidden></p>'
-    + '    </div>'
-    + '  </div>'
-    + '  <div>'
-    + '    <form class="kf-recap-card" id="leadForm" novalidate style="padding:24px">'
-    + '      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none">'
-    + '      <h4 style="margin-bottom:16px">Kontaktní údaje</h4>'
-    + '      <div class="form__status" id="formStatus" role="status"></div>'
-    + '      <div class="form__row">'
-    + '        <div class="field"><label for="f-name">Jméno <span class="req">*</span></label>'
-    + '          <input type="text" id="f-name" name="name" placeholder="Jan Novák" required>'
-    + '          <span class="field__err">Doplňte prosím jméno.</span></div>'
-    + '        <div class="field"><label for="f-phone">Telefon <span class="req">*</span></label>'
-    + '          <input type="tel" id="f-phone" name="phone" placeholder="+420 ..." required>'
-    + '          <span class="field__err">Doplňte prosím telefon.</span></div>'
-    + '      </div>'
-    + '      <div class="field"><label for="f-email">E-mail <span class="req">*</span></label>'
-    + '        <input type="email" id="f-email" name="email" placeholder="jan@email.cz" required>'
-    + '        <span class="field__err">Zadejte platný e-mail.</span></div>'
-    + '      <div class="field"><label for="f-loc">Lokalita pozemku</label>'
-    + '        <input type="text" id="f-loc" name="location" placeholder="Obec / okres"></div>'
-    + '      <div class="field"><label for="f-msg">Poznámka</label>'
-    + '        <textarea id="f-msg" name="message" placeholder="Termín, dotazy, specifické přání..."></textarea></div>'
-    + '      <div class="kf-kod" id="kodBox" hidden>'
-    + '        <div class="kf-kod__h">Kód vaší konfigurace</div>'
-    + '        <div class="kf-kod__val" id="kodVal"></div>'
-    + '        <p class="kf-kod__note">Uschovejte si ho. Kdykoli se k téhle sestavě vrátíte na <b>flexihouse.cz/konfigurator</b>, kde kód zadáte, nebo přes odkaz níže.</p>'
-    + '        <div class="kf-kod__row"><input type="text" id="kodOdkaz" readonly aria-label="Odkaz na konfiguraci">'
-    + '          <button type="button" class="btn btn--ghost" id="kodCopy">Kopírovat</button></div>'
-    + '      </div>'
-    + '      <div class="kf-actions">'
-    + '        <button type="button" class="btn btn--ghost" id="saveBtn">'
-    + '          '+svg('doc',16)+' Uložit konfiguraci</button>'
-    + '        <button type="button" class="btn btn--ghost" id="pdfBtn">'
-    + '          '+svg('doc',16)+' Stáhnout PDF</button>'
-    + '        <button type="submit" class="btn btn--green" id="formSubmit">Odeslat nezávaznou poptávku '
-    + '          <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>'
-    + '      </div>'
-    + '      <p class="form__note">Odesláním formuláře berete na vědomí zpracování osobních údajů za účelem vyřízení vaší poptávky. Poptávka je nezávazná. Více v <a href="/zasady-ochrany-soukromi">Zásadách ochrany osobních údajů</a>.</p>'
-    + '    </form>'
-    + '  </div>'
-    + '</div>'
-    + navHtml(RECAP_INDEX, true);
-  elMain.appendChild(panel);
-})();
-
-function navHtml(si, isRecap) {
-  const backDis = si === 0 ? ' disabled' : '';
-  const nextLbl = (si === RECAP_INDEX - 1) ? 'Pokračovat na rekapitulaci' : 'Další krok';
-  const nextBtn = isRecap ? '' :
-    '<button type="button" class="btn btn--green kf-next" data-idx="'+si+'">'+nextLbl
-    + ' <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></button>';
-  const skip = (isRecap || si === 0) ? '' :
-    '<p class="kf-skip"><button type="button" class="kf-skip__btn">Přeskočit rovnou na nezávaznou poptávku</button></p>';
-  return '<div class="kf-nav">'
-    + '<button type="button" class="kf-nav__back"'+backDis+' data-idx="'+si+'">'
-    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg> Zpět</button>'
-    + nextBtn + '</div>' + skip;
-}
-
-function prvniNedokonceny() {
-  for (let i = 0; i < MODEL.steps.length; i++) { if (!stepComplete(i)) return i; }
-  return -1;
-}
-function skokNaFormular() {
-  const chybi = prvniNedokonceny();
-  udalost('configurator_skip_to_form', {
-    z_kroku: state.step + 1,
-    vysledek: chybi === -1 ? 'formular' : 'chybi_volba'
-  });
-  if (chybi !== -1) { goTo(chybi); validateStep(chybi); return; }
-  goTo(RECAP_INDEX);
-  const form = document.getElementById('leadForm');
-  if (form) requestAnimationFrame(() => form.scrollIntoView({ behavior:'smooth', block:'start' }));
-}
-
-elMain.addEventListener('click', (e) => {
-  const ico = e.target.closest('.opt__info');
-  if (ico) { otevritFotku(ico); return; }
-  const opt = e.target.closest('.opt');
-  if (opt) { selectOption(opt, true); return; }
-  const skip = e.target.closest('.kf-skip__btn');
-  if (skip) { skokNaFormular(); return; }
-  const next = e.target.closest('.kf-next');
-  if (next) { if (validateStep(state.step)) goTo(state.step + 1); return; }
-  const back = e.target.closest('.kf-nav__back');
-  if (back && !back.hasAttribute('disabled')) { goTo(state.step - 1); return; }
-});
-
-var fotkaZpet = null;
-function otevritFotku(tlacitko) {
-  const most = document.getElementById('kfFoto');
-  if (!most) return;
-  const jmeno = tlacitko.dataset.foto;
-  fotkaZpet = tlacitko;
-  most.querySelector('.kf-foto__popis').textContent = tlacitko.dataset.popis;
-  const img = most.querySelector('.kf-foto__img');
-  img.src = 'img/konfigurator/' + jmeno + '-1000w.webp';
-  img.srcset = 'img/konfigurator/' + jmeno + '-640w.webp 640w, img/konfigurator/' + jmeno + '-1000w.webp 1000w';
-  img.alt = tlacitko.dataset.popis + ' v našem domě';
-  most.hidden = false;
-  requestAnimationFrame(function(){ most.classList.add('je-videt'); });
-  most.querySelector('.kf-foto__x').focus();
-}
-function zavritFotku() {
-  const most = document.getElementById('kfFoto');
-  if (!most || most.hidden) return;
-  most.classList.remove('je-videt');
-  setTimeout(function(){ most.hidden = true; }, 260);
-  if (fotkaZpet) { fotkaZpet.focus(); fotkaZpet = null; }
-}
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') zavritFotku();
-});
-document.addEventListener('click', function (e) {
-  if (e.target.closest('[data-zavrit]')) zavritFotku();
-});
-
-function selectOption(btn, odUzivatele) {
-  if (odUzivatele) poslatZapojeni();
-  const gKey = btn.dataset.group, oId = btn.dataset.opt;
-  const g = GROUPS[gKey];
-  const cards = btn.closest('.kf-cards');
-  if (g.type === 'multi') {
-    let arr = Array.isArray(state.sel[gKey]) ? state.sel[gKey] : [];
-    if (arr.includes(oId)) { arr = arr.filter(x => x !== oId); btn.classList.remove('selected'); }
-    else { arr.push(oId); btn.classList.add('selected'); }
-    btn.setAttribute('aria-pressed', arr.includes(oId) ? 'true' : 'false');
-    state.sel[gKey] = arr;
-  } else {
-    cards.querySelectorAll('.opt').forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-pressed', 'false'); });
-    btn.classList.add('selected');
-    btn.setAttribute('aria-pressed', 'true');
-    state.sel[gKey] = oId;
-    btn.closest('.kf-group').classList.remove('invalid');
-  }
-  syncKmField();
-  renderSummary();
-  if (odUzivatele && gKey === 'equipment') {
-    vizPrepni('dovnitr', oId === 'bath' ? 3 : 1);
-    return;
-  }
-  vizObnov();
-}
-
-function kmOptionSelected() {
-  const g = GROUPS.addons;
-  if (!g || !g.kmFor) return false;
-  return (state.sel.addons || []).indexOf(g.kmFor) !== -1;
-}
-function syncKmField() {
-  const box = document.getElementById('kfKm');
-  if (!box) return;
-  const on = kmOptionSelected();
-  box.hidden = !on;
-  refreshDynamicPrices();
-}
-function refreshDynamicPrices() {
-  Object.keys(GROUPS).forEach(k => {
-    GROUPS[k].options.forEach(o => {
-      if (!o.perKm) return;
-      const el = elMain.querySelector('[data-price="'+k+':'+o.id+'"]');
-      if (el) el.textContent = optPriceLabel(o);
-    });
-  });
-  const out = document.getElementById('kfKmOut');
-  if (out) {
-    const km = transportKm();
-    const t = transportOpt();
-    out.textContent = km > 0 && t
-      ? 'Doprava ' + km + ' km tam i zpět, tedy ' + ujeteKm() + ' km: ' + fmtPrice(ujeteKm() * t.perKm) + ' + usazení ' + fmtPrice(t.price) + ' = ' + fmtPrice(t.price + ujeteKm() * t.perKm) + ' vč. DPH'
-      : 'Zadejte vzdálenost a doprava se dopočítá.';
-  }
-}
-
-function maxReached() {
-  let i = 0;
-  for (; i < MODEL.steps.length; i++) { if (!stepComplete(i)) break; }
-  return Math.min(Math.max(i, state.step), RECAP_INDEX);
-}
-function stepComplete(si) {
-  return MODEL.steps[si].groups.every(g => !g.required || (g.type==='multi' ? true : !!state.sel[g.key]));
-}
-function validateStep(si) {
-  if (si >= MODEL.steps.length) return true;
-  let ok = true;
-  MODEL.steps[si].groups.forEach(g => {
-    if (g.required && g.type !== 'multi' && !state.sel[g.key]) {
-      ok = false;
-      document.querySelector('.kf-panel[data-idx="'+si+'"] .kf-group[data-group="'+g.key+'"]').classList.add('invalid');
-    }
-  });
-  if (!ok) {
-    const firstInv = document.querySelector('.kf-panel[data-idx="'+si+'"] .kf-group.invalid');
-    if (firstInv) firstInv.scrollIntoView({ behavior:'smooth', block:'center' });
-  }
-  return ok;
-}
-function goTo(idx) {
-  idx = Math.max(0, Math.min(RECAP_INDEX, idx));
-  if (idx === 2 && state.step !== 2 && vizPohled !== 'dovnitr') vizPrepni('dovnitr', 0);
-  if (idx === 1 && state.step !== 1 && vizPohled === 'dovnitr') vizPrepni('ven');
-  state.step = idx;
-  document.querySelectorAll('.kf-panel').forEach(p => p.classList.toggle('active', +p.dataset.idx === idx));
-  document.querySelectorAll('.kf-step-pill').forEach((p, i) => {
-    p.classList.toggle('active', i === idx);
-    p.classList.toggle('done', i < idx);
-  });
-  elFill.style.width = (idx / (TOTAL_STEPS - 1)) * 84 + '%';
-  if (idx === RECAP_INDEX) buildRecapContent();
-  poslatKrok(idx);
-  window.scrollTo({ top: 0, behavior:'smooth' });
-}
-
-function selectedItems() {
-  const items = [];
-  MODEL.steps.forEach(step => step.groups.forEach(g => {
-    const v = state.sel[g.key];
-    if (g.type === 'multi') {
-      (v || []).forEach(id => { const o = g.options.find(x=>x.id===id); if (o) items.push({ group:g.title, label:optLabel(o), price:optPrice(o), vat:optVat(o), from:!!o.from, key:g.key }); });
-    } else if (v) {
-      const o = g.options.find(x=>x.id===v); if (o) items.push({ group:g.title, label:optLabel(o), price:optPrice(o), vat:optVat(o), from:!!o.from, key:g.key });
-    }
-  }));
-  return items;
-}
-const BASE = MODEL.base || 0;
-function totals() {
-  const items = selectedItems();
-  const net = BASE + items.filter(i => i.vat !== 'incl').reduce((s,i)=>s+i.price, 0);
-  const gross = items.filter(i => i.vat === 'incl').reduce((s,i)=>s+i.price, 0);
-  return { net: net, gross: gross, total: net + gross, items: items };
-}
-function total() { return totals().total; }
-
-function sumRow(k, label, price, from) {
-  return '<div class="kf-sum-row"><span class="kf-sum-row__k">'+k+'</span>'
-    + '<span class="kf-sum-row__v">'+label
-    + (price > 0 ? '<small>+ '+(from ? 'od ' : '')+fmtPrice(price)+'</small>' : '')
-    + '</span></div>';
-}
-function sumBlockHead(title, note) {
-  return '<div class="kf-sum-head">'+title+'<span>'+note+'</span></div>';
-}
-function sumSubtotal(value) {
-  return '<div class="kf-sum-row kf-sum-row--sub"><span class="kf-sum-row__k">Mezisoučet</span>'
-    + '<span class="kf-sum-row__v">'+fmtPrice(value)+'</span></div>';
-}
-function renderSummary() {
-  const t = totals();
-  const net = t.items.filter(i => i.vat !== 'incl');
-  const gross = t.items.filter(i => i.vat === 'incl');
-
-  let html = sumBlockHead('Dům a vybavení', 'bez DPH')
-    + '<div class="kf-sum-row"><span class="kf-sum-row__k">Základní cena</span>'
-    + '<span class="kf-sum-row__v">'+MODEL.name+'<small>'+fmtPrice(BASE)+'</small></span></div>'
-    + net.map(i => sumRow(i.group, i.label, i.price, i.from)).join('')
-    + sumSubtotal(t.net);
-
-  if (gross.length) {
-    html += sumBlockHead('Práce na pozemku', 'vč. DPH')
-      + gross.map(i => sumRow(i.group, i.label, i.price, i.from)).join('')
-      + sumSubtotal(t.gross);
-  }
-
-  elSumBody.innerHTML = html;
-  elSumTotal.textContent = fmtPrice(t.total);
-  const note = document.getElementById('sumNote');
-  if (note) note.textContent = SUM_NOTE + (t.items.some(i => i.from) ? ' ' + FROM_NOTE : '');
-}
-
-function buildRecapContent() {
-  const grid = document.getElementById('recapGrid');
-  const stepCards = MODEL.steps.map(step => {
-    const lines = [];
-    step.groups.forEach(g => {
-      const v = state.sel[g.key];
-      if (g.type === 'multi') {
-        (v||[]).forEach(id => { const o=g.options.find(x=>x.id===id); if(o) lines.push([optLabel(o), optPrice(o), optVat(o), !!o.from]); });
-        if (!(v&&v.length)) lines.push(['–', null]);
-      } else {
-        const o = v && g.options.find(x=>x.id===v);
-        lines.push([o ? optLabel(o) : '–', o ? optPrice(o) : null, o ? optVat(o) : null, !!(o && o.from)]);
-      }
-    });
-    return '<div class="kf-recap-card"><h3>'+step.title+'</h3>'
-      + lines.map(l => '<div class="kf-recap-line"><span class="kf-recap-line__k">'+l[0]+'</span>'
-        + '<span class="kf-recap-line__v">'+(l[1]>0?'+ '+(l[3]?'od ':'')+fmtPrice(l[1])+(l[2]==='incl'?' <small>vč. DPH</small>':''):(l[1]===0?'v ceně':''))+'</span></div>').join('')
-      + '</div>';
-  }).join('');
-  const baseCard = '<div class="kf-recap-card kf-recap-card--base"><h3>Základní cena</h3>'
-    + '<div class="kf-recap-line"><span class="kf-recap-line__k">'+MODEL.name+'</span>'
-    + '<span class="kf-recap-line__v">'+fmtPrice(BASE)+'</span></div>'
-    + (MODEL.baseIncludes||[]).map(x => '<div class="kf-recap-line"><span class="kf-recap-line__k">'+x+'</span>'
-      + '<span class="kf-recap-line__v">v ceně</span></div>').join('')
-    + '</div>';
-  grid.innerHTML = baseCard + stepCards;
-  const t = totals();
-  document.getElementById('recapNet').textContent = fmtPrice(t.net);
-  document.getElementById('recapGross').textContent = fmtPrice(t.gross);
-  document.getElementById('recapGrossLine').style.display = t.gross > 0 ? '' : 'none';
-  document.getElementById('recapTotal').textContent = fmtPrice(t.total);
-  const recapNote = document.getElementById('recapNote');
-  if (recapNote) { recapNote.textContent = FROM_NOTE; recapNote.hidden = !t.items.some(i => i.from); }
-  const slot = document.getElementById('recapVatSlot');
-  if (slot && !slot.firstChild) { slot.innerHTML = vatInfoHtml('vatInfoRecap'); bindVatInfo(slot); }
-}
-
-function bindVatInfo(scope) {
-  scope.querySelectorAll('.kf-info').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const wrap = btn.closest('.kf-vat');
-      const open = wrap.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-}
-document.addEventListener('click', () => {
-  document.querySelectorAll('.kf-vat.is-open').forEach(w => {
-    w.classList.remove('is-open');
-    const b = w.querySelector('.kf-info');
-    if (b) b.setAttribute('aria-expanded', 'false');
-  });
-});
-
-function buildPayload() {
-  const f = document.getElementById('leadForm');
-  const items = selectedItems();
-  return {
-    website: f.website ? f.website.value : '',
-    model: modelKey,
-    modelName: MODEL.name,
-    base: BASE,
-    baseFormatted: fmtPrice(BASE),
-    baseIncludes: MODEL.baseIncludes || [],
-    total: totals().total,
-    totalFormatted: fmtPrice(totals().total),
-    totals: (function(){ const t = totals(); return {
-      net: t.net, netFormatted: fmtPrice(t.net),
-      vatIncluded: t.gross, vatIncludedFormatted: fmtPrice(t.gross)
-    }; })(),
-    transportKm: transportKm(),
-    configuration: MODEL.steps.map(step => ({
-      step: step.title,
-      items: step.groups.flatMap(g => {
-        const v = state.sel[g.key];
-        if (g.type === 'multi') return (v||[]).map(id => { const o=g.options.find(x=>x.id===id); return { group:g.title, value:optLabel(o), price:optPrice(o), vat:optVat(o), from:!!o.from }; });
-        const o = v && g.options.find(x=>x.id===v);
-        return o ? [{ group:g.title, value:optLabel(o), price:optPrice(o), vat:optVat(o), from:!!o.from }] : [];
-      })
-    })),
-    summary: items.map(i => ({ group:i.group, value:i.label, price:i.price, vat:i.vat, from:i.from })),
-    contact: {
-      name: f.name.value.trim(),
-      email: f.email.value.trim(),
-      phone: f.phone.value.trim(),
-      location: f.location.value.trim(),
-      message: f.message.value.trim()
-    },
-    kod: ulozenyKod,
-    meta: { source:'konfigurator', url: location.href, ts: new Date().toISOString() }
-  };
-}
-
-const PDF_ASSETS = ['assets/vendor/jspdf.umd.min.js?v=1', 'assets/vendor/jspdf-fonty.js?v=1'];
-let pdfLibPromise = null;
-function loadPdfLib() {
-  if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
-  if (!pdfLibPromise) {
-    pdfLibPromise = PDF_ASSETS.reduce((chain, src) => chain.then(() => new Promise((resolve, reject) => {
-      const sc = document.createElement('script');
-      sc.src = src;
-      sc.onload = resolve;
-      sc.onerror = () => reject(new Error('nelze nacist ' + src));
-      document.head.appendChild(sc);
-    })), Promise.resolve()).catch((err) => { pdfLibPromise = null; throw err; });
-  }
-  return pdfLibPromise;
-}
-
-const PDF = {
-  ink: [22, 32, 42],
-  blue: [90, 120, 133],
-  soft: [238, 242, 244],
-  hair: [222, 227, 230],
-  paper: [255, 255, 255]
-};
-
-const pdfSafe = (s) => String(s == null ? '' : s)
-  .replace(/[\u00a0\u202f\u2007\u2009\u200a]/g, ' ')
-  .replace(/[\u2011\u2012\u2013\u2014]/g, '\u2013')
-  .replace(/²/g, '2').replace(/³/g, '3');
-
-function buildPdfDoc() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'pt', format: 'a4', compress: true });
-  const W = doc.internal.pageSize.getWidth();
-  const H = doc.internal.pageSize.getHeight();
-  const M = 46;
-  const CW = W - M * 2;
-  const right = W - M;
-  let y = 0;
-
-  const display = () => doc.setFont('Bricolage', 'bold');
-  const body = (strong) => doc.setFont('Instrument', strong ? 'bold' : 'normal');
-  const fill = (c) => doc.setFillColor(c[0], c[1], c[2]);
-  const ink = (c) => doc.setTextColor(c[0], c[1], c[2]);
-  const stroke = (c) => doc.setDrawColor(c[0], c[1], c[2]);
-  const put = (s, x, opts) => doc.text(pdfSafe(s), x, y, opts);
-
-  const footer = () => {
-    stroke(PDF.hair); doc.setLineWidth(0.6);
-    doc.line(M, H - 42, right, H - 42);
-    body(false); doc.setFontSize(7.5); ink(PDF.blue);
-    doc.text('Flexi House · WINstores, s.r.o. · IČO 07836929 · +420 607 321 543 · flexihouse.cz', M, H - 30);
-    doc.text('Strana ' + doc.internal.getNumberOfPages(), right, H - 30, { align: 'right' });
-  };
-
-  const header = () => {
-    y = M + 12;
-    display(); doc.setFontSize(17); ink(PDF.ink);
-    put('FLEXI HOUSE', M);
-    body(false); doc.setFontSize(8); ink(PDF.blue);
-    const meta = ['WINstores, s.r.o. · IČO 07836929', '+420 607 321 543', new Date().toLocaleDateString('cs-CZ')];
-    meta.forEach((line, i) => doc.text(pdfSafe(line), right, y - 6 + i * 10.5, { align: 'right' }));
-    y += 16;
-    fill(PDF.ink); doc.rect(M, y, CW, 2, 'F');
-    y += 26;
-  };
-
-  let openSection = null;
-  const drawSectionTitle = (title) => {
-    body(true); doc.setFontSize(8); ink(PDF.ink);
-    doc.setCharSpace(0.9);
-    put(title.toUpperCase(), M);
-    doc.setCharSpace(0);
-    y += 8;
-    stroke(PDF.ink); doc.setLineWidth(1);
-    doc.line(M, y, right, y);
-    y += 14;
-  };
-  const newPage = () => {
-    footer(); doc.addPage(); header();
-    if (openSection) drawSectionTitle(openSection + ' – pokračování');
-  };
-  const room = (need) => { if (y + need > H - 62) { newPage(); return true; } return false; };
-
-  header();
-
-  body(false); doc.setFontSize(7.5); ink(PDF.blue);
-  doc.setCharSpace(1.2);
-  put('VAŠE KONFIGURACE', M);
-  doc.setCharSpace(0);
-  y += 22;
-  display(); doc.setFontSize(24); ink(PDF.ink);
-  put(MODEL.name.toUpperCase(), M);
-  y += 18;
-  body(false); doc.setFontSize(9.5); ink(PDF.blue);
-  put('Orientační kalkulace. Finální cenu potvrdíme v závazné nabídce.', M);
-  y += 26;
-
-  const sectionTitle = (title) => {
-    openSection = null;
-    room(40);
-    drawSectionTitle(title);
-    openSection = title;
-  };
-
-  const line = (label, value, strongValue) => {
-    body(false); doc.setFontSize(9.5);
-    const labelLines = doc.splitTextToSize(pdfSafe(label), CW * 0.58);
-    room(labelLines.length * 12 + 10);
-    body(false); doc.setFontSize(9.5); ink(PDF.blue);
-    doc.text(labelLines, M, y);
-    body(!!strongValue); doc.setFontSize(9.5); ink(strongValue ? PDF.ink : PDF.blue);
-    doc.text(pdfSafe(value), right, y, { align: 'right' });
-    y += labelLines.length * 12 + 3;
-    stroke(PDF.hair); doc.setLineWidth(0.6);
-    doc.line(M, y, right, y);
-    y += 8;
-  };
-
-  sectionTitle('Základní cena');
-  line(MODEL.name, fmtPrice(BASE), true);
-  (MODEL.baseIncludes || []).forEach((x) => line(x, 'v ceně', false));
-  y += 7;
-
-  MODEL.steps.forEach((step) => {
-    const rows = [];
-    step.groups.forEach((g) => {
-      const v = state.sel[g.key];
-      if (g.type === 'multi') {
-        (v || []).forEach((id) => { const o = g.options.find((x) => x.id === id); if (o) rows.push(o); });
-      } else if (v) {
-        const o = g.options.find((x) => x.id === v);
-        if (o) rows.push(o);
-      }
-    });
-    if (!rows.length) return;
-    sectionTitle(step.title);
-    rows.forEach((o) => {
-      const p = optPrice(o);
-      line(optLabel(o), p > 0 ? '+ ' + (o.from ? 'od ' : '') + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '') : (o.cenaText || 'v ceně'), p > 0);
-    });
-    y += 7;
-  });
-
-  const T = totals();
-  openSection = null;
-  room(130);
-  sectionTitle('Rekapitulace ceny');
-  line('Dům a vybavení (bez DPH)', fmtPrice(T.net), true);
-  if (T.gross > 0) line('Práce na pozemku (vč. DPH)', fmtPrice(T.gross), true);
-  const TO = transportOpt();
-  if (transportKm() > 0 && TO) line('Z toho doprava, ' + transportKm() + ' km tam i zpět po ' + TO.perKm + ' Kč', fmtPrice(ujeteKm() * TO.perKm), false);
-  openSection = null;
-  y += 9;
-  room(70);
-  stroke(PDF.ink); doc.setLineWidth(1);
-  doc.rect(M, y, CW, 54, 'S');
-  body(false); doc.setFontSize(8); ink(PDF.blue);
-  doc.setCharSpace(0.9);
-  doc.text('ORIENTAČNÍ CENA CELKEM', M + 18, y + 22);
-  doc.setCharSpace(0);
-  doc.setFontSize(7.5);
-  doc.text('Sazbu DPH podle využití stavby potvrdíme v nabídce', M + 18, y + 37);
-  display(); doc.setFontSize(21); ink(PDF.ink);
-  doc.text(pdfSafe(fmtPrice(T.total)), right - 18, y + 34, { align: 'right' });
-  y += 64;
-
-  const f = document.getElementById('leadForm');
-  const contact = f ? [f.name.value.trim(), f.phone.value.trim(), f.email.value.trim(), f.location.value.trim()].filter(Boolean) : [];
-  if (contact.length) {
-    body(false); doc.setFontSize(9.5);
-    const lines = doc.splitTextToSize(pdfSafe(contact.join(' · ')), CW - 36);
-    const boxH = lines.length * 12 + 30;
-    room(boxH + 12);
-    fill(PDF.soft); doc.rect(M, y, CW, boxH, 'F');
-    body(true); doc.setFontSize(7.5); ink(PDF.blue);
-    doc.setCharSpace(0.9);
-    doc.text('KONTAKT', M + 18, y + 20);
-    doc.setCharSpace(0);
-    body(false); doc.setFontSize(9.5); ink(PDF.ink);
-    doc.text(lines, M + 18, y + 34);
-    y += boxH + 16;
-  }
-
-  const note = 'Tento dokument je orientační a nezávazný. Dům a jeho vybavení uvádíme bez DPH, sazba DPH se řídí využitím stavby a potvrdíme ji v nabídce. Práce na pozemku, tedy doprava, usazení, betonové patky, montáž a sítě do oken, jsou uvedené včetně DPH. U položek s cenou od počítáme spodní hranici: betonové patky vyjdou podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na 30 000 až 80 000 Kč. Cena nezahrnuje přípravu pozemku ani přípojky, připojení na sítě ani vyřízení povolení neděláme. Vygenerováno konfigurátorem na flexihouse.cz.';
-  body(false); doc.setFontSize(7.5);
-  const noteLines = doc.splitTextToSize(note, CW);
-  room(noteLines.length * 10 + 12);
-  ink(PDF.blue);
-  doc.text(noteLines, M, y);
-
-  footer();
-  return doc;
-}
-
-async function downloadPdf() {
-  const btn = document.getElementById('pdfBtn');
-  const label = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Připravuji PDF...'; }
-  try {
-    await loadPdfLib();
-    const doc = buildPdfDoc();
-    doc.save('Flexi-House-' + MODEL.name.replace(/\s+/g, '-') + '-konfigurace.pdf');
-    udalost('download_pdf', { form: 'konfigurator', cena: total() });
-  } catch (e) {
-    alert('PDF se nepodařilo připravit. Zkuste to prosím znovu, nebo nám konfiguraci rovnou odešlete.');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = label; }
-  }
-}
-
-var VIZ = null;
-var vizPohled = 'ven', vizMisto = 0;
-var FASADA_3D = {
-  wood: 'wood', grey: 'grey', black: 'black',
-  'pz-101': 'fas-pz-101',   'pz-102': 'fas-pz-102',   'pz-201': 'fas-pz-201',
-  'tz-202': 'fas-tz-202',   'tz-201': 'fas-tz-201',   'tz-501': 'fas-tz-501',
-  'tz-504': 'fas-tz-504',   'tz-502': 'fas-tz-502',   'mz-0302': 'fas-mz-0302',
-  'mz-8043': 'fas-mz-8043',   'mz-0301': 'fas-mz-0301'
-};
-function vizStav() {
-  var addons = state.sel.addons || [];
-  var vyb = state.sel.equipment || [];
-  return {
-    roof: state.sel.roof === 'gable' ? 'gable' : 'flat',
-    facade: FASADA_3D[state.sel.facade] || 'grey',
-    terrace: addons.indexOf('terrace') !== -1,
-    patky: addons.indexOf('footings') !== -1,
-    site: addons.indexOf('nets') !== -1,
-    heat: state.sel.heating === 'ac' ? 'ac' : 'none',
-    pohled: vizPohled,
-    misto: vizMisto,
-    kuchyn: vyb.indexOf('kitchen') !== -1,
-    koupelna: vyb.indexOf('bath') !== -1
-  };
-}
-function vizPrepni(p, m) {
-  vizPohled = p;
-  if (m !== undefined) vizMisto = m;
-  document.querySelectorAll('.kf-viz__btn[data-pohled]').forEach(function (b) {
-    var on = b.dataset.pohled === p;
-    b.classList.toggle('is-on', on);
-    b.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  var box = document.getElementById('kfMistoBox');
-  if (box) box.hidden = p !== 'dovnitr';
-  var hint = document.getElementById('kfHint');
-  if (hint) hint.textContent = p === 'dovnitr' ? 'Tažením se rozhlédnete, kliknutím na podlahu popojdete.' : 'Tažením otočíte.';
-  var sel = document.getElementById('kfMisto');
-  if (sel) sel.value = String(vizMisto);
-  vizObnov();
-}
-function vizObnov() { if (VIZ) VIZ.nastav(vizStav()); }
-function vizZoom() {
-  var viz = document.getElementById('kfViz');
-  var btn = document.getElementById('kfZoom');
-  var lbl = document.getElementById('kfZoomLbl');
-  if (!viz || !btn) return;
-  var klid = window.matchMedia('(prefers-reduced-motion: reduce)');
-  function nastav(on) {
-    var pred = viz.getBoundingClientRect();
-    viz.classList.toggle('is-zoom', on);
-    document.body.classList.toggle('kf-zoomed', on);
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    lbl.textContent = on ? 'Zavřít' : 'Zvětšit';
-    var po = viz.getBoundingClientRect();
-    if (klid.matches || !viz.animate || !po.width || !pred.width) {
-      window.dispatchEvent(new Event('resize'));
-      return;
-    }
-    var a = viz.animate([
-      { transform: 'translate(' + (pred.left - po.left) + 'px,' + (pred.top - po.top) + 'px) scale(' +
-        (pred.width / po.width) + ',' + (pred.height / po.height) + ')' },
-      { transform: 'none' }
-    ], { duration: 330, easing: 'cubic-bezier(.2,.85,.25,1)' });
-    a.addEventListener('finish', function () { window.dispatchEvent(new Event('resize')); });
-  }
-  btn.addEventListener('click', function () { nastav(!viz.classList.contains('is-zoom')); });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && viz.classList.contains('is-zoom')) nastav(false);
-  });
-}
-function vizStart() {
-  var cv = document.getElementById('kfCanvas');
-  if (!cv || !window.Flexi3D) return;
-  VIZ = window.Flexi3D.vytvor(cv, { pomer: 0.66 });
-  VIZ.nastav(vizStav());
-  var sel = document.getElementById('kfMisto');
-  var mista = VIZ.mista ? VIZ.mista() : [];
-  if (sel && mista.length) {
-    mista.forEach(function (m, i) {
-      var o = document.createElement('option');
-      o.value = String(i);
-      o.textContent = m.nazev;
-      sel.appendChild(o);
-    });
-    var vlastni = document.createElement('option');
-    vlastni.value = 'vlastni';
-    vlastni.textContent = 'Vlastní pohled';
-    vlastni.hidden = true;
-    sel.appendChild(vlastni);
-    sel.addEventListener('change', function () {
-      if (sel.value !== 'vlastni') vizPrepni('dovnitr', Number(sel.value));
-    });
-  }
-  document.querySelectorAll('.kf-viz__btn[data-pohled]').forEach(function (b) {
-    b.addEventListener('click', function () { vizPrepni(b.dataset.pohled); });
-  });
-  // Po popojití kliknutím na podlahu už výběr neodpovídá tomu, kde člověk stojí.
-  // Bez neutrální položky by se navíc nešlo vrátit do místnosti, která je zvolená.
-  cv.addEventListener('flexipohyb', function () {
-    if (sel && sel.value !== 'vlastni') sel.value = 'vlastni';
-  });
-  vizZoom();
-}
-
-let ulozenyKod = null;
-
-function vyberKUlozeni() {
-  const out = {};
-  Object.keys(GROUPS).forEach(k => {
-    const v = state.sel[k];
-    if (Array.isArray(v)) { if (v.length) out[k] = v.slice(); }
-    else if (v) out[k] = v;
-  });
-  return out;
-}
-
-function zobrazKod(kod, odkaz) {
-  ulozenyKod = kod;
-  const box = document.getElementById('kodBox');
-  if (!box) return;
-  document.getElementById('kodVal').textContent = kod;
-  const inp = document.getElementById('kodOdkaz');
-  inp.value = odkaz;
-  box.hidden = false;
-  box.scrollIntoView({ behavior:'smooth', block:'center' });
-}
-
-async function ulozKonfiguraci(btn) {
-  const puvodni = btn.innerHTML;
-  btn.setAttribute('disabled','');
-  btn.textContent = 'Ukládám…';
-  try {
-    const res = await fetch('/api/konfigurace', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({
-        model: modelKey,
-        vyber: vyberKUlozeni(),
-        km: transportKm(),
-        cena: total(),
-        souhrn: selectedItems().map(i => ({ group:i.group, value:i.label, price:i.price }))
-      })
-    });
-    const j = await res.json().catch(() => ({}));
-    if (!res.ok || !j.ok) throw new Error(j.error || 'Uložení se nezdařilo.');
-    zobrazKod(j.kod, j.odkaz);
-    udalost('save_configuration', { form: 'konfigurator', cena: total() });
-  } catch (err) {
-    const box = document.getElementById('kodBox');
-    if (box) {
-      document.getElementById('kodVal').textContent = '';
-      box.hidden = false;
-      box.querySelector('.kf-kod__note').textContent = String(err.message || err) + ' Konfiguraci si zatím můžete stáhnout v PDF.';
-    }
-  } finally {
-    btn.removeAttribute('disabled');
-    btn.innerHTML = puvodni;
-  }
-}
-
-function aplikujVyber(vyber, km) {
-  Object.keys(GROUPS).forEach(gKey => {
-    const g = GROUPS[gKey];
-    const v = vyber[gKey];
-    if (g.type === 'multi') {
-      const chtene = Array.isArray(v) ? v : [];
-      (g.options || []).forEach(o => {
-        const btn = elMain.querySelector('.opt[data-group="'+gKey+'"][data-opt="'+o.id+'"]');
-        if (!btn) return;
-        const teduVybrano = (state.sel[gKey] || []).includes(o.id);
-        if (teduVybrano !== chtene.includes(o.id)) selectOption(btn);
-      });
-    } else if (typeof v === 'string') {
-      const btn = elMain.querySelector('.opt[data-group="'+gKey+'"][data-opt="'+v+'"]');
-      if (btn) selectOption(btn);
-    }
-  });
-  if (km > 0) {
-    state.km = km;
-    const ki = document.getElementById('kfKmInput');
-    if (ki) ki.value = km;
-  }
-  syncKmField();
-  refreshDynamicPrices();
-  renderSummary();
-}
-
-async function nactiZKodu(kod) {
-  const err = document.getElementById('kfObnovaErr');
-  if (err) err.textContent = '';
-  try {
-    const res = await fetch('/api/konfigurace?kod=' + encodeURIComponent(kod));
-    const j = await res.json().catch(() => ({}));
-    if (!res.ok || !j.ok) throw new Error(j.error || 'Konfiguraci se nepodařilo načíst.');
-    aplikujVyber(j.vyber || {}, j.km || 0);
-    zobrazKod(j.kod, location.origin + '/konfigurator?kod=' + j.kod);
-    goTo(RECAP_INDEX);
-    return true;
-  } catch (e) {
-    if (err) err.textContent = String(e.message || e);
-    return false;
-  }
-}
-
-function bindObnova() {
-  const form = document.getElementById('kfObnova');
-  if (!form) return;
-  const pole = document.getElementById('kfKod');
-  const err = document.getElementById('kfObnovaErr');
-  pole.addEventListener('input', () => {
-    let v = pole.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (v.startsWith('FH')) v = v.slice(2);
-    pole.value = v ? 'FH-' + v.slice(0, 6) : '';
-    err.textContent = '';
-  });
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const kod = pole.value.trim().toUpperCase();
-    if (!/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kod)) {
-      err.textContent = 'Kód má tvar FH a šest znaků, například FH-4K7P2M.';
-      return;
-    }
-    const btn = form.querySelector('button');
-    btn.setAttribute('disabled', '');
-    await nactiZKodu(kod);
-    btn.removeAttribute('disabled');
-  });
-}
-
-function bindForm() {
-  const form = document.getElementById('leadForm');
-  const status = document.getElementById('formStatus');
-  const submitBtn = document.getElementById('formSubmit');
-  const pdfBtn = document.getElementById('pdfBtn');
-  if (pdfBtn) pdfBtn.addEventListener('click', downloadPdf);
-  const saveBtn = document.getElementById('saveBtn');
-  if (saveBtn) saveBtn.addEventListener('click', () => ulozKonfiguraci(saveBtn));
-  const kodCopy = document.getElementById('kodCopy');
-  if (kodCopy) kodCopy.addEventListener('click', async () => {
-    const inp = document.getElementById('kodOdkaz');
-    inp.select();
-    try { await navigator.clipboard.writeText(inp.value); kodCopy.textContent = 'Zkopírováno'; }
-    catch { document.execCommand('copy'); kodCopy.textContent = 'Zkopírováno'; }
-    setTimeout(() => { kodCopy.textContent = 'Kopírovat'; }, 2000);
-  });
-
-  const setErr = (field, on) => field.closest('.field').classList.toggle('invalid', on);
-  const validEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    status.className = 'form__status'; status.textContent = '';
-    const name=form.name, phone=form.phone, email=form.email;
-    let ok = true;
-    if (!name.value.trim()) { setErr(name,true); ok=false; } else setErr(name,false);
-    if (!phone.value.trim()) { setErr(phone,true); ok=false; } else setErr(phone,false);
-    if (!validEmail(email.value.trim())) { setErr(email,true); ok=false; } else setErr(email,false);
-    if (!ok) return;
-
-    const payload = buildPayload();
-    payload.vstup = window.fhVstup ? fhVstup() : '';
-    submitBtn.setAttribute('disabled',''); submitBtn.textContent = 'Odesílám…';
-    try {
-      const res = await fetch('/api/send-konfigurace', {
-        method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error('bad response');
-      udalost('generate_lead', { form: 'konfigurator', value: 1 });
-      status.className = 'form__status ok';
-      status.textContent = 'Děkujeme! Poptávku i konfiguraci jsme přijali. Ozveme se do 24 hodin. Kopii jsme poslali na váš e-mail.';
-      form.querySelector('.kf-actions').scrollIntoView({ behavior:'smooth', block:'center' });
-    } catch (err) {
-      status.className = 'form__status err';
-      status.textContent = 'Odeslání se nezdařilo. Zkuste to prosím znovu, nebo zavolejte na +420 607 321 543. Tip: konfiguraci si můžete stáhnout v PDF.';
-    } finally {
-      submitBtn.removeAttribute('disabled');
-      submitBtn.innerHTML = 'Odeslat nezávaznou poptávku <svg class="btn__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>';
-    }
-  });
-}
-
-Object.values(GROUPS).forEach(g => {
-  if (g.type === 'multi') {
-    g.options.filter(o => o.preset).forEach(o => {
-      const btn = elMain.querySelector('.opt[data-group="'+g.key+'"][data-opt="'+o.id+'"]');
-      if (btn) selectOption(btn);
-    });
-  } else if (g.options.length === 1) {
-    const btn = elMain.querySelector('.opt[data-group="'+g.key+'"][data-opt="'+g.options[0].id+'"]');
-    if (btn) selectOption(btn);
-  }
-});
-
-const kmInput = document.getElementById('kfKmInput');
-if (kmInput) kmInput.addEventListener('input', () => {
-  state.km = kmInput.value;
-  refreshDynamicPrices();
-  renderSummary();
-});
-
-const sumSlot = document.getElementById('sumVatSlot');
-if (sumSlot) { sumSlot.innerHTML = vatInfoHtml('vatInfoSum'); bindVatInfo(sumSlot); }
-
-syncKmField();
-renderSummary();
-goTo(0);
-bindForm();
-bindObnova();
-vizStart();
-
-const kodZUrl = (params.get('kod') || '').trim().toUpperCase();
-if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZUrl);
-</script>
-
-<script src="assets/cookies.js?v=13"></script>
-
-
-
 <footer class="foot">
   <div class="wrap">
-    <div class="duvera">
-      <a class="hodn" href="https://maps.google.com/?cid=17359223683127731475" target="_blank" rel="noopener">
-        <span class="hodn__logo"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-2.7-.4-4H24v7.3h12.1c-.2 1.9-1.6 4.9-4.5 6.9l6.9 5.3c4.1-3.8 6.6-9.4 6.6-15.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.2 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1z"/></svg></span>
-        <span>
-          <span class="hodn__hvezdy" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
-          <span class="hodn__popis">Hodnocení na Googlu</span>
-        </span>
-      </a>
-      <a class="hodn hodn--f" href="https://www.firmy.cz/detail/14064659-flexi-house-litomysl.html" target="_blank" rel="noopener">
-        <span class="hodn__logo"><img src="assets/firmy-cz.svg" width="88" height="19" alt="Firmy.cz"></span>
-        <span>
-          <span class="hodn__hvezdy" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
-          <span class="hodn__popis">Vynikající</span>
-        </span>
-      </a>
-      <div class="foot__soc">
-        <a class="soc" href="https://www.facebook.com/profile.php?id=61593950803170" target="_blank" rel="noopener" aria-label="Flexi House na Facebooku"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 3.5h-2.2A3.8 3.8 0 0 0 9.5 7.3V10H7v3.2h2.5v7.3h3.3v-7.3h2.5l.5-3.2h-3V7.6c0-.8.4-1.2 1.2-1.2h1.5z"/></svg></a>
-        <a class="soc" href="https://www.instagram.com/flexihouse.cz/" target="_blank" rel="noopener" aria-label="Flexi House na Instagramu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="16.9" cy="7.1" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-      </div>
-    </div>
-
     <div class="foot__in">
-      <div>
-        <span class="brand">
-          <svg viewBox="9 16 46 33" aria-hidden="true">
-            <path d="M 20 47.5 L 53 31 L 44 26.5 L 11 43 Z" fill="#eef2f4"/>
-      <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
-      <path d="M 44.6 30.700000000000003 L 50.120000000000005 27.939999999999998 L 50.120000000000005 23.74 L 44.6 26.500000000000004 Z" fill="#eef2f4"/>
-      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
-      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
-      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
-      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
-      <path d="M 36.365 36.2175 L 36.635 36.082499999999996 L 36.635 25.482499999999998 L 36.365 25.617500000000003 Z" fill="#16202a"/>
-      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
-      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
-      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
-      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
-      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
-      <path d="M 23.12 41.44 L 28.64 38.68 L 28.64 34.48 L 23.12 37.239999999999995 Z" fill="#eef2f4"/>
-          </svg>
-          Flexi House
-        </span>
-        <p class="foot__note">Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Praha, Litomyšl, Brno a odtud po celé ČR.</p>
+      <div class="foot__copy">
+        <p>© 2026 WINstores, s.r.o.<br>Všechna práva vyhrazena</p>
+        <p class="foot__ico">IČO 07836929 · DIČ CZ07836929<br>Korunní 2569/108, Vinohrady, 101 00 Praha 10<br>Zapsáno v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 308049</p>
+        <div class="duvera2">
+          <a class="hodn2" href="https://maps.google.com/?cid=17359223683127731475" target="_blank" rel="noopener">
+            <span class="hodn2__l"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-2.7-.4-4H24v7.3h12.1c-.2 1.9-1.6 4.9-4.5 6.9l6.9 5.3c4.1-3.8 6.6-9.4 6.6-15.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.2 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1z"/></svg></span>
+            <span class="hodn2__h"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
+            <span class="vh">Hodnocení na Googlu, pět hvězd</span>
+          </a>
+          <a class="hodn2" href="https://www.firmy.cz/detail/14064659-flexi-house-litomysl.html" target="_blank" rel="noopener">
+            <span class="hodn2__l hodn2__l--f"><img src="assets/firmy-cz.svg" width="62" height="13" alt="Firmy.cz"></span>
+            <span class="hodn2__h"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
+            <span class="vh">Hodnocení na Firmy.cz, vynikající</span>
+          </a>
+        </div>
+        <ul class="foot__pravni">
+          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
+          <li><a href="/podminky">Podmínky použití</a></li>
+        </ul>
       </div>
       <div>
         <h3>Domy</h3>
         <ul>
           <li><a href="/rozkladaci-dum">Rozkládací dům</a></li>
           <li><a href="/flexi-office">Flexi Office</a></li>
-            <li><a href="/glamping">Glamping</a></li>
+          <li><a href="/dum-na-miru">Dům na míru</a></li>
+          <li><a href="/glamping">Glamping</a></li>
           <li><a href="/katalog">Katalog</a></li>
           <li><a href="/konfigurator">Konfigurátor</a></li>
         </ul>
@@ -1393,33 +233,43 @@ if (/^FH-[23456789ABCDEFGHJKLMNPQRSTUVWXYZ]{6}$/.test(kodZUrl)) nactiZKodu(kodZU
         <h3>Společnost</h3>
         <ul>
           <li><a href="/poptavka">Poptávka</a></li>
-            <li><a href="/cena">Ceník</a></li>
-            <li><a href="/jak-to-probiha">Jak to probíhá</a></li>
-            <li><a href="/doprava-a-montaz">Doprava a montáž</a></li>
+          <li><a href="/cena">Ceník</a></li>
+          <li><a href="/jak-to-probiha">Jak to probíhá</a></li>
+          <li><a href="/doprava-a-montaz">Doprava a montáž</a></li>
           <li><a href="/caste-dotazy">Časté dotazy</a></li>
-            <li><a href="/stavebni-povoleni">Stavební povolení</a></li>
-            <li><a href="/celorocni-bydleni">Celoroční bydlení</a></li>
-          <li><a href="/zasady-ochrany-soukromi">Ochrana soukromí</a></li>
-          <li><a href="/podminky">Podmínky použití</a></li>
+          <li><a href="/stavebni-povoleni">Stavební povolení</a></li>
+          <li><a href="/celorocni-bydleni">Celoroční bydlení</a></li>
         </ul>
       </div>
       <div>
-        <h3>Kontakt</h3>
+        <h3>Ke stažení</h3>
+        <ul class="foot__stah">
+          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Technický list rozkládacího domu</span></span></li>
+          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Katalog fasád a vybavení</span></span></li>
+          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Příprava pozemku a přípojek</span></span></li>
+        </ul>
+        <p class="stah__pozn">Připravujeme</p>
+      </div>
+      <div>
+        <h3>Sociální sítě</h3>
         <ul>
-          <li><a class="foot__person" href="tel:+420607321543">Dan Prokeš<span>607 321 543</span></a></li>
-          <li><a class="foot__person" href="tel:+420730171909">Jan Prokeš<span>730 171 909</span></a></li>
-          <li><a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a></li>
-          <li class="foot__adr">Sokolovská 612<span>570 01 Litomyšl</span></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61593950803170" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com/flexihouse.cz/" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
     </div>
-    <div class="foot__legal">
-      <span>WINstores, s.r.o. · IČO 07836929 · DIČ CZ07836929 · Korunní 2569/108, Vinohrady, 101 00 Praha 10 · Zapsáno v obchodním rejstříku u Městského soudu v Praze, oddíl C, vložka 308049</span>
-      <a class="statly" href="https://statly.cz/" target="_blank" rel="noopener" aria-label="Statly"><span class="statly__lock"><svg class="statly__s" viewBox="296 115 429 794" aria-hidden="true"><g transform="translate(0,1024) scale(0.1,-0.1)"><path d="M6390 8884 c-57 -22 -90 -44 -167 -112 -105 -91 -177 -154 -293 -252 -104 -88 -178 -152 -291 -250 -147 -128 -202 -176 -256 -221 -47 -40 -107 -92 -368 -319 -127 -110 -384 -331 -570 -490 -87 -74 -182 -155 -210 -180 -28 -25 -98 -83 -155 -130 -57 -47 -108 -89 -114 -95 -6 -5 -45 -39 -86 -75 -41 -36 -77 -67 -80 -70 -3 -3 -34 -30 -70 -60 -71 -61 -95 -85 -190 -186 -66 -70 -118 -133 -134 -163 -5 -9 -17 -25 -27 -36 -27 -31 -134 -243 -157 -310 -50 -152 -61 -301 -53 -710 6 -292 7 -301 29 -332 14 -20 38 -37 62 -44 66 -20 109 10 323 225 104 105 201 208 214 228 l25 37 -25 58 c-59 140 -63 267 -15 433 47 163 228 395 458 589 30 25 108 93 173 151 65 58 143 125 172 150 76 64 253 220 370 325 55 50 127 112 160 140 33 27 89 77 125 110 36 33 117 105 180 160 63 55 142 125 175 155 64 57 231 207 420 376 61 55 144 128 185 164 41 36 99 88 130 116 30 28 75 68 100 90 169 148 214 204 225 274 14 99 -26 191 -100 230 -39 22 -135 35 -165 24z M6260 6858 c-52 -30 -85 -56 -201 -164 -186 -172 -260 -236 -343 -299 -79 -58 -354 -287 -626 -520 -74 -64 -173 -148 -220 -187 -47 -40 -92 -79 -100 -88 -8 -8 -35 -33 -60 -54 -25 -22 -92 -83 -150 -136 -58 -54 -127 -117 -155 -140 -260 -223 -297 -284 -246 -395 34 -74 102 -115 188 -115 84 0 132 32 343 225 36 33 168 152 295 265 126 113 266 239 310 280 131 121 288 257 395 340 25 19 61 49 80 66 19 18 64 55 100 84 36 28 74 58 85 68 11 9 41 32 66 52 80 61 142 113 200 165 30 27 103 90 161 139 137 113 160 148 162 236 1 49 -4 76 -19 103 -11 20 -22 37 -25 37 -4 0 -15 8 -26 18 -51 46 -152 56 -214 20z M6705 5824 c-46 -7 -131 -53 -183 -98 -26 -23 -94 -78 -151 -121 -57 -44 -135 -106 -175 -138 -39 -32 -78 -64 -86 -70 -29 -23 -125 -102 -130 -107 -3 -3 -30 -25 -60 -50 -30 -24 -75 -62 -100 -85 -25 -22 -72 -62 -105 -90 -33 -27 -95 -81 -139 -120 -43 -38 -98 -86 -121 -105 -39 -33 -141 -122 -319 -280 -79 -70 -229 -205 -366 -329 -129 -118 -385 -347 -475 -426 -44 -39 -94 -84 -110 -100 -34 -33 -230 -207 -344 -305 -125 -107 -169 -157 -182 -203 -23 -86 7 -169 80 -222 40 -30 54 -35 104 -35 40 0 71 7 100 21 37 19 238 189 292 246 11 12 43 41 70 64 28 23 97 86 155 139 58 53 125 115 150 136 25 21 47 41 50 44 3 3 34 32 70 65 36 33 119 110 185 171 66 60 143 130 170 155 62 54 415 389 470 445 22 22 80 83 130 135 49 52 144 150 210 219 66 69 138 145 159 170 21 25 80 88 130 140 50 52 129 138 176 190 46 52 90 96 97 98 11 3 12 -10 7 -60 -6 -62 0 -105 32 -238 34 -138 30 -229 -17 -404 -44 -163 -145 -323 -309 -486 -59 -59 -246 -232 -320 -296 -25 -21 -56 -50 -70 -64 -14 -14 -72 -68 -130 -120 -57 -52 -138 -127 -180 -166 -41 -39 -95 -89 -120 -110 -25 -21 -70 -62 -100 -90 -30 -29 -83 -76 -117 -105 -34 -30 -124 -110 -200 -178 -76 -68 -176 -158 -223 -200 -224 -200 -250 -235 -250 -335 0 -30 5 -58 10 -61 6 -3 10 -13 10 -21 0 -22 69 -93 110 -112 24 -12 60 -17 115 -17 79 0 81 1 142 45 34 25 115 92 180 150 64 58 136 121 159 140 46 38 149 130 414 365 25 23 61 54 80 69 19 16 55 47 80 70 25 22 79 70 120 106 41 36 77 67 80 70 3 3 39 34 80 70 41 36 95 84 120 106 25 23 74 66 109 95 35 30 92 79 127 109 35 30 101 87 146 126 103 88 217 207 286 299 50 66 140 231 156 285 23 78 29 100 37 145 27 147 30 215 24 540 -6 358 -18 518 -42 573 -21 47 -70 100 -114 123 -39 20 -129 31 -184 23z M3961 2052 c-45 -38 -64 -94 -48 -147 20 -70 69 -105 146 -105 40 0 53 5 83 33 47 43 63 95 47 145 -7 20 -28 52 -47 70 -31 28 -42 32 -92 32 -46 0 -61 -5 -89 -28z M3459 1591 c-48 -40 -66 -95 -48 -146 26 -71 85 -104 162 -90 42 8 60 23 86 68 25 45 26 73 5 116 -41 82 -138 107 -205 52z" fill="currentColor" stroke="currentColor" stroke-width="280" stroke-linejoin="round" stroke-linecap="round" paint-order="stroke"/></g></svg><svg class="statly__w" viewBox="0 -720 2600 960" aria-hidden="true"><path d="M217 -386Q217 -367 241.0 -356.0Q265 -345 301.0 -341.0Q337 -337 379.5 -326.5Q422 -316 458.0 -302.0Q494 -288 518.0 -254.5Q542 -221 542 -172Q542 -88 471.0 -34.5Q400 19 288 19Q177 19 106.5 -30.5Q36 -80 22 -179H216Q219 -154 240.0 -140.0Q261 -126 293 -126Q348 -126 348 -160Q348 -178 324.5 -189.0Q301 -200 266.0 -204.0Q231 -208 190.0 -218.0Q149 -228 114.0 -242.5Q79 -257 55.5 -291.5Q32 -326 32 -376Q32 -453 93.0 -507.5Q154 -562 264 -562Q372 -562 441.5 -511.5Q511 -461 522 -362H329Q319 -417 259 -417Q241 -417 229.0 -408.5Q217 -400 217 -386Z M585.0 -189V-397H525.0V-543H585.0V-669H779.0V-543H885.0V-397H779.0V-220Q779.0 -183 793.5 -165.0Q808.0 -147 849.0 -147H885.0V0Q843.0 19 771.0 19Q678.0 19 631.5 -34.5Q585.0 -88 585.0 -189Z M1099.0 -362H905.0Q917.0 -454 988.0 -508.0Q1059.0 -562 1167.0 -562Q1284.0 -562 1349.5 -500.5Q1415.0 -439 1415.0 -342V-137Q1415.0 -58 1428.0 0H1229.0Q1225.0 -18 1222.0 -57Q1166.0 19 1059.0 19Q983.0 19 934.0 -22.0Q885.0 -63 885.0 -139Q885.0 -255 1018.0 -301Q1101.0 -330 1221.0 -332V-345Q1221.0 -407 1160.0 -407Q1108.0 -407 1099.0 -362ZM1078.0 -154Q1078.0 -132 1092.0 -119.0Q1106.0 -106 1131.0 -106Q1168.0 -106 1194.5 -135.5Q1221.0 -165 1221.0 -211V-230Q1078.0 -225 1078.0 -154Z M1486.0 -189V-397H1426.0V-543H1486.0V-669H1680.0V-543H1786.0V-397H1680.0V-220Q1680.0 -183 1694.5 -165.0Q1709.0 -147 1750.0 -147H1786.0V0Q1744.0 19 1672.0 19Q1579.0 19 1532.5 -34.5Q1486.0 -88 1486.0 -189Z M1806.0 0V-720H2000.0V0Z M2145.0 240Q2093.0 240 2055.0 221V74H2089.0Q2130.0 74 2157.5 57.0Q2185.0 40 2201.0 -10L2207.0 -29L2005.0 -543H2211.0L2288.0 -298L2306.0 -211L2327.0 -298L2398.0 -543H2595.0L2380.0 25Q2336.0 142 2281.0 191.0Q2226.0 240 2145.0 240Z" fill="currentColor"/></svg></span></a>
-    </div>
+    <div class="foot__pata"><a class="statly" href="https://statly.cz/" target="_blank" rel="noopener" aria-label="Statly"><span class="statly__lock"><svg class="statly__s" viewBox="296 115 429 794" aria-hidden="true"><g transform="translate(0,1024) scale(0.1,-0.1)"><path d="M6390 8884 c-57 -22 -90 -44 -167 -112 -105 -91 -177 -154 -293 -252 -104 -88 -178 -152 -291 -250 -147 -128 -202 -176 -256 -221 -47 -40 -107 -92 -368 -319 -127 -110 -384 -331 -570 -490 -87 -74 -182 -155 -210 -180 -28 -25 -98 -83 -155 -130 -57 -47 -108 -89 -114 -95 -6 -5 -45 -39 -86 -75 -41 -36 -77 -67 -80 -70 -3 -3 -34 -30 -70 -60 -71 -61 -95 -85 -190 -186 -66 -70 -118 -133 -134 -163 -5 -9 -17 -25 -27 -36 -27 -31 -134 -243 -157 -310 -50 -152 -61 -301 -53 -710 6 -292 7 -301 29 -332 14 -20 38 -37 62 -44 66 -20 109 10 323 225 104 105 201 208 214 228 l25 37 -25 58 c-59 140 -63 267 -15 433 47 163 228 395 458 589 30 25 108 93 173 151 65 58 143 125 172 150 76 64 253 220 370 325 55 50 127 112 160 140 33 27 89 77 125 110 36 33 117 105 180 160 63 55 142 125 175 155 64 57 231 207 420 376 61 55 144 128 185 164 41 36 99 88 130 116 30 28 75 68 100 90 169 148 214 204 225 274 14 99 -26 191 -100 230 -39 22 -135 35 -165 24z M6260 6858 c-52 -30 -85 -56 -201 -164 -186 -172 -260 -236 -343 -299 -79 -58 -354 -287 -626 -520 -74 -64 -173 -148 -220 -187 -47 -40 -92 -79 -100 -88 -8 -8 -35 -33 -60 -54 -25 -22 -92 -83 -150 -136 -58 -54 -127 -117 -155 -140 -260 -223 -297 -284 -246 -395 34 -74 102 -115 188 -115 84 0 132 32 343 225 36 33 168 152 295 265 126 113 266 239 310 280 131 121 288 257 395 340 25 19 61 49 80 66 19 18 64 55 100 84 36 28 74 58 85 68 11 9 41 32 66 52 80 61 142 113 200 165 30 27 103 90 161 139 137 113 160 148 162 236 1 49 -4 76 -19 103 -11 20 -22 37 -25 37 -4 0 -15 8 -26 18 -51 46 -152 56 -214 20z M6705 5824 c-46 -7 -131 -53 -183 -98 -26 -23 -94 -78 -151 -121 -57 -44 -135 -106 -175 -138 -39 -32 -78 -64 -86 -70 -29 -23 -125 -102 -130 -107 -3 -3 -30 -25 -60 -50 -30 -24 -75 -62 -100 -85 -25 -22 -72 -62 -105 -90 -33 -27 -95 -81 -139 -120 -43 -38 -98 -86 -121 -105 -39 -33 -141 -122 -319 -280 -79 -70 -229 -205 -366 -329 -129 -118 -385 -347 -475 -426 -44 -39 -94 -84 -110 -100 -34 -33 -230 -207 -344 -305 -125 -107 -169 -157 -182 -203 -23 -86 7 -169 80 -222 40 -30 54 -35 104 -35 40 0 71 7 100 21 37 19 238 189 292 246 11 12 43 41 70 64 28 23 97 86 155 139 58 53 125 115 150 136 25 21 47 41 50 44 3 3 34 32 70 65 36 33 119 110 185 171 66 60 143 130 170 155 62 54 415 389 470 445 22 22 80 83 130 135 49 52 144 150 210 219 66 69 138 145 159 170 21 25 80 88 130 140 50 52 129 138 176 190 46 52 90 96 97 98 11 3 12 -10 7 -60 -6 -62 0 -105 32 -238 34 -138 30 -229 -17 -404 -44 -163 -145 -323 -309 -486 -59 -59 -246 -232 -320 -296 -25 -21 -56 -50 -70 -64 -14 -14 -72 -68 -130 -120 -57 -52 -138 -127 -180 -166 -41 -39 -95 -89 -120 -110 -25 -21 -70 -62 -100 -90 -30 -29 -83 -76 -117 -105 -34 -30 -124 -110 -200 -178 -76 -68 -176 -158 -223 -200 -224 -200 -250 -235 -250 -335 0 -30 5 -58 10 -61 6 -3 10 -13 10 -21 0 -22 69 -93 110 -112 24 -12 60 -17 115 -17 79 0 81 1 142 45 34 25 115 92 180 150 64 58 136 121 159 140 46 38 149 130 414 365 25 23 61 54 80 69 19 16 55 47 80 70 25 22 79 70 120 106 41 36 77 67 80 70 3 3 39 34 80 70 41 36 95 84 120 106 25 23 74 66 109 95 35 30 92 79 127 109 35 30 101 87 146 126 103 88 217 207 286 299 50 66 140 231 156 285 23 78 29 100 37 145 27 147 30 215 24 540 -6 358 -18 518 -42 573 -21 47 -70 100 -114 123 -39 20 -129 31 -184 23z M3961 2052 c-45 -38 -64 -94 -48 -147 20 -70 69 -105 146 -105 40 0 53 5 83 33 47 43 63 95 47 145 -7 20 -28 52 -47 70 -31 28 -42 32 -92 32 -46 0 -61 -5 -89 -28z M3459 1591 c-48 -40 -66 -95 -48 -146 26 -71 85 -104 162 -90 42 8 60 23 86 68 25 45 26 73 5 116 -41 82 -138 107 -205 52z" fill="currentColor" stroke="currentColor" stroke-width="280" stroke-linejoin="round" stroke-linecap="round" paint-order="stroke"/></g></svg><svg class="statly__w" viewBox="0 -720 2600 960" aria-hidden="true"><path d="M217 -386Q217 -367 241.0 -356.0Q265 -345 301.0 -341.0Q337 -337 379.5 -326.5Q422 -316 458.0 -302.0Q494 -288 518.0 -254.5Q542 -221 542 -172Q542 -88 471.0 -34.5Q400 19 288 19Q177 19 106.5 -30.5Q36 -80 22 -179H216Q219 -154 240.0 -140.0Q261 -126 293 -126Q348 -126 348 -160Q348 -178 324.5 -189.0Q301 -200 266.0 -204.0Q231 -208 190.0 -218.0Q149 -228 114.0 -242.5Q79 -257 55.5 -291.5Q32 -326 32 -376Q32 -453 93.0 -507.5Q154 -562 264 -562Q372 -562 441.5 -511.5Q511 -461 522 -362H329Q319 -417 259 -417Q241 -417 229.0 -408.5Q217 -400 217 -386Z M585.0 -189V-397H525.0V-543H585.0V-669H779.0V-543H885.0V-397H779.0V-220Q779.0 -183 793.5 -165.0Q808.0 -147 849.0 -147H885.0V0Q843.0 19 771.0 19Q678.0 19 631.5 -34.5Q585.0 -88 585.0 -189Z M1099.0 -362H905.0Q917.0 -454 988.0 -508.0Q1059.0 -562 1167.0 -562Q1284.0 -562 1349.5 -500.5Q1415.0 -439 1415.0 -342V-137Q1415.0 -58 1428.0 0H1229.0Q1225.0 -18 1222.0 -57Q1166.0 19 1059.0 19Q983.0 19 934.0 -22.0Q885.0 -63 885.0 -139Q885.0 -255 1018.0 -301Q1101.0 -330 1221.0 -332V-345Q1221.0 -407 1160.0 -407Q1108.0 -407 1099.0 -362ZM1078.0 -154Q1078.0 -132 1092.0 -119.0Q1106.0 -106 1131.0 -106Q1168.0 -106 1194.5 -135.5Q1221.0 -165 1221.0 -211V-230Q1078.0 -225 1078.0 -154Z M1486.0 -189V-397H1426.0V-543H1486.0V-669H1680.0V-543H1786.0V-397H1680.0V-220Q1680.0 -183 1694.5 -165.0Q1709.0 -147 1750.0 -147H1786.0V0Q1744.0 19 1672.0 19Q1579.0 19 1532.5 -34.5Q1486.0 -88 1486.0 -189Z M1806.0 0V-720H2000.0V0Z M2145.0 240Q2093.0 240 2055.0 221V74H2089.0Q2130.0 74 2157.5 57.0Q2185.0 40 2201.0 -10L2207.0 -29L2005.0 -543H2211.0L2288.0 -298L2306.0 -211L2327.0 -298L2398.0 -543H2595.0L2380.0 25Q2336.0 142 2281.0 191.0Q2226.0 240 2145.0 240Z" fill="currentColor"/></svg></span></a></div>
   </div>
 </footer>
-<script src="assets/flexi.js?v=15" defer></script>
-<script src="assets/flexi-poradce.js?v=3" defer></script>
+
+<script src="assets/cookies.js?v=13"></script>
+<script src="assets/flexi.js?v=25" defer></script>
+<script src="assets/flexi-poradce.js?v=10" defer></script>
+<script src="assets/flexi-konfig-data.js?v=1"></script>
+<script src="assets/flexi-konfig-jadro.js?v=1"></script>
+<script src="assets/flexi-konfig-pdf.js?v=1"></script>
+<script src="assets/flexi-otocka.js?v=14" defer></script>
+<script src="assets/flexi-pano.js?v=2" defer></script>
+<script src="assets/flexi-konfig-a.js?v=12" defer></script>
 </body>
 </html>

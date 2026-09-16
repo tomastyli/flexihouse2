@@ -114,6 +114,10 @@
     var n = pocet;
     return ((Math.round(uhel / (360 / n)) % n) + n) % n;
   }
+  // Prolínat sousední snímky nejde: sada má 24 úhlů, tedy 15 stupňů na krok,
+  // a v polovině přechodu jsou oba vidět naplno, takže dům má dvojobraz.
+  // Zkoušeno 16. 9. 2026, vypadalo to rozbitě. Plynulost musí přijít z hustší
+  // sady, ne z míchání. Snímek se proto drží ostrý a přepíná se natvrdo.
 
   // Okno dekódovaných snímků. Dekódovat všech 36 najednou znamená u sady
   // 3000 x 1688 celých 695 MB bitmap; prohlížeč je začne zahazovat a znovu
@@ -264,10 +268,29 @@
 
   // Tažení kdekoli po obrázku. Šířka scény odpovídá jedné celé otáčce, aby
   // dům šel obejít jedním pohybem.
-  var start = 0, startUhel = 0;
+  var start = 0, startUhel = 0, minulyX = 0, rychlost = 0, dobih = 0;
+  var klidnePohyby = global.matchMedia
+    && global.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function zastavDobih() {
+    if (dobih) { global.cancelAnimationFrame(dobih); dobih = 0; }
+    rychlost = 0;
+  }
+  // Po puštění se dům točí dál a doznívá. Bez toho se zastaví jako přibitý
+  // a otáčení působí, jako by se zaseklo.
+  function dobihej() {
+    dobih = 0;
+    if (Math.abs(rychlost) < 0.06) return;
+    uhel = ((uhel + rychlost) % 360 + 360) % 360;
+    rychlost *= 0.94;
+    ukaz();
+    dobih = global.requestAnimationFrame(dobihej);
+  }
+
   box.addEventListener('pointerdown', function (e) {
     if (!aktivni || box.classList.contains('je-statika')) return;
-    tahnu = true; start = e.clientX; startUhel = uhel;
+    zastavDobih();
+    tahnu = true; start = e.clientX; startUhel = uhel; minulyX = e.clientX;
     box.classList.add('je-tazena');
     if (box.setPointerCapture) box.setPointerCapture(e.pointerId);
   });
@@ -276,16 +299,25 @@
     e.preventDefault();
     var d = (e.clientX - start) / box.clientWidth;
     uhel = ((startUhel - d * 360) % 360 + 360) % 360;
+    var krok = -(e.clientX - minulyX) / box.clientWidth * 360;
+    rychlost = rychlost * 0.65 + krok * 0.35;
+    minulyX = e.clientX;
     ukaz();
   });
   // Bez pointerleave: se zachyceným ukazatelem smí tažení klidně vyjet ven
   // ze scény a má pokračovat, dokud se tlačítko nepustí.
   ['pointerup', 'pointercancel'].forEach(function (u) {
-    box.addEventListener(u, function () { tahnu = false; box.classList.remove('je-tazena'); });
+    box.addEventListener(u, function () {
+      if (!tahnu) return;
+      tahnu = false;
+      box.classList.remove('je-tazena');
+      if (!klidnePohyby && !dobih) dobih = global.requestAnimationFrame(dobihej);
+    });
   });
 
   // Lišta je zároveň ukazatel i posuvník: kliknutí na ni skočí rovnou na úhel.
   function zListy(e) {
+    zastavDobih();
     var r = lista.getBoundingClientRect();
     var p = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 0.9999);
     uhel = p * 360;

@@ -1,0 +1,413 @@
+/* Vzhled konfigurátoru podle schváleného návrhu A (průvodce po krocích).
+   Všechno je zapouzdřené pod .kva, aby se to nepralo s hlavičkou a patičkou
+   webu: návrh počítal s vlastní stránkou, kde si přebarvil i body.
+   Deklarace písem odsud vypadly, ta už jsou v assets/flexi.css a cesta
+   k souborům je odjinud. */
+
+
+.kva{
+  --ink:#16202a;
+  --ink-2:rgba(22,32,42,.64);
+  --ink-3:rgba(22,32,42,.62);
+  --blue:#4e6a76;
+  --paper:#ffffff;
+  --soft:#eef2f4;
+  --plocha:#f3f6f7;
+  --plocha-2:#e5ecee;
+  --hair:rgba(22,32,42,.10);
+  --r-karta:20px;
+  --r-vnor:14px;
+  --r-pill:999px;
+  --panel:clamp(360px,33vw,480px);
+  --dur-1:180ms;
+  --dur-2:300ms;
+  --dur-3:460ms;
+  --ease:cubic-bezier(.2,.7,.3,1);
+  --stin-1:0 2px 3px rgba(22,32,42,.05);
+  --stin-2:0 3px 8px rgba(22,32,42,.10);
+  --stin-3:0 8px 30px rgba(22,32,42,.12);
+}
+.kva,.kva *{box-sizing:border-box}
+.kva{-webkit-text-size-adjust:100%}
+.kva{
+  margin:0;background:var(--soft);color:var(--ink);
+  font-family:'Instrument',system-ui,sans-serif;font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.kva h1,.kva h2,.kva h3,.kva h4{margin:0;font-family:'Archivo',system-ui,sans-serif;font-weight:700;line-height:1.14;letter-spacing:-0.02em}
+.kva p{margin:0}
+.kva img{display:block;max-width:100%}
+.kva [hidden]{display:none !important}
+.kva button,.kva input,.kva textarea,.kva select{font:inherit;color:inherit}
+.kva .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.kva .cislo{font-variant-numeric:tabular-nums}
+
+.kva :where(button,.kva a,.kva input,.kva textarea,.kva label.vo,.kva label.vz):focus-visible{
+  outline:2px solid var(--ink);outline-offset:3px;border-radius:6px;
+}
+
+/* Návrh počítal s celou obrazovkou jen pro sebe. Tady nad ním sedí hlavička
+   webu, takže se od výšky okna musí odečíst, jinak panel přeteče pod okraj
+   a cena s tlačítky zmizí. */
+.kva .ap{display:flex;min-height:calc(100svh - var(--nav-h, 84px))}
+@media (min-width:1280px){
+  .kva .ap{height:calc(100svh - var(--nav-h, 84px));overflow:hidden}
+}
+
+.kva .sc{
+  position:relative;flex:1;min-width:0;overflow:hidden;
+  background:#c9d2d6;
+  touch-action:pan-y;
+  user-select:none;-webkit-user-select:none;
+}
+.kva .sc__vrstva{
+  position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity var(--dur-3) var(--ease),visibility 0s linear var(--dur-3);
+}
+.kva .sc__vrstva.je-videt{opacity:1;visibility:visible;transition-delay:0s,0s}
+
+.kva .plan{padding:clamp(24px,4vw,72px) clamp(24px,4vw,72px) clamp(96px,10vw,120px);background:linear-gradient(180deg,#f4f7f8 0%,#e3eaed 100%)}
+.kva .plan img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 40px rgba(22,32,42,.16))}
+
+.kva .spin{background:#3a3e41}
+.kva .spin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.kva .spin img.je-videt{display:block}
+.kva .spin.je-tazena{cursor:grabbing}
+@media (hover:hover) and (pointer:fine){
+  .kva .spin{cursor:grab}
+}
+
+.kva .pano{background:#2c3033}
+.kva /* Skutečný pohled,.kva ne posouvané pozadí: rovné hrany zůstanou rovné. */
+.pano__host{position:absolute;inset:0;touch-action:none}
+.kva .pano__host canvas{display:block;width:100%;height:100%}
+.kva .pano.je-prechod .pano__host{opacity:.06;filter:brightness(.5)}
+.kva .pano__host{transition:opacity 200ms var(--ease),filter 200ms var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  .kva .pano__host{transition:none}
+  .kva .pano.je-prechod .pano__host{opacity:1;filter:none}
+}
+.kva .pano.je-nacita::after{
+  content:'Načítám pohled';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  padding:10px 16px;border-radius:var(--r-pill);background:rgba(255,255,255,.92);
+  font-size:14px;color:var(--ink);box-shadow:var(--stin-2);
+}
+@media (hover:hover) and (pointer:fine){
+  .kva .pano{cursor:grab}
+  .kva .pano.je-tazena{cursor:grabbing}
+}
+
+.kva .karta{
+  position:absolute;left:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);
+  width:236px;padding:16px;border-radius:var(--r-karta);
+  background:rgba(255,255,255,.94);backdrop-filter:blur(8px);
+  box-shadow:var(--stin-3);z-index:3;
+  transition:opacity var(--dur-2) var(--ease);
+}
+.kva .karta__nadpis{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:15px;letter-spacing:-0.01em}
+.kva .karta__radek{margin-top:2px;font-size:13px;line-height:1.45;color:var(--ink-2)}
+
+.kva .mapa{position:relative;margin-bottom:12px;border-radius:var(--r-vnor);background:var(--plocha);padding:8px}
+.kva .mapa__plan{position:relative;width:100%;aspect-ratio:1600/1495}
+.kva .mapa__plan img{width:100%;height:100%;object-fit:contain;opacity:.62}
+.kva /* Klín ukazuje,.kva kam se divák právě dívá. Rozevření odpovídá skutečnému
+   vodorovnému zornému úhlu scény,.kva takže neukazuje nazdařbůh. Nula stupňů
+   je na půdorysu nahoru,.kva protože panorama míří výchozím pohledem na -z. */
+.klin{
+  position:absolute;width:92px;height:92px;margin:-46px 0 0 -46px;
+  pointer-events:none;border-radius:50%;opacity:0;
+  background:conic-gradient(from calc(var(--pul, 40) * -1deg),
+    rgba(24,34,42,.34) 0deg, rgba(24,34,42,.34) calc(var(--pul, 40) * 2deg), transparent 0);
+  -webkit-mask-image:radial-gradient(closest-side,#000 16%,rgba(0,0,0,.6) 58%,transparent 100%);
+  mask-image:radial-gradient(closest-side,#000 16%,rgba(0,0,0,.6) 58%,transparent 100%);
+  transform:rotate(var(--yaw, 0deg));
+  transition:opacity var(--dur-1) var(--ease);
+}
+.kva .klin.je-videt{opacity:1}
+.kva .bod{
+  position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;padding:0;
+  border:0;background:none;display:grid;place-items:center;cursor:pointer;
+}
+.kva .bod::before{
+  content:'';width:13px;height:13px;border-radius:50%;
+  background:var(--paper);box-shadow:0 0 0 2px var(--ink-2),var(--stin-1);
+  transition:transform var(--dur-1) var(--ease),background-color var(--dur-1) var(--ease),box-shadow var(--dur-1) var(--ease);
+}
+@media (hover:hover) and (pointer:fine){
+  .kva .bod:hover::before{transform:scale(1.25)}
+}
+.kva .bod:active::before{transform:scale(.9)}
+.kva .bod[aria-current="true"]::before{
+  background:var(--ink);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink);
+  transform:scale(1.15);
+}
+
+
+.kva .coach{
+  position:absolute;inset:0;z-index:4;display:grid;place-items:center;pointer-events:none;
+  background:rgba(22,32,42,.28);
+  opacity:0;transition:opacity var(--dur-2) var(--ease);
+}
+.kva .coach.je-videt{opacity:1}
+.kva .coach__in{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  padding:24px 28px;border-radius:var(--r-karta);background:rgba(255,255,255,.96);
+  box-shadow:var(--stin-3);max-width:min(300px,80vw);text-align:center;
+}
+.kva .coach__in svg{width:36px;height:36px;color:var(--ink)}
+.kva .coach__in p{font-size:15px;line-height:1.45}
+.kva .coach__in b{display:block;font-family:'Archivo',system-ui,sans-serif;font-size:16px}
+
+.kva .pn{
+  width:var(--panel);flex:none;display:flex;flex-direction:column;
+  background:var(--paper);box-shadow:-18px 0 44px rgba(22,32,42,.08);z-index:5;
+}
+.kva .pn__hlava{padding:20px clamp(20px,2vw,28px) 16px}
+.kva .znacka{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+.kva .znacka svg{width:38px;height:27px;flex:none}
+.kva .znacka span{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:14px;letter-spacing:.02em}
+
+.kva .postup{display:flex;gap:6px;margin:0;padding:0;list-style:none}
+.kva .postup li{flex:1;display:flex}
+.kva .postup__k{
+  flex:1;height:22px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center;
+}
+.kva .postup__k::before{
+  content:'';width:100%;height:4px;border-radius:var(--r-pill);background:var(--plocha-2);
+  transition:height var(--dur-2) var(--ease),background-color var(--dur-2) var(--ease);
+}
+.kva .postup__k[data-stav="hotovo"]::before{background:var(--blue)}
+.kva .postup__k[aria-current="step"]::before{height:8px;background:var(--ink)}
+.kva .postup__k:disabled{cursor:default}
+@media (hover:hover) and (pointer:fine){
+  .kva .postup__k:not(:disabled):hover::before{background:var(--blue)}
+}
+.kva .postup__text{margin-top:8px;font-size:12px;letter-spacing:.03em;color:var(--ink-3)}
+
+.kva .pn__telo{flex:1;min-height:0;overflow-y:auto;padding:4px clamp(20px,2vw,28px) 28px}
+@media (min-width:1280px){.kva .pn__telo{overscroll-behavior:contain}}
+.kva .krok{animation:vstup var(--dur-3) var(--ease) both}
+@keyframes vstup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.kva .krok__nadpis{font-size:clamp(26px,2.2vw,33px);margin-top:14px}
+.kva .krok__nadpis:focus{outline:none}
+.kva .krok__micro{margin-top:10px;font-size:15px;line-height:1.55;color:var(--ink-2)}
+
+.kva .sk{margin-top:28px}
+.kva .sk__nazev{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em}
+.kva .sk__hint{margin-top:3px;font-size:13px;line-height:1.45;color:var(--ink-3)}
+.kva .sk__telo{margin-top:12px;display:grid;gap:8px}
+
+.kva .vo{
+  position:relative;display:flex;align-items:flex-start;gap:12px;
+  min-height:56px;padding:14px 16px;border-radius:var(--r-vnor);
+  background:var(--plocha);cursor:pointer;
+  transition:background-color var(--dur-1) var(--ease),box-shadow var(--dur-1) var(--ease);
+}
+.kva .vo input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.kva .vo__zn{
+  flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;
+  background:var(--paper);box-shadow:inset 0 0 0 1.5px rgba(22,32,42,.28);
+  display:grid;place-items:center;
+  transition:box-shadow var(--dur-1) var(--ease),background-color var(--dur-1) var(--ease);
+}
+.kva .vo--multi .vo__zn{border-radius:7px}
+.kva .vo__zn svg{width:12px;height:12px;color:var(--paper);opacity:0;transform:scale(.6);transition:opacity var(--dur-1) var(--ease),transform var(--dur-1) var(--ease)}
+.kva .vo__txt{flex:1;min-width:0}
+.kva .vo__radek{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.kva .vo__nazev{font-weight:600;font-size:16px;line-height:1.3}
+.kva .vo__popis{display:block;margin-top:3px;font-size:13px;line-height:1.45;color:var(--ink-2)}
+.kva /* Cenovka se smí zalomit. S nowrap se dlouhý popis u dopravy
+   (+ 20 000 Kč + 100 Kč/km tam i zpět) roztáhl na 212 px,.kva rozhodil řádek
+   a zůstal osiřelý vpravo pod názvem. */
+.vo__cena{margin-left:auto;font-size:13px;line-height:1.3;color:var(--ink-2);
+  text-align:right;max-width:46%;align-self:start}
+.kva .vo:has(input:checked){background:var(--plocha-2);box-shadow:inset 0 0 0 2px var(--ink)}
+.kva .vo:has(input:checked) .vo__zn{background:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.kva .vo:has(input:checked) .vo__zn svg{opacity:1;transform:none}
+.kva .vo:has(input:checked) .vo__cena{color:var(--ink)}
+.kva .vo:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){
+  .kva .vo:hover{background:var(--plocha-2)}
+}
+.kva .vo:active{transform:scale(.995)}
+
+.kva .fakt{padding:16px;border-radius:var(--r-vnor);background:var(--plocha)}
+.kva .fakt__nazev{font-weight:600;font-size:16px}
+.kva .fakt__popis{margin-top:4px;font-size:13px;line-height:1.5;color:var(--ink-2)}
+.kva .fakt__meta{margin-top:10px;font-size:13px;color:var(--ink)}
+
+.kva .blok{margin-top:14px}
+.kva .blok__stitek{font-size:13px;color:var(--ink-3);margin-bottom:8px}
+.kva /* auto-fill by u tri vzorku nechal 41 % radku prazdnych. Mrizka se proto
+   drzi sirky vzorku,.kva ne pevneho poctu sloupcu. */
+.vzor{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:8px}
+.kva .vzor.je-mala{grid-template-columns:repeat(3,minmax(64px,1fr));justify-content:start;max-width:260px}
+.kva .vz{position:relative;display:block;border-radius:10px;overflow:hidden;cursor:pointer;aspect-ratio:3/2;background:var(--plocha)}
+.kva .vz input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.kva .vz img{width:100%;height:100%;object-fit:cover;transition:transform var(--dur-2) var(--ease)}
+.kva .vz__fajf{
+  position:absolute;right:4px;bottom:4px;width:18px;height:18px;border-radius:50%;
+  background:var(--ink);display:grid;place-items:center;opacity:0;transform:scale(.5);
+  transition:opacity var(--dur-1) var(--ease),transform var(--dur-1) var(--ease);
+}
+.kva .vz__fajf svg{width:11px;height:11px;color:var(--paper)}
+.kva .vz:has(input:checked){box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--ink)}
+.kva .vz:has(input:checked) .vz__fajf{opacity:1;transform:none}
+.kva .vz:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:4px}
+@media (hover:hover) and (pointer:fine){
+  .kva .vz:hover img{transform:scale(1.07)}
+}
+.kva .vzor__info{margin-top:12px;padding:14px 16px;border-radius:var(--r-vnor);background:var(--plocha)}
+.kva .vzor__nazev{font-weight:600;font-size:15px}
+.kva .vzor__popis{margin-top:3px;font-size:13px;line-height:1.45;color:var(--ink-2)}
+.kva .vzor__cena{margin-top:6px;font-size:14px}
+
+.kva .km{margin-top:8px;padding:16px;border-radius:var(--r-vnor);background:var(--plocha)}
+.kva .km label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.kva .km__pole{display:flex;align-items:center;gap:10px}
+.kva .km input{
+  width:120px;height:48px;padding:0 14px;border-radius:12px;
+  border:1.5px solid rgba(22,32,42,.22);background:var(--paper);font-size:16px;
+  font-variant-numeric:tabular-nums;
+}
+.kva .km input:focus{outline:2px solid var(--ink);outline-offset:1px;border-color:var(--ink)}
+.kva .km__jednotka{font-size:15px;color:var(--ink-2)}
+.kva .km__pozn{margin-top:8px;font-size:13px;line-height:1.45;color:var(--ink-3)}
+
+.kva .zaklad{margin-top:20px;padding:20px;border-radius:var(--r-karta);background:var(--plocha)}
+.kva .zaklad__cena{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.kva .zaklad__pozn{margin-top:2px;font-size:13px;color:var(--ink-3)}
+.kva .zaklad__sez{margin:14px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.kva .zaklad__sez li{font-size:13.5px;line-height:1.4;color:var(--ink-2)}
+
+.kva .sh{margin-top:24px}
+.kva .sh__list{padding:20px;border-radius:var(--r-karta);background:var(--plocha)}
+.kva .sh__blok+.sh__blok{margin-top:22px}
+.kva .sh__hlava{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.kva .sh__nazev{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:15px}
+.kva .sh__upravit{
+  border:0;background:none;padding:6px 8px;margin:-6px -8px;cursor:pointer;
+  font-size:13px;font-weight:600;color:var(--blue);border-radius:8px;
+}
+@media (hover:hover) and (pointer:fine){.kva .sh__upravit:hover{color:var(--ink);background:var(--plocha-2)}}
+.kva .sh__radek{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:14px}
+.kva .sh__radek span:first-child{color:var(--ink-2)}
+.kva .sh__radek b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kva .sh__nic{font-size:14px;color:var(--ink-3)}
+.kva .sh__soucet{margin-top:16px;padding:20px;border-radius:var(--r-karta);background:var(--ink);color:#fff}
+.kva .sh__soucet .sh__radek span:first-child{color:rgba(255,255,255,.7)}
+.kva .sh__soucet .sh__radek b{color:#fff}
+.kva .sh__celkem{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+.kva .sh__celkem span{font-size:14px;color:rgba(255,255,255,.7)}
+.kva .sh__celkem b{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+
+.kva .fm{margin-top:24px}
+.kva .fm__nadpis{font-size:20px}
+.kva .fm__pod{margin-top:6px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.kva .pole{margin-top:14px}
+.kva .pole label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.kva .pole input,.kva .pole textarea{
+  width:100%;padding:13px 14px;border-radius:12px;background:var(--paper);
+  border:1.5px solid rgba(22,32,42,.22);font-size:16px;line-height:1.4;
+}
+.kva .pole input{height:50px}
+.kva .pole textarea{min-height:92px;resize:vertical}
+.kva .pole input:focus,.kva .pole textarea:focus{outline:2px solid var(--ink);outline-offset:1px;border-color:var(--ink)}
+.kva .pole.je-chyba input,.kva .pole.je-chyba textarea{border-color:#a62b3f;background:#fdf6f7}
+.kva .pole__chyba{display:none;margin-top:6px;font-size:13px;color:#a62b3f}
+.kva .pole.je-chyba .pole__chyba{display:block}
+.kva .fm__stav.je-chyba{color:#a62b3f}
+.kva .fm__stav{margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+.kva .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.kva .pn__pata{
+  flex:none;padding:16px clamp(20px,2vw,28px) calc(16px + env(safe-area-inset-bottom));
+  background:var(--paper);box-shadow:0 -14px 30px rgba(22,32,42,.07);
+}
+.kva .soucet{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.kva .soucet__popis{font-size:13px;color:var(--ink-3)}
+.kva .soucet__cena{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.kva .pozn{margin-top:6px;font-size:12px;line-height:1.45;color:var(--ink-3)}
+.kva .akce{display:flex;gap:8px;margin-top:14px}
+.kva .btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:52px;padding:0 22px;border:0;border-radius:var(--r-pill);cursor:pointer;
+  font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.005em;
+  transition:background-color var(--dur-1) var(--ease),color var(--dur-1) var(--ease);
+}
+.kva .btn--hlavni{flex:1;background:var(--ink);color:#fff}
+.kva .btn--vedlejsi{background:var(--plocha);color:var(--ink);padding:0 20px}
+.kva .btn:disabled{opacity:.45;cursor:default}
+@media (hover:hover) and (pointer:fine){
+  .kva .btn--hlavni:not(:disabled):hover{background:#0d151c}
+  .kva .btn--vedlejsi:not(:disabled):hover{background:var(--plocha-2)}
+}
+.kva .btn:not(:disabled):active{transform:translateY(1px)}
+.kva .btn svg{width:18px;height:18px}
+
+@media (max-width:1279px){
+  .kva .ap{display:block}
+  .kva .sc{
+    position:sticky;top:0;z-index:2;
+    height:clamp(220px,36svh,300px);
+  }
+  .kva .sc.je-uvnitr{height:clamp(300px,46svh,380px)}
+  .kva .karta{width:min(260px,calc(100% - 32px));left:16px;bottom:16px;padding:14px}
+  .kva .bod{width:48px;height:48px;margin:-24px 0 0 -24px}
+  /* Karta na telefonu nepřekrývá scénu, ale sedí pod ní. Přes scénu zabírala
+     přes tři čtvrtiny výšky a divák koukal do místnosti přes půdorys. */
+  .kva .karta{position:static;width:auto;border-radius:0;box-shadow:none;
+    background:var(--paper);padding:12px clamp(16px,4vw,24px);
+    display:flex;align-items:center;gap:14px}
+  /* Mapa musí být tak velká, aby se dva nejbližší body nepřekrývaly.
+     Při 134 px byly 37 px od sebe a dotykový cíl má 48. */
+  .kva .karta .mapa{flex:0 0 178px;margin-bottom:0}
+  .kva .mapa__plan{max-width:178px;margin:0}
+  .kva .karta__nadpis,.kva .karta__radek{flex:0 1 auto}
+  .kva .karta__text{flex:1 1 auto;min-width:0}
+  .kva .mapa__plan{max-width:216px;margin:0 auto}
+  .kva .pn{width:auto;box-shadow:none}
+  .kva .pn__hlava{padding-top:16px;background:var(--paper)}
+  .kva .pn__telo{overflow:visible}
+  .kva /* Přilepená patka na telefonu ubírala 160 px z 812,.kva tedy pětinu obrazovky.
+     Cena a tlačítko jdou na jeden řádek a poznámka o DPH patří do těla,.kva kde ji nikdo nepotřebuje číst při každém posunu. */
+  .pn__pata{
+    position:sticky;bottom:0;z-index:3;
+    padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    box-shadow:0 -10px 26px rgba(22,32,42,.10);
+  }
+  .kva .pn__pata .soucet{flex:1 1 auto;min-width:0;display:block}
+  .kva .pn__pata .soucet__popis{font-size:12px}
+  .kva .pn__pata .soucet__cena{font-size:21px;display:block;line-height:1.15}
+  .kva .pn__pata .pozn{display:none}
+  .kva .pn__pata .akce{margin-top:0;flex:0 0 auto}
+  .kva .pn__pata .btn{min-height:48px;padding:0 18px;font-size:15px}
+  .kva .vzor{grid-template-columns:repeat(4,1fr)}
+  .kva .zaklad__sez{grid-template-columns:1fr}
+}
+@media (max-width:399px){
+  .kva .akce{flex-wrap:wrap}
+  .kva .btn--vedlejsi{flex:1}
+}
+
+@media (pointer:coarse){
+  .kva .sc.je-coach .karta{opacity:0}
+  .kva .postup{margin-block:-11px}
+  .kva .postup__k{height:48px}
+        .kva .sh__upravit{padding:14px 12px;margin:-14px -12px}
+  .kva .coach__in{padding:18px 20px;gap:8px;max-width:min(272px,74vw)}
+  .kva .coach__in svg{width:30px;height:30px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .kva *,.kva *::before,.kva *::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+      .kva .sc__vrstva{transition:none}
+}
+
+/* Mimo obal .kva, protože tohle platí pro celou stránku konfigurátoru.
+   Chatové tlačítko sedí vpravo dole, kde je tlačítko Pokračovat, a soupeří
+   s poptávkou, kterou konfigurátor vede sám. Skrývala ho i předchozí verze. */
+body.kv-cely .fhp-launch,
+body.kv-cely .fhp-bublina,
+body.kv-cely .fhp-wid{display:none}
