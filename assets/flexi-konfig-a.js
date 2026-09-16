@@ -15,6 +15,7 @@ var D = window.FlexiKonfigData;
 var J = window.FlexiKonfigJadro;
 var MODEL = D.MODELS.flexihouse;
 var FASADA_3D = D.FASADA_3D;
+var REALNE = D.REALNE;
 
 var SOUHRN = {
   title: 'Souhrn',
@@ -26,12 +27,53 @@ var KROKY = MODEL.steps.concat([SOUHRN]);
 var POSLEDNI = KROKY.length - 1;
 
 var MISTA = [
-  { klic:'obyvak',   nazev:'Obývací prostor',  mx:33.7, my:66.0, uhel:100, volby:['kuchyn','podlaha','zavesy','klima'] },
-  { klic:'kuchyn',   nazev:'Kuchyňský kout',   mx:23.3, my:29.9, uhel:172, volby:['kuchyn','podlaha','zavesy','klima'] },
-  { klic:'koupelna', nazev:'Koupelna',         mx:50.2, my:23.4, uhel:50,  volby:['koupelna','podlaha'] },
-  { klic:'loznice1', nazev:'Ložnice u vstupu', mx:76.9, my:74.9, uhel:245, volby:['podlaha','zavesy'] },
-  { klic:'loznice2', nazev:'Zadní ložnice',    mx:76.9, my:33.7, uhel:187, volby:['podlaha','zavesy'] }
+  { klic:'obyvak',   nazev:'Obývací prostor',  mx:33.7, my:66.0, yaw:-16,  sklon:8,  volby:['kuchyn','podlaha','zavesy','klima'] },
+  { klic:'kuchyn',   nazev:'Kuchyňský kout',   mx:23.3, my:29.9, yaw:19,   sklon:18, volby:['kuchyn','podlaha','zavesy','klima'] },
+  { klic:'koupelna', nazev:'Koupelna',         mx:50.2, my:23.4, yaw:140,  sklon:8,  volby:['koupelna','podlaha'] },
+  { klic:'loznice1', nazev:'Ložnice u vstupu', mx:76.9, my:74.9, yaw:67,   sklon:5,  volby:['podlaha','zavesy'] },
+  { klic:'loznice2', nazev:'Zadní ložnice',    mx:76.9, my:33.7, yaw:74,   sklon:8,  volby:['podlaha','zavesy'] }
 ];
+
+/* Kam se v místnosti podívat, aby byla volba doopravdy v záběru. Dvojice je
+   yaw a sklon ve stupních, kladný sklon míří dolů, yaw null nechá vodorovný
+   směr být. Změřeno na panoramatech rozdílem snímku bez volby a s volbou:
+   hledal se směr, který zabere nejvíc pixelů, které ta volba mění, a každý
+   se pak ještě prohlédl v _pano-zamer.html při zorném úhlu scény. */
+var ZABERY = {
+  obyvak:   { floor:[null, 42], drapes:[-110, -7] },
+  kuchyn:   { floor:[null, 42], drapes:[-94, -2], kitchen:[19, 25], ac:[-99, -3] },
+  koupelna: { floor:[null, 42], bath:[-112, 18] },
+  loznice1: { floor:[null, 42], drapes:[67, 5] },
+  loznice2: { floor:[null, 42], drapes:[74, 13] }
+};
+
+/* Volbu, která bydlí v jedné místnosti, není kde jinde ukázat, takže tam
+   diváka přenese. Podlaha a závěsy jsou v celém domě: u těch stačí otočit
+   pohled na nejbližší kus a člověk nemusí opustit místnost, ve které je. */
+var DOMA = { kitchen:'kuchyn', bath:'koupelna', ac:'kuchyn' };
+var HLAVNI = { obyvak:['drapes'], kuchyn:['kitchen','drapes'],
+  koupelna:['bath'], loznice1:['drapes'], loznice2:['drapes'] };
+
+function indexMista(klic) {
+  for (var i = 0; i < MISTA.length; i++) if (MISTA[i].klic === klic) return i;
+  return -1;
+}
+function zvoleno(id) {
+  if (id === 'ac') return vyber.heating === 'ac';
+  return maVybaveni(id);
+}
+/* Výchozí pohled po vstupu do místnosti. Míří na to, co si divák objednal:
+   v koupelně na umyvadlo, jakmile koupelnu vybral, jinak do prostoru. Bez
+   toho by v holé místnosti kamera trvala na detailu, který v ní není. */
+function vychoziZaber(i) {
+  var m = MISTA[i];
+  var por = HLAVNI[m.klic] || [];
+  for (var j = 0; j < por.length; j++) {
+    var z = ZABERY[m.klic] && ZABERY[m.klic][por[j]];
+    if (z && zvoleno(por[j])) return z;
+  }
+  return [m.yaw, m.sklon];
+}
 var PORADI_VOLEB = ['kuchyn','koupelna','podlaha','zavesy','klima'];
 
 var vyber = {};
@@ -145,17 +187,28 @@ function nastavOtocku() {
   if (window.FlexiOtocka) window.FlexiOtocka.kombinace(klic);
 }
 
-function nastavPano(letem) {
+function nastavPano(letem, zaber) {
   if (!PANO) return;
   var url = 'img/pano-m/' + panoKlic(stav.misto) + '.webp';
-  var uhel = -MISTA[stav.misto].uhel * Math.PI / 180;
+  var cil = zaber || vychoziZaber(stav.misto);
+  // Podlaha je pod nohama všude. Záběr na ni proto vodorovný směr nemění
+  // (yaw je null) a jen sklopí pohled tam, kde divák právě stojí.
+  var uhel = cil[0] === null ? PANO.smer().yaw : cil[0] * Math.PI / 180;
+  var sklon = cil[1] * Math.PI / 180;
   if (!letem) {
-    if (vrPano.dataset.url === url) { PANO.prekresli(); return; }
+    // Se zadaným záběrem se pohled přetáčí, ne přeskakuje. Divák musí vidět,
+    // kterým směrem se otočil, jinak nepozná, že je pořád v téže místnosti.
+    if (vrPano.dataset.url === url) {
+      if (zaber) PANO.prejed({ yaw: uhel, pitch: sklon }, 520);
+      else PANO.prekresli();
+      return;
+    }
     vrPano.dataset.url = url;
     vrPano.classList.add('je-nacita');
     PANO.nahraj(url).then(function () {
       vrPano.classList.remove('je-nacita');
-      PANO.nastavSmer(uhel, 0);
+      if (zaber) PANO.prejed({ yaw: uhel, pitch: sklon }, 520);
+      else PANO.nastavSmer(uhel, sklon);
       kresliKlin();
     }).catch(function () { vrPano.classList.remove('je-nacita'); });
     return;
@@ -178,7 +231,7 @@ function nastavPano(letem) {
       return PANO.nahraj(url);
     })
     .then(function () {
-      PANO.nastavSmer(uhel, 0);
+      PANO.nastavSmer(uhel, sklon);
       kresliKlin();
       return new Promise(function (h) { window.setTimeout(h, 120); });
     })
@@ -252,7 +305,7 @@ MISTA.forEach(function (m, i) {
   b.addEventListener('click', function () { doMistnosti(i); });
   mapa.querySelector('.mapa__plan').appendChild(b);
 });
-function doMistnosti(i) {
+function doMistnosti(i, zaber) {
   if (i === stav.misto) return;
   udalost('view_interior', { misto: MISTA[i].klic });
   stav.mistoPredtim = stav.misto;
@@ -261,7 +314,7 @@ function doMistnosti(i) {
     b.setAttribute('aria-current', j === i ? 'true' : 'false');
   });
   schovejCoach();
-  nastavPano(true);
+  nastavPano(true, zaber);
   popisScenu();
   hlaseni.textContent = 'Jste v místnosti ' + MISTA[i].nazev + '.';
 }
@@ -335,12 +388,25 @@ function seznamHtml(g) {
         '</span>' +
         '<span class="vo__popis">' + esc(o.desc) + '</span>' +
       '</span>' +
+      fotoHtml(o) +
     '</label>';
   });
   h += '</div>';
   if (g.kmFor && maAddon(g.kmFor)) h += kmHtml();
   h += '</section>';
   return h;
+}
+
+/* Miniatura místo ička. Písmeno i slibuje informaci, tenhle knoflík slibuje
+   fotku, a tak ať rovnou ukáže, jakou. Je uvnitř štítku volby, takže si klik
+   musí vzít pro sebe, jinak by zaškrtl volbu, na kterou se chtěl jen podívat. */
+function fotoHtml(o) {
+  var f = o.foto && REALNE[o.foto];
+  if (!f) return '';
+  return '<button type="button" class="vo__foto" data-foto="' + esc(o.foto) + '"' +
+    ' aria-label="Ukázat fotku, ' + esc(f.titul.toLowerCase()) + ' ve vyrobeném domě">' +
+    '<img src="img/nahled/' + esc(o.foto) + '.webp" width="128" height="128" alt="" loading="lazy" decoding="async">' +
+    '</button>';
 }
 
 function kmHtml() {
@@ -488,6 +554,15 @@ function vykresli() {
 }
 
 function navazPanel() {
+  telo.querySelectorAll('.vo__foto').forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      // Knoflík sedí uvnitř štítku volby, takže by klik jinak propadl do
+      // zaškrtnutí. Podívat se na fotku není totéž jako položku si objednat.
+      e.preventDefault();
+      e.stopPropagation();
+      otevriFoto(b.dataset.foto);
+    });
+  });
   telo.querySelectorAll('.vo input, .vz input').forEach(function (inp) {
     inp.addEventListener('change', function () {
       var klic = inp.name;
@@ -521,7 +596,6 @@ function navazPanel() {
 
 /* Scéna se drží kroku: uvnitř kroku Interiér vás volba přenese tam,
    kde je na ní vidět, jinde se pohled po místnostech vůbec nenabízí. */
-var KAM = { bath:'koupelna', kitchen:'kuchyn', ac:'kuchyn' };
 function poVolbe(klic, id, zapnuto) {
   poslatZapojeni();
   // Uložený kód patří té sestavě, pod kterou se ukládalo. Po změně už neplatí
@@ -551,15 +625,88 @@ function poVolbe(klic, id, zapnuto) {
   } else obnovCeny();
 
   if (scenaTed === 'spin') { nastavOtocku(); popisScenu(); }
-  if (scenaTed === 'pano') {
-    var cil = KAM[id];
-    if (zapnuto && cil) {
-      var i = -1;
-      MISTA.forEach(function (m, j) { if (m.klic === cil) i = j; });
-      if (i !== -1 && i !== stav.misto) { doMistnosti(i); return; }
-    }
-    nastavPano(false);
+  if (scenaTed === 'pano') zamerVolbu(id);
+}
+
+/* Otočí prohlídku na to, co divák právě zaškrtl nebo odškrtl. Bez toho se
+   mění snímek, na který se nikdo nedívá: kuchyňská linka je za zády a v
+   záběru zůstane prázdná stěna, na které se nestalo nic.
+   Platí i pro odebrání, protože zmizení je stejná zpráva jako přibytí. */
+function zamerVolbu(id) {
+  var tady = MISTA[stav.misto].klic;
+  var zdeVidet = ZABERY[tady] && ZABERY[tady][id];
+  if (zdeVidet) { nastavPano(false, zdeVidet); return; }
+  var jinde = DOMA[id] ? indexMista(DOMA[id]) : nejblizSVolbou(id);
+  if (jinde !== -1 && jinde !== stav.misto) {
+    doMistnosti(jinde, ZABERY[MISTA[jinde].klic][id]);
+    return;
   }
+  nastavPano(false, null);
+}
+
+/* Závěsy v koupelně nikdo neuvidí, okno tam není. Pohled proto vyrazí do
+   nejbližší místnosti, která tu volbu ukázat umí; nejbližší proto, aby se
+   prohlídka nepřehodila přes celý dům kvůli jednomu zaškrtnutí. */
+function nejblizSVolbou(id) {
+  var a = MISTA[stav.misto], nej = -1, nejd = Infinity;
+  MISTA.forEach(function (m, i) {
+    if (i === stav.misto || !ZABERY[m.klic] || !ZABERY[m.klic][id]) return;
+    var dx = m.mx - a.mx, dy = m.my - a.my;
+    var d = dx * dx + dy * dy;
+    if (d < nejd) { nejd = d; nej = i; }
+  });
+  return nej;
+}
+
+
+var fot = document.getElementById('fot');
+var fotRam = document.getElementById('fotRam');
+var fotPrep = document.getElementById('fotPrep');
+var fotTed = null;
+
+/* Fotky vyrobeného domu vedle vyrenderované scény. Celý konfigurátor ukazuje
+   model, a tohle je jediné místo, kde si člověk ověří, že věc existuje i mimo
+   něj. Proto ta patička pod snímkem říká, že je to fotka, ne vizualizace. */
+function otevriFoto(klic) {
+  var f = REALNE[klic];
+  if (!f || !fot) return;
+  fotTed = klic;
+  document.getElementById('fotTitul').textContent = f.titul;
+  document.getElementById('fotPopis').textContent = f.snimky.length > 1
+    ? 'Fotky vyrobeného domu, ne vizualizace.'
+    : 'Fotka vyrobeného domu, ne vizualizace.';
+  ukazSnimek(0);
+  fotPrep.hidden = f.snimky.length < 2;
+  if (f.snimky.length > 1) {
+    fotPrep.innerHTML = f.snimky.map(function (o, i) {
+      return '<button type="button" class="fot__bod" data-i="' + i + '"' +
+        (i === 0 ? ' aria-current="true"' : '') +
+        '><span class="vh">Snímek ' + (i + 1) + ' z ' + f.snimky.length + '</span></button>';
+    }).join('');
+    fotPrep.querySelectorAll('.fot__bod').forEach(function (b) {
+      b.addEventListener('click', function () { ukazSnimek(Number(b.dataset.i)); });
+    });
+  }
+  udalost('view_photo', { polozka: klic });
+  if (fot.showModal) fot.showModal(); else fot.setAttribute('open', '');
+}
+
+function ukazSnimek(i) {
+  var f = REALNE[fotTed];
+  var o = f.snimky[i];
+  fotRam.innerHTML = '<img src="' + esc(o.s) + '" width="' + o.w + '" height="' + o.h +
+    '" alt="' + esc(o.alt) + '" decoding="async">';
+  fotPrep.querySelectorAll('.fot__bod').forEach(function (b, j) {
+    if (j === i) b.setAttribute('aria-current', 'true');
+    else b.removeAttribute('aria-current');
+  });
+}
+
+if (fot) {
+  document.getElementById('fotZavri').addEventListener('click', function () { fot.close(); });
+  // Klepnutí mimo snímek zavírá. Cíl události je samotný dialog jen tehdy,
+  // když se trefilo do podložky; uvnitř ho odchytí některé z dětí.
+  fot.addEventListener('click', function (e) { if (e.target === fot) fot.close(); });
 }
 
 function obnovCeny() {

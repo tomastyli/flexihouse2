@@ -126,5 +126,36 @@ var FASADA_3D = {
   'lam-antracit': 'lam-antracit', 'lam-seda': 'lam-seda', 'lam-bila': 'lam-bila'
 };
 
-global.FlexiKonfigData = { I: I, MODELS: MODELS, svg: svg, FASADA_3D: FASADA_3D };
+
+/* Snímky vyrobeného domu, ne vizualizace. Klíč je hodnota `foto:` u volby;
+   volba bez něj náhled nemá a žádný se jí nepodstrčí. Sada je z natáčení
+   31. 8. 2026 plus detaily terasy a schodu, `img/nahled/` jsou čtvercové
+   miniatury do karet. Schválně chybí položky, které se sice dají koupit,
+   ale nevybírají se podle vzhledu: patky, doprava, montáž, sítě. */
+var REALNE = {
+  koupelna: { titul:'Koupelna', snimky:[
+    { s:'img/realne/koupelna-840h.webp', w:1260, h:840, alt:'Koupelna s umyvadlem, WC a sprchovým koutem ve vyrobeném domě' },
+    { s:'img/koupelna-baterie-1200w.webp', w:1200, h:675, alt:'Detail sprchové baterie a mramorového obkladu' }
+  ]},
+  kuchyne: { titul:'Kuchyňská linka', snimky:[
+    { s:'img/kuchyn-linka-1200w.webp', w:1200, h:675, alt:'Kuchyňská linka s dřezem pod oknem' },
+    { s:'img/kuchyn-drez-1200w.webp', w:1200, h:675, alt:'Detail nerezového dřezu a baterie' },
+    { s:'img/kuchyn-kavovar-1200w.webp', w:1200, h:675, alt:'Pracovní deska linky s kávovarem' }
+  ]},
+  podlaha: { titul:'Podlaha', snimky:[
+    { s:'img/interier-koupelna-1200w.webp', w:1200, h:676, alt:'Podlahová krytina v obývacím prostoru' }
+  ]},
+  zavesy: { titul:'Závěsy a záclony', snimky:[
+    { s:'img/realne/obyvak-840h.webp', w:1260, h:840, alt:'Obývací prostor se závěsy a záclonami u oken' }
+  ]},
+  terasa: { titul:'Terasa', snimky:[
+    { s:'img/realne/terasa-840h.webp', w:1260, h:840, alt:'Krytá terasa před vstupem do domu' },
+    { s:'img/terasa-detail-1200w.webp', w:1200, h:676, alt:'Detail prken terasové podlahy' }
+  ]},
+  schody: { titul:'Schody', snimky:[
+    { s:'img/schod-rost-1200w.webp', w:1200, h:675, alt:'Pozinkovaný rošt vstupního schodu u terasy' }
+  ]}
+};
+
+global.FlexiKonfigData = { I: I, MODELS: MODELS, svg: svg, FASADA_3D: FASADA_3D, REALNE: REALNE };
 }(window));

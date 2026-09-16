@@ -411,3 +411,65 @@
 body.kv-cely .fhp-launch,
 body.kv-cely .fhp-bublina,
 body.kv-cely .fhp-wid{display:none}
+
+.kva .vo__foto{
+  flex:none;align-self:center;width:52px;height:52px;padding:0;border:0;
+  border-radius:10px;overflow:hidden;cursor:pointer;background:var(--plocha-2);
+  box-shadow:0 0 0 1px var(--hair);
+  transition:box-shadow var(--dur-1) var(--ease),transform var(--dur-1) var(--ease);
+}
+.kva .vo__foto img{width:100%;height:100%;object-fit:cover}
+.kva .vo__foto:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){
+  .kva .vo__foto:hover{box-shadow:0 0 0 2px var(--ink);transform:scale(1.06)}
+}
+.kva .vo__foto:active{transform:scale(.96)}
+
+.fot{
+  width:min(920px,calc(100vw - 32px));max-width:none;max-height:calc(100svh - 48px);
+  margin:auto;padding:0;border:0;border-radius:var(--r-karta,20px);overflow:hidden;
+  background:#ffffff;color:#16202a;box-shadow:0 20px 60px rgba(22,32,42,.28);
+  font-family:'Instrument',system-ui,sans-serif;
+}
+.fot:not([open]){display:none}
+.fot[open]{display:flex;flex-direction:column}
+.fot::backdrop{background:rgba(12,18,24,.62)}
+.fot__hlava{display:flex;align-items:center;gap:16px;padding:16px 16px 12px 20px}
+.fot__titul{margin:0;flex:1;font-family:'Archivo',system-ui,sans-serif;font-weight:700;
+  font-size:18px;line-height:1.2;letter-spacing:-0.01em}
+.fot__zavri{
+  flex:none;width:40px;height:40px;display:grid;place-items:center;padding:0;border:0;
+  border-radius:50%;background:#eef2f4;color:#16202a;cursor:pointer;
+  transition:background-color 180ms cubic-bezier(.2,.7,.3,1);
+}
+.fot__zavri svg{width:18px;height:18px}
+.fot__zavri:focus-visible{outline:2px solid #16202a;outline-offset:2px}
+@media (hover:hover) and (pointer:fine){ .fot__zavri:hover{background:#e0e7ea} }
+.fot__ram{background:#eef2f4}
+.fot__ram img{display:block;width:100%;height:auto;max-height:calc(100svh - 220px);object-fit:contain;margin:0 auto}
+.fot__pata{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 20px 16px}
+.fot__popis{margin:0;flex:1;min-width:180px;font-size:13px;line-height:1.45;color:rgba(22,32,42,.64)}
+.fot__prep{display:flex;gap:8px}
+.fot__bod{
+  width:32px;height:32px;display:grid;place-items:center;padding:0;border:0;
+  background:none;cursor:pointer;
+}
+.fot__bod::after{
+  content:"";width:9px;height:9px;border-radius:50%;
+  background:rgba(22,32,42,.22);transition:background-color 180ms cubic-bezier(.2,.7,.3,1);
+}
+.fot__bod[aria-current]::after{background:#16202a}
+.fot__bod:focus-visible{outline:2px solid #16202a;outline-offset:-4px;border-radius:50%}
+@media (hover:hover) and (pointer:fine){ .fot__bod:hover::after{background:rgba(22,32,42,.5)} }
+
+.fot__ram{display:grid;place-items:center;min-height:0;flex:1}
+
+/* Na telefonu se okno smrští na snímek. Přes celou výšku by kolem fotky
+   na šířku zůstaly dva prázdné pásy a ty čtou jako chyba načítání. */
+@media (max-width:640px){
+  .fot{width:calc(100vw - 20px);max-width:none;max-height:calc(100svh - 40px);border-radius:16px}
+  .fot__hlava{padding:14px 14px 10px 16px}
+  .fot__titul{font-size:17px}
+  .fot__ram img{max-height:calc(100svh - 200px)}
+  .fot__pata{padding:12px 16px 14px}
+}
