@@ -170,6 +170,40 @@
 @media(max-width:860px){.kcta__in{grid-template-columns:1fr;align-items:start}
   .kcta__kryt{background:linear-gradient(180deg,rgba(9,17,29,.86) 0%,rgba(9,17,29,.92) 100%)}
   .kcta__go .btn{width:100%;justify-content:center}}
+.pasfoto{background:var(--paper);padding-block:clamp(30px,3.4vw,52px) 0}
+.pasfoto__ram{position:relative}
+.pasfoto__pas{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.pasfoto__pas::-webkit-scrollbar{display:none}
+.pasfoto__pas:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.pasfoto__kus{margin:0;flex:none}
+.pasfoto__kus img{display:block;height:clamp(240px,32vw,440px);width:auto;background:var(--soft)}
+.pasfoto__sip{position:absolute;top:50%;transform:translateY(-50%);z-index:1;
+  display:grid;place-items:center;width:44px;height:44px;
+  color:#fff;background:rgba(9,17,29,.42);border:0;border-radius:50%;cursor:pointer;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  transition:background var(--dur-micro),opacity var(--dur-micro)}
+.pasfoto__sip svg{width:20px;height:20px}
+.pasfoto__sip:hover{background:rgba(9,17,29,.68)}
+.pasfoto__sip--vlevo{left:clamp(10px,1.4vw,18px)}
+.pasfoto__sip--vpravo{right:clamp(10px,1.4vw,18px)}
+.pasfoto__sip[disabled]{opacity:0;pointer-events:none}
+.pasfoto__tecky{position:absolute;left:50%;bottom:clamp(12px,1.6vw,20px);transform:translateX(-50%);
+  z-index:1;display:flex;gap:24px;padding:6px 8px;
+  filter:drop-shadow(0 1px 3px rgba(9,17,29,.55))}
+.pasfoto__tecka{position:relative;width:6px;height:6px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.42);transition:background var(--dur-micro)}
+.pasfoto__tecka[aria-selected="true"]{background:rgba(255,255,255,.92)}
+.pasfoto__tecka:hover{background:rgba(255,255,255,.7)}
+@media (max-width:760px){
+  .pasfoto__sip{display:none}
+  .pasfoto__kus img{height:clamp(200px,54vw,300px)}
+  .pasfoto__tecky{gap:24px;padding:12px 16px}
+  .pasfoto__tecka::after{content:"";position:absolute;inset:-11px}
+}
+.rui__pod--nad{margin-bottom:-4px;color:var(--ink);font-weight:600}
+
+.pasfoto__hlava{max-width:58ch;margin-bottom:clamp(20px,2.6vw,32px)}
+.pasfoto__hlava p{margin:10px 0 0;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -199,6 +233,7 @@
       </span>
       <a href="/konfigurator">Konfigurátor</a>
       <a href="/poptavka">Poptávka</a>
+      <a href="/kontakt">Kontakt</a>
     </nav>
     <div class="top__end">
       <a class="tel" href="tel:+420607321543">607 321 543</a>
@@ -238,6 +273,16 @@
     </div>
   </div>
 </header>
+<div class="menu" id="menu" hidden>
+  <a class="menu__link" href="/katalog">Domy</a>
+  <a class="menu__link" href="/konfigurator">Konfigurátor</a>
+  <a class="menu__link" href="/poptavka">Poptávka</a>
+  <a class="menu__link" href="/kontakt">Kontakt</a>
+  <div class="menu__end">
+    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, voláme zpátky</small></a>
+    <a class="btn" href="/poptavka">Chci nabídku</a>
+  </div>
+</div>
 
 <main>
 
@@ -314,6 +359,84 @@
         <a href="/stavebni-povoleni">stavební povolení</a>.</p>
       <a class="btn pl__akce" href="/poptavka">Chci nezávaznou nabídku</a>
     </div>
+  </div>
+</section>
+<section class="pasfoto" aria-labelledby="pasfoto-h">
+  <div class="wrap pasfoto__hlava">
+    <h2 class="pr-h" id="pasfoto-h">Jak to vypadá uvnitř</h2>
+    <p>Fotky skutečného domu, ne&nbsp;vizualizace. Kuchyň, koupelnu a&nbsp;vybavení
+      si vybíráte zvlášť, tohle je jedno z&nbsp;provedení.</p>
+  </div>
+  <div class="pasfoto__ram">
+    <div class="pasfoto__pas" id="pasfoto-pas" tabindex="0" role="group" aria-label="Fotky domu, posuvné">
+      <figure class="pasfoto__kus">
+        <img src="img/realne/dvere-560h.webp" width="373" height="560" loading="lazy" decoding="async"
+             alt="Prosklené dvoukřídlé dveře domu z kryté terasy"
+             srcset="img/realne/dvere-560h.webp 373w, img/realne/dvere-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/obyvak-linka-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+             alt="Obytný prostor domu s kuchyňskou linkou a dvěma okny"
+             srcset="img/realne/obyvak-linka-560h.webp 840w, img/realne/obyvak-linka-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/kavovar-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+             alt="Kávovar a šálky na pracovní desce kuchyňské linky"
+             srcset="img/realne/kavovar-560h.webp 996w, img/realne/kavovar-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/koupelna-560h.webp" width="420" height="560" loading="lazy" decoding="async"
+             alt="Koupelna se sprchovým koutem, umyvadlem a toaletou"
+             srcset="img/realne/koupelna-560h.webp 420w, img/realne/koupelna-840h.webp 630w" sizes="(max-width:900px) 38vw, 373px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/terasa-pod-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+             alt="Pohled podél kryté terasy pod přesahem střechy"
+             srcset="img/realne/terasa-pod-560h.webp 840w, img/realne/terasa-pod-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/drez-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+             alt="Nerezový dřez s vysokou baterií zblízka"
+             srcset="img/realne/drez-detail-560h.webp 996w, img/realne/drez-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/okno-obklad-560h.webp" width="373" height="560" loading="lazy" decoding="async"
+             alt="Okno v dřevěném obkladu fasády proti obloze"
+             srcset="img/realne/okno-obklad-560h.webp 373w, img/realne/okno-obklad-840h.webp 560w" sizes="(max-width:900px) 38vw, 373px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/obyvak-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+             alt="Obývací část domu s pohovkou a konferenčním stolkem"
+             srcset="img/realne/obyvak-560h.webp 840w, img/realne/obyvak-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/sprcha-detail-560h.webp" width="996" height="560" loading="lazy" decoding="async"
+             alt="Detail sprchové baterie na obkladu"
+             srcset="img/realne/sprcha-detail-560h.webp 996w, img/realne/sprcha-detail-840h.webp 1494w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/prkna-detail-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+             alt="Prkna kryté terasy zblízka"
+             srcset="img/realne/prkna-detail-560h.webp 840w, img/realne/prkna-detail-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/pohovka-detail-560h.webp" width="995" height="560" loading="lazy" decoding="async"
+             alt="Detail čalouněné pohovky s polštáři"
+             srcset="img/realne/pohovka-detail-560h.webp 995w, img/realne/pohovka-detail-840h.webp 1492w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+      <figure class="pasfoto__kus">
+        <img src="img/realne/kuchyne-560h.webp" width="840" height="560" loading="lazy" decoding="async"
+             alt="Kuchyňská linka s dřezem a pracovní deskou"
+             srcset="img/realne/kuchyne-560h.webp 840w, img/realne/kuchyne-840h.webp 1260w" sizes="(max-width:900px) 82vw, 840px">
+      </figure>
+    </div>
+    <button class="pasfoto__sip pasfoto__sip--vlevo" type="button" data-smer="-1" aria-label="Předchozí fotky">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+    </button>
+    <button class="pasfoto__sip pasfoto__sip--vpravo" type="button" data-smer="1" aria-label="Další fotky">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+    </button>
+    <div class="pasfoto__tecky" id="pasfoto-tecky" role="tablist" aria-label="Přeskočit na fotku"></div>
   </div>
 </section>
 <section class="holy fh-rv" aria-label="Co je v ceně">
@@ -692,6 +815,98 @@
     }
     btn.disabled = false; btn.textContent = popis;
   });
+})();
+</script>
+<script>
+(function () {
+  var pas = document.getElementById('pasfoto-pas');
+  if (pas) {
+    var puvodni = [].slice.call(pas.children);
+    var pocet = puvodni.length;
+    var klid = matchMedia('(prefers-reduced-motion: reduce)');
+    var tecky = document.getElementById('pasfoto-tecky');
+    var sirkaSady = 0, stojiDo = 0, casovac = null;
+    var PRODLEVA = 3800;   // jak dlouho stojí na jedné fotce
+
+    puvodni.forEach(function (k) {
+      var c = k.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      [].forEach.call(c.querySelectorAll('img'), function (i) { i.alt = ''; });
+      pas.appendChild(c);
+    });
+
+    function sirka(i) { return puvodni[i].getBoundingClientRect().width; }
+    function odsazeni(i) { var s = 0; for (var j = 0; j < i; j++) s += sirka(j); return s; }
+    function zmerSadu() { sirkaSady = odsazeni(pocet); }
+
+    function indexTed() {
+      if (!sirkaSady) return 0;
+      var x = ((pas.scrollLeft % sirkaSady) + sirkaSady) % sirkaSady;
+      var beh = 0;
+      for (var i = 0; i < pocet; i++) {
+        var w = sirka(i);
+        if (x < beh + w / 2) return i;
+        beh += w;
+      }
+      return pocet - 1;
+    }
+
+    function srovnej() {
+      if (sirkaSady && pas.scrollLeft >= sirkaSady - 1) pas.scrollLeft -= sirkaSady;
+      else if (pas.scrollLeft < 0) pas.scrollLeft += sirkaSady;
+    }
+
+    function jdi(kam, hladce) {
+      var lap = Math.floor(pas.scrollLeft / sirkaSady) * sirkaSady;
+      pas.scrollTo({ left: lap + kam, behavior: (hladce && !klid.matches) ? 'smooth' : 'auto' });
+      setTimeout(function () { srovnej(); oznacTecku(); }, 800);
+    }
+
+    function posun(smer) {
+      if (!sirkaSady) return;
+      var i = indexTed() + smer;
+      if (i < 0) { pas.scrollLeft += sirkaSady; i = pocet - 1; }
+      jdi(odsazeni(i), true);
+    }
+
+    puvodni.forEach(function (k, i) {
+      var b = document.createElement('button');
+      b.className = 'pasfoto__tecka';
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-label', 'Fotka ' + (i + 1) + ' ze ' + pocet);
+      b.addEventListener('click', function () { pozdrz(); jdi(odsazeni(i), true); });
+      tecky.appendChild(b);
+    });
+    var seznamTecek = [].slice.call(tecky.children);
+
+    function oznacTecku() {
+      var akt = indexTed();
+      seznamTecek.forEach(function (b, i) { b.setAttribute('aria-selected', i === akt ? 'true' : 'false'); });
+    }
+
+    function pozdrz() { stojiDo = performance.now() + 6000; }
+
+    function tik() {
+      var stoji = pas.matches(':hover') || pas.contains(document.activeElement);
+      if (stoji || document.hidden || performance.now() < stojiDo) return;
+      posun(1);
+    }
+
+    [].forEach.call(document.querySelectorAll('.pasfoto__sip'), function (b) {
+      b.addEventListener('click', function () { pozdrz(); posun(+b.dataset.smer); });
+    });
+
+    pas.addEventListener('scroll', oznacTecku, { passive: true });
+    ['pointerdown', 'wheel', 'touchstart'].forEach(function (u) {
+      pas.addEventListener(u, pozdrz, { passive: true });
+    });
+
+    window.addEventListener('resize', function () { zmerSadu(); oznacTecku(); });
+    window.addEventListener('load', function () { zmerSadu(); oznacTecku(); });
+    zmerSadu(); oznacTecku();
+    if (!klid.matches) casovac = setInterval(tik, PRODLEVA);
+  }
 })();
 </script>
 </body>
