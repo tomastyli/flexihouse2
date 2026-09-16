@@ -24,7 +24,7 @@
 <meta name="description" content="Jak Flexi House zpracovává osobní údaje z poptávkových formulářů a konfigurátoru, jak dlouho je uchovává a jaká máte práva.">
 <link rel="preload" href="fonts/archivo2-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/flexi.css?v=51">
+<link rel="stylesheet" href="assets/flexi.css?v=53">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Domů","item":"https://flexihouse.cz/"},{"@type":"ListItem","position":2,"name":"Ochrana soukromí","item":"https://flexihouse.cz/zasady-ochrany-soukromi"}]}
 </script>
@@ -59,7 +59,24 @@
       <a href="/kontakt">Kontakt</a>
     </nav>
     <div class="top__end">
-      <a class="tel" href="tel:+420607321543">607 321 543</a>
+      <div class="kontakt">
+        <button class="tel kontakt__spoust" type="button" aria-expanded="false" aria-controls="kontakt-panel">607 321 543
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 9 7 7 7-7"/></svg>
+        </button>
+        <div class="kontakt__panel" id="kontakt-panel">
+          <a class="kontakt__os" href="tel:+420607321543">
+            <span class="kontakt__jm">Dan Prokeš</span>
+            <span class="kontakt__role">Prodej a nabídky</span>
+            <span class="kontakt__cis">607 321 543</span>
+          </a>
+          <a class="kontakt__os" href="tel:+420730171909">
+            <span class="kontakt__jm">Jan Prokeš</span>
+            <span class="kontakt__role">Doprava a montáž</span>
+            <span class="kontakt__cis">730 171 909</span>
+          </a>
+          <span class="kontakt__adr">Sokolovská 612, Litomyšl</span>
+        </div>
+      </div>
       <a class="btn btn--sm" href="/poptavka">Chci nabídku</a>
       <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
     </div>
@@ -103,7 +120,9 @@
   <a class="menu__link" href="/poptavka">Poptávka</a>
   <a class="menu__link" href="/kontakt">Kontakt</a>
   <div class="menu__end">
-    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, voláme zpátky</small></a>
+    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, prodej a nabídky</small></a>
+    <a class="menu__tel" href="tel:+420730171909">730 171 909<small>Jan Prokeš, doprava a montáž</small></a>
+    <p class="menu__adr">Sokolovská 612, Litomyšl</p>
     <a class="btn" href="/poptavka">Chci nabídku</a>
   </div>
 </div>
@@ -239,6 +258,6 @@
 </footer>
 
 <script src="assets/cookies.js?v=13" defer></script>
-<script src="assets/flexi.js?v=25" defer></script>
+<script src="assets/flexi.js?v=26" defer></script>
 </body>
 </html>
