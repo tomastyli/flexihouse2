@@ -131,3 +131,28 @@
   });
   siroko.addEventListener('change',function(){ if(!siroko.matches) set(false); });
 })();
+
+(function(){
+  var obal=document.querySelector('.kontakt');
+  if(!obal) return;
+  var spoust=obal.querySelector('.kontakt__spoust'), panel=obal.querySelector('.kontakt__panel');
+  if(!spoust||!panel) return;
+  var jemny=window.matchMedia('(hover:hover) and (pointer:fine)');
+  var cas;
+  function set(open){
+    clearTimeout(cas);
+    obal.classList.toggle('je-otevreny',open);
+    spoust.setAttribute('aria-expanded',String(open));
+  }
+  function odloz(open,ms){ clearTimeout(cas); cas=setTimeout(function(){ set(open); },ms); }
+  obal.addEventListener('mouseenter',function(){ if(jemny.matches) odloz(true,90); });
+  obal.addEventListener('mouseleave',function(){ if(jemny.matches) odloz(false,180); });
+  spoust.addEventListener('click',function(){ set(!obal.classList.contains('je-otevreny')); });
+  obal.addEventListener('focusout',function(e){ if(!obal.contains(e.relatedTarget)) set(false); });
+  document.addEventListener('click',function(e){ if(!obal.contains(e.target)) set(false); });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&obal.classList.contains('je-otevreny')){ set(false); spoust.focus(); }
+  });
+  var md=document.querySelector('.md');
+  if(md) md.addEventListener('mouseenter',function(){ set(false); });
+})();

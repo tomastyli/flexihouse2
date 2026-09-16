@@ -29,7 +29,7 @@
 <link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" media="(min-width:921px)" href="img/kf-hero-teak-1800w.webp" imagesrcset="img/kf-hero-teak-1200w.webp 1200w, img/kf-hero-teak-1800w.webp 1800w, img/kf-hero-teak-2400w.webp 2400w, img/kf-hero-teak-3000w.webp 3000w" imagesizes="100vw" fetchpriority="high">
 <link rel="preload" as="image" media="(max-width:920px)" href="img/kf-hero-teak-mobil-1200w.webp" imagesrcset="img/kf-hero-teak-mobil-600w.webp 600w, img/kf-hero-teak-mobil-900w.webp 900w, img/kf-hero-teak-mobil-1200w.webp 1200w, img/kf-hero-teak-mobil-1500w.webp 1500w" imagesizes="100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/flexi.css?v=51">
+<link rel="stylesheet" href="assets/flexi.css?v=53">
 <link rel="stylesheet" href="assets/produkt.css?v=47">
 <link rel="stylesheet" href="assets/domov.css?v=55">
 <link rel="stylesheet" href="assets/flexi-otocka.css?v=2">
@@ -201,7 +201,24 @@
       <a href="/poptavka">Poptávka</a>
     </nav>
     <div class="top__end">
-      <a class="tel" href="tel:+420607321543">607 321 543</a>
+      <div class="kontakt">
+        <button class="tel kontakt__spoust" type="button" aria-expanded="false" aria-controls="kontakt-panel">607 321 543
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 9 7 7 7-7"/></svg>
+        </button>
+        <div class="kontakt__panel" id="kontakt-panel">
+          <a class="kontakt__os" href="tel:+420607321543">
+            <span class="kontakt__jm">Dan Prokeš</span>
+            <span class="kontakt__role">Prodej a nabídky</span>
+            <span class="kontakt__cis">607 321 543</span>
+          </a>
+          <a class="kontakt__os" href="tel:+420730171909">
+            <span class="kontakt__jm">Jan Prokeš</span>
+            <span class="kontakt__role">Doprava a montáž</span>
+            <span class="kontakt__cis">730 171 909</span>
+          </a>
+          <span class="kontakt__adr">Sokolovská 612, Litomyšl</span>
+        </div>
+      </div>
       <a class="btn btn--sm" href="/poptavka">Chci nabídku</a>
       <button class="burger" type="button" aria-label="Otevřít menu"><span></span></button>
     </div>
@@ -238,6 +255,18 @@
     </div>
   </div>
 </header>
+
+<div class="menu" id="menu" hidden>
+  <a class="menu__link" href="/katalog">Domy</a>
+  <a class="menu__link" href="/konfigurator">Konfigurátor</a>
+  <a class="menu__link" href="/poptavka">Poptávka</a>
+  <div class="menu__end">
+    <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, prodej a nabídky</small></a>
+    <a class="menu__tel" href="tel:+420730171909">730 171 909<small>Jan Prokeš, doprava a montáž</small></a>
+    <p class="menu__adr">Sokolovská 612, Litomyšl</p>
+    <a class="btn" href="/poptavka">Chci nabídku</a>
+  </div>
+</div>
 
 <main>
 
@@ -660,7 +689,7 @@
 </footer>
 
 <script src="assets/cookies.js?v=13" defer></script>
-<script src="assets/flexi.js?v=25" defer></script>
+<script src="assets/flexi.js?v=26" defer></script>
 <script src="assets/flexi-poradce.js?v=10" defer></script>
 <script src="assets/flexi-otocka.js?v=14" defer></script>
 <script>
