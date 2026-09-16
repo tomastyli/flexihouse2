@@ -99,8 +99,9 @@ Kamna už v nabídce nejsou.
 
 ## Životnost a záruka
 
-Životnost stavby je 25 let při správné údržbě. Záruka je 2 roky.
-Požární odolnost doložit neumíme, na tu se poradce nesmí vyjadřovat.
+Životnost stavby je při správné údržbě minimálně 25 let. Záruka je 2 roky.
+Požární odolnost doložit umíme, konkrétní doklad ke stavbě dá Dan. Vyřízení stavebního
+povolení ale neděláme, to si zákazník řeší na svém stavebním úřadě.
 
 ## Co neděláme
 

@@ -13,15 +13,14 @@ Výška | 2,48 m
 Hmotnost | 2 000 kg
 Dispozice | 2 ložnice, obývák s kuchyňským koutem, koupelna
 
-## V ceně 400 000 Kč
+## V ceně 399 000 Kč
 typ: dva-sloupce
-V ceně | konstrukce, hliníková okna s dvojskly, dveře, fasádní obklad, zateplení 75 mm, plochá střecha, vnitřní příčky
-Není v ceně | kuchyň, koupelna, elektroinstalace, vytápění, terasa. Terasa bývá na fotkách.
+V ceně | konstrukce, hliníková okna s dvojskly, dveře, fasádní obklad, zateplení 75 mm, plochá střecha, vnitřní příčky, elektroinstalace
+Není v ceně | kuchyň, koupelna, vytápění, terasa. Terasa bývá na fotkách.
 
 ## Příplatky bez DPH
 typ: tabulka
-Elektroinstalace, je v každé sestavě | 5 000 Kč
-Kuchyňská linka | 10 000 Kč
+Kuchyňská linka | 25 000 Kč
 Koupelna | 30 000 Kč
 Klimatizace s montáží, topí i chladí | 29 000 Kč
 Terasa | 40 000 Kč
@@ -43,7 +42,7 @@ Připojení na sítě a vyřízení povolení. Vodu, elektřinu a odpad si doved
 
 ## Co neumíme doložit
 typ: text
-Třídu oceli, skladbu podlahy, požární odolnost, životnost ani délku výroby neuvádíme. Nemáme to potvrzené z výroby.
+Třídu oceli, skladbu podlahy ani délku výroby neuvádíme. Nemáme to potvrzené z výroby. Požární odolnost doložit umíme a životnost je při správné údržbě minimálně 25 let (potvrzeno 16. 9. 2026).
 
 ## Pro koho se nehodí
 typ: text
@@ -55,7 +54,7 @@ Kuchyně, ložnice, koupelna, terasa. Terasa je příplatek 40 000 Kč.
 
 ## Časté dotazy
 typ: faq
-Je 400 000 Kč hotový dům? | Ne, hrubá stavba. Kuchyň, koupelna, elektroinstalace, topení ani terasa v ní nejsou.
+Je 399 000 Kč hotový dům? | Ne. Je v tom hrubá stavba a elektroinstalace. Kuchyň, koupelna, topení ani terasa v ní nejsou.
 Dá se dům odvézt jinam? | Ano, složí se stejně, jako přijel. Cenu stěhování neuvádíme.
 
 ## Chcete dům na svůj pozemek?
