@@ -38,10 +38,19 @@ for (const v of volby) {
 }
 
 // Druhý směr: co tvrdí báze, musí existovat. Bez toho projdou i ceny zrušených položek.
+// Nejnižší objednatelná cena: základ plus povinné skupiny. Konfigurátor bez nich
+// sestavu nepustí, takže tohle číslo web inzeruje jako „od“. Není to položka, je to součet.
+let minimum = zaklad ? Number(zaklad[1]) : 0;
+for (const g of konfig.matchAll(/\{[^{}]*?required:\s*true[\s\S]*?options:\s*\[([\s\S]*?)\]/g)) {
+  const ceny = [...g[1].matchAll(/price:\s*(\d+)/g)].map(m => Number(m[1]));
+  if (ceny.length) minimum += Math.min(...ceny);
+}
+
 const znameCastky = new Set([
   ...volby.map(v => cislo(v.cena)),
   cislo(zaklad ? zaklad[1] : 0),
-  '70 000',
+  cislo(minimum),
+  '100 000',   // Flexi Office, mimo konfigurátor (Tomáš 10. 9. 2026)
   '90 000',
   '80 000'
 ]);

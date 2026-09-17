@@ -133,6 +133,13 @@ pro nákladní auto s jeřábem, přípojky vody, elektřiny a odpadu si zajiš�
   pokyn. Žije jen krátká `/cena` ze šablony. Zálohová větev `zaloha-main-cenik` zůstává.
 - `flexi-family.html` a `mini-house.html` smazány, staré adresy vede 301 v `_redirects`.
 
+## Rozhodnutí 8. 9. 2026
+
+- **`/dum-na-miru` postavena** z produktové šablony, 741 slov. Katalog měl tři modely,
+  ale jen dva z nich měly stránku. Není to další tenká podstránka: proti `/rozkladaci-dum`
+  (produkt) a `/cena` (celý ceník) stojí na volbách, mřížka čtrnácti vzorků fasády je jen tady.
+- Cíl „zhruba 900 slov“ na ni neplatí, platí délka šablony podle rozhodnutí z 5. 9.
+
 ## Co do fronty nepatří a proč
 
 - **Tiny house** (320/měs). Ten produkt neděláte.
@@ -141,7 +148,11 @@ pro nákladní auto s jeřábem, přípojky vody, elektřiny a odpadu si zajiš�
 - **Samostatné stránky na technické dotazy** typu „modulární dům zateplení" nebo
   „kontejnerový dům rozměry". Změřená nula hledání. Patří jako sekce do existujících stránek.
 - **Cizojazyčné mutace.** Dodáváte po ČR.
-- **Blog.** Ani modulstav, ani q-construct ho nemají a rankují. Až po bodech 1 až 6.
+- **Blog.** Ani modulstav, ani q-construct ho nemají a rankují. Body 1 až 6 jsou od 5. 9.
+  hotové, takže tahle brzda padla, ale měření z 13. 9. dalo lepší důvod počkat: devět
+  obsahových stránek dělá 575 zobrazení týdně a deset prokliků, protože většinu těch
+  zobrazení tvoří značkové sitelinky a na oborových dotazech visí stránky na 14. až 37.
+  pozici. Blog by vyrobil další takové. Podrobně v `MERENI-2026-09-13.md`.
 - **Rozsekat produkt na desítky podstránek** jako levnykontejner (44 českých stránek).
   Máte dva produkty a konfigurátor. Umělé dělení vyrobí tenké skoro shodné stránky.
 

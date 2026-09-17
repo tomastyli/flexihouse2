@@ -34,3 +34,6 @@ _3d-zdroj/
 /q.html
 /fh.html
 /dis.html
+
+# Syrové přepisy sessionů, do repa nepatří
+.docs/session-konfigurator/prepis.md

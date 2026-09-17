@@ -139,6 +139,32 @@ Změřeno po opravě na 375 px: kontrast v heru h1 **6,42**, cena **5,62**,
 mikrotext **6,16**; claim se 60% překryvem **6,81**. Žádné přetečení na žádné
 z jedenácti stránek dávky.
 
+### `/konfigurator` zůstal na Bricolage, a proč jsem to nespravil
+
+Po nasazení 15. 9. je to **jediná stránka webu, která nejede na Archivu**.
+Odkazuje na `flexi.css?v=35` a předepisuje si `bricolage-*.woff2`.
+
+Zkusil jsem minimální opravu: vzít nasazenou verzi `konfigurator.html`, přepsat
+tři řádky (dva preloady fontu a verzi CSS) a nasadit jen to, bez přestavby.
+**Lokálně z toho vyšla patička vysoká 15 710 px** místo 765: `.duvera` narostla
+na 15 193 px a SVG hodnocení na tisíce pixelů.
+
+**Živý web je přitom v pořádku**, ověřeno i po tvrdém reloadu: `.duvera` 87 px,
+patička 765 px, SVG 16 až 26 px. A to i přesto, že `?v=35` po nasazení vrací
+už novou CSS (34 950 B), takže se stará kopie z cache nemůže uplatnit.
+
+**Příčinu jsem neurčil.** Vyloučil jsem: rozdíl v `flexi.css` (md5 sedí lokálně
+i naostro), rozdíl v pravidlech pro `.duvera`, `.hodn` a `svg` (shodná v obou
+verzích) a rozeditovanou `flexi-konfigurator.css` (po jejím vrácení na nasazenou
+verzi zůstala `.duvera` pořád 15 193). Lokální prostředí tenhle případ neumí
+věrně reprodukovat, protože v pracovní kopii leží nedodělaná přestavba
+konfigurátoru rozložená mezi `konfigurator.html` (132/1319 řádků)
+a `assets/flexi-konfigurator.css` (50/20).
+
+**Nenasazovat naslepo.** Oprava fontu na `/konfigurator` má počkat na dávku
+s přestavbou konfigurátoru, která už Archivo i novou verzi CSS obsahuje, a která
+se dá ověřit jako celek. Do té doby je `/konfigurator` odlišný, ale funkční.
+
 ### Co na Office schválně ještě není
 
 1. **Vizualizace zevnitř.** Dnes je na stránce `img/office-interier.webp` a stránka

@@ -41,24 +41,37 @@ def ldjson(f):
     return out
 
 
-# 1) Cena „od": web nesmí slibovat 400 000, konfigurátor umí nejméně 405 000
+# 1) Cena „od": web nesmí slibovat 400 000, konfigurátor umí nejméně 410 000
 for f in STRANKY + [BAZE, GBP]:
     for m in re.finditer(r"[Oo]d 400 000|400 000 Kč bez DPH za hrubou", raw(f)):
-        chyby.append(f"{f}: „od 400 000“, konfigurátor dává nejméně 405 000 (základ 400 000 + elektroinstalace 5 000)")
+        chyby.append(f"{f}: „od 400 000“, konfigurátor dává nejméně 410 000 (základ 400 000 + povinná elektroinstalace 10 000)")
 
-# 2) Schéma: cena domu ve strukturovaných datech = 405000, kancelář 70000
+# 2) Schéma: cena domu ve strukturovaných datech = nejnižší objednatelná, kancelář 100000
+#    (Flexi Office potvrdil Tomáš 10. 9. 2026 jako 100 000, dřív tu bylo 70 000)
 for f in STRANKY:
     for x in ldjson(f):
         items = [x] if x.get("@type") == "Product" else []
         if x.get("@type") == "ItemList":
             items = [li.get("item", {}) for li in x.get("itemListElement", [])]
         for p in items:
-            cena = str(p.get("offers", {}).get("price", ""))
+            of = p.get("offers", {})
+            # stránky používají AggregateOffer s lowPrice, ne price. Dřív se tu četlo jen
+            # "price", takže kontrola vždycky viděla prázdno a tiše procházela.
+            cena = str(of.get("price", of.get("lowPrice", "")))
             jm = p.get("name", "")
-            if "Office" in jm and cena != "70000":
-                chyby.append(f"{f}: schéma {jm!r} má cenu {cena}, má být 70000")
-            if "Office" not in jm and cena and cena != "405000":
-                chyby.append(f"{f}: schéma {jm!r} má cenu {cena}, má být 405000")
+            if "Office" in jm and cena != "100000":
+                chyby.append(f"{f}: schéma {jm!r} má cenu {cena}, má být 100000")
+            if "Office" not in jm and cena and cena != "399000":
+                chyby.append(f"{f}: schéma {jm!r} má cenu {cena}, má být 399000")
+
+# 2b) Cena kanceláře i v běžném textu, ne jen ve schématu. Tohle tu chybělo a proto
+#     v častých dotazech přežilo 70 000, když už web jinde psal 100 000.
+OFFICE_CENA = "100 000"
+for f in STRANKY + [BAZE, GBP]:
+    t = raw(f)
+    for m in re.finditer(r"Office[^.]{0,120}?od (\d{1,3}(?: \d{3})+) K\u010d", t):
+        if m.group(1) != OFFICE_CENA:
+            chyby.append(f"{f}: u Flexi Office je v textu {m.group(1)} K\u010d, m\u00e1 b\u00fdt {OFFICE_CENA} K\u010d")
 
 # 3) Topení: dodává se „klimatizace, která topí i chladí“, ne tepelné čerpadlo
 for f in STRANKY + [BAZE, GBP]:
@@ -79,14 +92,24 @@ for f in STRANKY:
 
 # 6) Každá částka na webu musí být cena z konfigurátoru, hranice jeho rozpětí, nebo součet
 #    jeho položek. Konfigurátor je jediný zdroj pravdy pro ceny (Tomáš 5. 9. 2026).
-KONF = open("konfigurator.html", encoding="utf-8").read()
+# Ceník se 10. 9. 2026 přesunul z konfigurator.html do sdíleného
+# assets/flexi-konfig-data.js. Od 13. 9. 2026 je celý konfigurátor postavený
+# nad ním, ve stránce už žádná čísla nezůstala.
+KONF = open("assets/flexi-konfig-data.js", encoding="utf-8").read()
 ceny = {}
 for m in re.finditer(r"\{[^{}]*?id\s*:\s*'([^']+)'[^{}]*?price\s*:\s*(\d+)[^{}]*\}", KONF):
     ceny[m.group(1)] = int(m.group(2))
 ZAKLAD = int(re.search(r"base\s*:\s*(\d+)", KONF).group(1))
-ROZPETI = {int(x.replace(" ", "")) for x in re.findall(r"(\d{2,3} \d{3}) Kč", re.search(r"FROM_NOTE = '([^']*)'", KONF).group(1))}
+# Rozpětí u položek s „od“ (patky, montáž) stojí v popisu té položky v ceníku.
+# Dřív se četla z FROM_NOTE ve stránce, ta zanikla s krokovým průvodcem.
+ROZPETI = {int(x.replace(" ", "").replace("\u00a0", ""))
+           for m in re.finditer(r"from\s*:\s*true", KONF)
+           for x in re.findall(r"(\d{2,3} \d{3}) Kč",
+                               KONF[max(0, m.start() - 700):m.start()])}
+if not ROZPETI:
+    raise SystemExit("konzistence: nenašel jsem rozpětí u položek s „od“ v ceníku")
 KM = int(re.search(r"perKm\s*:\s*(\d+)", KONF).group(1))
-POVOLENE = set(ceny.values()) | ROZPETI | {ZAKLAD, KM, 70000, 2000000, 4000000}  # 70 000 = Flexi Office (mimo konfigurátor), 2 000 000 a 4 000 000 = stropy pokut v zákoně
+POVOLENE = set(ceny.values()) | ROZPETI | {ZAKLAD, KM, 100000, 2000000, 4000000}  # 100 000 = Flexi Office (mimo konfigurátor), 2 000 000 a 4 000 000 = stropy pokut v zákoně
 # součty: základ + libovolná podmnožina položek (dekory jsou jedna položka, mají stejnou cenu);
 # stejná cena může být v součtu vícekrát (koupelna 30 000 i zimní zateplení 30 000)
 import itertools

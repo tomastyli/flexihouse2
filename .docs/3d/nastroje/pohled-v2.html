@@ -1,0 +1,16 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>Pohled v2</title>
+<style>body{margin:0;background:#111820}.s{position:relative;width:1200px;height:800px}canvas{position:absolute;inset:0;width:100%;height:100%}</style>
+</head><body>
+<div class="s"><canvas id="c" data-vyska="ramec"></canvas></div>
+<script>window.requestAnimationFrame=function(cb){return setTimeout(function(){cb(performance.now());},16);};</script>
+<script>document.write('<scr'+'ipt src="../../../assets/flexi-3d-v2.js?v='+Date.now()+'"><\/scr'+'ipt>');</script>
+<script>
+var q=new URLSearchParams(location.search);
+var V=Flexi3D.vytvor(document.getElementById('c'),{pomer:0.667,zaklad:'../../../',studio:q.get('studio')||'tmave'});
+var s={roof:q.get('roof')||'flat',facade:q.get('facade')||'wood',
+ terrace:q.get('terrace')==='1',heat:q.get('heat')||'none',
+ pohled:q.get('pohled')||'ven',misto:parseInt(q.get('m')||'0',10),
+ kuchyn:q.get('kuchyn')!=='0',koupelna:q.get('koupelna')!=='0'};
+['patky','site','schody','zabradli','zavesy'].forEach(function(k){if(q.get(k))s[k]=q.get(k)==='1';});
+V.nastav(s);
+</script></body></html>

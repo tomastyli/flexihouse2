@@ -1,24 +1,24 @@
 # Kolik stojí modulární dům
-Od 400 000 Kč bez DPH za hrubou stavbu. Dopravu, patky a montáž počítáme podle pozemku.
+Od 399 000 Kč bez DPH za hrubou stavbu s elektroinstalací. Dopravu, patky a montáž počítáme podle pozemku.
 
 ## Co je a co není v ceně
 typ: dva-sloupce
 
-**V ceně 400 000 Kč bez DPH**
-Nosná konstrukce, hliníková okna s dvojskly, dveře, fasádní obklad (dřevěný, šedý nebo černý), zateplení 75 mm, plochá střecha.
+**V ceně 399 000 Kč bez DPH**
+Nosná konstrukce, hliníková okna s dvojskly, dveře, fasádní obklad (dřevěný, šedý nebo černý), zateplení 75 mm, plochá střecha, elektroinstalace.
 
 **V ceně není**
 Koupelna, kuchyňská linka, vytápění, terasa, schody, doprava, patky ani montáž.
 
-Elektroinstalaci za 5 000 Kč počítáme do každé sestavy. Nejnižší cena domu je proto 405 000 Kč bez DPH.
+Elektroinstalace je v základní ceně. Nejlevnější dosažitelná sestava je proto přesně 399 000 Kč bez DPH.
 
 ## Tři sestavy
 typ: tabulka
 
 | Sestava | Cena bez DPH |
-| Hrubá stavba s elektroinstalací | 405 000 Kč |
-| S koupelnou, linkou a klimatizací | 474 000 Kč |
-| Navíc zimní zateplení, terasa a schody | 570 661 Kč |
+| Hrubá stavba s elektroinstalací | 399 000 Kč |
+| S koupelnou, linkou a klimatizací | 483 000 Kč |
+| Navíc terasa a schody | 546 000 Kč |
 
 Bez prací na pozemku.
 
@@ -26,14 +26,13 @@ Bez prací na pozemku.
 typ: galerie
 
 1. Elektroinstalace a klimatizace, 34 000 Kč.
-2. Kuchyňská linka, 10 000 Kč.
+2. Kuchyňská linka, 25 000 Kč.
 3. Krytá terasa, 40 000 Kč. V základní ceně není.
 
 ## Ceník příplatků
 typ: tabulka
 
 | Položka | Cena bez DPH |
-| Elektroinstalace (v každé sestavě) | 5 000 Kč |
 | Kuchyňská linka | 25 000 Kč |
 | Koupelna, sprchový kout a WC | 30 000 Kč |
 | Klimatizace s montáží, topí i chladí | 29 000 Kč |
