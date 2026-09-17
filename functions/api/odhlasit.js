@@ -6,8 +6,19 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
-    const data = await request.json();
-    const kod = String(data.kod || '').trim().toLowerCase();
+    // Dvě cesty. Stránka /odhlasit posílá JSON. Poštovní klient při
+    // jednoklikovém odhlášení podle RFC 8058 pošle formulářové tělo na adresu
+    // z hlavičky List-Unsubscribe, kód je pak v dotazu. Bez téhle větve by
+    // tlačítko „Odhlásit“ v Gmailu tiše selhalo.
+    let kod = '';
+    const typ = request.headers.get('Content-Type') || '';
+    if (typ.includes('application/json')) {
+      const data = await request.json();
+      kod = String(data.kod || '');
+    } else {
+      kod = new URL(request.url).searchParams.get('kod') || '';
+    }
+    kod = kod.trim().toLowerCase();
 
     if (!KOD.test(kod)) {
       return json({ ok: false, error: 'Odkaz na odhlášení je neúplný. Zkuste ho zkopírovat z e-mailu celý.' }, 400);
