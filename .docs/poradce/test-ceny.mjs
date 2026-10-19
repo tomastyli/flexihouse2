@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const zde = dirname(fileURLToPath(import.meta.url));
 const baze = readFileSync(join(zde, 'baze.md'), 'utf8');
-const konfig = readFileSync(join(zde, '..', '..', 'konfigurator.html'), 'utf8');
+const konfig = readFileSync(join(zde, '..', '..', 'assets', 'flexi-konfig-data.js'), 'utf8');
 
 const chyby = [];
 const cislo = (n) => Number(n).toLocaleString('cs-CZ').replace(/ /g, ' ');

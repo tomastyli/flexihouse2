@@ -41,7 +41,7 @@ Vy: přípojky vody, elektřiny a odpadu, povolení stavby, kolaudace a projekto
 ## Práce na pozemku
 typ: tabulka
 
-| Položka | Poznámka | Cena včetně DPH |
+| Položka | Poznámka | Cena bez DPH |
 | Betonové patky | podle podloží a počtu patek | 50 000 až 90 000 Kč |
 | Doprava a usazení | plus 100 Kč za kilometr z výroby | 20 000 Kč |
 | Montáž domu | podle náročnosti sestavení | 30 000 až 80 000 Kč |
@@ -49,10 +49,10 @@ typ: tabulka
 
 Pozemek potřebuje rovnou plochu a příjezd pro nákladní auto s jeřábem. Klasické základy dům nepotřebuje.
 
-## Dvojí režim DPH
+## DPH
 typ: text
 
-Dům a vybavení uvádíme bez DPH. Práce na pozemku a sítě do oken včetně DPH. Nesčítejte to dohromady, dokud nemáte nabídku, ve které je to srovnané.
+Všechny ceny uvádíme bez DPH, dům, vybavení i práce na pozemku.
 
 Sazbu paušálně neuvádíme. Řídí se tím, k čemu bude stavba povolená, a to se rozhoduje případ od případu. Potvrdíme ji v nabídce, kterou posíláme do 24 hodin.
 

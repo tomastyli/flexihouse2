@@ -153,7 +153,7 @@ function buildPdfDoc(K) {
     sectionTitle(step.title);
     rows.forEach((o) => {
       const p = K.optPrice(o);
-      line(K.optLabel(o), p > 0 ? '+ ' + (o.from ? 'od ' : '') + K.fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '') : (o.cenaText || 'v ceně'), p > 0);
+      line(K.optLabel(o), p > 0 ? '+ ' + (o.from ? 'od ' : '') + K.fmtPrice(p) : (o.cenaText || 'v ceně'), p > 0);
     });
     y += 7;
   });
@@ -162,10 +162,10 @@ function buildPdfDoc(K) {
   openSection = null;
   room(130);
   sectionTitle('Rekapitulace ceny');
-  line('Dům a vybavení (bez DPH)', K.fmtPrice(T.net), true);
-  if (T.gross > 0) line('Práce na pozemku (vč. DPH)', K.fmtPrice(T.gross), true);
+  line('Celkem bez DPH', K.fmtPrice(T.total), true);
   const TO = najdiDopravu(K.MODEL);
   if (K.transportKm() > 0 && TO) line('Z toho doprava, ' + K.transportKm() + ' km tam i zpět po ' + TO.perKm + ' Kč', K.fmtPrice(K.ujeteKm() * TO.perKm), false);
+  T.sDph.forEach((d) => line('S DPH ' + d.sazba + ' %, ' + d.popis, K.fmtPrice(d.castka), true));
   openSection = null;
   y += 9;
   room(70);
@@ -173,7 +173,7 @@ function buildPdfDoc(K) {
   doc.rect(M, y, CW, 54, 'S');
   body(false); doc.setFontSize(8); ink(PDF.blue);
   doc.setCharSpace(0.9);
-  doc.text('ORIENTAČNÍ CENA CELKEM', M + 18, y + 22);
+  doc.text('ORIENTAČNÍ CENA BEZ DPH', M + 18, y + 22);
   doc.setCharSpace(0);
   doc.setFontSize(7.5);
   doc.text('Sazbu DPH podle využití stavby potvrdíme v nabídce', M + 18, y + 37);
@@ -198,7 +198,7 @@ function buildPdfDoc(K) {
     y += boxH + 16;
   }
 
-  const note = 'Tento dokument je orientační a nezávazný. Dům a jeho vybavení uvádíme bez DPH, sazba DPH se řídí využitím stavby a potvrdíme ji v nabídce. Práce na pozemku, tedy doprava, usazení, betonové patky, montáž a sítě do oken, jsou uvedené včetně DPH. U položek s cenou od počítáme spodní hranici: betonové patky vyjdou podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na 30 000 až 80 000 Kč. Cena nezahrnuje přípravu pozemku ani přípojky, připojení na sítě ani vyřízení povolení neděláme. Vygenerováno konfigurátorem na flexihouse.cz.';
+  const note = 'Tento dokument je orientační a nezávazný. Všechny ceny uvádíme bez DPH, sazba DPH se řídí využitím stavby a potvrdíme ji v nabídce. U položek s cenou od počítáme spodní hranici: betonové patky vyjdou podle podloží a počtu patek na 50 000 až 90 000 Kč, montáž podle náročnosti sestavení na 30 000 až 80 000 Kč. Cena nezahrnuje přípravu pozemku ani přípojky, připojení na sítě ani vyřízení povolení neděláme. Vygenerováno konfigurátorem na flexihouse.cz.';
   body(false); doc.setFontSize(7.5);
   const noteLines = doc.splitTextToSize(note, CW);
   room(noteLines.length * 10 + 12);

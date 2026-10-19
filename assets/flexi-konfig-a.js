@@ -495,11 +495,11 @@ function souhrnHtml() {
   });
   h += '</div>';
   h += '<div class="sh__soucet">' +
-    '<p class="sh__radek"><span>Dům a vybavení bez DPH</span><b class="cislo">' + esc(J.fmtPrice(t.net)) + '</b></p>';
-  if (t.gross > 0) {
-    h += '<p class="sh__radek"><span>Práce na pozemku včetně DPH</span><b class="cislo">' + esc(J.fmtPrice(t.gross)) + '</b></p>';
-  }
-  h += '<div class="sh__celkem"><span>Celkem</span><b>' + esc(J.fmtPrice(t.total)) + '</b></div></div>';
+    '<div class="sh__celkem"><span>Celkem bez DPH</span><b>' + esc(J.fmtPrice(t.total)) + '</b></div>' +
+    '<div class="sh__dph">' + t.sDph.map(function (d) {
+      return '<p class="sh__radek"><span>S DPH ' + d.sazba + ' %, ' + d.popis + '</span><b class="cislo">' + esc(J.fmtPrice(d.castka)) + '</b></p>';
+    }).join('') +
+    '<p class="sh__dph-pozn">Která sazba platí, záleží na využití stavby. Potvrdíme ji v nabídce.</p></div></div>';
   h += '<div class="sh__nastroje">' +
     '<button type="button" class="odkaz" id="btnUloz">Uložit konfiguraci</button>' +
     '<button type="button" class="odkaz" id="btnPdf">Stáhnout PDF</button>' +
@@ -734,8 +734,8 @@ function obnovPatku() {
   if (soucetBox) soucetBox.hidden = jeSouhrn;
   var maOd = t.items.some(function (i) { return i.from; });
   document.getElementById('pozn').textContent = maOd
-    ? 'Dům a vybavení bez DPH. U položek s „od“ počítáme spodní hranici, přesnou cenu potvrdíme v nabídce.'
-    : 'Dům a vybavení bez DPH. Finální cenu potvrdíme v nabídce.';
+    ? 'Všechny ceny jsou bez DPH. U položek s „od“ počítáme spodní hranici, přesnou cenu potvrdíme v nabídce.'
+    : 'Všechny ceny jsou bez DPH. Finální cenu potvrdíme v nabídce.';
 
   var zpet = document.getElementById('btnZpet');
   var dal = document.getElementById('btnDal');

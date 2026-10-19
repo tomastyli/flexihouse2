@@ -78,7 +78,8 @@ for f in STRANKY + [BAZE, GBP]:
     if re.search(r"tepeln\w+ čerpadl", raw(f)):
         chyby.append(f"{f}: „tepelné čerpadlo“, konfigurátor i báze říkají „klimatizace, topí i chladí“")
 
-# 4) DPH: žádné konkrétní sazby, sazbu potvrzuje nabídka
+# 4) DPH: na stránkách žádné konkrétní sazby, sazbu potvrzuje nabídka. Součet s 12 % a 21 %
+#    ukazuje jen konfigurátor, skládá ho jádro v JS (zadání 19. 10. 2026).
 for f in STRANKY:
     if re.search(r"\b(12|21) ?% ", raw(f)) and "DPH" in raw(f):
         for m in re.finditer(r".{40}\b(12|21) ?%.{40}", raw(f)):

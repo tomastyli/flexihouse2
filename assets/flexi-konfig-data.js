@@ -87,10 +87,10 @@ function addonGroup() {
     { key:'addons', title:'Doplňky a služby', type:'multi', required:false, hint:'Vyberte libovolný počet', kmFor:'transport', options:[
       { id:'terrace',    label:'Terasa', desc:'Krytý prostor pro posezení venku.', icon:'deck', price:40000, foto:'terasa' },
       { id:'stairs',     label:'Schody', desc:'Vstupní schodiště k domu, který stojí na patkách.', icon:'stairs', price:23000, foto:'schody' },
-      { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000, vat:'incl' },
-      { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, vat:'incl', from:true },
-      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem. Kilometry se počítají tam i zpět, souprava se musí vrátit.', icon:'truck', price:20000, perKm:100, vat:'incl', badge:'Doporučeno' },
-      { id:'assembly',   label:'Montáž domku', desc:'Rozložení a kompletace domu na pozemku. Podle náročnosti sestavení vyjde na 30 000 až 80 000 Kč.', icon:'tool', price:30000, vat:'incl', from:true }
+      { id:'nets',       label:'Sítě do oken', desc:'Sítě proti hmyzu do všech oken.', icon:'window', price:10000 },
+      { id:'footings',   label:'Betonové patky', desc:'Základové patky pod dům včetně provedení. Podle podloží a počtu patek vyjdou na 50 000 až 90 000 Kč.', icon:'layers', price:50000, from:true },
+      { id:'transport',  label:'Doprava na místo a usazení', desc:'Dovezeme dům na váš pozemek a usadíme ho jeřábem. Kilometry se počítají tam i zpět, souprava se musí vrátit.', icon:'truck', price:20000, perKm:100, badge:'Doporučeno' },
+      { id:'assembly',   label:'Montáž domku', desc:'Rozložení a kompletace domu na pozemku. Podle náročnosti sestavení vyjde na 30 000 až 80 000 Kč.', icon:'tool', price:30000, from:true }
     ]}
   ];
 }
@@ -111,7 +111,7 @@ const MODELS = {
       ]},
       { title:'Exteriér', micro:'Vzhled a opláštění domu: střecha, fasáda a zasklení. Základní obklad, okna i dveře jsou v ceně, dekor fasády je příplatek.', groups: exteriorGroups() },
       { title:'Interiér a technologie', micro:'Vybavení, izolace, elektroinstalace a vytápění. Ceny jsou bez DPH, u klimatizace je v ceně i montáž.', groups: interiorGroups() },
-      { title:'Doplňky a služby', micro:'Volitelné. Doprava, usazení, patky a montáž jsou práce na pozemku, u nich uvádíme ceny včetně DPH. Připojení na sítě ani vyřízení povolení neděláme.', groups: addonGroup() }
+      { title:'Doplňky a služby', micro:'Volitelné. Ceny jsou bez DPH. Připojení na sítě ani vyřízení povolení neděláme.', groups: addonGroup() }
     ]
   }
 };

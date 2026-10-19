@@ -53,7 +53,7 @@ je hrubá stavba s elektroinstalací. Když se někdo ptá na cenu, tohle je pot
 | Vstupní schody | 23 000 Kč |
 | Podlaha | 25 000 Kč |
 | Závěsy a záclony | 20 000 Kč |
-| Sítě do oken | 10 000 Kč včetně DPH |
+| Sítě do oken | 10 000 Kč |
 | Betonové patky | od 50 000 Kč, podle podloží až 90 000 Kč |
 | Doprava na místo a usazení | 20 000 Kč a k tomu 100 Kč za kilometr |
 | Montáž domku | od 30 000 Kč, podle náročnosti až 80 000 Kč |
@@ -79,7 +79,7 @@ Dekorový panel navíc přidává 15 mm izolace k základním 75 mm.
 Vzorky dekorů jsou vidět v konfigurátoru, poradce na něj odkazuje. **Tloušťku zateplení
 u panelu poradce NEŘÍKÁ**, tu potvrdí Dan.
 
-Ceny domu a vybavení jsou bez DPH, práce na pozemku včetně DPH. Konečnou cenu potvrzuje
+Všechny ceny jsou bez DPH, dům, vybavení i práce na pozemku. Konečnou cenu potvrzuje
 Dan v nabídce, poradce ji nikdy nesmí prezentovat jako závaznou.
 
 ## Celoroční bydlení

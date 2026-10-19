@@ -297,7 +297,9 @@
 .kva .sh__soucet{margin-top:16px;padding:20px;border-radius:var(--r-karta);background:var(--ink);color:#fff}
 .kva .sh__soucet .sh__radek span:first-child{color:rgba(255,255,255,.7)}
 .kva .sh__soucet .sh__radek b{color:#fff}
-.kva .sh__celkem{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+.kva .sh__celkem{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.kva .sh__dph{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18)}
+.kva .sh__dph-pozn{margin-top:6px;font-size:12px;line-height:1.5;color:rgba(255,255,255,.6)}
 .kva .sh__celkem span{font-size:14px;color:rgba(255,255,255,.7)}
 .kva .sh__celkem b{font-family:'Archivo',system-ui,sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 

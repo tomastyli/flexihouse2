@@ -28,13 +28,13 @@ Vstupní schody | 23 000 Kč
 Dekor fasády místo obkladu | 23 600 Kč
 Sedlová střecha | 90 000 Kč
 
-## Ceny včetně DPH
+## Práce na pozemku, bez DPH
 typ: tabulka
 Patky | 50 000 až 90 000 Kč
 Doprava a usazení | 20 000 Kč a 100 Kč za kilometr
 Montáž | 30 000 až 80 000 Kč
 Sítě do oken | 10 000 Kč
-Dům a vybavení bez DPH, práce na pozemku včetně DPH, nesčítejte je. Sazbu potvrdíme v nabídce.
+Všechny ceny jsou bez DPH. Sazbu potvrdíme v nabídce.
 
 ## Co neděláme
 typ: text

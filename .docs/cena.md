@@ -41,14 +41,14 @@ typ: tabulka
 | Dekor fasády, 11 provedení místo obkladu | 23 600 Kč |
 | Sedlová střecha místo ploché | 90 000 Kč |
 | Reflexní zasklení, teď bez příplatku | 0 Kč |
-| Sítě do oken, cena včetně DPH | 10 000 Kč |
+| Sítě do oken | 10 000 Kč |
 
 Sestavu si naklikáte v [konfigurátoru](/konfigurator). Ceny jsou orientační, závaznou potvrdíme v nabídce.
 
 ## Co přibude na pozemku
 typ: tabulka
 
-| Práce | Cena včetně DPH |
+| Práce | Cena bez DPH |
 | Doprava a usazení | 20 000 Kč a 100 Kč za kilometr |
 | Betonové patky podle podloží | 50 000 až 90 000 Kč |
 | Montáž | 30 000 až 80 000 Kč |
@@ -56,10 +56,10 @@ typ: tabulka
 
 Konfigurátor počítá u patek i montáže spodní hranici. Přesné číslo dáme, až uvidíme pozemek. Podmínky usazení jsou v [dopravě a montáži](/doprava-a-montaz).
 
-## Bez DPH a s DPH
+## DPH
 typ: text
 
-Dům a vybavení uvádíme bez DPH, práce na pozemku včetně DPH. Oba režimy nesčítáme do jednoho čísla. Sazbu potvrdíme v nabídce, řídí se využitím stavby.
+Všechny ceny uvádíme bez DPH, dům, vybavení i práce na pozemku. Sazbu potvrdíme v nabídce, řídí se využitím stavby.
 
 ## Co si platíte jinde
 typ: dva-sloupce

@@ -34,7 +34,7 @@ oborových výrazech neexistuje bez ohledu na to, co postavíme.
 3. **Nic, co je v `.docs/poradce/baze.md` pod NEVÍME.** K 9/2026 to je délka výroby,
    financování, záruka, náklady na vytápění a zateplení dekorového panelu. Web a chatový
    poradce musí říkat totéž, jinak si web protiřečí sám se sebou.
-4. **Ceny bez DPH u domu a vybavení, práce na pozemku včetně DPH.** Nesčítat dohromady.
+4. **Všechny ceny bez DPH**, dům, vybavení i práce na pozemku (od 19. 10. 2026).
 5. Vzhled a jazyk podle `_navrh-D.html` a GOAL.md, viz zamčené barvy a písma.
 
 ---

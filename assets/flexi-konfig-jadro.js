@@ -25,9 +25,6 @@ function optPrice(o, km) {
   return o.price + (o.perKm ? o.perKm * ujeteKm(km) : 0);
 }
 
-function optVat(o) {
-  return o.vat === 'incl' ? 'incl' : 'excl';
-}
 
 function optLabel(o) {
   return o.kod ? o.label + ' (' + o.kod + ')' : o.label;
@@ -40,7 +37,7 @@ function optPriceLabel(o, km) {
   }
   var p = optPrice(o, km);
   if (p <= 0) return 'V základní ceně';
-  return '+ ' + (o.from ? 'od ' : '') + fmtPrice(p) + (o.vat === 'incl' ? ' vč. DPH' : '');
+  return '+ ' + (o.from ? 'od ' : '') + fmtPrice(p);
 }
 
 // Kroky průvodce mají skupiny, celoobrazovková verze bere skupinu i jako krok.
@@ -62,22 +59,30 @@ function selectedItems(MODEL, sel, km) {
       if (!o) return;
       items.push({
         group: g.title, label: optLabel(o), price: optPrice(o, km),
-        vat: optVat(o), from: !!o.from, key: g.key
+        from: !!o.from, key: g.key
       });
     });
   });
   return items;
 }
 
-// Položky s DPH v ceně se nesčítají se základem, který je bez DPH. Součet je
-// jejich prostý úhrn, rozdělení slouží k popiskům.
+// Ceny jsou bez DPH a sazba se řídí využitím stavby, proto zákazník vidí
+// součet s oběma sazbami (zadání 19. 10. 2026).
+var SAZBY_DPH = [
+  { sazba: 12, popis: 'bydlení' },
+  { sazba: 21, popis: 'podnikání' }
+];
+
+function sDph(castka) {
+  return SAZBY_DPH.map(function (s) {
+    return { sazba: s.sazba, popis: s.popis, castka: Math.round(castka * (100 + s.sazba) / 100) };
+  });
+}
+
 function totals(MODEL, sel, km) {
   var items = selectedItems(MODEL, sel, km);
-  var net = (MODEL.base || 0) + items.filter(function (i) { return i.vat !== 'incl'; })
-    .reduce(function (s, i) { return s + i.price; }, 0);
-  var gross = items.filter(function (i) { return i.vat === 'incl'; })
-    .reduce(function (s, i) { return s + i.price; }, 0);
-  return { net: net, gross: gross, total: net + gross, items: items };
+  var total = (MODEL.base || 0) + items.reduce(function (s, i) { return s + i.price; }, 0);
+  return { total: total, sDph: sDph(total), items: items };
 }
 
 // Tělo poptávky z konfigurátoru. Obě verze stránky ho musí skládat stejně,
@@ -94,10 +99,6 @@ function payload(MODEL, sel, km, kontakt, extra) {
     baseIncludes: MODEL.baseIncludes || [],
     total: t.total,
     totalFormatted: fmtPrice(t.total),
-    totals: {
-      net: t.net, netFormatted: fmtPrice(t.net),
-      vatIncluded: t.gross, vatIncludedFormatted: fmtPrice(t.gross)
-    },
     transportKm: transportKm(km),
     configuration: MODEL.steps.map(function (step) {
       return {
@@ -108,14 +109,14 @@ function payload(MODEL, sel, km, kontakt, extra) {
           idy.forEach(function (id) {
             var o = (g.options || []).find(function (x) { return x.id === id; });
             if (o) out.push({ group: g.title, value: optLabel(o), price: optPrice(o, km),
-              vat: optVat(o), from: !!o.from });
+              from: !!o.from });
           });
           return out;
         }, [])
       };
     }),
     summary: t.items.map(function (i) {
-      return { group: i.group, value: i.label, price: i.price, vat: i.vat, from: i.from };
+      return { group: i.group, value: i.label, price: i.price, from: i.from };
     }),
     contact: kontakt,
     kod: e.kod || null,
@@ -129,7 +130,6 @@ global.FlexiKonfigJadro = {
   transportKm: transportKm,
   ujeteKm: ujeteKm,
   optPrice: optPrice,
-  optVat: optVat,
   optLabel: optLabel,
   optPriceLabel: optPriceLabel,
   skupiny: skupiny,
