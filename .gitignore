@@ -37,3 +37,9 @@ _3d-zdroj/
 
 # Syrové přepisy sessionů, do repa nepatří
 .docs/session-konfigurator/prepis.md
+
+.docs/sanon-google.env
+.docs/sanon-google-token.json
+
+.claude/sanon-dev.cjs
+.docs/sanon-hesla.txt

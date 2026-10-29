@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Šanon | Flexi House</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:'Instrument';font-weight:400 700;font-display:swap;src:url(fonts/instrument-ext-sub.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Instrument';font-weight:400 700;font-display:swap;src:url(fonts/instrument-lat-sub.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+:root{
+  --ink:#1d1c1d;--ink2:#454245;--muted:#616061;--line:#e0e0e0;--line2:#ebebeb;--hover:#f8f8f8;--bg:#f6f6f6;--card:#fff;
+  --top:#0f161c;--side:#16202a;--side-h:rgba(255,255,255,.08);--side-t:rgba(255,255,255,.82);--side-m:rgba(255,255,255,.52);
+  --blue:#5a7885;--blue-d:#476370;--blue-soft:#e6eef1;--link:#1264a3;
+  --red:#c0392b;--red-soft:#fdeceb;--green:#2f6b47;--green-soft:#e6f2ea;--amber:#8a5a10;--amber-soft:#fbf1df;
+  --w:260px;--h:44px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--card);color:var(--ink);font-family:'Instrument',system-ui,sans-serif;font-size:15px;line-height:1.46;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3{margin:0;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--link)}
+
+.app{display:grid;grid-template-rows:var(--h) 1fr;grid-template-columns:var(--w) 1fr;height:100dvh}
+.topbar{grid-column:1/-1;background:var(--top);display:flex;align-items:center;padding:0 12px;gap:10px;color:#fff}
+.topbar__l,.topbar__r{width:var(--w);display:flex;align-items:center;gap:8px;flex:none}
+.topbar__r{justify-content:flex-end;width:auto;margin-left:auto}
+.topbar__hledat{flex:1;max-width:720px;margin:0 auto;height:28px;border-radius:6px;background:rgba(255,255,255,.16);border:0;color:rgba(255,255,255,.85);display:flex;align-items:center;gap:8px;padding:0 10px;font-size:.84rem}
+.topbar__hledat:hover{background:rgba(255,255,255,.22)}
+.topbar__hledat svg{width:14px;height:14px;flex:none}
+.topbar__hledat kbd{margin-left:auto;font-family:inherit;font-size:.72rem;opacity:.6}
+.topbar .ib{color:rgba(255,255,255,.8)}
+.topbar .ib:hover{background:rgba(255,255,255,.12);color:#fff}
+
+.ib{border:0;background:none;width:32px;height:32px;border-radius:6px;display:inline-grid;place-items:center;color:var(--muted);padding:0;cursor:pointer;flex:none}
+.ib:hover{background:var(--line2);color:var(--ink)}
+.ib svg{width:18px;height:18px}
+
+.side{background:var(--side);color:var(--side-t);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid rgba(255,255,255,.06)}
+.ws{display:flex;align-items:center;gap:8px;padding:10px 12px 8px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.ws__n{font-weight:700;font-size:1.05rem;color:#fff;display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.ws__n svg{width:14px;height:14px;opacity:.7}
+.ws .ib{background:#fff;color:var(--side);border-radius:50%;width:30px;height:30px}
+.ws .ib svg{width:15px;height:15px}
+.ws .ib:hover{background:#eee}
+.side__scroll{flex:1;overflow:auto;padding:8px 0 12px}
+.sek{margin-top:14px}
+.sek__h{display:flex;align-items:center;gap:4px;padding:3px 10px 3px 12px;color:var(--side-m);font-size:.9rem;width:100%;border:0;background:none;text-align:left;border-radius:6px}
+.sek__h:hover{color:#fff}
+.sek__h svg{width:12px;height:12px;transition:transform .15s}
+.sek.je-sbalena .sek__h svg{transform:rotate(-90deg)}
+.sek__h .n{margin-left:auto;font-size:.78rem;opacity:.8}
+.sek.je-sbalena .kan{display:none}
+.sek.je-sbalena .kan.je-on,.sek.je-sbalena .kan.je-nove{display:flex}
+.kan{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 22px;color:var(--side-t);background:none;border:0;text-align:left;width:calc(100% - 16px);margin:0 8px;font-size:.95rem;min-height:30px;border-radius:6px}
+.kan:hover{background:var(--side-h);color:#fff}
+.kan.je-on{background:var(--blue);color:#fff}
+.kan.je-nove{color:#fff;font-weight:700}
+.kan.je-pozor{color:#fff}
+.kan svg{width:16px;height:16px;flex:none;opacity:.9}
+.kan .pre{width:16px;display:grid;place-items:center;flex:none;font-size:.95rem;opacity:.7}
+.kan .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kan .poc{font-size:.74rem;background:#cd2553;color:#fff;padding:1px 7px;border-radius:12px;font-weight:700;min-width:20px;text-align:center;font-variant-numeric:tabular-nums}
+.kan.je-on .poc{background:#fff;color:var(--blue-d)}
+.kan .poc--sv{background:rgba(255,255,255,.2)}
+.kan .vyk{width:8px;height:8px;border-radius:50%;background:#e8a33d;flex:none;box-shadow:0 0 0 2px var(--side)}
+.kan .maj{font-size:.68rem;font-weight:700;opacity:.55;letter-spacing:.02em}
+.side__ja{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-top:1px solid rgba(255,255,255,.08);position:relative}
+.side__ja .ava{width:26px;height:26px;font-size:.66rem}
+.side__ja .tec{position:absolute;left:34px;bottom:11px;width:9px;height:9px;border-radius:50%;background:#2bac76;border:2px solid var(--side)}
+.side__ja select{background:transparent;border:0;color:#fff;font-weight:600;width:100%;padding:2px 0;font-size:.95rem}
+.side__ja select option{color:var(--ink)}
+
+.hl{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--card)}
+.hl__top{display:flex;align-items:center;gap:8px;padding:0 16px;height:50px;border-bottom:1px solid var(--line2);flex:none}
+.hl__top h1{font-size:1.1rem;display:flex;align-items:center;gap:8px;min-width:0}
+.hl__top h1 span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hl__top h1 .ava{width:24px;height:24px;font-size:.62rem;border-radius:5px}
+.hl__sub{color:var(--muted);font-size:.84rem}
+.hl__end{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.hl__scroll{flex:1;overflow:auto;min-height:0}
+.hl__scroll--seda{background:var(--bg);padding:16px 20px}
+
+.pbtn{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:4px 10px;font-size:.84rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;min-height:30px;white-space:nowrap}
+.pbtn:hover{background:var(--hover)}
+.pbtn svg{width:13px;height:13px;color:var(--muted)}
+.pbtn .d{width:8px;height:8px;border-radius:50%}
+.d--novy{background:#8fb6c6}.d--jednani{background:#e0b35a}.d--nabidka{background:#9f8ad0}.d--zakazka{background:#4faa75}.d--predano{background:#9aa5ad}.d--ztraceno{background:#d0675e}
+.menu{position:absolute;z-index:40;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.14);min-width:220px;padding:6px;display:none}
+.menu.je-on{display:block}
+.menu__h{font-size:.74rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:6px 10px 4px}
+.menu button{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;text-align:left;padding:7px 10px;border-radius:6px;font-size:.92rem}
+.menu button:hover{background:var(--blue);color:#fff}
+.menu button .d{width:8px;height:8px;border-radius:50%}
+.menu button svg{width:14px;height:14px;margin-left:auto;opacity:0}
+.menu button[data-neni-zak] svg{margin-left:0;opacity:1}
+.menu button.je-on svg{opacity:1}
+
+.tema{display:flex;gap:6px 14px;flex-wrap:wrap;padding:7px 16px;border-bottom:1px solid var(--line2);font-size:.84rem;color:var(--muted);align-items:center;flex:none}
+.tema a{text-decoration:none;color:var(--link);font-weight:600}
+.tema b{color:var(--ink);font-weight:600}
+.tema .kroky{width:96px}
+.tema select{border:0;background:transparent;font-weight:700;color:var(--ink);padding:0 18px 0 0;appearance:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23616061' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right center/12px;cursor:pointer}
+.kroky{display:inline-flex;gap:2px;vertical-align:middle}
+.kroky i{flex:1;height:6px;border-radius:3px;background:#dcdcdc;min-width:10px}
+.kroky i.je-hotovo{background:var(--green)}
+.kroky i.je-ted{background:#e8a33d}
+.pozor{display:flex;gap:10px;align-items:center;padding:8px 16px;font-size:.86rem;border-bottom:1px solid var(--line2);flex:none;flex-wrap:wrap}
+.pozor--ticho{background:var(--red-soft);color:#8a2a21}
+.pozor--ukol{background:var(--amber-soft);color:var(--amber)}
+.pozor svg{width:16px;height:16px;flex:none}
+.pozor b{font-weight:700}
+.pozor .pbtn{margin-left:auto;background:rgba(255,255,255,.7)}
+.pozor .chk{width:18px;height:18px;border-radius:5px}
+
+.tok{padding:12px 0 8px}
+.den{display:flex;align-items:center;margin:14px 0 6px;position:relative}
+.den::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line2)}
+.den span{position:relative;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:3px 12px;font-size:.78rem;font-weight:700}
+.zpr{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:6px 20px 6px 16px;position:relative}
+.zpr:hover{background:var(--hover)}
+.zpr > div{min-width:0}
+.zpr .ava{width:36px;height:36px;border-radius:7px;font-size:.78rem}
+.zpr--kompakt{padding-top:2px;padding-bottom:2px}
+.zpr--kompakt .cas{font-size:.7rem;color:var(--muted);text-align:right;padding-top:5px;opacity:0;font-variant-numeric:tabular-nums}
+.zpr--kompakt:hover .cas{opacity:1}
+.zpr__hl{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;line-height:1.3}
+.zpr__hl b{font-weight:700}
+.zpr__hl time{font-size:.74rem;color:var(--muted)}
+.zpr__t{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
+.zpr__mail{margin-top:5px;border:1px solid var(--line);border-radius:8px;overflow:hidden;max-width:720px}
+.zpr__mail-h{display:flex;gap:8px;align-items:center;padding:7px 12px;background:var(--bg);border-bottom:1px solid var(--line2);font-size:.82rem;color:var(--muted)}
+.zpr__mail-h b{color:var(--ink);font-weight:700;font-size:.9rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.zpr__mail-h svg{width:14px;height:14px;flex:none}
+.zpr__mail-t{padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.zpr__mail .prilohy{padding:0 12px 10px;margin:0}
+.zpr__akce{position:absolute;right:16px;top:-12px;display:none;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:7px;padding:2px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.zpr:hover .zpr__akce{display:flex}
+.zpr__akce button{border:0;background:none;border-radius:5px;padding:4px 8px;font-size:.8rem;font-weight:600;display:inline-flex;gap:5px;align-items:center}
+.zpr__akce button:hover{background:var(--line2)}
+.zpr__akce svg{width:14px;height:14px}
+.zpr--sys{grid-template-columns:1fr;padding-left:62px;font-size:.84rem;color:var(--muted)}
+.zpr--sys b{color:var(--ink);font-weight:600}
+.pil{display:inline-flex;align-items:center;gap:5px;font-size:.75rem;font-weight:700;padding:1px 8px;border-radius:12px;background:var(--line2);color:var(--ink2);white-space:nowrap;vertical-align:middle}
+.pil svg{width:11px;height:11px}
+.pil--zajem{background:var(--green-soft);color:var(--green)}.pil--nezvedl{background:var(--amber-soft);color:var(--amber)}.pil--nezajem{background:var(--red-soft);color:var(--red)}.pil--zavolat{background:var(--blue-soft);color:var(--blue-d)}
+
+.ava{width:30px;height:30px;border-radius:6px;display:inline-grid;place-items:center;font-size:.7rem;font-weight:700;color:#fff;flex:none}
+.ava--tomas{background:#5a7885}.ava--honza{background:#8a6f45}.ava--dan{background:#3f7a5a}.ava--web{background:#2b3946}.ava--kl{background:#c9a26b}.ava--nikdo{background:#c7ccd1}.ava--claude{background:linear-gradient(135deg,#6a8f9e,#1f2b36)}
+.ava svg{width:16px;height:16px}
+
+.prilohy{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.sb{border:1px solid var(--line);padding:0;background:var(--card);border-radius:8px;overflow:hidden;cursor:pointer;text-align:left;display:flex;flex-direction:column;width:150px;max-width:100%}
+.sb:hover{border-color:#bbb}
+.sb__img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#e9e9e9}
+.sb__ik{width:100%;aspect-ratio:4/3;display:grid;place-items:center;background:var(--bg)}
+.sb__ik span{width:44px;height:54px;border-radius:4px;background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.14);display:grid;place-items:end center;padding-bottom:6px;font-size:.6rem;font-weight:800;letter-spacing:.04em;position:relative}
+.sb__ik span::before{content:"";position:absolute;top:0;right:0;border-style:solid;border-width:0 11px 11px 0;border-color:transparent var(--bg) transparent transparent}
+.pdf{color:#c0392b}.doc{color:#2b5797}.xls{color:#1f7244}.img{color:var(--blue)}
+.sb__n{padding:6px 9px 7px;font-size:.78rem;line-height:1.3}
+.sb__n b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb__n i{font-style:normal;color:var(--muted)}
+.sb--mini{width:auto;flex-direction:row;align-items:center;gap:6px;padding:3px 6px 3px 3px;font-size:.8rem}
+.sb--mini .sb__img,.sb--mini .sb__ik{width:28px;height:28px;aspect-ratio:auto;border-radius:5px}
+.sb--mini .sb__ik span{width:16px;height:20px;font-size:0;padding:0;border-radius:2px}
+.sb--mini .sb__ik span::before{border-width:0 5px 5px 0}
+.sb--mini .sb__n{padding:0}
+.sb--mini .sb__n i{display:none}
+.sb--mini .x{border:0;background:none;color:var(--muted);padding:0 2px;font-size:1rem;line-height:1}
+
+.skl{padding:0 16px 16px;flex:none;background:var(--card)}
+.skl__box{border:1px solid #8d8d8d;border-radius:8px;overflow:hidden;background:var(--card)}
+.skl__box:focus-within{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.skl__box.je-mail{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue)}
+.skl__box.je-mail:focus-within{border-color:var(--blue-d);box-shadow:0 0 0 1px var(--blue-d)}
+.skl__horni{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--line2);background:var(--bg)}
+.seg{display:inline-flex;background:var(--line2);border-radius:7px;padding:2px}
+.seg button{border:0;background:none;padding:4px 12px;border-radius:5px;font-size:.84rem;font-weight:700;color:var(--muted)}
+.seg button.je-on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.je-mail .seg button.je-on{background:var(--blue);color:#fff}
+.skl__komu{font-size:.84rem;color:var(--muted);margin-left:4px;display:flex;gap:6px;align-items:center;min-width:0;overflow:hidden}
+.skl__komu b{color:var(--ink);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skl__radek{display:flex;gap:8px;align-items:center;padding:0 12px;border-bottom:1px solid var(--line2);font-size:.9rem}
+.skl__radek label{color:var(--muted);font-size:.82rem;font-weight:600;width:62px;flex:none}
+.skl__radek input{flex:1;border:0;padding:8px 0;background:transparent;min-width:0}
+.skl__radek input:focus{outline:0}
+.skl textarea{width:100%;border:0;resize:none;padding:10px 12px;min-height:44px;max-height:40vh;font-size:.95rem;display:block;background:transparent}
+.skl textarea:focus{outline:0}
+.skl__pata{display:flex;align-items:center;gap:2px;padding:4px 6px 6px}
+.skl__pata .btn{margin-left:auto;min-height:32px;padding:0 12px}
+.skl__pata .ib.je-nahravam{background:var(--red-soft);color:var(--red);animation:puls 1.2s ease-in-out infinite}
+@keyframes puls{50%{box-shadow:0 0 0 6px rgba(192,57,43,.12)}}
+.skl__tip{font-size:.74rem;color:var(--muted);padding:6px 4px 0;text-align:right}
+.nahr{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:.9rem;color:var(--red);font-weight:700;border-bottom:1px solid var(--line2)}
+.nahr i{font-style:normal;font-variant-numeric:tabular-nums;color:var(--ink)}
+.nahr__vlny{display:flex;gap:2px;align-items:center;height:18px}
+.nahr__vlny b{width:3px;border-radius:2px;background:var(--red);animation:vl .9s ease-in-out infinite}
+.nahr__vlny b:nth-child(2){animation-delay:.15s}.nahr__vlny b:nth-child(3){animation-delay:.3s}.nahr__vlny b:nth-child(4){animation-delay:.45s}.nahr__vlny b:nth-child(5){animation-delay:.6s}
+@keyframes vl{0%,100%{height:5px}50%{height:18px}}
+.prepis{padding:8px 12px 0;font-size:.8rem;color:var(--muted);display:flex;gap:8px;align-items:center}
+.prepis svg{width:14px;height:14px;color:var(--red)}
+.navrh{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
+.navrh__hl{font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.navrh__hl .ava{width:18px;height:18px;border-radius:4px}
+.navrh__hl .ava svg{width:11px;height:11px}
+.navrh ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.navrh li{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line2);border-radius:6px;padding:6px 9px;font-size:.88rem}
+.navrh li svg{width:15px;height:15px;flex:none;color:var(--blue)}
+.navrh li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.navrh li button{border:0;background:none;color:var(--muted);font-size:1.05rem;min-width:28px;min-height:28px;padding:0}
+.navrh__pata{display:flex;gap:6px;justify-content:flex-end;margin-top:8px}
+.tocka{width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--ink);border-radius:50%;animation:t .7s linear infinite;display:inline-block}
+@keyframes t{to{transform:rotate(360deg)}}
+
+.btn{text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:6px;padding:0 12px;font-weight:700;font-size:.86rem;background:var(--ink);color:#fff;min-height:34px;white-space:nowrap;cursor:pointer}
+.btn:hover{background:#000}
+.btn--sv{background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn--sv:hover{background:var(--hover)}
+.btn--m{background:var(--blue);color:#fff}
+.btn--m:hover{background:var(--blue-d)}
+.btn svg{width:15px;height:15px}
+.pole{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:7px 10px;min-height:36px;font-size:.9rem}
+.pole:focus{outline:2px solid var(--blue);outline-offset:-1px}
+select.pole{padding-right:26px;appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23616061' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center/14px}
+.zpet{display:none}
+
+.karta{background:var(--card);border:1px solid var(--line2);border-radius:10px;padding:14px 16px}
+.karta + .karta{margin-top:12px}
+.karta h2{font-size:.95rem;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.karta h2 small{color:var(--muted);font-weight:400;font-size:.82rem}
+.seznam{list-style:none;margin:0;padding:0}
+.polozka{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:7px;cursor:pointer}
+.polozka:hover{background:var(--hover)}
+.polozka__hl{flex:1;min-width:0}
+.polozka__hl strong{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.polozka__hl span{font-size:.84rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.polozka__kdy{font-size:.8rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.polozka__kdy.je-po{color:var(--red);font-weight:700}
+.prazdno{padding:14px 6px;color:var(--muted);font-size:.9rem}
+.dva{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.dva > *{min-width:0}
+.chk{width:20px;height:20px;border-radius:5px;border:1.5px solid #9a9a9a;background:var(--card);flex:none;display:grid;place-items:center;padding:0}
+.chk:hover{border-color:var(--green)}
+.chk svg{width:12px;height:12px;opacity:0}
+.chk:hover svg{opacity:.6;color:var(--green)}
+.cip{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:4px 12px;font-size:.84rem;font-weight:600;color:var(--ink2);min-height:30px}
+.cip:hover{background:var(--hover)}
+.cip.je-on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filtry{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+
+.zkr{display:grid;grid-template-columns:1.3fr 1fr 1fr auto 30px;gap:14px;align-items:center;padding:12px 10px;cursor:pointer;border-radius:7px}
+.zkr:hover{background:var(--hover)}
+.zkr + .zkr{border-top:1px solid var(--line2)}
+.zkr__hl{min-width:0}
+.zkr__hl strong{display:block;font-weight:700}
+.zkr__hl span{font-size:.84rem;color:var(--muted)}
+.zkr__krok .kroky{width:100%;display:flex;margin-bottom:4px}
+.zkr__krok span{font-size:.84rem;font-weight:700}
+.zkr__dal{font-size:.84rem}
+.zkr__dal span{display:block;color:var(--muted);font-size:.74rem}
+.zkr__kdy{text-align:right;font-size:.84rem;white-space:nowrap}
+.zkr__kdy span{display:block;color:var(--muted);font-size:.74rem}
+
+.sk-skup{margin-bottom:14px}
+.sk-skup__h{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer}
+.sk-skup__h h2{font-size:1rem}
+.sk-skup__h .hl__sub{margin-left:auto}
+.sk-slozka{margin:0 0 12px}
+.sk-slozka__h{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.sk-slozka__h svg{width:14px;height:14px}
+.foto-karta{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:start}
+.foto-karta img,.foto-karta .sb__ik{width:120px;aspect-ratio:3/4;object-fit:cover;border-radius:8px}
+.foto-karta label{display:block;font-size:.8rem;font-weight:700;color:var(--muted);margin:10px 0 4px}
+.foto-karta select{width:100%}
+.foto-karta .okno__pata{justify-content:flex-start;margin-top:12px}
+
+.uvod{padding:28px 20px 10px;display:grid;gap:10px;max-width:640px}
+.uvod .ava{width:56px;height:56px;border-radius:12px}
+.uvod .ava svg{width:26px;height:26px}
+.uvod h2{font-size:1.5rem}
+.uvod p{color:var(--ink2)}
+.uvod .filtry{margin:6px 0 0}
+.chb{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:6px 20px 6px 16px}
+.chb .ava{width:36px;height:36px;border-radius:7px}
+.chb__t{line-height:1.55;max-width:720px}
+.chb__t ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:3px}
+.chb__t li{display:flex;gap:8px;align-items:baseline}
+.chb__t button.odk{border:0;background:none;padding:0;color:var(--link);font:inherit;font-weight:600;cursor:pointer}
+.chb__t button.odk:hover{text-decoration:underline}
+
+.list-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:30;align-items:flex-start;justify-content:center;padding:10vh 16px 16px}
+.list-bg.je-on{display:flex}
+.okno{background:var(--card);border-radius:12px;width:100%;max-width:460px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.okno h2{font-size:1.15rem;margin-bottom:12px}
+.okno label{display:block;font-size:.82rem;font-weight:700;color:var(--muted);margin:12px 0 5px}
+.okno textarea,.okno input,.okno select{width:100%}
+.okno textarea{min-height:80px;resize:vertical}
+.okno__pata{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.vyber{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.vyber button{border:1px solid var(--line);background:var(--card);border-radius:7px;padding:10px;font-weight:600;min-height:44px;font-size:.9rem}
+.vyber button.je-on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--bg)}
+.hl-okno{max-width:600px;padding:0;overflow:hidden}
+.hl-okno input{border:0;width:100%;padding:16px 18px;font-size:1.05rem;border-bottom:1px solid var(--line)}
+.hl-okno input:focus{outline:0}
+.hl-vysl{max-height:52vh;overflow:auto;padding:6px}
+.nahled{max-width:860px;padding:0;overflow:hidden}
+.nahled img{display:block;width:100%;max-height:70vh;object-fit:contain;background:#111}
+.nahled__dok{display:grid;place-items:center;padding:44px 20px;background:var(--bg)}
+.nahled__dok span{width:92px;height:112px;border-radius:8px;background:var(--card);box-shadow:0 2px 8px rgba(0,0,0,.12);display:grid;place-items:end center;padding-bottom:12px;font-size:.85rem;font-weight:800;letter-spacing:.04em}
+.nahled__p{display:flex;gap:12px;align-items:center;padding:14px 18px;flex-wrap:wrap}
+.nahled__p div{flex:1;min-width:0;flex-basis:100%}
+@media (min-width:600px){.nahled__p div{flex-basis:0}}
+.nahled__p b{display:block;overflow-wrap:anywhere}
+.nahled__p i{font-style:normal;color:var(--muted);font-size:.86rem}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;font-size:.9rem;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.je-on{opacity:1}
+.mob-nav{display:none}
+.mob-sez .kan{color:var(--ink);padding:12px 16px;border-radius:0;border-bottom:1px solid var(--line2);min-height:54px;font-size:.98rem;width:100%;margin:0}
+.mob-sez .kan:hover{background:var(--hover)}
+.mob-sez .kan .poc--sv{background:var(--line2);color:var(--ink)}
+.mob-sez .kan .vyk{box-shadow:0 0 0 2px #fff}
+.mob-sez .kan .ava{width:34px;height:34px;border-radius:7px}
+.mob-sez .kan small{font-weight:400;color:var(--muted)}
+.mob-tab{display:flex;gap:2px;padding:8px 12px 0;border-bottom:1px solid var(--line2)}
+.mob-tab button{border:0;background:none;padding:8px 12px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.mob-tab button.je-on{color:var(--ink);border-color:var(--ink)}
+
+@media (max-width:820px){
+  .app{grid-template-columns:1fr;grid-template-rows:1fr}
+  .topbar,.side{display:none}
+  .hl{height:100dvh;padding-bottom:58px}
+  .je-kanal .hl{padding-bottom:0}
+  .hl__top{padding:0 10px;height:52px}
+  .hl__scroll--seda{padding:12px}
+  .tema,.pozor,.skl{padding-left:12px;padding-right:12px}
+  .zpr{padding-left:12px;padding-right:12px}
+  .zpr--sys{padding-left:58px}
+  .zpet{display:inline-grid}
+  .dva{grid-template-columns:1fr}
+  .zkr{grid-template-columns:1fr auto;gap:4px 10px}
+  .zkr__krok,.zkr__dal{grid-column:1/-1}
+  .zkr .ava{display:none}
+  .foto-karta{grid-template-columns:90px 1fr}
+  .foto-karta img,.foto-karta .sb__ik{width:90px}
+  .mob-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);z-index:20;padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+  .mob-nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.64rem;font-weight:700;color:var(--muted);padding:5px 0;min-height:48px;position:relative}
+  .mob-nav button.je-on{color:var(--ink)}
+  .mob-nav svg{width:21px;height:21px}
+  .mob-nav .poc{position:absolute;top:1px;left:calc(50% + 6px);font-size:.64rem;background:#cd2553;color:#fff;padding:0 5px;border-radius:10px;font-weight:700}
+  .je-kanal .mob-nav{display:none}
+  .zpr__akce{display:flex;position:static;border:0;box-shadow:none;padding:0;margin-top:4px;background:none}
+  .zpr__akce button{padding:2px 0;color:var(--link)}
+  .skl__tip{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="topbar__l"></div>
+    <button class="topbar__hledat" data-hledat><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Hledat ve Flexi House<kbd>⌘K</kbd></button>
+    <div class="topbar__r"><button class="ib" data-okno="hovor" title="Zapsat hovor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></button></div>
+  </header>
+  <aside class="side">
+    <div class="ws"><div class="ws__n"><span>Flexi House</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><button class="ib" data-okno="novy" title="Nový zákazník"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <div class="side__scroll" id="side"></div>
+    <div class="side__ja"><span class="ava" id="ja-ava"></span><span class="tec"></span><select id="ja" aria-label="Přihlášený uživatel"></select></div>
+  </aside>
+  <main class="hl" id="hl"></main>
+</div>
+<nav class="mob-nav" id="mob-nav"></nav>
+<div class="menu" id="menu"></div>
+<div class="list-bg" id="okno-bg"><div class="okno" id="okno" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const IK = {
+  den:'<path d="M3 10h18M8 3v4M16 3v4"/><rect x="3" y="5" width="18" height="16" rx="2"/>',
+  lide:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.6 5.2"/>',
+  dum:'<path d="M3 11 12 4l9 7M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+  posta:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  dodavatel:'<path d="M3 7h11v10H3zM14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
+  hovor:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  pozn:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  zvon:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/>',
+  stav:'<path d="M5 12l4 4L19 6"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  zpet:'<path d="m15 18-6-6 6-6"/>',
+  sipka:'<path d="m6 9 6 6 6-6"/>',
+  sponka:'<path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.3 3.3 0 0 1 4.7 4.7L10.5 17a1.7 1.7 0 0 1-2.4-2.4L16 7"/>',
+  drive:'<path d="M8 4h8l6 10-4 6H6l-4-6z"/>',
+  web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>',
+  mik:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+  stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',
+  foto:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  slozka:'<path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>',
+  ven:'<path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>',
+  jiskra:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+  poslat:'<path d="M4 12 20 4l-4 16-4-7z"/>',
+  odpoved:'<path d="M9 14 4 9l5-5M4 9h9a7 7 0 0 1 7 7v4"/>',
+  varovani:'<path d="M12 3 2 21h20zM12 10v5M12 18h.01"/>',
+  hodiny:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+const ik = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IK[n]}</svg>`;
+const LIDE = {dan:'Dan', honza:'Honza', tomas:'Tomáš'};
+const KOMU = {dan:'Danovi', honza:'Honzovi', tomas:'Tomášovi'};
+const ZKR = {dan:'DP', honza:'HP', tomas:'TT'};
+const STAVY = {novy:'Nový', jednani:'V jednání', nabidka:'Nabídka poslaná', zakazka:'Zakázka', predano:'Předáno', ztraceno:'Ztraceno'};
+const KROKY = [['zaloha','Záloha zaplacená'],['objednano','Objednáno'],['more','Na cestě'],['praha','Ve skladu Praha'],['pozemek','Příprava pozemku'],['predano','Předáno']];
+const VYSLEDKY = {zajem:'Má zájem', nezvedl:'Nezvedl to', zavolat:'Zavolat znovu', nezajem:'Nemá zájem'};
+const SLOZKY = ['Smlouva','Pozemek','Fotky','Nabídky','Doprava','Ceníky','Dokumenty'];
+
+const dnes = new Date();
+const d = (dny, h=10, m=0) => { const x = new Date(); x.setDate(x.getDate()+dny); x.setHours(h, m, 0, 0); return x.toISOString(); };
+
+const S = {
+  ja:null, lide:[], pohled:'den', kanal:null, typKanalu:'zak', rezim:'pozn', text:'', predmet:'', prilohy:[], navrh:null, tridim:false,
+  chat:[], chatPisu:false, ukolyVsech:false, filtrSlozka:'', foto:null, nahravam:false, nahrSek:0, prepis:false, prepsano:false,
+  sbaleno:{ost:true}, mobTab:'zak', nacteno:false, chyba:null, google:false, claude:false, whisper:false, odesilam:false,
+  zakaznici:[], dodavatele:[], zpravy:[], pripominky:[], zakazky:[]
+};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const zak = id => S.zakaznici.find(z => z.id === id);
+const dod = id => S.dodavatele.find(x => x.id === id);
+const inic = t => t.split(/\s+/).filter(Boolean).map(x => x[0]).join('').slice(0, 2).toUpperCase();
+const ava = (k, t) => `<span class="ava ava--${t ? 'kl' : k || 'nikdo'}" title="${esc(t || (k ? LIDE[k] : 'Nikdo'))}">${t ? esc(inic(t)) : k ? ZKR[k] : '?'}</span>`;
+const kc = n => Number(n).toLocaleString('cs-CZ') + ' Kč';
+const posledni = z => S.zpravy.filter(m => m.zak === z.id).map(m => m.kdy).sort().pop() || z.vzniklo;
+const dniTicha = z => Math.round((dnes - new Date(posledni(z))) / 864e5);
+const mojeUkoly = () => S.pripominky.filter(p => !p.hotovo && p.komu === S.ja).sort((a, b) => a.kdy.localeCompare(b.kdy));
+const krokHtml = zk => { const ix = KROKY.findIndex(k => k[0] === zk.krok); return `<span class="kroky">${KROKY.map((k, i) => `<i class="${i < ix || zk.krok === 'predano' ? 'je-hotovo' : i === ix ? 'je-ted' : ''}"></i>`).join('')}</span>`; };
+const krokNazev = zk => (KROKY.find(k => k[0] === zk.krok) || ['', zk.krok])[1];
+const typSoub = n => /\.(jpe?g|png|heic|webp|gif)$/i.test(n) ? 'img' : /\.pdf$/i.test(n) ? 'pdf' : /\.(xlsx?|csv)$/i.test(n) ? 'xls' : 'doc';
+const urlSoub = (f, nahled) => f.u ? f.u : f.drive_id ? `/api/sanon/soubor?drive=${encodeURIComponent(f.drive_id)}&n=${encodeURIComponent(f.n)}${nahled ? '&nahled=1' : ''}` : f.gmail_att ? `/api/sanon/soubor?gmail=${encodeURIComponent(f.gmail_msg)}&att=${encodeURIComponent(f.gmail_att)}&mime=${encodeURIComponent(f.mime || '')}&n=${encodeURIComponent(f.n)}` : '';
+const ikSoub = (f, t) => t === 'img' && urlSoub(f, true) ? `<img class="sb__img" src="${urlSoub(f, true)}" alt="" loading="lazy">` : `<div class="sb__ik"><span class="${t}">${t === 'img' ? ik('foto') : t.toUpperCase()}</span></div>`;
+const soubHtml = (f, mid, i) => { const t = typSoub(f.n); return `<button class="sb" data-soubor="${mid}:${i}" title="${esc(f.n)}">${ikSoub(f, t)}<div class="sb__n"><b>${esc(f.n)}</b><i>${esc(f.s || (f.gmail_att ? 'z mailu' : ''))}</i></div></button>`; };
+const prilohyHtml = m => m.prilohy?.length ? `<div class="prilohy">${m.prilohy.map((f, i) => soubHtml(f, m.id, i)).join('')}</div>` : '';
+const vsechnySoubory = () => S.zpravy.flatMap(m => (m.prilohy || []).map((f, i) => ({...f, mid:m.id, i, zak:m.zak, dod:m.dod, kdy:m.kdy, kdo:m.kdo})));
+const aktivni = z => !['predano','ztraceno'].includes(z.stav);
+const pozorZak = z => aktivni(z) && (S.pripominky.some(p => p.zak === z.id && !p.hotovo && poTerminu(p.kdy) && kdy(p.kdy, 1) !== 'dnes') || (z.stav !== 'novy' && dniTicha(z) >= 14 && !S.pripominky.some(p => p.zak === z.id && !p.hotovo)));
+const nepr = z => S.zpravy.filter(m => m.zak === z.id && m.nove).length;
+const jmenoKdo = k => k === 'gmail' ? 'Flexi House (z Gmailu)' : LIDE[k] || k;
+
+function kdy(iso, jenDen){
+  const x = new Date(iso);
+  const dd = Math.round((new Date(x.getFullYear(), x.getMonth(), x.getDate()) - new Date(dnes.getFullYear(), dnes.getMonth(), dnes.getDate())) / 864e5);
+  const cas = x.toLocaleTimeString('cs-CZ', {hour:'numeric', minute:'2-digit'});
+  const den = dd === 0 ? 'dnes' : dd === -1 ? 'včera' : dd === 1 ? 'zítra' : x.toLocaleDateString('cs-CZ', {day:'numeric', month:'numeric'});
+  return jenDen ? den : dd === 0 ? cas : `${den} ${cas}`;
+}
+const casJen = iso => new Date(iso).toLocaleTimeString('cs-CZ', {hour:'numeric', minute:'2-digit'});
+const denNadpis = iso => { const dd = kdy(iso, 1); return dd === 'dnes' || dd === 'včera' ? dd[0].toUpperCase() + dd.slice(1) : new Date(iso).toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}); };
+const poTerminu = iso => new Date(iso) < dnes;
+function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('je-on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('je-on'), 2600); }
+
+async function api(cesta, metoda, telo){
+  const init = { method: metoda || 'GET', headers: {} };
+  if (telo instanceof FormData) init.body = telo;
+  else if (telo !== undefined) { init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(telo); }
+  const r = await fetch('/api/sanon/' + cesta, init);
+  let data = {};
+  try { data = await r.json(); } catch {}
+  if (r.status === 401) { S.ja = null; vykresli(); throw new Error('Nepřihlášen'); }
+  if (!r.ok) throw new Error(data.error || ('Chyba ' + r.status));
+  return data;
+}
+
+async function nacti(tise){
+  try {
+    const d = await api('stav');
+    S.ja = d.kdo; S.google = d.google; S.claude = d.claude; S.whisper = d.whisper;
+    S.zakaznici = d.zakaznici.map(z => ({...z, majitel: z.majitel || null}));
+    S.dodavatele = d.dodavatele;
+    S.zpravy = d.zpravy.map(m => ({...m, zak: m.zak_id, dod: m.dod_id}));
+    S.pripominky = d.pripominky.map(p => ({...p, zak: p.zak_id, dod: p.dod_id, hotovo: !!p.hotovo_kdy}));
+    S.zakazky = d.zakazky.map(x => ({...x, zak: x.zak_id}));
+    S.nacteno = true; S.chyba = null;
+  } catch (e) {
+    if (e.message !== 'Nepřihlášen') { S.chyba = S.nacteno ? null : e.message; toast('Nepodařilo se načíst: ' + e.message); }
+  }
+  vykresli();
+}
+
+let syncBezi = false;
+async function synchronizuj(){
+  if (syncBezi || !S.ja || !S.google) return;
+  syncBezi = true;
+  try { const r = await api('sync', 'POST'); if (r.zprav) await nacti(true); } catch (e) { console.warn('sync', e.message); } finally { syncBezi = false; }
+}
+
+const kanalBtn = (z, extra='') => `<button class="kan ${S.kanal === z.id && S.typKanalu === 'zak' ? 'je-on' : ''} ${nepr(z) ? 'je-nove' : ''} ${pozorZak(z) ? 'je-pozor' : ''}" data-zak="${z.id}" title="${STAVY[z.stav]}${z.majitel ? ', má ' + LIDE[z.majitel] : ''}">${pozorZak(z) ? '<span class="vyk" title="Čeká na reakci"></span>' : `<span class="pre d d--${z.stav}" style="width:8px;height:8px;border-radius:50%;opacity:1"></span>`}<span class="t">${esc(z.jmeno)}</span>${extra}${nepr(z) ? `<span class="poc">${nepr(z)}</span>` : !z.majitel ? `<span class="poc poc--sv">nový</span>` : ''}</button>`;
+
+function vykresliSide(){
+  const ukoly = mojeUkoly().filter(p => new Date(p.kdy) <= new Date(d(0, 23))).length;
+  const poradi = (a, b) => (nepr(b) - nepr(a)) || (pozorZak(b) - pozorZak(a)) || posledni(b).localeCompare(posledni(a));
+  const nove = S.zakaznici.filter(z => !z.majitel && aktivni(z)).sort(poradi);
+  const moje = S.zakaznici.filter(z => z.majitel === S.ja && aktivni(z)).sort(poradi);
+  const ost = S.zakaznici.filter(z => z.majitel && z.majitel !== S.ja && aktivni(z)).sort(poradi);
+  const sek = (klic, nazev, items, html) => items.length ? `<div class="sek ${S.sbaleno[klic] ? 'je-sbalena' : ''}"><button class="sek__h" data-sbal="${klic}">${ik('sipka')}${nazev}<span class="n">${items.length}</span></button>${items.map(html).join('')}</div>` : '';
+  $('#side').innerHTML = `
+    <button class="kan ${S.pohled === 'den' && !S.kanal ? 'je-on' : ''}" data-jdi="den">${ik('den')}<span class="t">Dnes</span>${ukoly ? `<span class="poc poc--sv">${ukoly}</span>` : ''}</button>
+    <button class="kan ${S.pohled === 'asistent' && !S.kanal ? 'je-on' : ''}" data-jdi="asistent">${ik('jiskra')}<span class="t">Asistent</span></button>
+    <button class="kan ${S.pohled === 'zakazky' && !S.kanal ? 'je-on' : ''}" data-jdi="zakazky">${ik('dum')}<span class="t">Zakázky</span></button>
+    <button class="kan ${S.pohled === 'soubory' && !S.kanal ? 'je-on' : ''}" data-jdi="soubory">${ik('slozka')}<span class="t">Soubory</span></button>
+    ${sek('nove', 'Nové poptávky', nove, z => kanalBtn(z))}
+    ${sek('moje', 'Moji zákazníci', moje, z => kanalBtn(z))}
+    ${sek('ost', 'Ostatní', ost, z => kanalBtn(z, `<span class="maj">${ZKR[z.majitel]}</span>`))}
+    <div class="sek ${S.sbaleno.dod ? 'je-sbalena' : ''}"><button class="sek__h" data-sbal="dod">${ik('sipka')}Dodavatelé</button>${S.dodavatele.map(x => { const n = S.zpravy.filter(m => m.dod === x.id && m.nove).length; return `<button class="kan ${S.kanal === x.id && S.typKanalu === 'dod' ? 'je-on' : ''} ${n ? 'je-nove' : ''}" data-dod="${x.id}"><span class="pre">${ik('dodavatel')}</span><span class="t">${esc(x.nazev)}</span>${n ? `<span class="poc">${n}</span>` : ''}</button>`; }).join('')}</div>
+    <div class="sek"><button class="sek__h" data-jdi="vsichni" style="padding-left:14px">${ik('lide')}&nbsp;Všichni zákazníci</button></div>`;
+  $('#ja-ava').outerHTML = `<span class="ava ava--${S.ja}" id="ja-ava">${ZKR[S.ja] || '?'}</span>`;
+  $('#ja').innerHTML = `<option>${LIDE[S.ja] || ''}</option><option value="odhlasit">Odhlásit se</option>`;
+  $('#mob-nav').innerHTML = [['den','Dnes','den',ukoly],['zakaznici','Zákazníci','lide',S.zakaznici.reduce((a, z) => a + nepr(z), 0)],['asistent','Asistent','jiskra',0],['zakazky','Zakázky','dum',0],['soubory','Soubory','slozka',0]].map(([k, t, i, n]) => `<button class="${S.pohled === k ? 'je-on' : ''}" data-jdi="${k}">${ik(i)}${t}${n ? `<span class="poc">${n}</span>` : ''}</button>`).join('');
+  document.body.classList.toggle('je-kanal', !!S.kanal);
+}
+
+const hlava = (h, sub, end='') => `<div class="hl__top"><button class="ib zpet" data-zpet aria-label="Zpět">${ik('zpet')}</button><div style="min-width:0"><h1>${h}</h1>${sub ? `<p class="hl__sub">${sub}</p>` : ''}</div><div class="hl__end">${end}</div></div>`;
+
+function pohledPrihlaseni(){
+  return `<div class="hl__scroll hl__scroll--seda" style="display:grid;place-items:center"><form class="karta" id="login" style="width:100%;max-width:360px;padding:24px">
+    <h1 style="font-size:1.3rem;margin-bottom:4px">Šanon</h1><p class="hl__sub" style="margin-bottom:16px">Flexi House</p>
+    <label class="hl__sub" style="display:block;margin-bottom:4px;font-weight:600">Kdo jste</label>
+    <select class="pole" id="l-kdo" style="width:100%;margin-bottom:12px">${(S.lide.length ? S.lide : Object.keys(LIDE)).map(k => `<option value="${k}">${LIDE[k]}</option>`).join('')}</select>
+    <label class="hl__sub" style="display:block;margin-bottom:4px;font-weight:600">Heslo</label>
+    <input class="pole" id="l-heslo" type="password" autocomplete="current-password" style="width:100%;margin-bottom:14px">
+    ${S.chyba ? `<p style="color:var(--red);font-size:.88rem;margin-bottom:10px">${esc(S.chyba)}</p>` : ''}
+    <button class="btn" style="width:100%;justify-content:center;min-height:40px">Přihlásit se</button></form></div>`;
+}
+
+function pohledDen(){
+  const moje = S.ukolyVsech ? S.pripominky.filter(p => !p.hotovo).sort((a, b) => a.kdy.localeCompare(b.kdy)) : mojeUkoly();
+  const nove = S.zakaznici.filter(z => !z.majitel && aktivni(z));
+  const pozor = S.zakaznici.filter(pozorZak).sort((a, b) => dniTicha(b) - dniTicha(a));
+  const f = S.foto;
+  const fotoHtml = !f ? '' : `<section class="karta" style="margin-bottom:12px"><h2>${f.stav === 'ctu' ? 'Claude čte fotku' : f.stav === 'chyba' ? 'Fotku se nepodařilo přečíst' : 'Vyfocený papír'}</h2>
+    <div class="foto-karta">${f.u ? `<img src="${f.u}" alt="">` : `<div class="sb__ik"><span class="img">${ik('foto')}</span></div>`}
+    <div>${f.stav === 'ctu' ? `<p class="hl__sub" style="display:flex;gap:8px;align-items:center"><span class="tocka"></span>Poznávám, co to je a komu to patří</p>` : f.stav === 'chyba' ? `<p style="color:var(--red)">${esc(f.chyba)}</p><div class="okno__pata"><button class="btn btn--sv" data-foto-zrus>Zavřít</button></div>` : `<p><strong>${esc(f.popis)}</strong></p><p class="hl__sub">${esc(f.proc)}</p>${f.text ? `<p class="hl__sub" style="margin-top:6px;white-space:pre-wrap">${esc(f.text)}</p>` : ''}
+      <label for="f-zak">Zákazník</label><select class="pole" id="f-zak"><option value="">Vyberte…</option>${S.zakaznici.filter(aktivni).map(x => `<option value="${x.id}" ${x.id === f.zak ? 'selected' : ''}>${esc(x.jmeno)}</option>`).join('')}</select>
+      <label for="f-sl">Složka</label><select class="pole" id="f-sl">${SLOZKY.map(x => `<option ${x === f.slozka ? 'selected' : ''}>${x}</option>`).join('')}</select>
+      <div class="okno__pata"><button class="btn" data-foto-uloz ${S.odesilam ? 'disabled' : ''}>${S.odesilam ? 'Ukládám…' : 'Uložit'}</button><button class="btn btn--sv" data-foto-zrus>Zrušit</button></div>`}</div></div></section>`;
+  const varovani = !S.google ? '<div class="pozor pozor--ukol" style="border-radius:8px;margin-bottom:12px">' + ik('varovani') + '<span>Pošta a Disk zatím nejsou napojené, poznámky a hovory fungují.</span></div>' : '';
+  return hlava('Dnes', dnes.toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}), `<label class="btn btn--sv" style="cursor:pointer">${ik('foto')}Vyfotit papír<input type="file" id="foto-global" accept="image/*" capture="environment" hidden></label><button class="btn" data-okno="hovor">${ik('hovor')}Zapsat hovor</button>`) + `<div class="hl__scroll hl__scroll--seda">${varovani}${fotoHtml}<div class="dva">
+    <div>
+    <section class="karta"><h2>${S.ukolyVsech ? 'Úkoly všech' : 'Moje úkoly'} <small>${moje.length}</small><button class="cip" data-ukoly-vsech style="margin-left:auto;min-height:26px;padding:2px 10px;font-size:.76rem">${S.ukolyVsech ? 'Jen moje' : 'Všech'}</button></h2>
+      ${moje.length ? `<ul class="seznam">${moje.map(p => { const z = p.zak ? zak(p.zak) : null; const x = p.dod ? dod(p.dod) : null;
+        return `<li class="polozka" ${z ? `data-zak="${z.id}"` : x ? `data-dod="${x.id}"` : ''}><button class="chk" data-hotovo="${p.id}" aria-label="Hotovo">${ik('stav')}</button>
+          <div class="polozka__hl"><strong>${esc(p.text)}</strong><span>${z ? esc(z.jmeno) : x ? esc(x.nazev) : ''}${S.ukolyVsech ? ' · ' + LIDE[p.komu] : ''}</span></div>
+          <span class="polozka__kdy ${poTerminu(p.kdy) ? 'je-po' : ''}">${poTerminu(p.kdy) && kdy(p.kdy, 1) !== 'dnes' ? 'po termínu' : kdy(p.kdy)}</span></li>`; }).join('')}</ul>` : '<p class="prazdno">Nic nečeká.</p>'}
+    </section>
+    <section class="karta"><h2>Čekají na reakci <small>${pozor.length}</small></h2>
+      ${pozor.length ? `<ul class="seznam">${pozor.map(z => `<li class="polozka" data-zak="${z.id}">${ava(z.majitel)}<div class="polozka__hl"><strong>${esc(z.jmeno)}</strong><span>${dniTicha(z)} dní bez kontaktu · ${STAVY[z.stav]} · ${z.majitel ? LIDE[z.majitel] : 'nikdo'}</span></div></li>`).join('')}</ul>` : '<p class="prazdno">Všichni jsou v kontaktu.</p>'}
+    </section>
+    </div>
+    <section class="karta"><h2>Nové poptávky <small>${nove.length}</small></h2>
+      ${nove.length ? `<ul class="seznam">${nove.map(z => `<li class="polozka" data-zak="${z.id}">${ava(null)}<div class="polozka__hl"><strong>${esc(z.jmeno)}</strong><span>${z.web && z.web.model ? esc(z.web.model) + (z.web.cena ? ' · ' + kc(z.web.cena) : '') : z.email && !z.telefon ? 'mail na info@' : esc(z.misto || z.telefon)} · ${kdy(z.vzniklo)}</span></div><button class="btn btn--sv" data-vzit="${z.id}">Vzít si</button></li>`).join('')}</ul>` : '<p class="prazdno">Žádné nové.</p>'}
+    </section>
+    </div></div>`;
+}
+
+function pohledZakaznici(vsichni){
+  const tab = S.mobTab || 'zak';
+  const sez = S.zakaznici.filter(z => vsichni || aktivni(z)).sort((a, b) => (nepr(b) - nepr(a)) || posledni(b).localeCompare(posledni(a)));
+  const tel = tab === 'zak' || vsichni ? sez.map(z => `<button class="kan ${nepr(z) ? 'je-nove' : ''}" data-zak="${z.id}">${ava(z.majitel)}<span class="t">${esc(z.jmeno)}<br><small>${STAVY[z.stav]} · ${esc(z.misto || z.telefon || z.email)}${pozorZak(z) ? ' · <span style="color:var(--red);font-weight:700">čeká</span>' : ''}</small></span>${nepr(z) ? `<span class="poc">${nepr(z)}</span>` : `<span class="hl__sub">${kdy(posledni(z), 1)}</span>`}</button>`).join('')
+    : S.dodavatele.map(x => { const n = S.zpravy.filter(m => m.dod === x.id && m.nove).length; return `<button class="kan ${n ? 'je-nove' : ''}" data-dod="${x.id}"><span class="ava ava--web">${ik('dodavatel')}</span><span class="t">${esc(x.nazev)}<br><small>${esc(x.co)}</small></span>${n ? `<span class="poc">${n}</span>` : ''}</button>`; }).join('');
+  return hlava(vsichni ? 'Všichni zákazníci' : 'Zákazníci', vsichni ? `${sez.length} včetně předaných a ztracených` : '', `<button class="ib" data-hledat aria-label="Hledat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="btn" data-okno="novy">${ik('plus')}Nový</button>`)
+    + (vsichni ? '' : `<div class="mob-tab"><button class="${tab === 'zak' ? 'je-on' : ''}" data-mobtab="zak">Zákazníci</button><button class="${tab === 'dod' ? 'je-on' : ''}" data-mobtab="dod">Dodavatelé</button></div>`)
+    + `<div class="hl__scroll mob-sez">${tel || '<p class="prazdno" style="padding:20px">Zatím nikdo.</p>'}</div>`;
+}
+
+function pohledZakazky(){
+  const bezi = S.zakazky.filter(x => x.krok !== 'predano'), hot = S.zakazky.filter(x => x.krok === 'predano');
+  const dalsi = x => { const p = S.pripominky.filter(q => q.zak === x.zak && !q.hotovo).sort((a, b) => a.kdy.localeCompare(b.kdy))[0]; return p ? `<div class="zkr__dal"><span>další krok</span>${esc(p.text)} · ${kdy(p.kdy, 1)}</div>` : `<div class="zkr__dal"><span>další krok</span><i style="color:var(--muted)">nic naplánováno</i></div>`; };
+  const radek = x => { const z = zak(x.zak); if (!z) return ''; return `<li class="zkr" data-zak="${z.id}">
+    <div class="zkr__hl"><strong>${esc(z.jmeno)}</strong><span>${esc(x.model)} · ${esc(z.misto)}${x.kontejner ? ' · ' + esc(x.kontejner) : ''}</span></div>
+    <div class="zkr__krok">${krokHtml(x)}<span>${krokNazev(x)}</span></div>
+    ${x.krok === 'predano' ? '<div></div>' : dalsi(x)}
+    <div class="zkr__kdy"><span>předání</span><strong>${esc(x.predani)}</strong></div>${ava(z.majitel)}</li>`; };
+  return hlava('Zakázky', `${bezi.length} běží`) + `<div class="hl__scroll hl__scroll--seda">
+    <div class="karta" style="padding:4px 8px"><ul class="seznam">${bezi.map(radek).join('') || '<p class="prazdno">Žádná zakázka neběží. Zakázka vznikne, když zákazníkovi nastavíte stav Zakázka.</p>'}</ul></div>
+    ${hot.length ? `<h2 style="font-size:.9rem;margin:18px 0 8px;color:var(--muted)">Předané</h2><div class="karta" style="padding:4px 8px"><ul class="seznam">${hot.map(radek).join('')}</ul></div>` : ''}</div>`;
+}
+
+function pohledSoubory(){
+  const vse = vsechnySoubory();
+  const slozky = [...new Set(vse.map(f => f.s).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'cs'));
+  const fil = vse.filter(f => !S.filtrSlozka || f.s === S.filtrSlozka);
+  const skupina = (nazev, klic, soub) => { if (!soub.length) return ''; const sl = [...new Set(soub.map(f => f.s || ''))];
+    return `<div class="sk-skup karta"><div class="sk-skup__h" ${klic}><h2>${esc(nazev)}</h2><span class="hl__sub">${soub.length}</span></div>
+      ${sl.map(x => `<div class="sk-slozka"><div class="sk-slozka__h">${ik('slozka')}${esc(x || 'Přílohy mailů (zatím ne na Disku)')}</div><div class="prilohy" style="margin:0">${soub.filter(f => (f.s || '') === x).sort((a, b) => b.kdy.localeCompare(a.kdy)).map(f => soubHtml(f, f.mid, f.i)).join('')}</div></div>`).join('')}</div>`; };
+  const zz = S.zakaznici.map(z => skupina(z.jmeno, `data-zak="${z.id}"`, fil.filter(f => f.zak === z.id))).join('');
+  const dd = S.dodavatele.map(x => skupina(x.nazev, `data-dod="${x.id}"`, fil.filter(f => f.dod === x.id))).join('');
+  return hlava('Soubory', `${vse.length} souborů`, `<a class="btn btn--sv" href="https://drive.google.com/drive/u/0/my-drive" target="_blank" rel="noopener">${ik('ven')}Otevřít Disk</a>`) + `<div class="hl__scroll hl__scroll--seda">
+    <div class="filtry"><button class="cip ${!S.filtrSlozka ? 'je-on' : ''}" data-fsl="">Vše</button>${slozky.map(x => `<button class="cip ${S.filtrSlozka === x ? 'je-on' : ''}" data-fsl="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+    ${zz}${dd ? `<h2 style="font-size:.9rem;margin:6px 0 10px;color:var(--muted)">Dodavatelé</h2>${dd}` : ''}
+    ${!fil.length ? '<div class="karta"><p class="prazdno">Zatím tu nic není. Soubory sem přibudou z poznámek, mailů a fotek.</p></div>' : ''}</div>`;
+}
+
+function otevriSoubor(klic){
+  const [mid, i] = klic.split(':').map(Number);
+  const m = S.zpravy.find(x => x.id === mid); const f = m.prilohy[i]; const t = typSoub(f.n);
+  const kde = m.zak ? (zak(m.zak) || {}).jmeno : (dod(m.dod) || {}).nazev;
+  const url = urlSoub(f);
+  $('#okno').className = 'okno nahled';
+  $('#okno').innerHTML = `${t === 'img' && url ? `<img src="${url}" alt="">` : `<div class="nahled__dok"><span class="${t}">${t === 'img' ? ik('foto') : t.toUpperCase()}</span></div>`}
+    <div class="nahled__p"><div><b>${esc(f.n)}</b><i>${esc(kde || '')} / ${esc(f.s || 'příloha mailu')} · ${m.kdo ? jmenoKdo(m.kdo) : kde} · ${kdy(m.kdy, 1)}${f.velikost ? ' · ' + Math.round(f.velikost / 1024) + ' kB' : ''}</i></div>
+    ${url ? `<a class="btn btn--sv" href="${url}" target="_blank" rel="noopener">${ik('ven')}Otevřít</a>` : ''}
+    ${f.drive_id ? `<a class="btn btn--sv" href="https://drive.google.com/file/d/${encodeURIComponent(f.drive_id)}/view" target="_blank" rel="noopener">${ik('drive')}Na Disku</a>` : f.gmail_att ? `<select class="pole" id="n-sl">${SLOZKY.map(x => `<option>${x}</option>`).join('')}</select><button class="btn" data-na-disk="${mid}:${i}">${ik('drive')}Uložit na Disk</button>` : ''}
+    <button class="btn btn--sv" data-zavrit>Zavřít</button></div>`;
+  $('#okno-bg').classList.add('je-on');
+}
+
+function zpravaHtml(m, jmenoKanalu, kompakt){
+  if (m.typ === 'sys') return `<div class="zpr zpr--sys"><span><b>${esc(jmenoKdo(m.kdo))}</b> ${m.text} <time>${casJen(m.kdy)}</time></span></div>`;
+  const kdo = m.kdo ? jmenoKdo(m.kdo) : m.typ === 'web' ? 'Web flexihouse.cz' : jmenoKanalu;
+  const av = m.kdo && LIDE[m.kdo] ? ava(m.kdo) : m.kdo === 'gmail' || m.typ === 'web' ? `<span class="ava ava--web">${ik(m.typ === 'web' ? 'web' : 'posta')}</span>` : ava(null, jmenoKanalu);
+  const akce = [];
+  if (m.typ === 'mail' && !m.kdo && S.typKanalu === 'zak') akce.push(`<button data-odpovedet="${esc(m.predmet)}" data-thread="${esc(m.thread_id || '')}">${ik('odpoved')}Odpovědět</button>`);
+  if (m.typ !== 'web') akce.push(`<button data-pripomenout="${m.id}">${ik('zvon')}Připomenout zítra</button>`);
+  const telo = m.typ === 'mail'
+    ? `<div class="zpr__mail"><div class="zpr__mail-h">${ik('posta')}<b>${esc(m.predmet)}</b><span>${m.kdo ? 'odesláno z info@' : 'přišlo na info@'}</span></div><div class="zpr__mail-t">${esc(m.text)}</div>${prilohyHtml(m)}</div>`
+    : `${m.text ? `<div class="zpr__t">${esc(m.text)}</div>` : ''}${prilohyHtml(m)}`;
+  const co = m.typ === 'hovor' ? `<span class="pil pil--${m.vysledek}">${ik('hovor')}${VYSLEDKY[m.vysledek] || ''}</span>` : '';
+  if (kompakt) return `<div class="zpr zpr--kompakt"><span class="cas">${casJen(m.kdy)}</span><div>${co ? `<div class="zpr__hl">${co}</div>` : ''}${telo}</div><div class="zpr__akce">${akce.join('')}</div></div>`;
+  return `<div class="zpr">${av}<div><div class="zpr__hl"><b>${esc(kdo)}</b>${co}<time>${casJen(m.kdy)}</time></div>${telo}</div><div class="zpr__akce">${akce.join('')}</div></div>`;
+}
+
+function pohledKanal(){
+  const jeZak = S.typKanalu === 'zak';
+  const z = jeZak ? zak(S.kanal) : dod(S.kanal);
+  if (!z) { S.kanal = null; return pohledDen(); }
+  const jmeno = jeZak ? z.jmeno : z.nazev;
+  const zp = S.zpravy.filter(m => jeZak ? m.zak === z.id : m.dod === z.id).sort((a, b) => a.kdy.localeCompare(b.kdy));
+  const zk = jeZak ? S.zakazky.find(x => x.zak === z.id) : null;
+  const ukoly = S.pripominky.filter(p => !p.hotovo && (jeZak ? p.zak === z.id : p.dod === z.id)).sort((a, b) => a.kdy.localeCompare(b.kdy));
+  let tok = '', denP = '', predch = null;
+  zp.forEach(m => { const dn = denNadpis(m.kdy); if (dn !== denP) { tok += `<div class="den"><span>${dn}</span></div>`; denP = dn; predch = null; }
+    const kompakt = predch && predch.typ !== 'sys' && m.typ !== 'sys' && m.typ !== 'web' && predch.typ !== 'web' && (predch.kdo || null) === (m.kdo || null) && (new Date(m.kdy) - new Date(predch.kdy)) < 7 * 60e3;
+    tok += zpravaHtml(m, jmeno, kompakt); predch = m; });
+  const end = jeZak ? `<button class="pbtn" data-menu="stav" data-pro="${z.id}"><span class="d d--${z.stav}"></span><span class="pt">${STAVY[z.stav]}</span>${ik('sipka')}</button><button class="pbtn" data-menu="maj" data-pro="${z.id}">${z.majitel ? ava(z.majitel).replace('class="ava', 'style="width:18px;height:18px;font-size:.55rem;border-radius:4px" class="ava') : ''}<span class="pt">${z.majitel ? LIDE[z.majitel] : 'Bez majitele'}</span>${ik('sipka')}</button>` : '';
+  const tema = `<div class="tema">
+    ${z.telefon ? `<a href="tel:${z.telefon.replace(/\s/g, '')}">${esc(z.telefon)}</a>` : jeZak ? `<button class="odk" data-upravit="telefon" data-pro="${z.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer">doplnit telefon</button>` : `<span>${esc(z.kontakt)}</span>`}${z.email ? `<span>${esc(z.email)}</span>` : ''}${z.misto ? `<span>${esc(z.misto)}</span>` : jeZak ? `<button data-upravit="misto" data-pro="${z.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer">doplnit místo</button>` : `<span>${esc(z.co)}</span>`}
+    ${jeZak && z.web && z.web.model ? `<span><b>${esc(z.web.model)}</b>${z.web.cena ? ' · ' + kc(z.web.cena) : ''}${z.web.km ? ' · ' + z.web.km + ' km' : ''}</span>` : ''}
+    ${zk ? `<span style="display:inline-flex;gap:8px;align-items:center">${krokHtml(zk)}<select data-krok="${zk.id}" aria-label="Krok zakázky">${KROKY.map(([k, t]) => `<option value="${k}" ${zk.krok === k ? 'selected' : ''}>${t}</option>`).join('')}</select>${zk.kontejner ? `<span>${esc(zk.kontejner)}</span>` : ''}<button data-upravit="kontejner" data-pro="${zk.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer;font-size:.8rem">${zk.kontejner ? 'upravit' : 'kontejner a termín'}</button></span>` : ''}
+    ${jeZak ? `<button class="pbtn" data-okno="hovor" data-pro="${z.id}" style="margin-left:auto">${ik('hovor')}Zapsat hovor</button>` : ''}
+  </div>`;
+  const ticho = jeZak ? dniTicha(z) : 0;
+  const poTerm = ukoly.filter(p => poTerminu(p.kdy) && kdy(p.kdy, 1) !== 'dnes');
+  let pozor = '';
+  if (poTerm.length) pozor = `<div class="pozor pozor--ukol">${ik('varovani')}<span><b>Po termínu:</b> ${poTerm.map(p => `${esc(p.text)} (${LIDE[p.komu]}, ${kdy(p.kdy, 1)})`).join('; ')}</span><button class="chk" data-hotovo="${poTerm[0].id}" aria-label="Hotovo">${ik('stav')}</button></div>`;
+  else if (jeZak && aktivni(z) && z.stav !== 'novy' && ticho >= 14 && !ukoly.length) pozor = `<div class="pozor pozor--ticho">${ik('hodiny')}<span><b>${ticho} dní bez kontaktu</b> a nic naplánovaného.</span><button class="pbtn" data-pripomenout-zak="${z.id}">${ik('zvon')}Ozvat se zítra</button></div>`;
+  else if (ukoly.length) pozor = `<div class="pozor" style="background:var(--bg)">${ik('zvon')}<span>${ukoly.slice(0, 2).map(p => `<b>${esc(p.text)}</b> · ${LIDE[p.komu]}, ${kdy(p.kdy, 1)}`).join(' &nbsp;·&nbsp; ')}${ukoly.length > 2 ? ` a další ${ukoly.length - 2}` : ''}</span><button class="chk" data-hotovo="${ukoly[0].id}" aria-label="Hotovo">${ik('stav')}</button></div>`;
+  return hlava(`${jeZak ? ava(null, jmeno) : `<span class="ava ava--web">${ik('dodavatel')}</span>`}<span>${esc(jmeno)}</span>`, '', end) + tema + pozor
+    + `<div class="hl__scroll" id="tok"><div class="tok">${tok || '<p class="prazdno" style="padding:20px">Zatím nic. Napište první poznámku dole.</p>'}</div></div>` + skladatel(z);
+}
+
+function skladatel(z){
+  const mail = S.rezim === 'mail';
+  const navrh = S.navrh ? `<div class="navrh"><div class="navrh__hl"><span class="ava ava--claude">${ik('jiskra')}</span>${S.navrh.zdroj === 'claude' ? 'Roztřídil jsem to takhle, zkontrolujte a potvrďte' : 'Návrh zařazení, zkontrolujte a potvrďte'}</div><ul>${S.navrh.polozky.map((a, i) => `<li>${ik(a.ikona)}<span><strong>${esc(a.text)}</strong> ${esc(a.data)}</span><button data-vyhodit="${i}" aria-label="Vynechat">×</button></li>`).join('')}</ul>
+    <div class="navrh__pata"><button class="btn btn--sv" data-navrh-zpet>Upravit</button><button class="btn" data-potvrdit ${S.odesilam ? 'disabled' : ''}>${S.odesilam ? 'Ukládám…' : 'Potvrdit'}</button></div></div>` : '';
+  return `<div class="skl">${navrh}<div class="skl__box ${mail ? 'je-mail' : ''}">
+    <div class="skl__horni"><div class="seg"><button class="${!mail ? 'je-on' : ''}" data-rezim="pozn">Poznámka</button><button class="${mail ? 'je-on' : ''}" data-rezim="mail">Mail ${S.typKanalu === 'zak' ? 'zákazníkovi' : 'dodavateli'}</button></div>
+      <span class="skl__komu">${mail ? (!S.google ? 'pošta není napojená' : z.email ? `odejde z info@flexihouse.cz` : 'zatím nemá e-mail') : 'vidí jen Flexi House'}</span></div>
+    ${mail ? `<div class="skl__radek"><label>Komu</label>${z.email ? `<b style="padding:8px 0;font-weight:600">${esc(z.email)}</b>` : `<input id="m-komu" inputmode="email" placeholder="E-mail, uloží se k ${S.typKanalu === 'zak' ? 'zákazníkovi' : 'dodavateli'}">`}</div><div class="skl__radek"><label>Předmět</label><input id="m-pred" placeholder="O čem píšete" value="${esc(S.predmet)}"></div>` : ''}
+    ${S.nahravam ? `<div class="nahr"><span class="nahr__vlny"><b></b><b></b><b></b><b></b><b></b></span>Nahrávám <i>${Math.floor(S.nahrSek / 60)}:${String(S.nahrSek % 60).padStart(2, '0')}</i><span class="hl__sub" style="font-weight:400">Řekněte, co jste si řekli. Zastavíte stejným tlačítkem.</span></div>`
+      : S.prepis ? `<div class="prepis"><span class="tocka"></span>Přepisuji nahrávku</div>` : ''}
+    ${S.prepsano && !S.nahravam ? `<div class="prepis">${ik('mik')}Přepsáno z hlasové poznámky, text můžete upravit</div>` : ''}
+    <textarea id="skl-text" rows="1" placeholder="${mail ? 'Dobrý den,' : 'Napište nebo namluvte, co se stalo'}" ${S.tridim || S.nahravam || S.prepis || S.odesilam ? 'disabled' : ''}>${esc(S.text)}</textarea>
+    ${S.prilohy.length ? `<div class="prilohy" style="padding:0 10px 8px;margin:0">${S.prilohy.map((f, i) => `<span class="sb sb--mini">${ikSoub(f, typSoub(f.n))}<span class="sb__n"><b>${esc(f.n)}</b></span><button class="x" data-pril-x="${i}" aria-label="Odebrat">×</button></span>`).join('')}</div>` : ''}
+    <div class="skl__pata">
+      ${!mail ? `<button class="ib ${S.nahravam ? 'je-nahravam' : ''}" data-mik title="${S.nahravam ? 'Zastavit' : 'Namluvit, co se stalo'}">${ik(S.nahravam ? 'stop' : 'mik')}</button>` : ''}
+      <label class="ib" title="Vyfotit">${ik('foto')}<input type="file" id="skl-foto" accept="image/*" capture="environment" hidden></label>
+      <label class="ib" title="Přiložit soubor">${ik('sponka')}<input type="file" id="skl-soubor" accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx" multiple hidden></label>
+      ${S.tridim ? '<span class="hl__sub" style="display:inline-flex;gap:8px;align-items:center;margin-left:6px"><span class="tocka"></span>Třídím</span>' : S.odesilam ? '<span class="hl__sub" style="display:inline-flex;gap:8px;align-items:center;margin-left:6px"><span class="tocka"></span>Odesílám</span>' : ''}
+      <button class="btn ${mail ? 'btn--m' : ''}" data-odeslat ${S.odesilam || S.tridim ? 'disabled' : ''}>${mail ? 'Odeslat mail' : 'Uložit'}${ik('poslat')}</button>
+    </div></div><div class="skl__tip">⌘ Enter ${mail ? 'odešle' : 'uloží'}</div></div>`;
+}
+
+function pohledAsistent(){
+  const TIPY = ['Co mám dnes udělat?', 'Co je na cestě?', 'Komu jsme se dlouho neozvali?', 'Co přišlo nového?'];
+  const uvod = `<div class="uvod"><span class="ava ava--claude">${ik('jiskra')}</span><h2>Asistent</h2><p>Zeptejte se na zákazníka, zakázku, co máte dnes udělat nebo kde je dlouho ticho. Dívá se do všech hovorů, mailů a poznámek v Šanonu.${S.claude ? '' : ' <b>Zatím není zapnutý (chybí klíč k Claude).</b>'}</p>
+    <div class="filtry">${TIPY.map(t => `<button class="cip" data-chat-q="${esc(t)}">${t}</button>`).join('')}</div></div>`;
+  const odkazy = t => esc(t).replace(/\[z(\d+)\]/g, (_, id) => zak(+id) ? ` <button class="odk" data-zak="${id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer;font:inherit;font-weight:600">↗</button>` : '').replace(/\n/g, '<br>');
+  const tok = S.chat.map(c => c.kdo === 'ja' ? `<div class="chb">${ava(S.ja)}<div><div class="zpr__hl"><b>${LIDE[S.ja]}</b><time>${casJen(c.kdy)}</time></div><div class="chb__t">${esc(c.text)}</div></div></div>`
+    : `<div class="chb"><span class="ava ava--claude">${ik('jiskra')}</span><div><div class="zpr__hl"><b>Asistent</b><time>${casJen(c.kdy)}</time></div><div class="chb__t ${c.chyba ? 'je-chyba' : ''}" ${c.chyba ? 'style="color:var(--red)"' : ''}>${odkazy(c.text)}</div></div></div>`).join('');
+  const pisu = S.chatPisu ? `<div class="chb"><span class="ava ava--claude">${ik('jiskra')}</span><div><div class="zpr__hl"><b>Asistent</b></div><div class="chb__t hl__sub" style="display:inline-flex;gap:8px;align-items:center"><span class="tocka"></span>Dívám se</div></div></div>` : '';
+  const dalsi = S.chat.length && !S.chatPisu ? `<div class="filtry" style="padding:6px 16px 0 62px">${TIPY.filter(t => !S.chat.some(c => c.text === t)).slice(0, 3).map(t => `<button class="cip" data-chat-q="${esc(t)}">${t}</button>`).join('')}</div>` : '';
+  return hlava(`<span class="ava ava--claude">${ik('jiskra')}</span><span>Asistent</span>`, '') + `<div class="hl__scroll" id="tok">${S.chat.length ? '' : uvod}<div class="tok">${tok}${pisu}${dalsi}</div></div>
+    <div class="skl"><form class="skl__box" id="chat-form"><textarea id="chat-in" rows="1" placeholder="Zeptejte se Asistenta" style="min-height:44px"></textarea>
+    <div class="skl__pata"><span class="hl__sub" style="padding-left:6px;font-size:.78rem">Odpovídá z dat v Šanonu, nic neodesílá zákazníkům</span><button class="btn" type="submit">Zeptat se${ik('poslat')}</button></div></form><div class="skl__tip">Enter odešle</div></div>`;
+}
+
+async function zeptejSe(q){
+  q = q.trim(); if (!q || S.chatPisu) return;
+  S.chat.push({kdo:'ja', text:q, kdy:new Date().toISOString()}); S.chatPisu = true; vykresli();
+  try {
+    const r = await api('asistent', 'POST', { otazka: q, historie: S.chat.slice(0, -1).map(c => ({ role: c.kdo, text: c.text })) });
+    S.chat.push({kdo:'claude', text:r.text, kdy:new Date().toISOString()});
+  } catch (e) {
+    S.chat.push({kdo:'claude', text:'Nepodařilo se odpovědět: ' + e.message, kdy:new Date().toISOString(), chyba:true});
+  }
+  S.chatPisu = false; vykresli();
+}
+
+const DNY = ['neděl','pondělí','úterý','střed','čtvrt','pátek','sobot'];
+function rozpoznejTermin(t){
+  if (/pozítří/.test(t)) return 2;
+  if (/zítra/.test(t)) return 1;
+  if (/za týden/.test(t)) return 7;
+  const i = DNY.findIndex(x => t.includes(x));
+  if (i >= 0) return ((i - dnes.getDay() + 7) % 7) || 7;
+  if (/dnes|hned/.test(t)) return 0;
+  return null;
+}
+const nazevDne = n => n === 0 ? 'dnes' : n === 1 ? 'zítra' : new Date(dnes.getTime() + n * 864e5).toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'numeric'});
+function roztridLokalne(text, soubory){
+  const t = text.toLowerCase(); const out = [];
+  if (text.trim()) out.push({typ:'pozn', ikona:'pozn', text:'Poznámka:', data:text.trim()});
+  const n = rozpoznejTermin(t);
+  if (n !== null || /zavol|ozv[aueě]|posl[aeě]|domluv|připomeň|nezapomeň/.test(t)) {
+    const komu = /\bdan\b|danovi|dan mu/.test(t) ? 'dan' : /honz/.test(t) ? 'honza' : S.ja;
+    const vet = text.split(/[.\n]/).find(v => /zavol|ozv[aueě]|posl[aeě]|domluv|připomeň|nezapomeň/i.test(v)) || text;
+    out.push({typ:'pripominka', ikona:'zvon', text:`Připomínka ${KOMU[komu]}, ${nazevDne(n ?? 1)}:`, data:vet.trim(), komu, dny:n ?? 1});
+  }
+  soubory.forEach((f, i) => { const nz = f.n.toLowerCase();
+    const sl = /smlouv|protokol/.test(nz) ? 'Smlouva' : /katastr|pozemek|povolen/.test(nz) ? 'Pozemek' : /nabid/.test(nz) ? 'Nabídky' : /doprav|jerab|cmr/.test(nz) ? 'Doprava' : /\.(jpe?g|png|heic|webp)$/.test(nz) ? 'Fotky' : 'Dokumenty';
+    out.push({typ:'soubor', ikona:'drive', text:`Na Disk do složky ${sl}:`, data:f.n, slozka:sl, index:i}); });
+  return { zdroj:'mistni', polozky:out };
+}
+function navrhZClauda(r, text, soubory){
+  const out = [];
+  if (r.poznamka || text.trim()) out.push({typ:'pozn', ikona:'pozn', text:'Poznámka:', data:(r.poznamka || text).trim()});
+  (r.pripominky || []).forEach(p => { const komu = LIDE[p.komu] ? p.komu : S.ja; const dny = Number.isFinite(+p.za_dni) ? Math.max(0, +p.za_dni) : 1; out.push({typ:'pripominka', ikona:'zvon', text:`Připomínka ${KOMU[komu]}, ${nazevDne(dny)}:`, data:String(p.text || '').trim(), komu, dny}); });
+  soubory.forEach((f, i) => { const s = (r.soubory || []).find(x => x.n === f.n); const sl = s && SLOZKY.includes(s.slozka) ? s.slozka : (typSoub(f.n) === 'img' ? 'Fotky' : 'Dokumenty'); out.push({typ:'soubor', ikona:'drive', text:`Na Disk do složky ${sl}:`, data:f.n, slozka:sl, index:i}); });
+  if (r.stav && STAVY[r.stav]) out.push({typ:'stav', ikona:'stav', text:'Změnit stav na:', data:STAVY[r.stav], stav:r.stav});
+  return { zdroj:'claude', polozky:out };
+}
+
+let rekorder = null, nahrTimer = null, kousky = [];
+async function zacniNahravani(){
+  if (!navigator.mediaDevices) { toast('Prohlížeč nepustí mikrofon.'); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    kousky = [];
+    rekorder = new MediaRecorder(stream, MediaRecorder.isTypeSupported('audio/webm') ? { mimeType: 'audio/webm' } : undefined);
+    rekorder.ondataavailable = e => { if (e.data.size) kousky.push(e.data); };
+    rekorder.onstop = () => stream.getTracks().forEach(t => t.stop());
+    rekorder.start(250);
+  } catch { toast('Mikrofon se nepodařilo spustit.'); return; }
+  S.nahravam = true; S.nahrSek = 0; S.text = $('#skl-text')?.value || ''; vykresli();
+  nahrTimer = setInterval(() => { S.nahrSek++; const i = $('.nahr i'); if (i) i.textContent = `${Math.floor(S.nahrSek / 60)}:${String(S.nahrSek % 60).padStart(2, '0')}`; }, 1000);
+}
+function zastavNahravani(zahodit){
+  if (!S.nahravam) return;
+  clearInterval(nahrTimer); S.nahravam = false;
+  const rek = rekorder; rekorder = null;
+  if (!rek) return;
+  if (zahodit) { try { rek.stop(); } catch {} return; }
+  S.prepis = true; vykresli();
+  rek.onstop = async () => {
+    rek.stream.getTracks().forEach(t => t.stop());
+    const blob = new Blob(kousky, { type: rek.mimeType || 'audio/webm' });
+    try {
+      const fd = new FormData(); fd.append('audio', blob, 'nahravka.webm');
+      const r = await api('prepis', 'POST', fd);
+      S.prepsano = true; S.text = (S.text ? S.text + '\n' : '') + (r.text || '').trim();
+    } catch (e) { toast(e.message); }
+    S.prepis = false; vykresli(); $('#skl-text')?.focus();
+  };
+  rek.stop();
+}
+
+function vykresli(){
+  if (!S.ja) { $('#hl').innerHTML = pohledPrihlaseni(); document.body.classList.remove('je-kanal'); $('#side').innerHTML = ''; $('#mob-nav').innerHTML = '';
+    const f = $('#login'); if (f) { f.onsubmit = async e => { e.preventDefault(); try { const r = await api('prihlaseni', 'POST', { kdo: $('#l-kdo').value, heslo: $('#l-heslo').value }); S.ja = r.kdo; S.chyba = null; await nacti(); synchronizuj(); } catch (er) { S.chyba = er.message; vykresli(); } }; setTimeout(() => $('#l-heslo')?.focus(), 30); }
+    return; }
+  vykresliSide();
+  $('#hl').innerHTML = S.kanal ? pohledKanal() : S.pohled === 'den' ? pohledDen() : S.pohled === 'asistent' ? pohledAsistent() : S.pohled === 'zakaznici' ? pohledZakaznici() : S.pohled === 'vsichni' ? pohledZakaznici(true) : S.pohled === 'zakazky' ? pohledZakazky() : S.pohled === 'soubory' ? pohledSoubory() : pohledZakaznici();
+  const tok = $('#tok'); if (tok) tok.scrollTop = tok.scrollHeight;
+  const ta = $('#skl-text'); if (ta) { const auto = () => { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, innerHeight * .4) + 'px'; }; ta.oninput = () => { S.text = ta.value; auto(); }; auto(); }
+  const cf = $('#chat-form'); if (cf) { cf.onsubmit = e => { e.preventDefault(); const i = $('#chat-in'); zeptejSe(i.value); i.value = ''; }; $('#chat-in').onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); zeptejSe(e.target.value); e.target.value = ''; } }; }
+  $('#menu').classList.remove('je-on');
+}
+
+function otevriKanal(typ, id){
+  zastavNahravani(true); S.prepsano = false; S.typKanalu = typ; S.kanal = id; S.rezim = 'pozn'; S.text = ''; S.prilohy = []; S.navrh = null; S.predmet = ''; S.thread = '';
+  const nove = S.zpravy.filter(m => (typ === 'zak' ? m.zak : m.dod) === id && m.nove);
+  nove.forEach(m => m.nove = false);
+  if (nove.length) api('zprava', 'PATCH', { precteno: true, [typ === 'zak' ? 'zak_id' : 'dod_id']: id }).catch(() => {});
+  zavriOkno(); vykresli();
+}
+
+function otevriMenu(typ, zid, kotva){
+  const z = zak(zid); const m = $('#menu');
+  m.innerHTML = typ === 'stav'
+    ? `<div class="menu__h">Stav zákazníka</div>${Object.entries(STAVY).map(([k, t]) => `<button class="${z.stav === k ? 'je-on' : ''}" data-set-stav="${k}" data-pro="${zid}"><span class="d d--${k}"></span>${t}${ik('stav')}</button>`).join('')}<div class="menu__h" style="border-top:1px solid var(--line2);margin-top:4px;padding-top:8px">Omyl</div><button data-neni-zak="${zid}" style="color:var(--red)">${ik('varovani')}Není zákazník, skrýt${z.email ? ' a adresu ignorovat' : ''}</button>`
+    : `<div class="menu__h">Kdo to má na starosti</div>${Object.entries(LIDE).map(([k, t]) => `<button class="${z.majitel === k ? 'je-on' : ''}" data-set-maj="${k}" data-pro="${zid}">${ava(k).replace('class="ava', 'style="width:20px;height:20px;font-size:.58rem;border-radius:4px" class="ava')}${t}${ik('stav')}</button>`).join('')}<button class="${!z.majitel ? 'je-on' : ''}" data-set-maj="" data-pro="${zid}"><span class="ava ava--nikdo" style="width:20px;height:20px;font-size:.58rem;border-radius:4px">?</span>Nikdo${ik('stav')}</button>`;
+  const r = kotva.getBoundingClientRect();
+  m.style.top = (r.bottom + 6) + 'px'; m.style.left = Math.max(8, Math.min(r.left, innerWidth - 240)) + 'px';
+  m.classList.add('je-on');
+}
+
+let oknoStav = {};
+function otevriOkno(typ, pro){
+  oknoStav = {typ, pro, vysledek:'zajem'};
+  const z = pro ? zak(pro) : null;
+  const vyberZak = z ? `<p class="hl__sub" style="margin-top:-6px">${esc(z.jmeno)} · ${esc(z.telefon)}</p>` : `<label for="o-zak">Zákazník</label><select class="pole" id="o-zak">${S.zakaznici.filter(aktivni).map(x => `<option value="${x.id}">${esc(x.jmeno)}</option>`).join('')}</select>`;
+  let h = '';
+  if (typ === 'hovor') h = `<h2>Zapsat hovor</h2>${vyberZak}<label>Jak to dopadlo</label><div class="vyber">${Object.entries(VYSLEDKY).map(([k, t]) => `<button type="button" data-vysl="${k}" class="${k === 'zajem' ? 'je-on' : ''}">${t}</button>`).join('')}</div>
+    <label for="o-text">Co jste si řekli</label><textarea class="pole" id="o-text" placeholder="Stačí pár slov"></textarea><label>Ozvat se znovu</label><div class="vyber" style="grid-template-columns:repeat(4,1fr)">${[['','Ne'],['1','Zítra'],['3','Za 3 dny'],['7','Za týden']].map(([v, t], i) => `<button type="button" data-termin="${v}" class="${i === 0 ? 'je-on' : ''}">${t}</button>`).join('')}</div>`;
+  if (typ === 'novy') h = `<h2>Nový zákazník</h2><label for="o-jm">Jméno</label><input class="pole" id="o-jm"><label for="o-tel">Telefon</label><input class="pole" id="o-tel" inputmode="tel"><label for="o-em">E-mail</label><input class="pole" id="o-em" inputmode="email"><label for="o-mi">Místo</label><input class="pole" id="o-mi">`;
+  if (typ === 'upravit') { const pole = oknoStav.pole = pro.pole; const popis = {telefon:'Telefon', misto:'Místo', kontejner:'Číslo kontejneru'}[pole]; h = `<h2>${popis}</h2><input class="pole" id="o-text" value="${esc(pro.hodnota || '')}" ${pole === 'telefon' ? 'inputmode="tel"' : ''}>${pole === 'kontejner' ? `<label for="o-pred">Termín předání</label><input class="pole" id="o-pred" value="${esc(pro.predani || '')}" placeholder="např. 5. 12. 2026">` : ''}`; }
+  $('#okno').className = 'okno';
+  $('#okno').innerHTML = h + `<div class="okno__pata"><button class="btn btn--sv" data-zavrit>Zrušit</button><button class="btn" data-ulozit>Uložit</button></div>`;
+  $('#okno-bg').classList.add('je-on');
+  setTimeout(() => ($('#o-text') || $('#o-jm'))?.focus(), 30);
+}
+const zavriOkno = () => $('#okno-bg').classList.remove('je-on');
+
+async function ulozOkno(){
+  const o = oknoStav;
+  try {
+    if (o.typ === 'hovor') {
+      const zid = o.pro || +$('#o-zak').value; const text = $('#o-text').value.trim();
+      await api('zprava', 'POST', { zak_id: zid, typ: 'hovor', vysledek: o.vysledek, text });
+      if (o.termin) await api('pripominka', 'POST', { zak_id: zid, komu: S.ja, kdy: d(+o.termin, 9), text: 'Ozvat se: ' + (text || VYSLEDKY[o.vysledek]).slice(0, 80) });
+      zavriOkno(); await nacti(true); otevriKanal('zak', zid); toast('Hovor zapsaný' + (o.termin ? ', připomínka nastavená' : ''));
+    }
+    if (o.typ === 'novy') { const jm = $('#o-jm').value.trim(); if (!jm) return; const r = await api('zakaznik', 'POST', { jmeno: jm, telefon: $('#o-tel').value, email: $('#o-em').value, misto: $('#o-mi').value }); zavriOkno(); await nacti(true); otevriKanal('zak', r.id); }
+    if (o.typ === 'upravit') {
+      const v = $('#o-text').value.trim();
+      if (o.pole === 'kontejner') await api('zakazka', 'PATCH', { id: o.pro.id, kontejner: v, predani: $('#o-pred').value.trim() });
+      else await api('zakaznik', 'PATCH', { id: o.pro.id, [o.pole]: v });
+      zavriOkno(); await nacti(true);
+    }
+  } catch (e) { toast(e.message); }
+}
+
+function otevriHledani(){
+  $('#okno').className = 'okno hl-okno';
+  $('#okno').innerHTML = `<input id="hl-in" placeholder="Zákazník, telefon, kontejner, text mailu" autocomplete="off"><div class="hl-vysl" id="hl-vysl"></div>`;
+  $('#okno-bg').classList.add('je-on');
+  const run = () => {
+    const q = $('#hl-in').value.toLowerCase().trim();
+    const zz = S.zakaznici.filter(z => !q || [z.jmeno, z.telefon, z.email, z.misto].join(' ').toLowerCase().includes(q)).slice(0, 7);
+    const kk = q ? S.zakazky.filter(x => x.kontejner.toLowerCase().replace(/\s/g, '').includes(q.replace(/\s/g, ''))) : [];
+    const mm = q.length > 2 ? S.zpravy.filter(m => m.zak && ((m.predmet || '') + m.text).toLowerCase().includes(q)).slice(0, 5) : [];
+    $('#hl-vysl').innerHTML = [
+      ...zz.map(z => `<li class="polozka" data-zak="${z.id}">${ava(z.majitel)}<div class="polozka__hl"><strong>${esc(z.jmeno)}</strong><span>${esc(z.telefon)} · ${esc(z.misto)}</span></div><span class="pil">${STAVY[z.stav]}</span></li>`),
+      ...kk.map(x => `<li class="polozka" data-zak="${x.zak}"><span class="ava ava--web">${ik('dum')}</span><div class="polozka__hl"><strong>${esc(x.kontejner)}</strong><span>${esc((zak(x.zak) || {}).jmeno)}</span></div></li>`),
+      ...mm.map(m => `<li class="polozka" data-zak="${m.zak}"><span class="ava ava--nikdo">${ik('posta')}</span><div class="polozka__hl"><strong>${esc(m.predmet || m.text.slice(0, 60))}</strong><span>${esc((zak(m.zak) || {}).jmeno)} · ${kdy(m.kdy, 1)}</span></div></li>`)
+    ].join('') || '<p class="prazdno">Nic.</p>';
+  };
+  $('#hl-in').oninput = run; run(); setTimeout(() => $('#hl-in').focus(), 20);
+}
+
+async function odesli(){
+  const jeZak = S.typKanalu === 'zak';
+  const z = jeZak ? zak(S.kanal) : dod(S.kanal);
+  if (S.rezim === 'mail') {
+    const text = $('#skl-text').value.trim(); if (!text) return;
+    if (!S.google) { toast('Pošta zatím není napojená.'); return; }
+    const komuPole = $('#m-komu'); const komu = komuPole ? komuPole.value.trim() : z.email;
+    if (!/.+@.+\..+/.test(komu)) { komuPole?.focus(); toast('Doplňte e-mail.'); return; }
+    const fd = new FormData();
+    fd.append(jeZak ? 'zak_id' : 'dod_id', z.id); fd.append('komu', komu); fd.append('predmet', $('#m-pred').value); fd.append('text', text); fd.append('thread_id', S.thread || '');
+    S.prilohy.forEach(f => f.file && fd.append('soubory', f.file, f.n));
+    S.odesilam = true; S.text = text; vykresli();
+    try { await api('mail', 'POST', fd); S.text = ''; S.prilohy = []; S.rezim = 'pozn'; S.predmet = ''; S.thread = ''; toast('Mail odeslaný'); await nacti(true); }
+    catch (e) { toast('Neodesláno: ' + e.message); }
+    S.odesilam = false; vykresli(); return;
+  }
+  const text = $('#skl-text').value; if (!text.trim() && !S.prilohy.length) return;
+  S.text = text; S.tridim = true; vykresli();
+  const soubory = S.prilohy;
+  if (S.claude) {
+    try { const r = await api('tridit', 'POST', { text, soubory: soubory.map(f => f.n), zakaznik: jeZak ? { jmeno: z.jmeno, misto: z.misto } : { jmeno: z.nazev } }); S.navrh = navrhZClauda(r, text, soubory); }
+    catch (e) { toast('Claude nestihl, třídím sám: ' + e.message); S.navrh = roztridLokalne(text, soubory); }
+  } else S.navrh = roztridLokalne(text, soubory);
+  S.tridim = false; vykresli();
+}
+
+async function potvrdNavrh(){
+  const jeZak = S.typKanalu === 'zak'; const cil = jeZak ? { zak_id: S.kanal } : { dod_id: S.kanal };
+  const p = S.navrh.polozky; S.odesilam = true; vykresli();
+  try {
+    const pozn = p.find(a => a.typ === 'pozn'); const soub = p.filter(a => a.typ === 'soubor');
+    if (soub.length) {
+      const fd = new FormData(); fd.append(jeZak ? 'zak_id' : 'dod_id', S.kanal); fd.append('text', pozn ? pozn.data : '');
+      fd.append('slozky', JSON.stringify(soub.map(a => a.slozka)));
+      soub.forEach(a => { const f = S.prilohy[a.index]; if (f && f.file) fd.append('soubory', f.file, f.n); });
+      await api('soubor', 'POST', fd);
+    } else if (pozn) await api('zprava', 'POST', { ...cil, typ: 'pozn', text: pozn.data });
+    for (const a of p.filter(x => x.typ === 'pripominka')) await api('pripominka', 'POST', { ...cil, komu: a.komu, kdy: d(a.dny, 9), text: a.data });
+    const st = p.find(a => a.typ === 'stav'); if (st && jeZak) await api('zakaznik', 'PATCH', { id: S.kanal, stav: st.stav });
+    S.navrh = null; S.text = ''; S.prilohy = []; S.prepsano = false; toast('Uloženo'); await nacti(true);
+  } catch (e) { toast('Neuloženo: ' + e.message); }
+  S.odesilam = false; vykresli();
+}
+
+document.addEventListener('click', async e => {
+  if (!e.target.closest('#menu') && !e.target.closest('[data-menu]')) $('#menu').classList.remove('je-on');
+  const t = e.target.closest('button,[data-zak],[data-dod],[data-jdi]'); if (!t) { if (e.target.id === 'okno-bg') zavriOkno(); return; }
+  const ds = t.dataset;
+  const zkus = async (fn, hlaska) => { try { await fn(); if (hlaska) toast(hlaska); await nacti(true); } catch (er) { toast(er.message); } };
+  if (ds.hotovo) { e.stopPropagation(); const p = S.pripominky.find(x => x.id == ds.hotovo); if (p) p.hotovo = true; vykresli(); zkus(() => api('pripominka', 'PATCH', { id: +ds.hotovo, hotovo: true }), 'Hotovo'); return; }
+  if (ds.vzit) { e.stopPropagation(); zkus(() => api('zakaznik', 'PATCH', { id: +ds.vzit, majitel: S.ja }), 'Poptávka je vaše'); return; }
+  if (ds.okno) { otevriOkno(ds.okno, +ds.pro || null); return; }
+  if (ds.upravit) { const pro = ds.upravit === 'kontejner' ? { id: +ds.pro, pole: 'kontejner', hodnota: (S.zakazky.find(x => x.id == ds.pro) || {}).kontejner, predani: (S.zakazky.find(x => x.id == ds.pro) || {}).predani } : { id: +ds.pro, pole: ds.upravit, hodnota: (zak(+ds.pro) || {})[ds.upravit] }; otevriOkno('upravit', pro); return; }
+  if (ds.menu) { otevriMenu(ds.menu, +ds.pro, t); return; }
+  if (ds.setStav !== undefined) { $('#menu').classList.remove('je-on'); zkus(() => api('zakaznik', 'PATCH', { id: +ds.pro, stav: ds.setStav })); return; }
+  if (ds.neniZak) { $('#menu').classList.remove('je-on'); const z = zak(+ds.neniZak); if (!confirm(`Skrýt ${z.jmeno}? Maily zůstanou v Gmailu, ale z Šanonu zmizí a z téhle adresy se už nic nezaloží.`)) return; S.kanal = null; zkus(() => api('zakaznik', 'DELETE', { id: z.id }), 'Skryto'); return; }
+  if (ds.setMaj !== undefined) { $('#menu').classList.remove('je-on'); zkus(() => api('zakaznik', 'PATCH', { id: +ds.pro, majitel: ds.setMaj || null })); return; }
+  if (ds.vysl) { oknoStav.vysledek = ds.vysl; t.parentElement.querySelectorAll('button').forEach(b => b.classList.toggle('je-on', b === t)); return; }
+  if ('termin' in ds) { oknoStav.termin = ds.termin; t.parentElement.querySelectorAll('button').forEach(b => b.classList.toggle('je-on', b === t)); return; }
+  if ('zavrit' in ds) { zavriOkno(); return; }
+  if ('ulozit' in ds) { ulozOkno(); return; }
+  if ('hledat' in ds) { otevriHledani(); return; }
+  if ('zpet' in ds) { S.kanal = null; vykresli(); return; }
+  if (ds.sbal) { S.sbaleno[ds.sbal] = !S.sbaleno[ds.sbal]; vykresli(); return; }
+  if (ds.mobtab) { S.mobTab = ds.mobtab; vykresli(); return; }
+  if (ds.rezim) { S.rezim = ds.rezim; S.text = $('#skl-text').value; vykresli(); $('#skl-text').focus(); return; }
+  if ('odpovedet' in ds) { S.rezim = 'mail'; S.predmet = ds.odpovedet.startsWith('Re:') ? ds.odpovedet : 'Re: ' + ds.odpovedet; S.thread = ds.thread || ''; vykresli(); $('#skl-text').focus(); return; }
+  if (ds.pripomenout) { const m = S.zpravy.find(x => x.id == ds.pripomenout); zkus(() => api('pripominka', 'POST', { zak_id: m.zak, dod_id: m.dod, komu: S.ja, kdy: d(1, 9), text: 'Vrátit se k: ' + (m.predmet || m.text || VYSLEDKY[m.vysledek] || '').slice(0, 60) }), 'Připomenu zítra v 9:00'); return; }
+  if (ds.pripomenoutZak) { const z = zak(+ds.pripomenoutZak); zkus(() => api('pripominka', 'POST', { zak_id: z.id, komu: z.majitel || S.ja, kdy: d(1, 9), text: 'Ozvat se, dlouho ticho' }), 'Připomínka na zítra'); return; }
+  if ('mik' in ds) { S.nahravam ? zastavNahravani(false) : zacniNahravani(); return; }
+  if ('odeslat' in ds) { odesli(); return; }
+  if (ds.soubor) { otevriSoubor(ds.soubor); return; }
+  if (ds.naDisk) { const [mid, i] = ds.naDisk.split(':').map(Number); t.disabled = true; t.textContent = 'Ukládám…'; zkus(() => api('soubor', 'PUT', { zprava_id: mid, index: i, slozka: $('#n-sl').value }), 'Uloženo na Disk'); zavriOkno(); return; }
+  if ('fsl' in ds) { S.filtrSlozka = ds.fsl; vykresli(); return; }
+  if (ds.prilX) { S.text = $('#skl-text').value; S.prilohy.splice(+ds.prilX, 1); vykresli(); return; }
+  if ('fotoZrus' in ds) { S.foto = null; vykresli(); return; }
+  if ('fotoUloz' in ds) { const zid = +$('#f-zak').value, sl = $('#f-sl').value, f = S.foto; if (!zid) { toast('Vyberte zákazníka.'); return; }
+    const fd = new FormData(); fd.append('zak_id', zid); fd.append('text', (f.popis ? f.popis[0].toUpperCase() + f.popis.slice(1) + ' (vyfoceno).' : '') + (f.text ? '\n' + f.text : '')); fd.append('slozky', JSON.stringify([sl])); fd.append('soubory', f.file, f.n);
+    S.odesilam = true; vykresli();
+    try { await api('soubor', 'POST', fd); S.foto = null; await nacti(true); otevriKanal('zak', zid); toast('Uloženo na Disk do složky ' + sl); } catch (er) { toast(er.message); }
+    S.odesilam = false; vykresli(); return; }
+  if (ds.chatQ) { zeptejSe(ds.chatQ); return; }
+  if ('ukolyVsech' in ds) { S.ukolyVsech = !S.ukolyVsech; vykresli(); return; }
+  if (ds.vyhodit) { S.navrh.polozky.splice(+ds.vyhodit, 1); if (!S.navrh.polozky.length) S.navrh = null; vykresli(); return; }
+  if ('navrhZpet' in ds) { S.navrh = null; vykresli(); $('#skl-text').focus(); return; }
+  if ('potvrdit' in ds) { potvrdNavrh(); return; }
+  if (ds.jdi) { S.pohled = ds.jdi; S.kanal = null; zavriOkno(); vykresli(); return; }
+  if (ds.dod) { otevriKanal('dod', +ds.dod); return; }
+  if (ds.zak) { otevriKanal('zak', +ds.zak); return; }
+});
+
+document.addEventListener('change', async e => {
+  const ds = e.target.dataset;
+  if (e.target.id === 'skl-soubor' || e.target.id === 'skl-foto') { S.text = $('#skl-text')?.value || ''; const foto = e.target.id === 'skl-foto';
+    S.prilohy.push(...[...e.target.files].map(f => ({n: foto ? 'foto-' + new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '') + '.jpg' : f.name, foto, file: f, u: /^image\//.test(f.type) ? URL.createObjectURL(f) : null}))); vykresli(); return; }
+  if (e.target.id === 'foto-global') { const f = e.target.files[0]; if (!f) return;
+    S.foto = {stav:'ctu', n:'foto-' + new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '') + '.jpg', u:URL.createObjectURL(f), file:f}; vykresli();
+    if (!S.claude) { S.foto = {...S.foto, stav:'hotovo', popis:'fotka', slozka:'Fotky', zak:null, proc:'Claude není zapnutý, vyberte zákazníka ručně.'}; vykresli(); return; }
+    try { const fd = new FormData(); fd.append('foto', f, f.name); const r = await api('fotka', 'POST', fd);
+      S.foto = {...S.foto, stav:'hotovo', popis:r.popis || 'fotka', slozka:SLOZKY.includes(r.slozka) ? r.slozka : 'Dokumenty', zak:r.zakaznik_id || null, proc:r.proc || '', text:r.text || ''}; }
+    catch (er) { S.foto = {...S.foto, stav:'chyba', chyba:er.message}; }
+    vykresli(); return; }
+  if (ds.krok) { try { await api('zakazka', 'PATCH', { id: +ds.krok, krok: e.target.value }); await nacti(true); } catch (er) { toast(er.message); } }
+  if (e.target.id === 'ja' && e.target.value === 'odhlasit') { await api('prihlaseni', 'DELETE'); S.ja = null; S.kanal = null; vykresli(); }
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k' && S.ja) { e.preventDefault(); otevriHledani(); }
+  if (e.key === 'Escape') { zavriOkno(); $('#menu').classList.remove('je-on'); }
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && e.target.id === 'skl-text') odesli();
+});
+
+(async () => {
+  try { const p = await api('prihlaseni'); S.lide = p.lide || []; S.ja = p.kdo; } catch {}
+  if (S.ja) { await nacti(); synchronizuj(); } else vykresli();
+  setInterval(() => { if (S.ja && !document.hidden) synchronizuj().then(() => nacti(true)); }, 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.ja) nacti(true); });
+})();
+</script>
+</body>
+</html>
