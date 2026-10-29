@@ -24,6 +24,7 @@ export const onRequestPatch = chranene(async ({ request, env }) => {
   if (d.precteno) {
     if (d.zak_id) await env.DB.prepare('UPDATE s_zpravy SET nove = 0 WHERE zak_id = ?').bind(d.zak_id).run();
     if (d.dod_id) await env.DB.prepare('UPDATE s_zpravy SET nove = 0 WHERE dod_id = ?').bind(d.dod_id).run();
+    if (d.vse) await env.DB.prepare('UPDATE s_zpravy SET nove = 0 WHERE nove = 1').run();
   }
   return json(200, { ok: true });
 });

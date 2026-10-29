@@ -35,6 +35,15 @@ export const onRequestPatch = chranene(async ({ request, env, kdo }) => {
     await env.DB.prepare('UPDATE s_zakaznici SET majitel = ? WHERE id = ?').bind(d.majitel, z.id).run();
     await sysZprava(env, z.id, kdo, d.majitel === kdo && !z.majitel ? 'si vzal poptávku' : d.majitel ? 'předal zákazníka <b>' + JMENA[d.majitel] + '</b>' : 'zrušil majitele');
   }
+  if (d.na_dodavatele) {
+    const r = await env.DB.prepare('INSERT INTO s_dodavatele (nazev, co, kontakt, email, telefon) VALUES (?, ?, ?, ?, ?)').bind(z.jmeno, String(d.co || '').trim(), '', z.email || '', z.telefon || '').run();
+    const did = r.meta.last_row_id;
+    await env.DB.prepare('UPDATE s_zpravy SET dod_id = ?, zak_id = NULL WHERE zak_id = ?').bind(did, z.id).run();
+    await env.DB.prepare('UPDATE s_pripominky SET dod_id = ?, zak_id = NULL WHERE zak_id = ?').bind(did, z.id).run();
+    await env.DB.prepare('DELETE FROM s_zakazky WHERE zak_id = ?').bind(z.id).run();
+    await env.DB.prepare('DELETE FROM s_zakaznici WHERE id = ?').bind(z.id).run();
+    return json(200, { ok: true, dod_id: did });
+  }
   for (const pole of ['telefon', 'email', 'misto', 'jmeno']) {
     if (typeof d[pole] === 'string' && d[pole].trim() !== (z[pole] || '')) {
       await env.DB.prepare(`UPDATE s_zakaznici SET ${pole} = ? WHERE id = ?`).bind(pole === 'email' ? d[pole].trim().toLowerCase() : d[pole].trim(), z.id).run();

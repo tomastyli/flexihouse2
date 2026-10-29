@@ -97,7 +97,7 @@ a{color:var(--link)}
 .menu button:hover{background:var(--blue);color:#fff}
 .menu button .d{width:8px;height:8px;border-radius:50%}
 .menu button svg{width:14px;height:14px;margin-left:auto;opacity:0}
-.menu button[data-neni-zak] svg{margin-left:0;opacity:1}
+.menu button[data-neni-zak] svg,.menu button[data-je-dod] svg{margin-left:0;opacity:1}
 .menu button.je-on svg{opacity:1}
 
 .tema{display:flex;gap:6px 14px;flex-wrap:wrap;padding:7px 16px;border-bottom:1px solid var(--line2);font-size:.84rem;color:var(--muted);align-items:center;flex:none}
@@ -138,6 +138,19 @@ a{color:var(--link)}
 .zpr__mail-h svg{width:14px;height:14px;flex:none}
 .zpr__mail-t{padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere}
 .zpr__mail .prilohy{padding:0 12px 10px;margin:0}
+.zpr__mail-t.je-dlouhy{max-height:190px;overflow:hidden;position:relative}
+.zpr__mail-t.je-dlouhy::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(rgba(255,255,255,0),#fff)}
+.vic{border:0;background:none;color:var(--link);font-weight:600;font-size:.84rem;padding:6px 12px 8px;cursor:pointer}
+.vic:hover{text-decoration:underline}
+.zpr__t a,.zpr__mail-t a{color:var(--link);text-decoration:none}
+.zpr__t a:hover,.zpr__mail-t a:hover{text-decoration:underline}
+.side__sync{display:flex;align-items:center;gap:6px;padding:6px 16px;font-size:.76rem;color:var(--side-m);border-top:1px solid rgba(255,255,255,.06)}
+.side__sync button{border:0;background:none;color:inherit;padding:0 2px;cursor:pointer;display:inline-grid;place-items:center}
+.side__sync button svg{width:13px;height:13px}
+.side__sync button:hover{color:#fff}
+.side__sync .tocka{width:11px;height:11px;border-color:rgba(255,255,255,.2);border-top-color:#fff}
+.toast button{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:6px;padding:3px 10px;margin-left:10px;font-weight:600;font-size:.84rem}
+.toast.je-on{pointer-events:auto}
 .zpr__akce{position:absolute;right:16px;top:-12px;display:none;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:7px;padding:2px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 .zpr:hover .zpr__akce{display:flex}
 .zpr__akce button{border:0;background:none;border-radius:5px;padding:4px 8px;font-size:.8rem;font-weight:600;display:inline-flex;gap:5px;align-items:center}
@@ -368,6 +381,7 @@ select.pole{padding-right:26px;appearance:none;background:var(--card) url("data:
   <aside class="side">
     <div class="ws"><div class="ws__n"><span>Flexi House</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div><button class="ib" data-okno="novy" title="Nový zákazník"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
     <div class="side__scroll" id="side"></div>
+    <div class="side__sync" id="side-sync"></div>
     <div class="side__ja"><span class="ava" id="ja-ava"></span><span class="tec"></span><select id="ja" aria-label="Přihlášený uživatel"></select></div>
   </aside>
   <main class="hl" id="hl"></main>
@@ -403,7 +417,9 @@ const IK = {
   poslat:'<path d="M4 12 20 4l-4 16-4-7z"/>',
   odpoved:'<path d="M9 14 4 9l5-5M4 9h9a7 7 0 0 1 7 7v4"/>',
   varovani:'<path d="M12 3 2 21h20zM12 10v5M12 18h.01"/>',
-  hodiny:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+  hodiny:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  obnovit:'<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>',
+  oko:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'
 };
 const ik = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${IK[n]}</svg>`;
 const LIDE = {dan:'Dan', honza:'Honza', tomas:'Tomáš'};
@@ -420,7 +436,7 @@ const d = (dny, h=10, m=0) => { const x = new Date(); x.setDate(x.getDate()+dny)
 const S = {
   ja:null, lide:[], pohled:'den', kanal:null, typKanalu:'zak', rezim:'pozn', text:'', predmet:'', prilohy:[], navrh:null, tridim:false,
   chat:[], chatPisu:false, ukolyVsech:false, filtrSlozka:'', foto:null, nahravam:false, nahrSek:0, prepis:false, prepsano:false,
-  sbaleno:{ost:true}, mobTab:'zak', nacteno:false, chyba:null, google:false, claude:false, whisper:false, odesilam:false,
+  sbaleno:{ost:true}, mobTab:'zak', nacteno:false, syncKdy:null, syncBezi:false, rozbaleno:{}, chyba:null, google:false, claude:false, whisper:false, odesilam:false,
   zakaznici:[], dodavatele:[], zpravy:[], pripominky:[], zakazky:[]
 };
 
@@ -440,11 +456,14 @@ const typSoub = n => /\.(jpe?g|png|heic|webp|gif)$/i.test(n) ? 'img' : /\.pdf$/i
 const urlSoub = (f, nahled) => f.u ? f.u : f.drive_id ? `/api/sanon/soubor?drive=${encodeURIComponent(f.drive_id)}&n=${encodeURIComponent(f.n)}${nahled ? '&nahled=1' : ''}` : f.gmail_att ? `/api/sanon/soubor?gmail=${encodeURIComponent(f.gmail_msg)}&att=${encodeURIComponent(f.gmail_att)}&mime=${encodeURIComponent(f.mime || '')}&n=${encodeURIComponent(f.n)}` : '';
 const ikSoub = (f, t) => t === 'img' && urlSoub(f, true) ? `<img class="sb__img" src="${urlSoub(f, true)}" alt="" loading="lazy">` : `<div class="sb__ik"><span class="${t}">${t === 'img' ? ik('foto') : t.toUpperCase()}</span></div>`;
 const soubHtml = (f, mid, i) => { const t = typSoub(f.n); return `<button class="sb" data-soubor="${mid}:${i}" title="${esc(f.n)}">${ikSoub(f, t)}<div class="sb__n"><b>${esc(f.n)}</b><i>${esc(f.s || (f.gmail_att ? 'z mailu' : ''))}</i></div></button>`; };
-const prilohyHtml = m => m.prilohy?.length ? `<div class="prilohy">${m.prilohy.map((f, i) => soubHtml(f, m.id, i)).join('')}</div>` : '';
-const vsechnySoubory = () => S.zpravy.flatMap(m => (m.prilohy || []).map((f, i) => ({...f, mid:m.id, i, zak:m.zak, dod:m.dod, kdy:m.kdy, kdo:m.kdo})));
+const podpisovy = f => f.gmail_att && /^(image|obr[aá]zek|outlook)[-_ ]?\d*\.(png|gif|jpe?g)$/i.test(f.n) && (f.velikost || 0) < 60000;
+const prilohyHtml = m => m.prilohy?.some(f => !podpisovy(f)) ? `<div class="prilohy">${m.prilohy.map((f, i) => podpisovy(f) ? '' : soubHtml(f, m.id, i)).join('')}</div>` : '';
+const vsechnySoubory = () => S.zpravy.flatMap(m => (m.prilohy || []).map((f, i) => ({...f, mid:m.id, i, zak:m.zak, dod:m.dod, kdy:m.kdy, kdo:m.kdo})).filter(f => !podpisovy(f)));
 const aktivni = z => !['predano','ztraceno'].includes(z.stav);
 const pozorZak = z => aktivni(z) && (S.pripominky.some(p => p.zak === z.id && !p.hotovo && poTerminu(p.kdy) && kdy(p.kdy, 1) !== 'dnes') || (z.stav !== 'novy' && dniTicha(z) >= 14 && !S.pripominky.some(p => p.zak === z.id && !p.hotovo)));
 const nepr = z => S.zpravy.filter(m => m.zak === z.id && m.nove).length;
+const oriznout = t => { const v = [/\n\s*On .{3,120}wrote:\s*\n/, /\n[^\n]{0,160}napsal\(?a?\)?:\s*(\n|$)/, /\n-----\s*(Original Message|Původní zpráva)\s*-----/i, /\n>\s/]; let k = -1; for (const r of v) { const i = t.search(r); if (i > 40 && (k < 0 || i < k)) k = i; } return k > 0 ? t.slice(0, k).trim() : t; };
+const odkazy = t => esc(t).replace(/(https?:\/\/[^\s<)]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/(^|[\s(])((?:\+420\s?)?\d{3}\s?\d{3}\s?\d{3})(?=$|[\s).,;])/g, (m, p, c) => `${p}<a href="tel:${c.replace(/\s/g, '')}">${c}</a>`);
 const jmenoKdo = k => k === 'gmail' ? 'Flexi House (z Gmailu)' : LIDE[k] || k;
 
 function kdy(iso, jenDen){
@@ -457,7 +476,7 @@ function kdy(iso, jenDen){
 const casJen = iso => new Date(iso).toLocaleTimeString('cs-CZ', {hour:'numeric', minute:'2-digit'});
 const denNadpis = iso => { const dd = kdy(iso, 1); return dd === 'dnes' || dd === 'včera' ? dd[0].toUpperCase() + dd.slice(1) : new Date(iso).toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}); };
 const poTerminu = iso => new Date(iso) < dnes;
-function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('je-on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('je-on'), 2600); }
+function toast(t, akce){ const el = $('#toast'); el.innerHTML = esc(t) + (akce ? `<button data-toast-akce>${esc(akce.text)}</button>` : ''); if (akce) el.querySelector('button').onclick = () => { el.classList.remove('je-on'); akce.fn(); }; el.classList.add('je-on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('je-on'), akce ? 7000 : 2600); }
 
 async function api(cesta, metoda, telo){
   const init = { method: metoda || 'GET', headers: {} };
@@ -490,14 +509,24 @@ async function nacti(tise){
 let syncBezi = false;
 async function synchronizuj(){
   if (syncBezi || !S.ja || !S.google) return;
-  syncBezi = true;
+  syncBezi = true; S.syncBezi = true; kresliSync();
+  const pred = new Set(S.zpravy.filter(m => m.nove && m.typ === 'mail').map(m => m.id));
+  const prvni = !S.syncKdy && S.zpravy.length === 0;
   try {
     for (let i = 0; i < 25; i++) {
       const r = await api('sync', 'POST');
       if (r.zpracovano) await nacti(true);
       if (!r.zbyva) break;
     }
-  } catch (e) { console.warn('sync', e.message); } finally { syncBezi = false; }
+    S.syncKdy = new Date();
+    const nove = S.zpravy.filter(m => m.nove && m.typ === 'mail' && !pred.has(m.id) && !(S.kanal && (m.zak === S.kanal || m.dod === S.kanal)));
+    if (nove.length && !prvni) { const m = nove[0]; const kdo = m.zak ? zak(m.zak) : dod(m.dod); if (kdo) toast(nove.length === 1 ? `Nový mail: ${kdo.jmeno || kdo.nazev}, ${m.predmet}` : `${nove.length} nové maily, první od ${kdo.jmeno || kdo.nazev}`, { text: 'Otevřít', fn: () => otevriKanal(m.zak ? 'zak' : 'dod', m.zak || m.dod) }); }
+  } catch (e) { console.warn('sync', e.message); toast('Pošta se nenačetla: ' + e.message); } finally { syncBezi = false; S.syncBezi = false; kresliSync(); }
+}
+function kresliSync(){
+  const el = $('#side-sync'); if (!el) return;
+  const kdyT = S.syncKdy ? (Date.now() - S.syncKdy < 90000 ? 'před chvílí' : 'před ' + Math.round((Date.now() - S.syncKdy) / 60000) + ' min') : 'zatím ne';
+  el.innerHTML = S.google ? `${S.syncBezi ? '<span class="tocka"></span>Stahuji poštu' : 'Pošta načtená ' + kdyT}<button data-sync title="Načíst poštu teď" style="margin-left:auto">${ik('obnovit')}</button>` : 'Pošta není napojená';
 }
 
 const kanalBtn = (z, extra='') => `<button class="kan ${S.kanal === z.id && S.typKanalu === 'zak' ? 'je-on' : ''} ${nepr(z) ? 'je-nove' : ''} ${pozorZak(z) ? 'je-pozor' : ''}" data-zak="${z.id}" title="${STAVY[z.stav]}${z.majitel ? ', má ' + LIDE[z.majitel] : ''}">${pozorZak(z) ? '<span class="vyk" title="Čeká na reakci"></span>' : `<span class="pre d d--${z.stav}" style="width:8px;height:8px;border-radius:50%;opacity:1"></span>`}<span class="t">${esc(z.jmeno)}</span>${extra}${nepr(z) ? `<span class="poc">${nepr(z)}</span>` : !z.majitel ? `<span class="poc poc--sv">nový</span>` : ''}</button>`;
@@ -519,6 +548,7 @@ function vykresliSide(){
     ${sek('ost', 'Ostatní', ost, z => kanalBtn(z, `<span class="maj">${ZKR[z.majitel]}</span>`))}
     <div class="sek ${S.sbaleno.dod ? 'je-sbalena' : ''}"><button class="sek__h" data-sbal="dod">${ik('sipka')}Dodavatelé</button>${S.dodavatele.map(x => { const n = S.zpravy.filter(m => m.dod === x.id && m.nove).length; return `<button class="kan ${S.kanal === x.id && S.typKanalu === 'dod' ? 'je-on' : ''} ${n ? 'je-nove' : ''}" data-dod="${x.id}"><span class="pre">${ik('dodavatel')}</span><span class="t">${esc(x.nazev)}</span>${n ? `<span class="poc">${n}</span>` : ''}</button>`; }).join('')}</div>
     <div class="sek"><button class="sek__h" data-jdi="vsichni" style="padding-left:14px">${ik('lide')}&nbsp;Všichni zákazníci</button></div>`;
+  kresliSync();
   $('#ja-ava').outerHTML = `<span class="ava ava--${S.ja}" id="ja-ava">${ZKR[S.ja] || '?'}</span>`;
   $('#ja').innerHTML = `<option>${LIDE[S.ja] || ''}</option><option value="odhlasit">Odhlásit se</option>`;
   $('#mob-nav').innerHTML = [['den','Dnes','den',ukoly],['zakaznici','Zákazníci','lide',S.zakaznici.reduce((a, z) => a + nepr(z), 0)],['asistent','Asistent','jiskra',0],['zakazky','Zakázky','dum',0],['soubory','Soubory','slozka',0]].map(([k, t, i, n]) => `<button class="${S.pohled === k ? 'je-on' : ''}" data-jdi="${k}">${ik(i)}${t}${n ? `<span class="poc">${n}</span>` : ''}</button>`).join('');
@@ -550,7 +580,8 @@ function pohledDen(){
       <label for="f-sl">Složka</label><select class="pole" id="f-sl">${SLOZKY.map(x => `<option ${x === f.slozka ? 'selected' : ''}>${x}</option>`).join('')}</select>
       <div class="okno__pata"><button class="btn" data-foto-uloz ${S.odesilam ? 'disabled' : ''}>${S.odesilam ? 'Ukládám…' : 'Uložit'}</button><button class="btn btn--sv" data-foto-zrus>Zrušit</button></div>`}</div></div></section>`;
   const varovani = !S.google ? '<div class="pozor pozor--ukol" style="border-radius:8px;margin-bottom:12px">' + ik('varovani') + '<span>Pošta a Disk zatím nejsou napojené, poznámky a hovory fungují.</span></div>' : '';
-  return hlava('Dnes', dnes.toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}), `<label class="btn btn--sv" style="cursor:pointer">${ik('foto')}Vyfotit papír<input type="file" id="foto-global" accept="image/*" capture="environment" hidden></label><button class="btn" data-okno="hovor">${ik('hovor')}Zapsat hovor</button>`) + `<div class="hl__scroll hl__scroll--seda">${varovani}${fotoHtml}<div class="dva">
+  const neprCelkem = S.zpravy.filter(m => m.nove).length;
+  return hlava('Dnes', dnes.toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}), `${neprCelkem > 3 ? `<button class="btn btn--sv" data-vse-precteno title="${neprCelkem} nepřečtených">${ik('oko')}Vše přečtené</button>` : ''}<label class="btn btn--sv" style="cursor:pointer">${ik('foto')}Vyfotit papír<input type="file" id="foto-global" accept="image/*" capture="environment" hidden></label><button class="btn" data-okno="hovor">${ik('hovor')}Zapsat hovor</button>`) + `<div class="hl__scroll hl__scroll--seda">${varovani}${fotoHtml}<div class="dva">
     <div>
     <section class="karta"><h2>${S.ukolyVsech ? 'Úkoly všech' : 'Moje úkoly'} <small>${moje.length}</small><button class="cip" data-ukoly-vsech style="margin-left:auto;min-height:26px;padding:2px 10px;font-size:.76rem">${S.ukolyVsech ? 'Jen moje' : 'Všech'}</button></h2>
       ${moje.length ? `<ul class="seznam">${moje.map(p => { const z = p.zak ? zak(p.zak) : null; const x = p.dod ? dod(p.dod) : null;
@@ -628,8 +659,8 @@ function zpravaHtml(m, jmenoKanalu, kompakt){
   if (m.typ === 'mail' && !m.kdo && S.typKanalu === 'zak') akce.push(`<button data-odpovedet="${esc(m.predmet)}" data-thread="${esc(m.thread_id || '')}">${ik('odpoved')}Odpovědět</button>`);
   if (m.typ !== 'web') akce.push(`<button data-pripomenout="${m.id}">${ik('zvon')}Připomenout zítra</button>`);
   const telo = m.typ === 'mail'
-    ? `<div class="zpr__mail"><div class="zpr__mail-h">${ik('posta')}<b>${esc(m.predmet)}</b><span>${m.kdo ? 'odesláno z info@' : 'přišlo na info@'}</span></div><div class="zpr__mail-t">${esc(m.text)}</div>${prilohyHtml(m)}</div>`
-    : `${m.text ? `<div class="zpr__t">${esc(m.text)}</div>` : ''}${prilohyHtml(m)}`;
+    ? (() => { const txt = oriznout(m.text || ''); const dlouhy = txt.length > 700 && !S.rozbaleno[m.id]; return `<div class="zpr__mail"><div class="zpr__mail-h">${ik('posta')}<b>${esc(m.predmet)}</b><span>${m.kdo ? 'odesláno z info@' : 'přišlo na info@'}</span></div><div class="zpr__mail-t ${dlouhy ? 'je-dlouhy' : ''}">${odkazy(txt)}</div>${dlouhy ? `<button class="vic" data-rozbal="${m.id}">Zobrazit celý mail</button>` : ''}${prilohyHtml(m)}</div>`; })()
+    : `${m.text ? `<div class="zpr__t">${odkazy(m.text)}</div>` : ''}${prilohyHtml(m)}`;
   const co = m.typ === 'hovor' ? `<span class="pil pil--${m.vysledek}">${ik('hovor')}${VYSLEDKY[m.vysledek] || ''}</span>` : '';
   if (kompakt) return `<div class="zpr zpr--kompakt"><span class="cas">${casJen(m.kdy)}</span><div>${co ? `<div class="zpr__hl">${co}</div>` : ''}${telo}</div><div class="zpr__akce">${akce.join('')}</div></div>`;
   return `<div class="zpr">${av}<div><div class="zpr__hl"><b>${esc(kdo)}</b>${co}<time>${casJen(m.kdy)}</time></div>${telo}</div><div class="zpr__akce">${akce.join('')}</div></div>`;
@@ -803,7 +834,7 @@ function otevriKanal(typ, id){
 function otevriMenu(typ, zid, kotva){
   const z = zak(zid); const m = $('#menu');
   m.innerHTML = typ === 'stav'
-    ? `<div class="menu__h">Stav zákazníka</div>${Object.entries(STAVY).map(([k, t]) => `<button class="${z.stav === k ? 'je-on' : ''}" data-set-stav="${k}" data-pro="${zid}"><span class="d d--${k}"></span>${t}${ik('stav')}</button>`).join('')}<div class="menu__h" style="border-top:1px solid var(--line2);margin-top:4px;padding-top:8px">Omyl</div><button data-neni-zak="${zid}" style="color:var(--red)">${ik('varovani')}Není zákazník, skrýt${z.email ? ' a adresu ignorovat' : ''}</button>`
+    ? `<div class="menu__h">Stav zákazníka</div>${Object.entries(STAVY).map(([k, t]) => `<button class="${z.stav === k ? 'je-on' : ''}" data-set-stav="${k}" data-pro="${zid}"><span class="d d--${k}"></span>${t}${ik('stav')}</button>`).join('')}<div class="menu__h" style="border-top:1px solid var(--line2);margin-top:4px;padding-top:8px">Omyl</div><button data-je-dod="${zid}">${ik('dodavatel')}Je to dodavatel, přesunout</button><button data-neni-zak="${zid}" style="color:var(--red)">${ik('varovani')}Není zákazník, skrýt${z.email ? ' a adresu ignorovat' : ''}</button>`
     : `<div class="menu__h">Kdo to má na starosti</div>${Object.entries(LIDE).map(([k, t]) => `<button class="${z.majitel === k ? 'je-on' : ''}" data-set-maj="${k}" data-pro="${zid}">${ava(k).replace('class="ava', 'style="width:20px;height:20px;font-size:.58rem;border-radius:4px" class="ava')}${t}${ik('stav')}</button>`).join('')}<button class="${!z.majitel ? 'je-on' : ''}" data-set-maj="" data-pro="${zid}"><span class="ava ava--nikdo" style="width:20px;height:20px;font-size:.58rem;border-radius:4px">?</span>Nikdo${ik('stav')}</button>`;
   const r = kotva.getBoundingClientRect();
   m.style.top = (r.bottom + 6) + 'px'; m.style.left = Math.max(8, Math.min(r.left, innerWidth - 240)) + 'px';
@@ -878,7 +909,7 @@ async function odesli(){
     S.odesilam = true; S.text = text; vykresli();
     try { await api('mail', 'POST', fd); S.text = ''; S.prilohy = []; S.rezim = 'pozn'; S.predmet = ''; S.thread = ''; toast('Mail odeslaný'); await nacti(true); }
     catch (e) { toast('Neodesláno: ' + e.message); }
-    S.odesilam = false; vykresli(); return;
+    S.odesilam = false; vykresli(); $('#skl-text')?.focus(); return;
   }
   const text = $('#skl-text').value; if (!text.trim() && !S.prilohy.length) return;
   S.text = text; S.tridim = true; vykresli();
@@ -905,7 +936,7 @@ async function potvrdNavrh(){
     const st = p.find(a => a.typ === 'stav'); if (st && jeZak) await api('zakaznik', 'PATCH', { id: S.kanal, stav: st.stav });
     S.navrh = null; S.text = ''; S.prilohy = []; S.prepsano = false; toast('Uloženo'); await nacti(true);
   } catch (e) { toast('Neuloženo: ' + e.message); }
-  S.odesilam = false; vykresli();
+  S.odesilam = false; vykresli(); $('#skl-text')?.focus();
 }
 
 document.addEventListener('click', async e => {
@@ -919,6 +950,10 @@ document.addEventListener('click', async e => {
   if (ds.upravit) { const pro = ds.upravit === 'kontejner' ? { id: +ds.pro, pole: 'kontejner', hodnota: (S.zakazky.find(x => x.id == ds.pro) || {}).kontejner, predani: (S.zakazky.find(x => x.id == ds.pro) || {}).predani } : { id: +ds.pro, pole: ds.upravit, hodnota: (zak(+ds.pro) || {})[ds.upravit] }; otevriOkno('upravit', pro); return; }
   if (ds.menu) { otevriMenu(ds.menu, +ds.pro, t); return; }
   if (ds.setStav !== undefined) { $('#menu').classList.remove('je-on'); zkus(() => api('zakaznik', 'PATCH', { id: +ds.pro, stav: ds.setStav })); return; }
+  if (ds.rozbal) { S.rozbaleno[ds.rozbal] = true; const tok = $('#tok'); const st = tok ? tok.scrollTop : 0; vykresli(); if ($('#tok')) $('#tok').scrollTop = st; return; }
+  if ('sync' in ds) { synchronizuj(); return; }
+  if ('vsePrecteno' in ds) { S.zpravy.forEach(m => m.nove = false); vykresli(); zkus(() => api('zprava', 'PATCH', { precteno: true, vse: true }), 'Vše označené jako přečtené'); return; }
+  if (ds.jeDod) { $('#menu').classList.remove('je-on'); const z = zak(+ds.jeDod); const co = prompt(`Co ${z.jmeno} dodává? (např. doprava, jeřáb, okna)`, ''); if (co === null) return; S.kanal = null; zkus(async () => { const r = await api('zakaznik', 'PATCH', { id: z.id, na_dodavatele: true, co }); await nacti(true); otevriKanal('dod', r.dod_id); }, 'Přesunuto k dodavatelům'); return; }
   if (ds.neniZak) { $('#menu').classList.remove('je-on'); const z = zak(+ds.neniZak); if (!confirm(`Skrýt ${z.jmeno}? Maily zůstanou v Gmailu, ale z Šanonu zmizí a z téhle adresy se už nic nezaloží.`)) return; S.kanal = null; zkus(() => api('zakaznik', 'DELETE', { id: z.id }), 'Skryto'); return; }
   if (ds.setMaj !== undefined) { $('#menu').classList.remove('je-on'); zkus(() => api('zakaznik', 'PATCH', { id: +ds.pro, majitel: ds.setMaj || null })); return; }
   if (ds.vysl) { oknoStav.vysledek = ds.vysl; t.parentElement.querySelectorAll('button').forEach(b => b.classList.toggle('je-on', b === t)); return; }

@@ -105,7 +105,10 @@ export function teloZpravy(zprava) {
     if (!cast) return;
     const mime = cast.mimeType || '';
     if (cast.filename && cast.body && cast.body.attachmentId) {
-      prilohy.push({ n: cast.filename, mime, velikost: cast.body.size, gmail_att: cast.body.attachmentId });
+      const hl = (cast.headers || []).reduce((o, h) => (o[h.name.toLowerCase()] = h.value, o), {});
+      const inline = /inline/i.test(hl['content-disposition'] || '') || !!hl['content-id'];
+      const podpisovyObrazek = inline && /^image\//.test(mime) && (cast.body.size || 0) < 60000;
+      if (!podpisovyObrazek) prilohy.push({ n: cast.filename, mime, velikost: cast.body.size, gmail_att: cast.body.attachmentId });
     } else if (mime === 'text/plain' && cast.body && cast.body.data && !text) {
       text = b64urlDecodeText(cast.body.data);
     } else if (mime === 'text/html' && cast.body && cast.body.data && !html) {
@@ -116,9 +119,15 @@ export function teloZpravy(zprava) {
   projdi(zprava.payload);
   if (!text && html) text = html.replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<br\s*\/?>/gi, '\n').replace(/<\/(p|div|tr|li|h\d)>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/\n{3,}/g, '\n\n').trim();
   text = text.replace(/\r\n/g, '\n');
-  const citace = text.search(/\n(On .+wrote:|Dne .+napsal\(a\):|-----Original Message-----|> )/);
-  if (citace > 40) text = text.slice(0, citace).trim();
+  text = oriznoutCitaci(text);
   return { text: text.trim(), prilohy };
+}
+
+export function oriznoutCitaci(text) {
+  const vzory = [/\n\s*On .{3,120}wrote:\s*\n/, /\n[^\n]{0,160}napsal\(?a?\)?:\s*(\n|$)/, /\n-----\s*(Original Message|Původní zpráva)\s*-----/i, /\n(Od|From): .{2,120}\n(Odesláno|Sent|Datum|Date): /, /\n>\s/];
+  let kde = -1;
+  for (const v of vzory) { const i = text.search(v); if (i > 40 && (kde < 0 || i < kde)) kde = i; }
+  return kde > 0 ? text.slice(0, kde).trim() : text;
 }
 
 function kodujHlavicku(s) {
