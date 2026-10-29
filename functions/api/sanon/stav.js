@@ -32,7 +32,7 @@ export const onRequestGet = chranene(async ({ env, kdo }) => {
   const [zak, dod, zpr, pri, zkz] = await Promise.all([
     env.DB.prepare('SELECT * FROM s_zakaznici ORDER BY id').all(),
     env.DB.prepare('SELECT * FROM s_dodavatele ORDER BY id').all(),
-    env.DB.prepare('SELECT id, kdy, zak_id, dod_id, typ, kdo, text, predmet, vysledek, prilohy, gmail_id, thread_id, nove FROM s_zpravy WHERE typ != 'skip' AND (zak_id IS NOT NULL OR dod_id IS NOT NULL) ORDER BY kdy DESC LIMIT 3000').all(),
+    env.DB.prepare('SELECT id, kdy, zak_id, dod_id, typ, kdo, text, predmet, vysledek, prilohy, gmail_id, thread_id, nove FROM s_zpravy WHERE typ != "skip" AND (zak_id IS NOT NULL OR dod_id IS NOT NULL) ORDER BY kdy DESC LIMIT 3000').all(),
     env.DB.prepare('SELECT * FROM s_pripominky WHERE hotovo_kdy IS NULL ORDER BY kdy').all(),
     env.DB.prepare('SELECT * FROM s_zakazky ORDER BY id').all()
   ]);
