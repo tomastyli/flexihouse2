@@ -24,25 +24,27 @@ async function jeZakaznik(env, od, predmet, text) {
   }
 }
 
+const preskoc = async (env, id, m, duvod) => { await pridejZpravu(env, { kdy: new Date(Number(m.internalDate) || Date.now()).toISOString(), typ: 'skip', text: duvod, gmail_id: id, thread_id: m.threadId, nove: 0 }); return duvod; };
+
 async function zpracuj(env, id, ign) {
   const m = await gj(env, `${GMAIL}/messages/${id}?format=full`);
   const labels = m.labelIds || [];
-  if (labels.includes('SPAM') || labels.includes('TRASH') || labels.includes('DRAFT')) return 'spam';
+  if (labels.includes('SPAM') || labels.includes('TRASH') || labels.includes('DRAFT')) return preskoc(env, id, m, 'spam');
   const odeslany = labels.includes('SENT');
   const od = rozeberAdresu(hlavicka(m, 'From'));
   const komu = rozeberAdresu((hlavicka(m, 'To') || '').split(',')[0] || '');
   const protistrana = odeslany ? komu : od;
-  if (!protistrana.adresa || VLASTNI.includes(protistrana.adresa)) return 'vlastni';
-  if (SUM.test(protistrana.adresa)) return 'sum';
+  if (!protistrana.adresa || VLASTNI.includes(protistrana.adresa)) return preskoc(env, id, m, 'vlastni');
+  if (SUM.test(protistrana.adresa)) return preskoc(env, id, m, 'sum');
   const domena = protistrana.adresa.split('@')[1];
-  if (ign.includes(protistrana.adresa) || ign.includes('@' + domena)) return 'ignorovany';
+  if (ign.includes(protistrana.adresa) || ign.includes('@' + domena)) return preskoc(env, id, m, 'ignorovany');
   const kdy = new Date(Number(m.internalDate)).toISOString();
   const predmet = hlavicka(m, 'Subject') || '(bez předmětu)';
   const { text, prilohy } = teloZpravy(m);
   let zak = await env.DB.prepare('SELECT id FROM s_zakaznici WHERE lower(email) = ?').bind(protistrana.adresa).first();
   let dod = zak ? null : await env.DB.prepare('SELECT id FROM s_dodavatele WHERE lower(email) = ?').bind(protistrana.adresa).first();
   if (!zak && !dod) {
-    if (odeslany) return 'odeslany-neznamy';
+    if (odeslany) return preskoc(env, id, m, 'odeslany-neznamy');
     const typ = await jeZakaznik(env, hlavicka(m, 'From'), predmet, text);
     if (typ === 'ostatni') {
       await pridejZpravu(env, { kdy, typ: 'mail', text, predmet, gmail_id: id, thread_id: m.threadId, od_adresa: protistrana.adresa, nove: 0 });
@@ -91,6 +93,7 @@ export async function synchronizuj(env) {
   for (const id of nove.slice(0, DAVKA)) {
     const v = await zpracuj(env, id, ign).catch(e => 'chyba: ' + e.message.slice(0, 80));
     vysledky[v] = (vysledky[v] || 0) + 1;
+    if (v.startsWith('chyba: Google 403')) break;
   }
   const zbyva = Math.max(0, nove.length - DAVKA);
   if (!zbyva) await ulozNastaveni(env, 'gmail_sync', ted());
