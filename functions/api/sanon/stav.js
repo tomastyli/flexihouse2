@@ -5,6 +5,7 @@ async function importPoptavek(env) {
   const { results } = await env.DB.prepare('SELECT * FROM poptavky WHERE id > ? ORDER BY id LIMIT 50').bind(od).all();
   for (const p of results) {
     const email = (p.email || '').trim().toLowerCase();
+    if (/\btest\b|zkou[sš]ka|nevolat|example\.com/i.test((p.jmeno || '') + ' ' + email) || ['hasci.tomasek@gmail.com', 'tomas@statly.cz', 'dandaprokes@gmail.com', 'honzalit@gmail.com', 'prokes@winstores.cz'].includes(email)) { await ulozNastaveni(env, 'posledni_poptavka', String(p.id)); continue; }
     let zak = null;
     if (email) zak = await env.DB.prepare('SELECT id FROM s_zakaznici WHERE lower(email) = ?').bind(email).first();
     if (!zak && p.telefon) zak = await env.DB.prepare("SELECT id FROM s_zakaznici WHERE replace(telefon, ' ', '') = ?").bind(p.telefon.replace(/\s/g, '')).first();

@@ -15,7 +15,7 @@ async function jeZakaznik(env, od, predmet, text) {
   try {
     const { data } = await claude(env, {
       max_tokens: 60, json: true,
-      system: 'Flexi House dodává modulové domy. Dostaneš hlavičku mailu, který přišel na firemní schránku od neznámé adresy. Rozhodni, jestli to je zájemce o dům nebo zákazník (zakaznik), dodavatel či obchodní partner (dodavatel), nebo cokoli jiného: newsletter, notifikace, spam, nabídka služeb pro firmu, úřad, interní mail (ostatni). Vrať POUZE JSON {"typ":"zakaznik|dodavatel|ostatni"}.',
+      system: 'Flexi House dodává modulové domy (Flexi Stanza, Tenuta, Office) zájemcům o bydlení, chatu, kancelář nebo glamping. Dostaneš mail, který přišel na firemní schránku od neznámé adresy. "zakaznik" = člověk nebo firma, která se ptá na dům, cenu, dodání, chce koupit nebo řeší svou objednávku; "dodavatel" = výrobce, spedice, jeřáb, doprava, řemeslník, kdo pro Flexi House něco dodává; "ostatni" = nabídky marketingu, SEO, reklamy, webů, bazarové inzeráty a portály, newslettery, notifikace, úřady, banky, nábor, pozvánky, cokoli, co není zákazník ani dodavatel. Když si nejsi jistý mezi zakaznik a ostatni, vyber ostatni jen pokud mail zjevně nic o domech neřeší. Vrať POUZE JSON {"typ":"zakaznik|dodavatel|ostatni"}.',
       messages: [{ role: 'user', content: `Od: ${od}\nPředmět: ${predmet}\nZačátek: ${text.slice(0, 500)}` }]
     });
     return ['zakaznik', 'dodavatel', 'ostatni'].includes(data.typ) ? data.typ : 'zakaznik';

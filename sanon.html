@@ -1013,7 +1013,7 @@ document.addEventListener('keydown', e => {
 
 (async () => {
   try { const p = await api('prihlaseni'); S.lide = p.lide || []; S.ja = p.kdo; } catch {}
-  if (S.ja) { await nacti(); synchronizuj(); } else vykresli();
+  if (S.ja) { await nacti(); await synchronizuj(); if (S.claude) { try { for (let i = 0; i < 6; i++) { const r = await api('uklid', 'POST'); if (r.zpracovano) await nacti(true); if (!r.zbyva || !r.zpracovano) break; } } catch {} } } else vykresli();
   setInterval(() => { if (S.ja && !document.hidden) synchronizuj().then(() => nacti(true)); }, 60000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && S.ja) nacti(true); });
 })();
