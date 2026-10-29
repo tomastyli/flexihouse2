@@ -491,7 +491,13 @@ let syncBezi = false;
 async function synchronizuj(){
   if (syncBezi || !S.ja || !S.google) return;
   syncBezi = true;
-  try { const r = await api('sync', 'POST'); if (r.zprav) await nacti(true); } catch (e) { console.warn('sync', e.message); } finally { syncBezi = false; }
+  try {
+    for (let i = 0; i < 25; i++) {
+      const r = await api('sync', 'POST');
+      if (r.zpracovano) await nacti(true);
+      if (!r.zbyva) break;
+    }
+  } catch (e) { console.warn('sync', e.message); } finally { syncBezi = false; }
 }
 
 const kanalBtn = (z, extra='') => `<button class="kan ${S.kanal === z.id && S.typKanalu === 'zak' ? 'je-on' : ''} ${nepr(z) ? 'je-nove' : ''} ${pozorZak(z) ? 'je-pozor' : ''}" data-zak="${z.id}" title="${STAVY[z.stav]}${z.majitel ? ', má ' + LIDE[z.majitel] : ''}">${pozorZak(z) ? '<span class="vyk" title="Čeká na reakci"></span>' : `<span class="pre d d--${z.stav}" style="width:8px;height:8px;border-radius:50%;opacity:1"></span>`}<span class="t">${esc(z.jmeno)}</span>${extra}${nepr(z) ? `<span class="poc">${nepr(z)}</span>` : !z.majitel ? `<span class="poc poc--sv">nový</span>` : ''}</button>`;

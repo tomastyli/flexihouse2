@@ -24,9 +24,7 @@ async function jeZakaznik(env, od, predmet, text) {
   }
 }
 
-async function zpracuj(env, id) {
-  const uz = await env.DB.prepare('SELECT id FROM s_zpravy WHERE gmail_id = ?').bind(id).first();
-  if (uz) return 'uz';
+async function zpracuj(env, id, ign) {
   const m = await gj(env, `${GMAIL}/messages/${id}?format=full`);
   const labels = m.labelIds || [];
   if (labels.includes('SPAM') || labels.includes('TRASH') || labels.includes('DRAFT')) return 'spam';
@@ -36,7 +34,6 @@ async function zpracuj(env, id) {
   const protistrana = odeslany ? komu : od;
   if (!protistrana.adresa || VLASTNI.includes(protistrana.adresa)) return 'vlastni';
   if (SUM.test(protistrana.adresa)) return 'sum';
-  const ign = await ignorovane(env);
   const domena = protistrana.adresa.split('@')[1];
   if (ign.includes(protistrana.adresa) || ign.includes('@' + domena)) return 'ignorovany';
   const kdy = new Date(Number(m.internalDate)).toISOString();
@@ -70,6 +67,8 @@ async function zpracuj(env, id) {
   return 'ok';
 }
 
+const DAVKA = 8;
+
 export async function synchronizuj(env) {
   const posledni = await nastaveni(env, 'gmail_sync');
   const q = posledni ? `after:${Math.floor((Date.parse(posledni) - 3600000) / 1000)}` : 'newer_than:30d';
@@ -79,20 +78,29 @@ export async function synchronizuj(env) {
     const d = await gj(env, `${GMAIL}/messages?q=${encodeURIComponent(q + ' -in:spam -in:trash')}&maxResults=100${pageToken ? '&pageToken=' + pageToken : ''}`);
     (d.messages || []).forEach(x => ids.push(x.id));
     pageToken = d.nextPageToken || '';
-  } while (pageToken && ids.length < 500);
+  } while (pageToken && ids.length < 300);
+  const zname = new Set();
+  for (let i = 0; i < ids.length; i += 90) {
+    const kus = ids.slice(i, i + 90);
+    const { results } = await env.DB.prepare(`SELECT gmail_id FROM s_zpravy WHERE gmail_id IN (${kus.map(() => '?').join(',')})`).bind(...kus).all();
+    results.forEach(r => zname.add(r.gmail_id));
+  }
+  const nove = ids.filter(id => !zname.has(id)).reverse();
+  const ign = await ignorovane(env);
   const vysledky = {};
-  for (const id of ids.reverse()) {
-    const v = await zpracuj(env, id).catch(e => 'chyba: ' + e.message);
+  for (const id of nove.slice(0, DAVKA)) {
+    const v = await zpracuj(env, id, ign).catch(e => 'chyba: ' + e.message.slice(0, 80));
     vysledky[v] = (vysledky[v] || 0) + 1;
   }
-  await ulozNastaveni(env, 'gmail_sync', ted());
-  return { zprav: ids.length, vysledky };
+  const zbyva = Math.max(0, nove.length - DAVKA);
+  if (!zbyva) await ulozNastaveni(env, 'gmail_sync', ted());
+  return { zprav: ids.length, zpracovano: Math.min(nove.length, DAVKA), zbyva, vysledky };
 }
 
 export const onRequestPost = chranene(async ({ env }) => {
   if (!env.GOOGLE_REFRESH_TOKEN) return json(200, { google: false });
   const zamek = await nastaveni(env, 'gmail_sync_bezi');
-  if (zamek && Date.now() - Number(zamek) < 90000) return json(200, { bezi: true });
+  if (zamek && Date.now() - Number(zamek) < 40000) return json(200, { bezi: true });
   await ulozNastaveni(env, 'gmail_sync_bezi', String(Date.now()));
   try {
     return json(200, await synchronizuj(env));
