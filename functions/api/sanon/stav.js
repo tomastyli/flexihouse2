@@ -47,6 +47,6 @@ export const onRequestGet = chranene(async ({ env, kdo }) => {
     zakazky: zkz.results,
     google: !!(env.GOOGLE_REFRESH_TOKEN),
     claude: !!env.ANTHROPIC_API_KEY,
-    whisper: !!env.OPENAI_API_KEY
+    whisper: !!(env.OPENAI_API_KEY || env.AI)
   });
 });

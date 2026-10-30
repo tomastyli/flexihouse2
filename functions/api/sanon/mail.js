@@ -1,5 +1,5 @@
 import { json, chranene, pridejZpravu, ted } from './_sanon.js';
-import { gj, GMAIL, sestavMail, b64urlEncode, PODPIS_TEXT, PODPIS_HTML, slozkaPro, nahrajNaDisk } from './_google.js';
+import { gj, GMAIL, sestavMail, b64urlEncode, podpis, slozkaPro, nahrajNaDisk } from './_google.js';
 
 const escHtml = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 
@@ -37,8 +37,9 @@ export const onRequestPost = chranene(async ({ request, env, kdo }) => {
       inReplyTo = h ? h.value : '';
     } catch {}
   }
-  const html = '<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d1c1d">' + escHtml(text).replace(/\n/g, '<br>') + PODPIS_HTML + '</div>';
-  const raw = sestavMail({ komu, predmet, text: text + PODPIS_TEXT, html, inReplyTo, prilohy: mimePrilohy });
+  const pod = podpis(kdo);
+  const html = '<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1d1c1d">' + escHtml(text).replace(/\n/g, '<br>') + pod.html + '</div>';
+  const raw = sestavMail({ komu, predmet, text: text + pod.text, html, inReplyTo, prilohy: mimePrilohy });
   const odeslano = await gj(env, `${GMAIL}/messages/send`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ raw: b64urlEncode(raw), threadId: odpovedNa || undefined })

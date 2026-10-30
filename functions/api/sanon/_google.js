@@ -163,5 +163,43 @@ export function sestavMail({ komu, predmet, text, html, inReplyTo, prilohy }) {
   return radky.join('\r\n');
 }
 
-export const PODPIS_TEXT = '\n\nFlexi House\ninfo@flexihouse.cz · 607 321 543\nflexihouse.cz';
-export const PODPIS_HTML = '<p style="margin-top:18px;color:#444"><strong>Flexi House</strong><br>info@flexihouse.cz · 607 321 543<br><a href="https://flexihouse.cz">flexihouse.cz</a></p>';
+export const OSOBY = {
+  dan: { jmeno: 'Dan Prokeš', funkce: '', tel: '+420 607 321 543', email: 'dandaprokes@gmail.com' },
+  honza: { jmeno: 'Jan Prokeš', funkce: 'CEO', tel: '+420 730 171 909', email: 'honzalit@gmail.com' },
+  tomas: { jmeno: 'Flexi House', funkce: '', tel: '+420 607 321 543', email: 'hasci.tomasek@gmail.com' }
+};
+
+const KAL = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
+
+export async function udalosti(env, od, doKdy) {
+  const d = await gj(env, `${KAL}?timeMin=${encodeURIComponent(od)}&timeMax=${encodeURIComponent(doKdy)}&singleEvents=true&orderBy=startTime&maxResults=250`);
+  return d.items || [];
+}
+
+export const zalozUdalost = (env, u, posilat) => gj(env, `${KAL}?sendUpdates=${posilat ? 'all' : 'none'}`, {
+  method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(u)
+});
+
+export async function smazUdalost(env, id, posilat) {
+  try { await g(env, `${KAL}/${encodeURIComponent(id)}?sendUpdates=${posilat ? 'all' : 'none'}`, { method: 'DELETE' }); }
+  catch (e) { if (!/ 410 | 404 /.test(e.message)) throw e; }
+}
+
+export function podpis(kdo) {
+  const o = OSOBY[kdo] || OSOBY.tomas;
+  const tel = o.tel.replace(/\s/g, '');
+  const text = `\n\n${o.jmeno}${o.funkce ? ', ' + o.funkce : ''}\nFlexi House\n${o.tel} · info@flexihouse.cz\nflexihouse.cz`;
+  const html = '<table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;margin-top:22px"><tr>'
+    + '<td style="padding:0 22px 0 0;vertical-align:top"><a href="https://flexihouse.cz" style="text-decoration:none"><img src="https://flexihouse.cz/assets/podpis.png" alt="Flexi House, modulární domy" width="203" height="70" style="display:block;border:0"></a></td>'
+    + '<td style="padding:0 0 0 22px;border-left:1px solid #d5dee1;vertical-align:top">'
+    + `<div style="font:bold 16px/1.3 Arial,Helvetica,sans-serif;color:#16202a">${o.jmeno}</div>`
+    + (o.funkce ? `<div style="font:bold 11px/1.3 Arial,Helvetica,sans-serif;color:#5a7885;letter-spacing:1.5px;padding-top:4px">${o.funkce}</div>` : '')
+    + '<div style="font:13px/21px Arial,Helvetica,sans-serif;color:#16202a;padding-top:13px">'
+    + '<a href="mailto:info@flexihouse.cz" style="color:#16202a;text-decoration:none">info@flexihouse.cz</a><br>'
+    + `<a href="tel:${tel}" style="color:#16202a;text-decoration:none">${o.tel}</a><br>`
+    + '<a href="https://flexihouse.cz" style="color:#5a7885;text-decoration:none;font-weight:bold">flexihouse.cz</a></div>'
+    + '<div style="font:12px/18px Arial,Helvetica,sans-serif;color:#6d7b85;padding-top:12px">Sokolovská 612, 570 01 Litomyšl</div>'
+    + '</td></tr></table>'
+    + '<div style="font:10px/15px Arial,Helvetica,sans-serif;color:#9aa5ab;padding-top:16px">WINstores, s.r.o., Korunní 2569/108, 101 00 Praha 10 &middot; IČO 07836929 &middot; Městský soud v Praze, oddíl C, vložka 308049</div>';
+  return { text, html };
+}

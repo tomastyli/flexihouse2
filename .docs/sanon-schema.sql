@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS s_pripominky (
   text TEXT NOT NULL,
   zak_id INTEGER,
   dod_id INTEGER,
-  hotovo_kdy TEXT
+  hotovo_kdy TEXT,
+  gcal_id TEXT
 );
 
 CREATE TABLE IF NOT EXISTS s_zakazky (

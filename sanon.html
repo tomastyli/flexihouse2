@@ -253,6 +253,16 @@ select.pole{padding-right:26px;appearance:none;background:var(--card) url("data:
 .polozka__hl span{font-size:.84rem;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .polozka__kdy{font-size:.8rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .polozka__kdy.je-po{color:var(--red);font-weight:700}
+.kal-den{font-size:.82rem;font-weight:700;color:var(--muted);margin:16px 6px 6px}
+.kal-den:first-child{margin-top:4px}
+.kal-den.je-dnes{color:var(--ink)}
+.kal__cas{width:58px;flex:none;font-size:.84rem;font-weight:700;font-variant-numeric:tabular-nums}
+.kal__cas small{display:block;font-weight:400;color:var(--muted);font-size:.74rem}
+.kal__ik{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;flex:none;background:var(--bg);color:var(--muted)}
+.kal__ik svg{width:16px;height:16px}
+.kal__ik--u{background:#e6eef1;color:#3f6170}
+.ib--a{text-decoration:none}
+@media (max-width:640px){.kal__ik,.ib--a{display:none}.kal__cas{width:50px}}
 .prazdno{padding:14px 6px;color:var(--muted);font-size:.9rem}
 .dva{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
 .dva > *{min-width:0}
@@ -394,6 +404,7 @@ select.pole{padding-right:26px;appearance:none;background:var(--card) url("data:
 <script>
 const IK = {
   den:'<path d="M3 10h18M8 3v4M16 3v4"/><rect x="3" y="5" width="18" height="16" rx="2"/>',
+  kal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17.5h2M11 17.5h2"/>',
   lide:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.6 5.2"/>',
   dum:'<path d="M3 11 12 4l9 7M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
   posta:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
@@ -437,7 +448,7 @@ const S = {
   ja:null, lide:[], pohled:'den', kanal:null, typKanalu:'zak', rezim:'pozn', text:'', predmet:'', prilohy:[], navrh:null, tridim:false,
   chat:[], chatPisu:false, ukolyVsech:false, filtrSlozka:'', foto:null, nahravam:false, nahrSek:0, prepis:false, prepsano:false,
   sbaleno:{ost:true}, mobTab:'zak', nacteno:false, syncKdy:null, syncBezi:false, rozbaleno:{}, chyba:null, google:false, claude:false, whisper:false, odesilam:false,
-  zakaznici:[], dodavatele:[], zpravy:[], pripominky:[], zakazky:[]
+  zakaznici:[], dodavatele:[], zpravy:[], pripominky:[], zakazky:[], udalosti:[], kalNapojeno:null, kalJenMoje:false
 };
 
 const $ = s => document.querySelector(s);
@@ -506,6 +517,15 @@ async function nacti(tise){
   vykresli();
 }
 
+async function nactiKalendar(){
+  try { const r = await api('kalendar'); S.udalosti = r.udalosti || []; S.kalNapojeno = !!r.napojeno; } catch (e) { console.warn('kalendar', e.message); }
+  if (S.ja) vykresli();
+}
+const denKlic = iso => { const x = new Date(iso); return `${x.getFullYear()}-${x.getMonth() + 1}-${x.getDate()}`; };
+const dnesniUdalosti = () => S.udalosti.filter(u => denKlic(u.zacatek) === denKlic(dnes.toISOString())).sort((a, b) => a.zacatek.localeCompare(b.zacatek));
+const udalostiZak = id => S.udalosti.filter(u => u.zak_id === id && new Date(u.konec) > dnes).sort((a, b) => a.zacatek.localeCompare(b.zacatek));
+const casUdalosti = u => u.celyDen ? 'celý den' : casJen(u.zacatek);
+
 let syncBezi = false;
 async function synchronizuj(){
   if (syncBezi || !S.ja || !S.google) return;
@@ -540,6 +560,7 @@ function vykresliSide(){
   const sek = (klic, nazev, items, html) => items.length ? `<div class="sek ${S.sbaleno[klic] ? 'je-sbalena' : ''}"><button class="sek__h" data-sbal="${klic}">${ik('sipka')}${nazev}<span class="n">${items.length}</span></button>${items.map(html).join('')}</div>` : '';
   $('#side').innerHTML = `
     <button class="kan ${S.pohled === 'den' && !S.kanal ? 'je-on' : ''}" data-jdi="den">${ik('den')}<span class="t">Dnes</span>${ukoly ? `<span class="poc poc--sv">${ukoly}</span>` : ''}</button>
+    <button class="kan ${S.pohled === 'kalendar' && !S.kanal ? 'je-on' : ''}" data-jdi="kalendar">${ik('kal')}<span class="t">Kalendář</span>${dnesniUdalosti().length ? `<span class="poc poc--sv">${dnesniUdalosti().length}</span>` : ''}</button>
     <button class="kan ${S.pohled === 'asistent' && !S.kanal ? 'je-on' : ''}" data-jdi="asistent">${ik('jiskra')}<span class="t">Asistent</span></button>
     <button class="kan ${S.pohled === 'zakazky' && !S.kanal ? 'je-on' : ''}" data-jdi="zakazky">${ik('dum')}<span class="t">Zakázky</span></button>
     <button class="kan ${S.pohled === 'soubory' && !S.kanal ? 'je-on' : ''}" data-jdi="soubory">${ik('slozka')}<span class="t">Soubory</span></button>
@@ -551,7 +572,7 @@ function vykresliSide(){
   kresliSync();
   $('#ja-ava').outerHTML = `<span class="ava ava--${S.ja}" id="ja-ava">${ZKR[S.ja] || '?'}</span>`;
   $('#ja').innerHTML = `<option>${LIDE[S.ja] || ''}</option><option value="odhlasit">Odhlásit se</option>`;
-  $('#mob-nav').innerHTML = [['den','Dnes','den',ukoly],['zakaznici','Zákazníci','lide',S.zakaznici.reduce((a, z) => a + nepr(z), 0)],['asistent','Asistent','jiskra',0],['zakazky','Zakázky','dum',0],['soubory','Soubory','slozka',0]].map(([k, t, i, n]) => `<button class="${S.pohled === k ? 'je-on' : ''}" data-jdi="${k}">${ik(i)}${t}${n ? `<span class="poc">${n}</span>` : ''}</button>`).join('');
+  $('#mob-nav').innerHTML = [['den','Dnes','den',ukoly],['zakaznici','Zákazníci','lide',S.zakaznici.reduce((a, z) => a + nepr(z), 0)],['kalendar','Kalendář','kal',dnesniUdalosti().length],['asistent','Asistent','jiskra',0],['zakazky','Zakázky','dum',0]].map(([k, t, i, n]) => `<button class="${S.pohled === k ? 'je-on' : ''}" data-jdi="${k}">${ik(i)}${t}${n ? `<span class="poc">${n}</span>` : ''}</button>`).join('');
   document.body.classList.toggle('je-kanal', !!S.kanal);
 }
 
@@ -583,6 +604,7 @@ function pohledDen(){
   const neprCelkem = S.zpravy.filter(m => m.nove).length;
   return hlava('Dnes', dnes.toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'}), `${neprCelkem > 3 ? `<button class="btn btn--sv" data-vse-precteno title="${neprCelkem} nepřečtených">${ik('oko')}Vše přečtené</button>` : ''}<label class="btn btn--sv" style="cursor:pointer">${ik('foto')}Vyfotit papír<input type="file" id="foto-global" accept="image/*" capture="environment" hidden></label><button class="btn" data-okno="hovor">${ik('hovor')}Zapsat hovor</button>`) + `<div class="hl__scroll hl__scroll--seda">${varovani}${fotoHtml}<div class="dva">
     <div>
+    ${dnesniUdalosti().length ? `<section class="karta"><h2>Dnes v kalendáři <small>${dnesniUdalosti().length}</small></h2><ul class="seznam">${dnesniUdalosti().map(u => `<li class="polozka" ${u.zak_id ? `data-zak="${u.zak_id}"` : 'data-jdi="kalendar"'}><span class="kal__cas">${casUdalosti(u)}</span><div class="polozka__hl"><strong>${esc(u.nazev)}</strong><span>${[u.kdo.filter(k => k !== 'tomas').map(k => LIDE[k]).join(' a '), esc(u.misto)].filter(Boolean).join(' · ')}</span></div></li>`).join('')}</ul></section>` : ''}
     <section class="karta"><h2>${S.ukolyVsech ? 'Úkoly všech' : 'Moje úkoly'} <small>${moje.length}</small><button class="cip" data-ukoly-vsech style="margin-left:auto;min-height:26px;padding:2px 10px;font-size:.76rem">${S.ukolyVsech ? 'Jen moje' : 'Všech'}</button></h2>
       ${moje.length ? `<ul class="seznam">${moje.map(p => { const z = p.zak ? zak(p.zak) : null; const x = p.dod ? dod(p.dod) : null;
         return `<li class="polozka" ${z ? `data-zak="${z.id}"` : x ? `data-dod="${x.id}"` : ''}><button class="chk" data-hotovo="${p.id}" aria-label="Hotovo">${ik('stav')}</button>
@@ -637,6 +659,33 @@ function pohledSoubory(){
     ${!fil.length ? '<div class="karta"><p class="prazdno">Zatím tu nic není. Soubory sem přibudou z poznámek, mailů a fotek.</p></div>' : ''}</div>`;
 }
 
+function pohledKalendar(){
+  const zacDne = new Date(dnes.getFullYear(), dnes.getMonth(), dnes.getDate());
+  const moje = x => x.druh === 'u' ? x.u.kdo.includes(S.ja) || x.u.zalozil === S.ja : x.p.komu === S.ja;
+  const vse = [
+    ...S.udalosti.filter(u => new Date(u.konec) > zacDne).map(u => ({druh:'u', kdy:u.celyDen ? u.zacatek + 'T00:00:00' : u.zacatek, u})),
+    ...S.pripominky.filter(p => !p.hotovo).map(p => ({druh:'p', kdy:p.kdy, p}))
+  ].filter(x => !S.kalJenMoje || moje(x)).sort((a, b) => new Date(a.kdy) - new Date(b.kdy));
+  const po = vse.filter(x => x.druh === 'p' && new Date(x.kdy) < zacDne);
+  const dny = {};
+  vse.filter(x => !po.includes(x)).forEach(x => { const k = denKlic(x.kdy); (dny[k] = dny[k] || {kdy:x.kdy, polozky:[]}).polozky.push(x); });
+  const radek = x => {
+    if (x.druh === 'p') { const p = x.p; const z = p.zak ? zak(p.zak) : null; const dd = p.dod ? dod(p.dod) : null;
+      return `<li class="polozka" ${z ? `data-zak="${z.id}"` : dd ? `data-dod="${dd.id}"` : ''}><span class="kal__cas">${new Date(p.kdy) < zacDne ? `<span style="color:var(--red)">${kdy(p.kdy, 1)}</span>` : casJen(p.kdy)}</span><span class="kal__ik">${ik('zvon')}</span>
+        <div class="polozka__hl"><strong>${esc(p.text)}</strong><span>Připomínka · ${LIDE[p.komu]}${z ? ' · ' + esc(z.jmeno) : dd ? ' · ' + esc(dd.nazev) : ''}</span></div><button class="chk" data-hotovo="${p.id}" aria-label="Hotovo">${ik('stav')}</button></li>`; }
+    const u = x.u; const z = u.zak_id ? zak(u.zak_id) : null;
+    const kdo = u.kdo.filter(k => k !== 'tomas').map(k => LIDE[k]).join(' a ');
+    return `<li class="polozka" ${z ? `data-zak="${z.id}"` : ''}><span class="kal__cas">${casUdalosti(u)}${!u.celyDen ? `<small>${casJen(u.konec)}</small>` : ''}</span><span class="kal__ik kal__ik--u">${ik('kal')}</span>
+      <div class="polozka__hl"><strong>${esc(u.nazev)}</strong><span>${[kdo, u.misto && esc(u.misto)].filter(Boolean).join(' · ') || 'Google Kalendář info@'}</span></div>
+      ${u.odkaz ? `<a class="ib ib--a" href="${esc(u.odkaz)}" target="_blank" rel="noopener" title="Otevřít v Google Kalendáři" data-stop>${ik('ven')}</a>` : ''}<button class="ib" data-smaz-udalost="${esc(u.id)}" title="Zrušit" aria-label="Zrušit">×</button></li>`;
+  };
+  const obsah = (po.length ? `<div class="kal-den" style="color:var(--red)">Po termínu</div><ul class="seznam">${po.map(radek).join('')}</ul>` : '')
+    + Object.values(dny).map(d => { const dd = kdy(d.kdy, 1); return `<div class="kal-den ${dd === 'dnes' ? 'je-dnes' : ''}">${dd === 'dnes' ? 'Dnes' : dd === 'zítra' ? 'Zítra, ' + new Date(d.kdy).toLocaleDateString('cs-CZ', {weekday:'long'}) : new Date(d.kdy).toLocaleDateString('cs-CZ', {weekday:'long', day:'numeric', month:'long'})}</div><ul class="seznam">${d.polozky.map(radek).join('')}</ul>`; }).join('');
+  const info = S.kalNapojeno === false ? `<div class="pozor pozor--ukol" style="border-radius:8px;margin-bottom:12px">${ik('varovani')}<span>Google Kalendář ještě není napojený. Připomínky fungují, schůzky půjdou naplánovat po napojení.</span></div>` : '';
+  return hlava('Kalendář', 'Schůzky a připomínky', `<button class="cip" data-kal-filtr style="min-height:32px">${S.kalJenMoje ? 'Jen moje' : 'Všech'}</button><button class="btn" data-okno="udalost" ${S.kalNapojeno === false ? 'disabled' : ''}>${ik('plus')}Naplánovat</button>`)
+    + `<div class="hl__scroll hl__scroll--seda">${info}<div class="karta" style="padding:8px 10px">${obsah || '<p class="prazdno">Nic naplánováno.</p>'}</div></div>`;
+}
+
 function otevriSoubor(klic){
   const [mid, i] = klic.split(':').map(Number);
   const m = S.zpravy.find(x => x.id === mid); const f = m.prilohy[i]; const t = typSoub(f.n);
@@ -683,15 +732,17 @@ function pohledKanal(){
     ${z.telefon ? `<a href="tel:${z.telefon.replace(/\s/g, '')}">${esc(z.telefon)}</a>` : jeZak ? `<button class="odk" data-upravit="telefon" data-pro="${z.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer">doplnit telefon</button>` : `<span>${esc(z.kontakt)}</span>`}${z.email ? `<span>${esc(z.email)}</span>` : ''}${z.misto ? `<span>${esc(z.misto)}</span>` : jeZak ? `<button data-upravit="misto" data-pro="${z.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer">doplnit místo</button>` : `<span>${esc(z.co)}</span>`}
     ${jeZak && z.web && z.web.model ? `<span><b>${esc(z.web.model)}</b>${z.web.cena ? ' · ' + kc(z.web.cena) : ''}${z.web.km ? ' · ' + z.web.km + ' km' : ''}</span>` : ''}
     ${zk ? `<span style="display:inline-flex;gap:8px;align-items:center">${krokHtml(zk)}<select data-krok="${zk.id}" aria-label="Krok zakázky">${KROKY.map(([k, t]) => `<option value="${k}" ${zk.krok === k ? 'selected' : ''}>${t}</option>`).join('')}</select>${zk.kontejner ? `<span>${esc(zk.kontejner)}</span>` : ''}<button data-upravit="kontejner" data-pro="${zk.id}" style="border:0;background:none;color:var(--link);font-weight:600;padding:0;cursor:pointer;font-size:.8rem">${zk.kontejner ? 'upravit' : 'kontejner a termín'}</button></span>` : ''}
-    ${jeZak ? `<button class="pbtn" data-okno="hovor" data-pro="${z.id}" style="margin-left:auto">${ik('hovor')}Zapsat hovor</button>` : ''}
+    ${jeZak ? `<button class="pbtn" data-okno="udalost" data-pro="${z.id}" style="margin-left:auto">${ik('kal')}Naplánovat</button><button class="pbtn" data-okno="hovor" data-pro="${z.id}">${ik('hovor')}Zapsat hovor</button>` : ''}
   </div>`;
   const ticho = jeZak ? dniTicha(z) : 0;
   const poTerm = ukoly.filter(p => poTerminu(p.kdy) && kdy(p.kdy, 1) !== 'dnes');
   let pozor = '';
+  const ud = jeZak ? udalostiZak(z.id) : [];
+  const udHtml = ud.length ? `<div class="pozor" style="background:#e6eef1">${ik('kal')}<span>${ud.slice(0, 2).map(u => `<b>${esc(u.nazev.replace(' (' + z.jmeno + ')', ''))}</b> · ${kdy(u.zacatek, 1)}${u.celyDen ? '' : ' v ' + casJen(u.zacatek)}`).join(' &nbsp;·&nbsp; ')}</span></div>` : '';
   if (poTerm.length) pozor = `<div class="pozor pozor--ukol">${ik('varovani')}<span><b>Po termínu:</b> ${poTerm.map(p => `${esc(p.text)} (${LIDE[p.komu]}, ${kdy(p.kdy, 1)})`).join('; ')}</span><button class="chk" data-hotovo="${poTerm[0].id}" aria-label="Hotovo">${ik('stav')}</button></div>`;
   else if (jeZak && aktivni(z) && z.stav !== 'novy' && ticho >= 14 && !ukoly.length) pozor = `<div class="pozor pozor--ticho">${ik('hodiny')}<span><b>${ticho} dní bez kontaktu</b> a nic naplánovaného.</span><button class="pbtn" data-pripomenout-zak="${z.id}">${ik('zvon')}Ozvat se zítra</button></div>`;
   else if (ukoly.length) pozor = `<div class="pozor" style="background:var(--bg)">${ik('zvon')}<span>${ukoly.slice(0, 2).map(p => `<b>${esc(p.text)}</b> · ${LIDE[p.komu]}, ${kdy(p.kdy, 1)}`).join(' &nbsp;·&nbsp; ')}${ukoly.length > 2 ? ` a další ${ukoly.length - 2}` : ''}</span><button class="chk" data-hotovo="${ukoly[0].id}" aria-label="Hotovo">${ik('stav')}</button></div>`;
-  return hlava(`${jeZak ? ava(null, jmeno) : `<span class="ava ava--web">${ik('dodavatel')}</span>`}<span>${esc(jmeno)}</span>`, '', end) + tema + pozor
+  return hlava(`${jeZak ? ava(null, jmeno) : `<span class="ava ava--web">${ik('dodavatel')}</span>`}<span>${esc(jmeno)}</span>`, '', end) + tema + udHtml + pozor
     + `<div class="hl__scroll" id="tok"><div class="tok">${tok || '<p class="prazdno" style="padding:20px">Zatím nic. Napište první poznámku dole.</p>'}</div></div>` + skladatel(z);
 }
 
@@ -813,10 +864,10 @@ function zastavNahravani(zahodit){
 
 function vykresli(){
   if (!S.ja) { $('#hl').innerHTML = pohledPrihlaseni(); document.body.classList.remove('je-kanal'); $('#side').innerHTML = ''; $('#mob-nav').innerHTML = '';
-    const f = $('#login'); if (f) { f.onsubmit = async e => { e.preventDefault(); try { const r = await api('prihlaseni', 'POST', { kdo: $('#l-kdo').value, heslo: $('#l-heslo').value }); S.ja = r.kdo; S.chyba = null; await nacti(); synchronizuj(); } catch (er) { S.chyba = er.message; vykresli(); } }; setTimeout(() => $('#l-heslo')?.focus(), 30); }
+    const f = $('#login'); if (f) { f.onsubmit = async e => { e.preventDefault(); try { const r = await api('prihlaseni', 'POST', { kdo: $('#l-kdo').value, heslo: $('#l-heslo').value }); S.ja = r.kdo; S.chyba = null; await nacti(); nactiKalendar(); synchronizuj(); } catch (er) { S.chyba = er.message; vykresli(); } }; setTimeout(() => $('#l-heslo')?.focus(), 30); }
     return; }
   vykresliSide();
-  $('#hl').innerHTML = S.kanal ? pohledKanal() : S.pohled === 'den' ? pohledDen() : S.pohled === 'asistent' ? pohledAsistent() : S.pohled === 'zakaznici' ? pohledZakaznici() : S.pohled === 'vsichni' ? pohledZakaznici(true) : S.pohled === 'zakazky' ? pohledZakazky() : S.pohled === 'soubory' ? pohledSoubory() : pohledZakaznici();
+  $('#hl').innerHTML = S.kanal ? pohledKanal() : S.pohled === 'den' ? pohledDen() : S.pohled === 'asistent' ? pohledAsistent() : S.pohled === 'zakaznici' ? pohledZakaznici() : S.pohled === 'vsichni' ? pohledZakaznici(true) : S.pohled === 'zakazky' ? pohledZakazky() : S.pohled === 'soubory' ? pohledSoubory() : S.pohled === 'kalendar' ? pohledKalendar() : pohledZakaznici();
   const tok = $('#tok'); if (tok) tok.scrollTop = tok.scrollHeight;
   const ta = $('#skl-text'); if (ta) { const auto = () => { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight, innerHeight * .4) + 'px'; }; ta.oninput = () => { S.text = ta.value; auto(); }; auto(); }
   const cf = $('#chat-form'); if (cf) { cf.onsubmit = e => { e.preventDefault(); const i = $('#chat-in'); zeptejSe(i.value); i.value = ''; }; $('#chat-in').onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); zeptejSe(e.target.value); e.target.value = ''; } }; }
@@ -849,12 +900,24 @@ function otevriOkno(typ, pro){
   let h = '';
   if (typ === 'hovor') h = `<h2>Zapsat hovor</h2>${vyberZak}<label>Jak to dopadlo</label><div class="vyber">${Object.entries(VYSLEDKY).map(([k, t]) => `<button type="button" data-vysl="${k}" class="${k === 'zajem' ? 'je-on' : ''}">${t}</button>`).join('')}</div>
     <label for="o-text">Co jste si řekli</label><textarea class="pole" id="o-text" placeholder="Stačí pár slov"></textarea><label>Ozvat se znovu</label><div class="vyber" style="grid-template-columns:repeat(4,1fr)">${[['','Ne'],['1','Zítra'],['3','Za 3 dny'],['7','Za týden']].map(([v, t], i) => `<button type="button" data-termin="${v}" class="${i === 0 ? 'je-on' : ''}">${t}</button>`).join('')}</div>`;
+  if (typ === 'udalost') {
+    const zitra = new Date(dnes.getTime() + 864e5); const den = `${zitra.getFullYear()}-${String(zitra.getMonth() + 1).padStart(2, '0')}-${String(zitra.getDate()).padStart(2, '0')}`;
+    oknoStav.minut = 60; oknoStav.kdo = [z && ['dan', 'honza'].includes(z.majitel) ? z.majitel : S.ja === 'honza' ? 'honza' : 'dan'];
+    h = `<h2>Naplánovat</h2>${z ? `<p class="hl__sub" style="margin-top:-6px">${esc(z.jmeno)}${z.telefon ? ' · ' + esc(z.telefon) : ''}</p>` : ''}
+    <label for="u-co">Co se děje</label><input class="pole" id="u-co" placeholder="Prohlídka domu, schůzka na pozemku, předání">
+    ${z ? '' : `<label for="u-zak">Zákazník</label><select class="pole" id="u-zak"><option value="">Bez zákazníka</option>${S.zakaznici.filter(aktivni).map(x => `<option value="${x.id}">${esc(x.jmeno)}</option>`).join('')}</select>`}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><label for="u-den">Den</label><input class="pole" type="date" id="u-den" value="${den}"></div><div><label for="u-cas">Čas</label><input class="pole" type="time" id="u-cas" value="10:00" step="900"></div></div>
+    <label>Jak dlouho</label><div class="vyber" style="grid-template-columns:repeat(4,1fr)">${[[30,'30 min'],[60,'Hodina'],[120,'2 hodiny'],[0,'Celý den']].map(([v, t]) => `<button type="button" data-minut="${v}" class="${v === 60 ? 'je-on' : ''}">${t}</button>`).join('')}</div>
+    <label>Kdo jde</label><div class="vyber">${['dan', 'honza'].map(k => `<button type="button" data-kdo-jde="${k}" class="${oknoStav.kdo.includes(k) ? 'je-on' : ''}">${LIDE[k]}</button>`).join('')}</div>
+    <label for="u-mi">Místo</label><input class="pole" id="u-mi" value="${esc(z ? z.misto : '')}" placeholder="Adresa nebo obec">
+    <p class="hl__sub" style="margin-top:12px">Pozvánka přijde do Google Kalendáře a telefon ji připomene předem.</p>`;
+  }
   if (typ === 'novy') h = `<h2>Nový zákazník</h2><label for="o-jm">Jméno</label><input class="pole" id="o-jm"><label for="o-tel">Telefon</label><input class="pole" id="o-tel" inputmode="tel"><label for="o-em">E-mail</label><input class="pole" id="o-em" inputmode="email"><label for="o-mi">Místo</label><input class="pole" id="o-mi">`;
   if (typ === 'upravit') { const pole = oknoStav.pole = pro.pole; const popis = {telefon:'Telefon', misto:'Místo', kontejner:'Číslo kontejneru'}[pole]; h = `<h2>${popis}</h2><input class="pole" id="o-text" value="${esc(pro.hodnota || '')}" ${pole === 'telefon' ? 'inputmode="tel"' : ''}>${pole === 'kontejner' ? `<label for="o-pred">Termín předání</label><input class="pole" id="o-pred" value="${esc(pro.predani || '')}" placeholder="např. 5. 12. 2026">` : ''}`; }
   $('#okno').className = 'okno';
-  $('#okno').innerHTML = h + `<div class="okno__pata"><button class="btn btn--sv" data-zavrit>Zrušit</button><button class="btn" data-ulozit>Uložit</button></div>`;
+  $('#okno').innerHTML = h + `<div class="okno__pata"><button class="btn btn--sv" data-zavrit>Zrušit</button><button class="btn" data-ulozit>${typ === 'udalost' ? 'Naplánovat' : 'Uložit'}</button></div>`;
   $('#okno-bg').classList.add('je-on');
-  setTimeout(() => ($('#o-text') || $('#o-jm'))?.focus(), 30);
+  setTimeout(() => ($('#o-text') || $('#o-jm') || $('#u-co'))?.focus(), 30);
 }
 const zavriOkno = () => $('#okno-bg').classList.remove('je-on');
 
@@ -866,6 +929,15 @@ async function ulozOkno(){
       await api('zprava', 'POST', { zak_id: zid, typ: 'hovor', vysledek: o.vysledek, text });
       if (o.termin) await api('pripominka', 'POST', { zak_id: zid, komu: S.ja, kdy: d(+o.termin, 9), text: 'Ozvat se: ' + (text || VYSLEDKY[o.vysledek]).slice(0, 80) });
       zavriOkno(); await nacti(true); otevriKanal('zak', zid); toast('Hovor zapsaný' + (o.termin ? ', připomínka nastavená' : ''));
+    }
+    if (o.typ === 'udalost') {
+      const co = $('#u-co').value.trim(); if (!co) { $('#u-co').focus(); toast('Napište, co se děje.'); return; }
+      const den = $('#u-den').value; if (!den) { toast('Vyberte den.'); return; }
+      const zid = o.pro || +($('#u-zak')?.value || 0) || null;
+      const tl = $('[data-ulozit]'); tl.disabled = true; tl.textContent = 'Plánuji…';
+      try { await api('kalendar', 'POST', { nazev: co, den, cas: o.minut ? $('#u-cas').value : '', minut: o.minut || 60, kdo: o.kdo, zak_id: zid, misto: $('#u-mi').value.trim() }); }
+      catch (er) { tl.disabled = false; tl.textContent = 'Naplánovat'; throw er; }
+      zavriOkno(); await Promise.all([nacti(true), nactiKalendar()]); toast(o.kdo.length ? 'Naplánováno, pozvánka odešla' : 'Naplánováno');
     }
     if (o.typ === 'novy') { const jm = $('#o-jm').value.trim(); if (!jm) return; const r = await api('zakaznik', 'POST', { jmeno: jm, telefon: $('#o-tel').value, email: $('#o-em').value, misto: $('#o-mi').value }); zavriOkno(); await nacti(true); otevriKanal('zak', r.id); }
     if (o.typ === 'upravit') {
@@ -941,9 +1013,14 @@ async function potvrdNavrh(){
 
 document.addEventListener('click', async e => {
   if (!e.target.closest('#menu') && !e.target.closest('[data-menu]')) $('#menu').classList.remove('je-on');
+  if (e.target.closest('[data-stop]')) return;
   const t = e.target.closest('button,[data-zak],[data-dod],[data-jdi]'); if (!t) { if (e.target.id === 'okno-bg') zavriOkno(); return; }
   const ds = t.dataset;
   const zkus = async (fn, hlaska) => { try { await fn(); if (hlaska) toast(hlaska); await nacti(true); } catch (er) { toast(er.message); } };
+  if (ds.smazUdalost) { e.stopPropagation(); const u = S.udalosti.find(x => x.id === ds.smazUdalost); if (!u || !confirm(`Zrušit ${u.nazev}?${u.kdo.length ? ' Pozvaní dostanou zprávu o zrušení.' : ''}`)) return; S.udalosti = S.udalosti.filter(x => x !== u); vykresli(); try { await api('kalendar', 'DELETE', { id: u.id }); toast('Zrušeno'); } catch (er) { toast(er.message); } nactiKalendar(); return; }
+  if (ds.minut !== undefined) { oknoStav.minut = +ds.minut; t.parentElement.querySelectorAll('button').forEach(b => b.classList.toggle('je-on', b === t)); $('#u-cas').disabled = !oknoStav.minut; return; }
+  if (ds.kdoJde) { const i = oknoStav.kdo.indexOf(ds.kdoJde); i >= 0 ? oknoStav.kdo.splice(i, 1) : oknoStav.kdo.push(ds.kdoJde); t.classList.toggle('je-on', i < 0); return; }
+  if ('kalFiltr' in ds) { S.kalJenMoje = !S.kalJenMoje; vykresli(); return; }
   if (ds.hotovo) { e.stopPropagation(); const p = S.pripominky.find(x => x.id == ds.hotovo); if (p) p.hotovo = true; vykresli(); zkus(() => api('pripominka', 'PATCH', { id: +ds.hotovo, hotovo: true }), 'Hotovo'); return; }
   if (ds.vzit) { e.stopPropagation(); zkus(() => api('zakaznik', 'PATCH', { id: +ds.vzit, majitel: S.ja }), 'Poptávka je vaše'); return; }
   if (ds.okno) { otevriOkno(ds.okno, +ds.pro || null); return; }
@@ -985,7 +1062,7 @@ document.addEventListener('click', async e => {
   if (ds.vyhodit) { S.navrh.polozky.splice(+ds.vyhodit, 1); if (!S.navrh.polozky.length) S.navrh = null; vykresli(); return; }
   if ('navrhZpet' in ds) { S.navrh = null; vykresli(); $('#skl-text').focus(); return; }
   if ('potvrdit' in ds) { potvrdNavrh(); return; }
-  if (ds.jdi) { S.pohled = ds.jdi; S.kanal = null; zavriOkno(); vykresli(); return; }
+  if (ds.jdi) { S.pohled = ds.jdi; S.kanal = null; zavriOkno(); vykresli(); if (ds.jdi === 'kalendar') nactiKalendar(); return; }
   if (ds.dod) { otevriKanal('dod', +ds.dod); return; }
   if (ds.zak) { otevriKanal('zak', +ds.zak); return; }
 });
@@ -1013,8 +1090,9 @@ document.addEventListener('keydown', e => {
 
 (async () => {
   try { const p = await api('prihlaseni'); S.lide = p.lide || []; S.ja = p.kdo; } catch {}
-  if (S.ja) { await nacti(); await synchronizuj(); if (S.claude) { try { for (let i = 0; i < 6; i++) { const r = await api('uklid', 'POST'); if (r.zpracovano) await nacti(true); if (!r.zbyva || !r.zpracovano) break; } } catch {} } } else vykresli();
+  if (S.ja) { await nacti(); const h = location.hash.match(/^#z(\d+)$/); if (h && zak(+h[1])) { otevriKanal('zak', +h[1]); history.replaceState(null, '', location.pathname); } nactiKalendar(); await synchronizuj(); if (S.claude) { try { for (let i = 0; i < 6; i++) { const r = await api('uklid', 'POST'); if (r.zpracovano) await nacti(true); if (!r.zbyva || !r.zpracovano) break; } } catch {} } } else vykresli();
   setInterval(() => { if (S.ja && !document.hidden) synchronizuj().then(() => nacti(true)); }, 60000);
+  setInterval(() => { if (S.ja && !document.hidden) nactiKalendar(); }, 300000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden && S.ja) nacti(true); });
 })();
 </script>
