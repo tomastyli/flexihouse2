@@ -334,11 +334,12 @@ Náhled `_navrh-home-W.html`, nenasazený. Když se Tomáš zeptá „co máme d
 Každá druhá poptávka chodí z konfigurátoru, takže konfigurátor pro modulové domy dává smysl. Jednoduchý webový přes Three.js, ne rendery z Blenderu. Stavět na stávajícím rendereru (`_3d-zdroj/`, výstup `assets/flexi-3d-v2.js`, už je to Three.js). Moduly a terasy generovat z dat (`flexihouse-rodinny-dum/dispozice/kompozice.json` a `dispozice.py`), ne modelovat ručně, aby další dům znamenal jen nový záznam. Volby: model, fasáda (14 dlaždic z ceníku), terasa. Konec v poptávce; cena až s čísly od Dana, do té doby bez ceny.
 
 
-## Katalog a stránky domů (31. 10. 2026, v náhledu, NENASAZENO)
+## Katalog a stránky domů (NASAZENO 31. 10. 2026, commit e164e86)
 
 Tomáš: „přidat do katalogu všechny domy a subpages domů sjednotit“. V katalogu má být Vista, Tenuta, rozkládací dům, kancelář, bistro a dům na míru („všechny zatím“).
 - Stránky domů a katalog skládá `_gen/domy.py` z rámu `index.html`, šablona je popsaná v `.docs/PRESET-PRODUKT.md`, hlídá ji přepsaný `_audit/produkt-preset.py`.
 - Nové stránky `/vista` a `/tenuta`: render v heru, půdorys z `flexihouse-rodinny-dum/dispozice` (sprchy místo vany, Satoshi, popisek „půdorys je návrh“), parametry, pohled z terasy (Blender), u Visty mozaika vizualizací. Cena na poptávku.
 - `rozkladaci-dum`, `flexi-office`, `dum-na-miru` převedené na šablonu. Texty, ceny, rozměry a časté dotazy převzaté ze starých stránek (`_gen/zdroj/`). Vypadly: sekce „Proč to lidi berou“, claim, newsletter, závěr a dvojice „Co neděláme / Co umíme“, stejně jako na homepage. Otočka v heru rozkládacího domu nahrazená statickým renderem.
 - Homepage: karty Vista a Tenuta, megamenu a patička odkazují na nové stránky. Sitemap má `/vista` a `/tenuta`.
-- **Zbývá:** schválení a nasazení. Megamenu „Domy“ má pořád čtyři dlaždice. Bistro nemá vlastní stránku, karta vede na poptávku v katalogu.
+- Předchozí nasazená verze je zálohovaná: git tag `zaloha-pred-strankami-domu` (commit fb6c6dc) a kopie souborů s návodem v `_zaloha/2026-10-31-pred-strankami-domu/`.
+- **Zbývá:** Megamenu „Domy“ má pořád čtyři dlaždice. Bistro nemá vlastní stránku, karta vede na poptávku v katalogu.
