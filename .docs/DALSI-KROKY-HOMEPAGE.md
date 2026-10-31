@@ -284,3 +284,51 @@ Obojí ověřeno nastraženou chybou: podvržená cena 88 000 ve schématu i 70 
 se chytí, po vrácení hlásí skript nula rozporů.
 
 Test cen poradce má v seznamu povolených částek nově 100 000 místo 70 000.
+
+## Nová homepage s modulovými domy (30.–31. 10. 2026)
+
+Náhled `_navrh-home-W.html`, nenasazený. Když se Tomáš zeptá „co máme dělat“, je to tenhle seznam.
+
+**Hotové v náhledu 31. 10.** (čeká na Tomášovo schválení a nasazení)
+- Hero oříznutý, aby pod ním byly vidět karty domů; menší nadpis; místo „Chci nabídku“ kontakt (telefon); bez tlačítka pauzy.
+- Jedno písmo na celé stránce, všechny nadpisy stejným řezem.
+- Mezi rendery a reálnými fotkami jiná sekce, ne dvě fotosekce pod sebou.
+- Šipky na kartách domů dál od textu.
+- Jemné animace při scrollu, stránka působí moc staticky.
+- Poptávka s výběrem domu („Jaký dům vás zaujal?“) místo klasického formuláře, e-mail zůstává.
+- Vista v bílém provedení jako ostatní karty.
+
+**Čeká**
+- Jedno písmo převést z náhledu do sdílených stylů (`assets/flexi.css`), aby ho měl celý web, ne jen homepage.
+- Časté dotazy jsou z homepage pryč, odpovídá chatbot: Tomáš musí obnovit jeho API klíč.
+- Zachytávání rozepsaných poptávek (kdo začal psát a neodeslal), napojené na e-mail z formuláře. Pozor na GDPR: informovat u formuláře, ukládat jen kontakt.
+- Sjednotit rendery všech domů do jednoho stylu.
+- Předělat podstránky jednotlivých domů, Tomášovi se nelíbí.
+
+**Druhé kolo 31. 10. (v náhledu)**
+- Hero má jen CTA „Nezávazná poptávka“, telefon tam Tomáš nechce („nech to clean“).
+- Karty domů ve stejné vizuální velikosti (`img/katalog/karta-*.webp`, plátno 4 : 3, plocha domu srovnaná), zpátky ceny: rozkládací od 399 000 bez DPH, kancelář od 100 000 bez DPH, na míru individuálně, Vista „cena na poptávku“.
+- Karty jsou mřížka, ne posuvná řada (Tomáš nevěří, že lidi budou swipovat). Desktop 3 v řadě (5 domů = 3 + 2 na střed), mobil 2 vedle sebe.
+- Poptávka je průvodce ve čtyřech krocích: dům, kdy má stát, obec, kontakt (účel a pozemek vyhozené, Tomáš v nich neviděl smysl). Odpovědi jdou do `message`, dům do `model`, rozepsané se drží v `localStorage`.
+- Patička zkrácená na Domy, Informace a Kontakt. Z odkazů zmizely Glamping, Katalog, Konfigurátor, Stavební povolení, Celoroční bydlení, Obytný kontejner a Ke stažení. SEO stránky zůstávají v sitemapě, jen na ně neodkazuje homepage.
+
+- Tenuta přidaná (Tomáš 31. 10.): karta „Modulový dům Tenuta, velký bungalov 5+kk s terasou, cena na poptávku“, volba v průvodci poptávkou a odkaz v patičce. Render z Blenderu ve stejném bílém stylu jako Vista, skript `flexihouse-rodinny-dum/web-podklady/karta-tenuta.py` (spuštění `blender -b --python karta-tenuta.py -- výstup.png 2400 128`) skládá osm modulů z `flexihouse-rodinny-dum/dispozice/tenuta-vykres/tenuta-120.json` (okna a HS podle výkresu, příčky vynechané, zvenku nejsou vidět). V megamenu „Domy“ zatím není, má jen čtyři dlaždice.
+
+**Nasazeno 31. 10. 2026 (Tomáš: „jo tak je pak nasaď“)**
+- `index.html` je převzatý z náhledu `_navrh-home-W.html` (bez noindex). Náhled zůstává jako pracovní soubor mimo git.
+- Vista a Tenuta mají nové rendery v duchu Modulosu: hladká bílá fasáda bez žebrování, tmavé rohy a hrana střechy, plechová střecha s drážkami, dům na patkách, borovicová terasa se schůdky, nižší pohled. Skripty `flexihouse-rodinny-dum/web-podklady/` (`karta-vista.py`, `karta-tenuta.py`, společné `uhlazeni.py`, srovnání karet `karta-norm.py`). Sedlovou střechu ani pergolu jsme nepřebírali, Vista a Tenuta jsou ploché.
+- Jedno písmo: na homepage se všechno sází Satoshi (`*{font-family:'Satoshi'…!important}` ve stylu stránky), stahují se jen tři soubory `fonts/satoshi-*.woff2`. Původní přezdívání Instrument a Archivo nefungovalo, běžný text zůstával v Instrumentu.
+- Hero video zmenšené z 11 až 23 MB na 2,6 až 6,5 MB (`video/`, H.264 CRF 31, HEVC CRF 32), plakát z 785 na 312 kB. Rendery do mozaiky v `img/rada/`.
+- **Zbývá z nasazení:** oprava mobilního menu a jedno písmo jsou zatím jen ve stylu homepage, ostatní stránky mají staré menu i písma. Převést do `assets/flexi.css` a projít podstránky. „Po celé ČR“ na `kontakt.html` a `rozkladaci-dum.html` proti „po celé EU“ v popisu homepage. Testovací poptávka z nového průvodce neodešla (jen se souhlasem).
+
+**Otevřené z druhého kola**
+- Tenuta: cena a to, jestli 5+kk z osmi modulů Dan opravdu dodá (doprava, jeřáb), čeká na Dana. Do megamenu přidat, až bude jasné, jestli se dům nabízí.
+- Cena Visty: Tomáš zvažuje „od 500 000“, ale není spočítaná. Na web až s číslem od Dana.
+- Zachytávání rozepsaných poptávek dělat nad průvodcem (e-mail je až v posledním kroku, zvážit ho posunout dřív).
+- Mobilní menu: hlavička při otevření bílá přes celou šířku, křížek se plynule mění z hamburgeru, položky v písmu Satoshi. Tahle oprava patří při nasazení do `assets/flexi.css`, chyba je i na živém webu.
+- Desktopová navigace má zpátky číslo 607 321 543 s rozbalením na oba Prokeše (Tomáš: „v nav na desktopu musí být ta čísla“). Na mobilu jsou čísla v menu.
+- Titulek a popis pro Google přepsané na „Modulové domy, které přijedou hotové“ (DataForSEO: modulové domy 5 400/měs., modulární 1 300). „Na klíč“ schválně ne, základ 399 000 je hrubá stavba.
+- Popis pro Google: „Modulové domy od 399 000 Kč bez DPH, které vzniknou v hale a přijedou k vám hotové. Vozíme po celé EU.“ (Tomáš 31. 10.: bez Visty, rozvoz po celé EU). Před nasazením srovnat „po celé ČR“ na kontakt.html a rozkladaci-dum.html a ověřit, jestli konfigurátor počítá dopravu i do zahraničí.
+
+**Konfigurátor modulových domů (později, Tomáš 31. 10.)**
+Každá druhá poptávka chodí z konfigurátoru, takže konfigurátor pro modulové domy dává smysl. Jednoduchý webový přes Three.js, ne rendery z Blenderu. Stavět na stávajícím rendereru (`_3d-zdroj/`, výstup `assets/flexi-3d-v2.js`, už je to Three.js). Moduly a terasy generovat z dat (`flexihouse-rodinny-dum/dispozice/kompozice.json` a `dispozice.py`), ne modelovat ručně, aby další dům znamenal jen nový záznam. Volby: model, fasáda (14 dlaždic z ceníku), terasa. Konec v poptávce; cena až s čísly od Dana, do té doby bez ceny.

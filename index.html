@@ -13,20 +13,16 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flexi House">
 <meta property="og:locale" content="cs_CZ">
-<meta property="og:title" content="Modulární a kontejnerové domy Flexi House">
-<meta property="og:description" content="Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Rozkládací dům od 399 000 Kč, kancelář skladem od 100 000 Kč.">
+<meta property="og:title" content="Modulové domy, které přijedou hotové | Flexi House">
+<meta property="og:description" content="Modulové domy od 399 000 Kč bez DPH, které vzniknou v hale a přijedou k vám hotové. Vozíme po celé EU.">
 <meta property="og:url" content="https://flexihouse.cz/">
 <meta property="og:image" content="https://flexihouse.cz/img/og/og-home.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<title>Modulární a kontejnerové domy | Flexi House</title>
-<meta name="description" content="Modulární a kontejnerové domy vyrobené v hale a dodané na váš pozemek. Rozkládací dům, kancelář skladem nebo dům na míru z konfigurátoru. Dodáváme po celé ČR.">
-<link rel="preload" href="fonts/archivo2-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/archivo2-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/instrument-lat-sub.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/instrument-ext-sub.woff2" as="font" type="font/woff2" crossorigin>
+<title>Modulové domy, které přijedou hotové | Flexi House</title>
+<meta name="description" content="Modulové domy od 399 000 Kč bez DPH, které vzniknou v hale a přijedou k vám hotové. Vozíme po celé EU.">
 <link rel="stylesheet" href="assets/flexi.css?v=53">
 <link rel="stylesheet" href="assets/domov.css?v=56">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
@@ -36,6 +32,262 @@
  {"@type":"WebSite","@id":"https://flexihouse.cz/#web","url":"https://flexihouse.cz/","name":"Flexi House","inLanguage":"cs-CZ","publisher":{"@id":"https://flexihouse.cz/#org"}},
  {"@type":"LocalBusiness","name":"Flexi House","image":"https://flexihouse.cz/img/dum-rozlozeny-venku.webp","url":"https://flexihouse.cz/","telephone":"+420607321543","priceRange":"od 100 000 Kč","address":{"@type":"PostalAddress","streetAddress":"Sokolovská 612","addressLocality":"Litomyšl","postalCode":"57001","addressCountry":"CZ"},"geo":{"@type":"GeoCoordinates","latitude":49.876139,"longitude":16.302220}}]}
 </script>
+<link rel="preload" href="fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="video/hero-poster.webp" as="image">
+<style>
+@font-face{font-family:'Satoshi';src:url(fonts/satoshi-500.woff2) format('woff2');font-weight:500;font-display:swap}
+.rd-h2,.dotazy h2,.poptat h2{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;letter-spacing:-.035em;line-height:1.04}
+.rd-h2{font-size:clamp(2.2rem,4vw,3.6rem);color:var(--ink)}
+
+.rd-hero{position:relative;margin-top:calc(-1 * var(--nav-h));height:max(640px,100svh);overflow:hidden;isolation:isolate;background:#1d2329;
+  border-radius:0 0 clamp(22px,3vw,34px) clamp(22px,3vw,34px)}
+.rd-hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.rd-hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(14,20,26,.36) 0,rgba(14,20,26,0) 150px),
+  radial-gradient(120% 70% at 0% 100%,rgba(14,20,26,.55) 0,rgba(14,20,26,.38) 35%,rgba(14,20,26,0) 70%),
+  linear-gradient(0deg,rgba(14,20,26,.6) 0,rgba(14,20,26,.2) 26%,rgba(14,20,26,0) 42%)}
+.rd-hero h1,.rd-hero__perex{text-shadow:0 2px 28px rgba(14,20,26,.35)}
+.rd-hero__in{position:absolute;left:0;right:0;bottom:0;padding-bottom:clamp(40px,7vh,88px)}
+.rd-hero h1{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;color:#fff;font-size:clamp(2.5rem,4.6vw,4.4rem);line-height:1.02;letter-spacing:-.04em;max-width:15ch}
+.rd-hero__perex{color:rgba(255,255,255,.84);font-size:1.15rem;margin:clamp(16px,2vw,24px) 0 clamp(24px,3vw,34px)}
+.rd-hero__akce{display:flex;align-items:center;gap:12px}
+.rd-tl{display:inline-flex;align-items:center;gap:14px;height:56px;padding:0 6px 0 26px;border-radius:999px;background:#fff;color:var(--ink);
+  font-weight:600;font-size:1rem;white-space:nowrap;transition:background-color var(--dur-base) var(--ease-both)}
+.rd-tl__sip{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;flex:none;
+  transition:transform var(--dur-slow) var(--ease-out)}
+.rd-tl__sip svg{width:16px;height:16px}
+.rd-tl:hover .rd-tl__sip{transform:rotate(45deg)}
+.rd-tl:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.rd-pauza{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;flex:none;border:0;cursor:pointer;color:#fff;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background-color var(--dur-base)}
+.rd-pauza:hover{background:rgba(255,255,255,.28)}
+.rd-pauza svg{width:18px;height:18px}
+.rd-pauza .rd-hrat,.rd-pauza[aria-pressed="true"] .rd-stop{display:none}
+.rd-pauza[aria-pressed="true"] .rd-hrat{display:block}
+
+.rd-sekce{padding-top:clamp(80px,9vw,136px)}
+
+.rd-mozaika{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(16px,2vw,28px)}
+.rd-mozaika__levy{display:flex;flex-direction:column;gap:clamp(28px,3vw,40px)}
+.rd-mozaika img{width:100%;height:100%;object-fit:cover;border-radius:28px}
+.rd-mozaika__vysoka{flex:1;min-height:420px}
+.rd-mozaika__pravy{display:grid;grid-template-rows:auto auto;gap:clamp(12px,1.4vw,20px)}
+.rd-mozaika__siroka{aspect-ratio:16/9.4}
+.rd-mozaika__dvojice{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.4vw,20px)}
+.rd-mozaika__dvojice img{aspect-ratio:4/3.6}
+
+.rd-tl--tmave{background:var(--ink);color:#fff}
+.rd-tl--tmave .rd-tl__sip{background:#fff;color:var(--ink)}
+.rd-tl--tmave:focus-visible{outline-color:var(--ink)}
+
+.rd-ukazka{margin-top:clamp(80px,9vw,136px);padding:clamp(56px,6.4vw,96px) 0 clamp(56px,7vw,104px);background:var(--soft);overflow:hidden}
+.rd-ukazka__horni{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.rd-ukazka .rd-tab{background:#fff}
+.rd-ukazka__scena{position:relative;margin-top:clamp(24px,3vw,40px);text-align:center}
+.rd-ukazka__slovo{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;font-size:clamp(5rem,20vw,19rem);line-height:.8;letter-spacing:-.06em;
+  color:#d9e1e5;white-space:nowrap;user-select:none;transition:opacity .28s var(--ease-both),transform .28s var(--ease-both)}
+.rd-ukazka__dum{position:relative;isolation:isolate;width:min(1180px,92vw);margin:calc(-1 * clamp(48px,9vw,140px)) auto 0;
+  transition:opacity .28s var(--ease-both),transform .28s var(--ease-both)}
+.rd-ukazka__dum::after{content:"";position:absolute;left:4%;right:4%;bottom:0;height:12%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(22,32,42,.2),rgba(22,32,42,0))}
+.rd-ukazka__dum img{width:100%;height:auto}
+.rd-ukazka__misto{aspect-ratio:3.4/1;border-radius:28px;background:#e3e9ec}
+.rd-ukazka__pud{aspect-ratio:2.6/1}
+.rd-ukazka__pud img{width:100%;height:100%;object-fit:contain}
+.rd-ukazka__pud .rd-misto{height:100%;border-radius:28px;background:#e3e9ec}
+.rd-ukazka [hidden]{display:none}
+.rd-ukazka.je-pudorys .rd-ukazka__slovo{visibility:hidden}
+.rd-ukazka.je-pudorys .rd-ukazka__dum::after{display:none}
+.rd-ukazka.je-meni .rd-ukazka__slovo,.rd-ukazka.je-meni .rd-ukazka__dum{opacity:0;transform:translateY(12px)}
+.rd-ukazka__info{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:clamp(28px,4vw,48px)}
+.rd-ukazka__info p{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px}
+.rd-ukazka__jm{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;font-size:clamp(1.8rem,2.6vw,2.4rem);letter-spacing:-.03em;color:var(--ink)}
+.rd-ukazka__fakta{color:var(--muted);font-size:1.1rem}
+.rd-ukazka__akce{display:flex;align-items:center;gap:12px}
+.rd-prepinac{display:flex;gap:4px;padding:5px;border-radius:999px;background:#fff}
+.rd-prepinac button{height:38px;padding:0 16px;border:0;border-radius:999px;background:transparent;cursor:pointer;white-space:nowrap;
+  font:600 .95rem 'Instrument',system-ui,sans-serif;color:var(--muted);transition:background-color var(--dur-base),color var(--dur-base)}
+.rd-prepinac button:hover{color:var(--ink)}
+.rd-prepinac button[aria-pressed="true"]{background:#e3e9ec;color:var(--ink)}
+.rd-misto{display:grid;place-items:center;background:#eff2f4;color:rgba(22,32,42,.45);font-size:.9rem;text-align:center;padding:16px}
+
+.rd-tab{display:flex;gap:6px;padding:6px;border-radius:999px;background:#eff2f4;overflow-x:auto;scrollbar-width:none}
+.rd-tab::-webkit-scrollbar{display:none}
+.rd-tab button{height:44px;padding:0 20px;border:0;border-radius:999px;background:transparent;cursor:pointer;white-space:nowrap;
+  font:600 1rem 'Instrument',system-ui,sans-serif;color:var(--muted);transition:background-color var(--dur-base),color var(--dur-base)}
+.rd-tab button:hover{color:var(--ink)}
+.rd-tab button[aria-selected="true"]{background:var(--ink);color:#fff}
+
+.rd-vyzva{padding-top:clamp(150px,17vw,250px)}
+.rd-vyzva__karta{position:relative;display:flex;align-items:center;min-height:clamp(260px,22vw,330px);padding:clamp(32px,4.4vw,64px);
+  border-radius:clamp(22px,3vw,34px);background:radial-gradient(46% 70% at 72% 8%,#3a4f5d 0,#22313b 45%,#16202a 100%);color:#fff}
+.rd-vyzva__dum{position:absolute;right:3%;top:0;width:60%;height:auto;transform:translateY(-62%);pointer-events:none;
+  filter:drop-shadow(0 22px 26px rgba(0,0,0,.4))}
+.rd-vyzva__text{position:relative;max-width:min(30ch,40%)}
+.rd-vyzva h2{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;color:#fff;font-size:clamp(2rem,3vw,2.9rem);line-height:1.04;letter-spacing:-.04em}
+.rd-vyzva p{color:rgba(255,255,255,.7);margin:14px 0 28px}
+.rd-tl--mala{height:48px;padding-left:22px;font-size:.95rem;gap:12px}
+.rd-tl--mala .rd-tl__sip{width:38px;height:38px}
+.rd-tonovany{margin-top:clamp(80px,9vw,136px)}
+.dotazy__odp ul{margin:0;padding-left:1.1em;color:var(--muted)}
+.dotazy__odp li+li{margin-top:4px}
+
+@media (max-width:1080px){
+  .rd-mozaika{grid-template-columns:1fr}
+  .rd-mozaika__vysoka{min-height:0;aspect-ratio:4/5}
+}
+@media (max-width:700px){
+  .rd-tab{max-width:100%}
+  .rd-ukazka__horni,.rd-ukazka__info{flex-direction:column;align-items:flex-start}
+  .rd-ukazka__akce{flex-wrap:wrap}
+  .rd-ukazka__slovo{font-size:27vw}
+  .rd-ukazka__dum{margin-top:-7vw}
+  .rd-ukazka__pud{aspect-ratio:4/3}
+  .rd-vyzva{padding-top:clamp(80px,9vw,136px)}
+  .rd-vyzva__karta{flex-direction:column;align-items:flex-start;min-height:0;padding-top:0}
+  .rd-vyzva__dum{position:relative;right:auto;width:100%;margin:-18vw 0 20px;transform:none}
+  .rd-vyzva__text{max-width:none}
+  .rd-mozaika__dvojice img{aspect-ratio:3/4}
+}
+@media (prefers-reduced-motion:reduce){
+  .rd-tl__sip{transition:none}
+}
+</style>
+<style>.rd-hero__akce{margin-top:clamp(24px,3vw,36px)}</style>
+<style>
+@font-face{font-family:'Satoshi';src:url(fonts/satoshi-400.woff2) format('woff2');font-weight:300 450;font-display:swap}
+@font-face{font-family:'Satoshi';src:url(fonts/satoshi-700.woff2) format('woff2');font-weight:600 800;font-display:swap}
+*{font-family:'Satoshi',system-ui,sans-serif!important}
+body{font-size:19px}
+h1,h2,h3{letter-spacing:-.03em}
+.rd-hero{border-radius:0}
+.rd-hero h1{font-size:clamp(3rem,6.4vw,6.2rem);max-width:13ch;line-height:.98}
+.rd-hero__akce{margin-top:clamp(28px,3.4vw,44px)}
+.rd-tl{height:64px;font-size:1.12rem;padding-left:30px}
+.rd-tl__sip{width:52px;height:52px}
+.vyber>:is(h1,h2),.cesta h2,.poptat h2{font-size:clamp(2rem,3.6vw,3.2rem)}
+.dum :is(h2,h3){font-size:1.35rem}
+.dum__co{font-size:1.05rem;color:var(--muted)}
+.rd-sekce{padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(64px,7vw,112px)}
+.cesta__nazev{font-size:1.1rem}
+.btn{text-transform:none;letter-spacing:0;border-radius:999px;font-size:1rem}
+</style>
+<style>
+.rd-hero{height:max(560px,82svh)}
+.rd-hero h1{font-size:clamp(2.6rem,4.8vw,4.6rem);max-width:15ch;line-height:1.02}
+.rd-hero__akce{flex-wrap:wrap;gap:14px 18px}
+.rd-hero__kdo{color:rgba(255,255,255,.86);font-size:1rem;text-shadow:0 1px 16px rgba(14,20,26,.5)}
+.rd-tl{font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.rd-tl__sip svg{width:20px;height:20px}
+.rd-tl:hover .rd-tl__sip{transform:none}
+h1,h2,.rd-h2,.vyber>:is(h1,h2),.cesta h2,.poptat h2{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;letter-spacing:-.035em;line-height:1.04}
+.rd-h2,.vyber>:is(h1,h2),.cesta h2,.poptat h2{font-size:clamp(2.1rem,3.8vw,3.3rem);color:var(--ink)}
+.dum__co{margin-bottom:26px}
+.dum :is(h2,h3){margin-top:16px}
+.vyber__rada .dum:nth-child(2){transition-delay:.08s}
+.vyber__rada .dum:nth-child(3){transition-delay:.16s}
+.vyber__rada .dum:nth-child(4){transition-delay:.24s}
+.rd-mozaika img{transition:transform .9s var(--ease-out)}
+.rd-mozaika img:hover{transform:scale(1.015)}
+.rd-hero h1,.rd-hero__akce{animation:hero-in .9s var(--ease-out) both}
+.rd-hero__akce{animation-delay:.15s}
+@keyframes hero-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.vol__sada{border:0;margin:0;padding:0;min-width:0}
+.vol__sada legend{padding:0;margin-bottom:12px;font-weight:600;font-size:1.05rem;color:var(--ink)}
+.vol__mriz{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.vol{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px 12px;border-radius:18px;background:var(--soft);
+  cursor:pointer;text-align:center;font-weight:600;font-size:.95rem;line-height:1.2;transition:background-color var(--dur-base),box-shadow var(--dur-base)}
+.vol input{position:absolute;opacity:0;pointer-events:none}
+.vol img{width:100%;height:64px;object-fit:contain;transition:transform var(--dur-base) var(--ease-out)}
+.vol:hover img{transform:translateY(-3px)}
+.vol:has(input:checked){background:#fff;box-shadow:inset 0 0 0 2px var(--ink)}
+.vol:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:2px}
+@media (max-width:700px){
+  .dum :is(h2,h3){margin-bottom:16px}
+  .vol__mriz{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rd-hero{height:max(520px,78svh)}
+}
+@media (prefers-reduced-motion:reduce){.rd-hero h1,.rd-hero__akce{animation:none}.rd-mozaika img{transition:none}}
+</style>
+<style>
+.rd-hero__tel{color:#fff;font-weight:600;font-size:1.05rem;text-shadow:0 1px 16px rgba(14,20,26,.5);border-bottom:1px solid rgba(255,255,255,.5);padding-bottom:2px}
+.rd-hero__tel:hover{border-bottom-color:#fff}
+.rd-tl:hover .rd-tl__sip{transform:rotate(45deg)}
+.vyber__obal{position:relative;margin-top:clamp(28px,3.5vw,48px)}
+.vyber__obal .vyber__rada{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:calc((100% - 3 * 24px) / 4);gap:24px;margin:0;
+  overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:8px}
+.vyber__obal .vyber__rada::-webkit-scrollbar{display:none}
+.vyber__obal .dum{scroll-snap-align:start}
+.vyber__obal .dum img{width:100%;aspect-ratio:4/3;object-fit:contain}
+.dum__cena{margin-top:6px;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:22px}
+.dum__co{margin-bottom:0}
+.vyber__sip{position:absolute;top:32%;width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:var(--ink);cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 6px 20px rgba(22,32,42,.16);z-index:2}
+.vyber__sip[hidden]{display:none}
+.vyber__sip svg{width:18px;height:18px}
+.vyber__sip--l{left:-12px}.vyber__sip--p{right:-12px}
+.pruv{display:grid;gap:18px}
+.pruv__hlava{display:flex;align-items:center;gap:14px;font-size:.95rem;color:var(--muted)}
+.pruv__stav b{color:var(--ink)}
+.pruv__pas{flex:1;height:6px;border-radius:9px;background:var(--soft);overflow:hidden}
+.pruv__pas i{display:block;height:100%;width:16%;border-radius:9px;background:var(--ink);transition:width .35s var(--ease-out)}
+.pruv__k{display:grid;gap:14px;animation:pruv-in .35s var(--ease-out)}
+.pruv__k[hidden]{display:none}
+@keyframes pruv-in{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.pruv__ot{margin:0;font-family:'Satoshi',system-ui,sans-serif;font-weight:500;font-size:clamp(1.5rem,2.2vw,1.9rem);letter-spacing:-.03em;line-height:1.15;color:var(--ink)}
+.pruv__volby{display:grid;gap:10px}
+.pruv__vol,.pruv__nevim{min-height:58px;padding:0 20px;border:0;border-radius:16px;background:var(--soft);color:var(--ink);cursor:pointer;text-align:left;
+  font:600 1.05rem 'Satoshi',system-ui,sans-serif;transition:background-color var(--dur-base),box-shadow var(--dur-base)}
+.pruv__vol:hover,.pruv__nevim:hover,.vol:hover{background:#e3e9ec}
+.pruv__vol[aria-pressed="true"],.pruv__nevim[aria-pressed="true"],.vol[aria-pressed="true"]{background:#fff;box-shadow:inset 0 0 0 2px var(--ink)}
+.pruv__nevim{text-align:center;min-height:52px;background:transparent;box-shadow:inset 0 0 0 1px rgba(22,32,42,.2)}
+.vol{border:0;font-family:'Satoshi',system-ui,sans-serif;color:var(--ink)}
+.vol img{height:72px}
+.pruv__in{width:100%;height:56px;padding:0 16px;border:1px solid rgba(22,32,42,.22);border-radius:14px;background:#fff;font:inherit;font-size:1.05rem;color:var(--ink)}
+.pruv__in:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 3px rgba(22,32,42,.1)}
+.pruv__pole{display:grid;gap:6px}
+.pruv__pole label{font-weight:600;font-size:.95rem;margin-top:6px}
+.pruv__dal{width:100%;height:56px}
+.pruv__pod{margin:0;font-size:.9rem;color:var(--muted)}
+.pruv__pod a{border-bottom:1px solid rgba(22,32,42,.25)}
+.pruv__zpet{justify-self:start;border:0;background:none;padding:6px 0;cursor:pointer;color:var(--muted);font:600 .95rem 'Satoshi',system-ui,sans-serif}
+.pruv__zpet:hover{color:var(--ink)}
+.pruv__zpet[hidden]{display:none}
+@media (max-width:900px){.vyber__obal .vyber__rada{grid-auto-columns:calc((100% - 24px) / 2.3)}}
+@media (max-width:700px){
+  .vyber__obal .vyber__rada{grid-auto-columns:72%;gap:16px}
+  .vyber__sip{display:none}
+  .vyber__obal .dum__co{display:block;font-size:.95rem}
+}
+@media (prefers-reduced-motion:reduce){.pruv__k{animation:none}}
+</style>
+<style>
+.vyber__obal .vyber__rada{display:flex;flex-wrap:wrap;justify-content:center;overflow:visible;gap:32px 24px;padding:0}
+.vyber__obal .dum{flex:0 1 calc((100% - 2 * 24px) / 3)}
+@media (max-width:900px){.vyber__obal .dum{flex-basis:calc((100% - 24px) / 2)}}
+@media (max-width:700px){
+  .vyber__obal .vyber__rada{gap:28px 14px}
+  .vyber__obal .dum{flex-basis:calc((100% - 14px) / 2)}
+  .vyber__obal .dum__co{display:none}
+  .vyber__obal .dum__cena{font-size:.88rem;margin-bottom:14px}
+  .vyber__obal .dum h3{font-size:1.05rem;margin-bottom:4px}
+}
+body.is-locked .top{background:var(--paper)!important;box-shadow:none!important}
+body.is-locked .top .brand{color:var(--ink)!important}
+body.is-locked .top .burger span::before,body.is-locked .top .burger span::after{background:var(--ink)!important}
+body.is-locked .top .burger span{background:transparent!important}
+.top .burger span{transition:background-color .15s}
+.top .burger span::before,.top .burger span::after{transition:top .18s var(--ease-out) .18s,transform .18s var(--ease-out),background-color var(--dur-base)}
+.top .burger[aria-expanded="true"] span::before,.top .burger[aria-expanded="true"] span::after{transition:top .18s var(--ease-out),transform .18s var(--ease-out) .18s,background-color var(--dur-base)}
+.menu{transition:opacity .28s var(--ease-out),transform .28s var(--ease-out)}
+.menu a.menu__link{font-family:'Satoshi',system-ui,sans-serif;font-weight:500;text-transform:none;letter-spacing:-.03em;font-size:2rem}
+.menu__tel{font-family:'Satoshi',system-ui,sans-serif}
+.menu a.menu__link{opacity:0;transform:translateY(8px);transition:opacity .3s var(--ease-out),transform .3s var(--ease-out)}
+.menu.je-otevrene a.menu__link{opacity:1;transform:none}
+.menu.je-otevrene a.menu__link:nth-child(2){transition-delay:.05s}
+@media (prefers-reduced-motion:reduce){.menu a.menu__link{opacity:1;transform:none;transition:none}}
+</style>
 </head>
 <body>
 
@@ -63,8 +315,6 @@
         <a class="md__spoust" href="/katalog" aria-expanded="false" aria-controls="md-domy">Domy</a>
       </span>
       <a href="/konfigurator">Konfigurátor</a>
-      <a href="/poptavka">Poptávka</a>
-      <a href="/kontakt">Kontakt</a>
     </nav>
     <div class="top__end">
       <div class="kontakt">
@@ -104,10 +354,10 @@
           <span class="md__nadpis">Kancelářský kontejner</span>
           <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
         </a>
-        <a class="md__dum" href="/poptavka">
-          <img src="/img/katalog/bistro-800w.webp" width="800" height="510" alt="Bistro kontejner s výdejním okénkem" loading="lazy" fetchpriority="low"
-               srcset="/img/katalog/bistro-480w.webp 480w, /img/katalog/bistro-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
-          <span class="md__nadpis">Bistro kontejner</span>
+        <a class="md__dum" href="#kontakt">
+          <img src="/img/katalog/vista-800w.webp" width="800" height="312" alt="Modulový dům Vista" loading="lazy" fetchpriority="low"
+               srcset="/img/katalog/vista-480w.webp 480w, /img/katalog/vista-800w.webp 800w" sizes="(max-width:1280px) 22vw, 266px">
+          <span class="md__nadpis">Modulový dům Vista</span>
           <span class="md__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
         </a>
         <a class="md__dum" href="/dum-na-miru">
@@ -126,80 +376,79 @@
 <div class="menu" id="menu" hidden>
   <a class="menu__link" href="/katalog">Domy</a>
   <a class="menu__link" href="/konfigurator">Konfigurátor</a>
-  <a class="menu__link" href="/poptavka">Poptávka</a>
-  <a class="menu__link" href="/kontakt">Kontakt</a>
   <div class="menu__end">
     <a class="menu__tel" href="tel:+420607321543">607 321 543<small>Dan Prokeš, prodej a nabídky</small></a>
     <a class="menu__tel" href="tel:+420730171909">730 171 909<small>Jan Prokeš, prodej, nabídky, doprava a montáž</small></a>
     <p class="menu__adr">Sokolovská 612, Litomyšl</p>
-    <a class="btn" href="/poptavka">Chci nabídku</a>
+    <a class="btn" href="#kontakt">Chci nabídku</a>
   </div>
 </div>
 
 
 <main>
-<section class="hero">
-  <picture>
-    <source media="(max-width:700px)" type="image/webp"
-            srcset="img/flexi-hero-mobil-600w.webp 600w, img/flexi-hero-mobil-800w.webp 800w, img/flexi-hero-mobil-1200w.webp 1200w"
-            sizes="100vw">
-    <img class="hero__img" src="img/flexi-hero-tmavy-2560w.webp"
-         srcset="img/flexi-hero-tmavy-1000w.webp 1000w, img/flexi-hero-tmavy-1600w.webp 1600w, img/flexi-hero-tmavy-2560w.webp 2560w"
-         sizes="100vw" width="2560" height="955" alt="Rozkládací modulární dům, Flexi Office a bistro kontejner" fetchpriority="high">
-  </picture>
-  <div class="wrap">
-    <h1>Modulární dům,<br>který k vám přijede hotový</h1>
-    <div class="hero__actions">
-      <a class="btn" href="#kontakt">Chci nezávaznou nabídku</a>
-      <a class="link" href="/konfigurator">Sestavit v konfigurátoru</a>
+<section class="rd-hero" aria-labelledby="rd-h1">
+  <video class="rd-hero__video" muted loop playsinline preload="auto" poster="video/hero-poster.webp" aria-hidden="true"></video>
+  <div class="hero__hlidac" aria-hidden="true"></div>
+  <div class="rd-hero__in">
+    <div class="wrap">
+      <h1 id="rd-h1">Modulové domy, které přijedou hotové</h1>
+      <div class="rd-hero__akce">
+        <a class="rd-tl" href="#kontakt">Nezávazná poptávka<span class="rd-tl__sip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></span></a>
+      </div>
     </div>
   </div>
-  <div class="hero__hlidac" aria-hidden="true"></div>
 </section>
 
 <section class="wrap vyber" id="domy" aria-labelledby="domy-h">
-  <h2 id="domy-h">Inspirujte se, co k vám může přijet</h2>
-  <p class="vyber__pod">Tyhle čtyři vozíme nejčastěji. Střechu, fasádu i vybavení si vyberete sami. Když budete chtít něco úplně jiného, postavíme to podle vašeho zadání.</p>
-  <div class="vyber__rada">
-    <a class="dum" href="/rozkladaci-dum">
-      <img src="img/katalog/dum-800w.webp" width="800" height="433" alt="Rozkládací modulární dům s krytou terasou, bílé provedení" loading="lazy"
-           srcset="img/katalog/dum-480w.webp 480w, img/katalog/dum-800w.webp 800w, img/katalog/dum-1200w.webp 1200w"
-           sizes="(max-width:900px) 100vw, 370px">
+  <h2 class="fh-rv" id="domy-h">Co k vám může přijet</h2>
+  <div class="vyber__obal">
+  <div class="vyber__rada" id="rada">
+    <a class="dum fh-rv" href="#kontakt">
+      <img src="img/katalog/karta-vista-800w.webp" width="800" height="600" alt="Modulový dům Vista, tři moduly do tvaru L s terasou" loading="lazy"
+           srcset="img/katalog/karta-vista-480w.webp 480w, img/katalog/karta-vista-800w.webp 800w, img/katalog/karta-vista-1200w.webp 1200w"
+           sizes="(max-width:700px) 72vw, 380px">
+      <h3>Modulový dům Vista</h3>
+      <span class="dum__co">Dům do tvaru L s terasou</span>
+      <span class="dum__cena">cena na poptávku</span>
+      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+    </a>
+    <a class="dum fh-rv" href="#kontakt">
+      <img src="img/katalog/karta-tenuta-800w.webp" width="800" height="600" alt="Modulový dům Tenuta, osm modulů do tvaru L s terasou" loading="lazy"
+           srcset="img/katalog/karta-tenuta-480w.webp 480w, img/katalog/karta-tenuta-800w.webp 800w, img/katalog/karta-tenuta-1200w.webp 1200w"
+           sizes="(max-width:700px) 72vw, 380px">
+      <h3>Modulový dům Tenuta</h3>
+      <span class="dum__co">Velký bungalov 5+kk s terasou</span>
+      <span class="dum__cena">cena na poptávku</span>
+      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
+    </a>
+    <a class="dum fh-rv" href="/rozkladaci-dum">
+      <img src="img/katalog/karta-dum-800w.webp" width="800" height="600" alt="Rozkládací modulární dům s krytou terasou" loading="lazy"
+           srcset="img/katalog/karta-dum-480w.webp 480w, img/katalog/karta-dum-800w.webp 800w, img/katalog/karta-dum-1200w.webp 1200w"
+           sizes="(max-width:700px) 72vw, 380px">
       <h3>Rozkládací dům</h3>
-      <span class="dum__co">Přijede složený, bydlíte na 30 m²</span>
+      <span class="dum__co">Přijede složený, rozloží se na místě</span>
       <span class="dum__cena">od 399 000 Kč bez DPH</span>
       <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
     </a>
-    <a class="dum" href="/flexi-office">
-      <img src="img/katalog/office-800w.webp" width="800" height="621" alt="Kancelářský kontejner, bílé provedení s tmavým rámem" loading="lazy"
-           srcset="img/katalog/office-480w.webp 480w, img/katalog/office-800w.webp 800w, img/katalog/office-1200w.webp 1200w"
-           sizes="(max-width:900px) 100vw, 370px">
+    <a class="dum fh-rv" href="/flexi-office">
+      <img src="img/katalog/karta-office-800w.webp" width="800" height="600" alt="Kancelářský kontejner, bílé provedení s tmavým rámem" loading="lazy"
+           srcset="img/katalog/karta-office-480w.webp 480w, img/katalog/karta-office-800w.webp 800w, img/katalog/karta-office-1200w.webp 1200w"
+           sizes="(max-width:700px) 72vw, 380px">
       <h3>Kancelářský kontejner</h3>
-      <span class="dum__co">Stojí ve skladu, odjíždí za pár dní</span>
-      <span class="dum__cena">skladem, od 100 000 Kč</span>
+      <span class="dum__co">Skladem, odjíždí za pár dní</span>
+      <span class="dum__cena">od 100 000 Kč bez DPH</span>
       <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
     </a>
-    <a class="dum" href="/poptavka">
-      <img src="img/katalog/bistro-800w.webp" width="800" height="510" alt="Bistro kontejner s výklopným výdejním okénkem, bílé provedení" loading="lazy"
-           srcset="img/katalog/bistro-480w.webp 480w, img/katalog/bistro-800w.webp 800w, img/katalog/bistro-1200w.webp 1200w"
-           sizes="(max-width:900px) 100vw, 370px">
-      <h3>Bistro kontejner</h3>
-      <span class="dum__co">Výdejní okénko a pult, zbytek podle vás</span>
-      <span class="dum__cena">cena podle zadání</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum" href="/dum-na-miru">
-      <img src="img/katalog/namiru-800w.webp" width="800" height="571" alt="Dvoupodlažní sestava kontejnerů s venkovním schodištěm a balkonem, bílé provedení" loading="lazy"
-           srcset="img/katalog/namiru-480w.webp 480w, img/katalog/namiru-800w.webp 800w, img/katalog/namiru-1200w.webp 1200w"
-           sizes="(max-width:900px) 100vw, 280px">
+    <a class="dum fh-rv" href="/dum-na-miru">
+      <img src="img/katalog/karta-namiru-800w.webp" width="800" height="600" alt="Dvoupodlažní sestava kontejnerů s venkovním schodištěm" loading="lazy"
+           srcset="img/katalog/karta-namiru-480w.webp 480w, img/katalog/karta-namiru-800w.webp 800w, img/katalog/karta-namiru-1200w.webp 1200w"
+           sizes="(max-width:700px) 72vw, 380px">
       <h3>Dům na míru</h3>
-      <span class="dum__co">Pošlete zadání, dodáme, co potřebujete</span>
-      <span class="dum__cena">cena na vyžádání</span>
+      <span class="dum__co">Sestavíme podle vašeho zadání</span>
+      <span class="dum__cena">cena individuálně</span>
       <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
     </a>
   </div>
-  <div class="podsekci">
-    <a class="link" href="/katalog">Prohlédnout celý katalog</a>
   </div>
 </section>
 
@@ -209,57 +458,29 @@
 
 
 
-<section class="vyuz" aria-label="Pro každé využití">
-  <div class="vyuz__ram" id="vyuz-ram">
-      <figure class="vyuz__snimek">
-        <img src="img/zamer/bydleni-800w.webp" width="800" height="448" decoding="async"
-             alt="Rozkládací dům v antracitovém provedení, za plotem v zahradě při ranním slunci"
-             srcset="img/zamer/bydleni-480w.webp 480w, img/zamer/bydleni-800w.webp 800w, img/zamer/bydleni-1200w.webp 1200w, img/zamer/bydleni-1600w.webp 1600w"
-             sizes="100vw">
-        <figcaption class="vyuz__popis"><span>Celoroční bydlení</span></figcaption>
-      </figure>
-      <figure class="vyuz__snimek" hidden>
-        <img src="img/zamer/rekreace-800w.webp" width="800" height="448" loading="lazy" decoding="async"
-             alt="Rozkládací dům jako chata v lese, prosklená stěna a krytá terasa"
-             srcset="img/zamer/rekreace-480w.webp 480w, img/zamer/rekreace-800w.webp 800w, img/zamer/rekreace-1200w.webp 1200w, img/zamer/rekreace-1600w.webp 1600w"
-             sizes="100vw">
-        <figcaption class="vyuz__popis"><span>Chata a rekreace</span></figcaption>
-      </figure>
-      <figure class="vyuz__snimek" hidden>
-        <img src="img/zamer/hoste-800w.webp" width="800" height="448" loading="lazy" decoding="async"
-             alt="Tři šedé domky pro hosty na louce při západu slunce"
-             srcset="img/zamer/hoste-480w.webp 480w, img/zamer/hoste-800w.webp 800w, img/zamer/hoste-1200w.webp 1200w, img/zamer/hoste-1600w.webp 1600w"
-             sizes="100vw">
-        <figcaption class="vyuz__popis"><span>Ubytování hostů</span></figcaption>
-      </figure>
-      <figure class="vyuz__snimek" hidden>
-        <img src="img/zamer/bistro-800w.webp" width="800" height="448" loading="lazy" decoding="async"
-             alt="Bistro kontejner s výdejním okénkem, dřevěný obklad a hosté u pultu"
-             srcset="img/zamer/bistro-480w.webp 480w, img/zamer/bistro-800w.webp 800w, img/zamer/bistro-1200w.webp 1200w, img/zamer/bistro-1600w.webp 1600w"
-             sizes="100vw">
-        <figcaption class="vyuz__popis"><span>Bistro a prodej</span></figcaption>
-      </figure>
-      <figure class="vyuz__snimek" hidden>
-        <img src="img/zamer/prace-800w.webp" width="800" height="448" loading="lazy" decoding="async"
-             alt="Bílý kancelářský kontejner na zahradě, u vstupu truhlíky"
-             srcset="img/zamer/prace-480w.webp 480w, img/zamer/prace-800w.webp 800w, img/zamer/prace-1200w.webp 1200w, img/zamer/prace-1600w.webp 1600w"
-             sizes="100vw">
-        <figcaption class="vyuz__popis"><span>Kancelář a provoz</span></figcaption>
-      </figure>
-    <div class="vyuz__tecky" id="vyuz-tecky" aria-label="Využití">
-      <button class="vyuz__tecka" type="button" aria-label="Celoroční bydlení" aria-current="true"></button>
-      <button class="vyuz__tecka" type="button" aria-label="Chata a rekreace"></button>
-      <button class="vyuz__tecka" type="button" aria-label="Ubytování hostů"></button>
-      <button class="vyuz__tecka" type="button" aria-label="Bistro a prodej"></button>
-      <button class="vyuz__tecka" type="button" aria-label="Kancelář a provoz"></button>
+
+
+
+<section class="rd-sekce" aria-labelledby="dum-h">
+  <div class="wrap rd-mozaika fh-rv">
+    <div class="rd-mozaika__levy">
+      <h2 class="rd-h2" id="dum-h">Celoroční bydlení pro celou rodinu</h2>
+      <img class="rd-mozaika__vysoka" src="img/rada/dn-sedacka-den-1080.webp" srcset="img/rada/dn-sedacka-den-1080.webp 1080w, img/rada/dn-sedacka-den-1920.webp 1920w" sizes="(max-width:1080px) 100vw, 500px" width="1080" height="608" loading="lazy" alt="Obývací pokoj s pohovkou a dřevěným obkladem stěny">
+    </div>
+    <div class="rd-mozaika__pravy">
+      <img class="rd-mozaika__siroka" src="img/rada/dn-roh-den-1080.webp" srcset="img/rada/dn-roh-den-1080.webp 1080w, img/rada/dn-roh-den-1920.webp 1920w" sizes="(max-width:1080px) 100vw, 700px" width="1080" height="608" loading="lazy" alt="Modulový dům Vista s terasou na zahradě">
+      <div class="rd-mozaika__dvojice">
+        <img src="img/rada/dn-kuchyn-den-1080.webp" srcset="img/rada/dn-kuchyn-den-1080.webp 1080w, img/rada/dn-kuchyn-den-1920.webp 1920w" sizes="(max-width:1080px) 50vw, 340px" width="1080" height="608" loading="lazy" alt="Kuchyňská linka u prosklené stěny do zahrady">
+        <img src="img/rada/dn-loznice-1080.webp" srcset="img/rada/dn-loznice-1080.webp 1080w, img/rada/dn-loznice-1920.webp 1920w" sizes="(max-width:1080px) 50vw, 340px" width="1080" height="608" loading="lazy" alt="Ložnice s dřevěným obkladem za postelí">
+      </div>
     </div>
   </div>
 </section>
 
 <section class="cesta" aria-labelledby="cesta-h">
   <div class="wrap">
-    <h2 id="cesta-h">Pět kroků, než u vás bude stát</h2>
-    <ol class="cesta__rada">
+    <h2 class="fh-rv" id="cesta-h">Pět kroků, než u vás bude stát</h2>
+    <ol class="cesta__rada fh-rv">
       <svg class="cesta__oblouk cesta__oblouk--nad" viewBox="0 0 100 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
         <path d="M13 12 C16.5 0.6 23.5 0.6 27 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
         <path d="M53 12 C56.5 0.6 63.5 0.6 67 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
@@ -289,15 +510,11 @@
         <span class="cesta__nazev">Přivezeme a usadíme</span>
       </li>
     </ol>
-    <p class="cesta__pozn">Kdy dům přijede, řekneme až&nbsp;u&nbsp;konkrétní sestavy.
-      Dopředu to neodhadujeme, aby pak termín neseděl. Celý postup krok za&nbsp;krokem
-      je na&nbsp;stránce <a href="/jak-to-probiha">jak to probíhá</a>.</p>
   </div>
 </section>
 
-
 <section class="pasfoto" aria-label="Fotky našeho domu v Litomyšli">
-  <div class="pasfoto__ram">
+  <div class="pasfoto__ram fh-rv">
     <div class="pasfoto__pas" id="pasfoto-pas" tabindex="0" role="group" aria-label="Fotky domu, posuvné">
         <figure class="pasfoto__kus">
           <img src="img/realne/dvere-560h.webp" width="373" height="560" loading="lazy" decoding="async"
@@ -427,123 +644,8 @@
 
 
 <div class="tonovany">
-<section class="vyhody" aria-labelledby="vyhody-h">
-  <span class="vyh__znak" aria-hidden="true"><svg viewBox="9 16 46 33" aria-hidden="true">
-        <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
-      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
-      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
-      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
-      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
-      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
-      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
-      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
-      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
-      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
-      </svg></span>
-  <div class="wrap">
-    <h2 id="vyhody-h">Proč to lidi berou</h2>
-    <ul class="vyh__mriz"><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 10.5 12 3.5 22.5 10.5" stroke="#5a7885"/><path d="M4 10.2V20.5h16V10.2"/><rect x="9" y="13.5" width="6" height="7" rx=".6" fill="#cfdde2"/></svg><h3>Vzniká v hale</h3><p>Počasí ho nezdrží.</p></li><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9.9" y="7" width="4.2" height="12.6" rx=".6" fill="#a9c0c9"/><path d="M8.7 8.3 3 10.9v6.9l5.7 1.8z" fill="#cfdde2"/><path d="M15.3 8.3 21 10.9v6.9l-5.7 1.8z" fill="#cfdde2"/><path d="M8.1 5.4a5.4 5.4 0 0 0-3.6 2.1" stroke="#5a7885" stroke-width="1.3"/><path d="M4.5 7.5 6.5 7.2M4.5 7.5 5.3 5.6" stroke="#5a7885" stroke-width="1.3"/><path d="M15.9 5.4a5.4 5.4 0 0 1 3.6 2.1" stroke="#5a7885" stroke-width="1.3"/><path d="M19.5 7.5 17.5 7.2M19.5 7.5 18.7 5.6" stroke="#5a7885" stroke-width="1.3"/></svg><h3>Rozklopí se na místě</h3><p>Jeřáb ho usadí na patky.</p></li><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13.5h16l-1.7 7H5.7z" fill="#cfdde2"/><path d="M9 13.2V8.4A2.9 2.9 0 0 1 11.9 5.5H15"/><path d="M15 3.9v3.2" stroke="#5a7885"/></svg><h3>Kuchyň i koupelna</h3><p>Za příplatek, už smontované.</p></li><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="1" fill="#cfdde2"/><path d="M8.6 4v16M15.4 4v16"/><path d="M10.4 7.2l3.2 2.2-3.2 2.2 3.2 2.2-3.2 2.2 3.2 2.2" stroke="#5a7885" stroke-width="1.2"/></svg><h3>Bydlení celý rok</h3><p>Zateplení 75 mm je v ceně.</p></li><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 13.8V7.2l6-3.1 6 3.1v6.6" fill="#cfdde2"/><rect x="2.5" y="13.8" width="19" height="2.4" rx=".7" fill="#a9c0c9"/><circle cx="7" cy="19.4" r="2.1" fill="#16202a" stroke="none"/><circle cx="17" cy="19.4" r="2.1" fill="#16202a" stroke="none"/></svg><h3>Dá se odvézt</h3><p>Není zabetonovaný.</p></li><li class="vyh__k"><svg class="vyh__ik" viewBox="0 0 24 24" fill="none" stroke="#16202a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="3" cy="20" r="1.5" fill="#a9c0c9" stroke="#16202a" stroke-width="1.2"/><path d="M5 19.4c3.2-.6 2.6-5.4 6-6.2" stroke="#5a7885" stroke-width="1.5" stroke-dasharray="2.4 2"/><path d="M18.6 3.2a3.6 3.6 0 0 1 3.6 3.6c0 2.6-3.6 6.2-3.6 6.2S15 9.4 15 6.8a3.6 3.6 0 0 1 3.6-3.6z" fill="#cfdde2"/><circle cx="18.6" cy="6.8" r="1.3" fill="#16202a" stroke="none"/></svg><h3>Vozíme po celé ČR</h3><p>Kilometry počítáme z Prahy.</p></li></ul>
-  </div>
-</section>
 
 
-<section class="claim" aria-labelledby="claim-h">
-  <div class="claim__in fh-rv">
-    <p class="claim__znacka"><svg viewBox="9 16 46 33" aria-hidden="true">
-        <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
-      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
-      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
-      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
-      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
-      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
-      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
-      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
-      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
-      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
-      </svg><span class="vh">Flexi House</span></p>
-    <h2 id="claim-h">Vy řešíte pozemek a přípojky.<br>Zbytek přijede hotový.</h2>
-    <p class="claim__lead">Dům vzniká v hale, přijede složený na návěsu a my ho usadíme na patky.</p>
-    <div class="claim__akce">
-      <a class="btn" href="#kontakt">Chci nezávaznou nabídku</a>
-      <a class="link" href="/jak-to-probiha">Jak to probíhá krok za krokem</a>
-    </div>
-  </div>
-</section>
-<section class="klid" aria-labelledby="klid-h">
-  <div class="wrap klid__in">
-    <div>
-      <h2 id="klid-h">Zatím se jen rozhlížíte?</h2>
-      <p class="klid__lead">Napíšeme, až přibude nový model nebo se změní ceník.</p>
-    </div>
-    <div>
-      <form class="novinky" id="novinky" novalidate>
-        <label class="hp" for="nl-email">Váš e-mail</label>
-        <input id="nl-email" name="email" type="email" autocomplete="email" placeholder="vas@email.cz" required>
-        <div class="hp" aria-hidden="true">
-          <label for="nl-web">Nevyplňujte</label>
-          <input id="nl-web" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
-        <button class="btn btn--out" type="submit">Chci novinky</button>
-      </form>
-      <p class="klid__pozn">Adresu použijeme jen na tyhle zprávy a odhlásíte se jedním kliknutím.</p>
-      <p class="klid__stav" id="nl-stav" hidden></p>
-    </div>
-  </div>
-</section>
-<section class="dotazy" aria-labelledby="dotazy-h">
-  <span class="dotazy__znak" aria-hidden="true"><svg viewBox="9 16 46 33" aria-hidden="true">
-        <path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z" fill="#cfdde2"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z" fill="#a9c0c9"/>
-      <path d="M 41 35.5 L 53 29.5 L 53 27.9 L 41 33.9 Z" fill="#3f5c69"/>
-      <path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z" fill="#3f5c69"/>
-      <path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z" fill="#26333d"/>
-      <path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z" fill="#16202a"/>
-      <path d="M 33.62 37.589999999999996 L 39.38 34.71 L 39.38 24.110000000000003 L 33.62 26.99 Z" fill="#eef2f4"/>
-      <path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z" fill="#cfdde2"/>
-      <path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z" fill="#7e99a4"/>
-      <path d="M 20 46.0 L 11 41.5 L 11 39.9 L 20 44.4 Z" fill="#3f5c69"/>
-      <path d="M 20 46 L 32 40 L 32 30 L 20 36 Z" fill="#a9c0c9"/>
-      <path d="M 20 46 L 32 40 L 32 38.4 L 20 44.4 Z" fill="#3f5c69"/>
-      </svg></span>
-  <div class="wrap dotazy__in">
-    <h2 id="dotazy-h">Na co se ptáte nejčastěji</h2>
-    <div class="dotazy__seznam">
-      <details class="dotazy__kus">
-        <summary><span>Kolik to stojí?</span></summary>
-        <div class="dotazy__odp"><p>Rozkládací dům začíná na&nbsp;399 000 Kč bez DPH. Je v&nbsp;tom hrubá stavba i&nbsp;elektroinstalace, tedy okna, dveře, obklad a&nbsp;zateplení 75 mm, zásuvky, světla a&nbsp;jištění. K&nbsp;výsledné ceně patří ještě doprava, patky a&nbsp;usazení. Přesnou částku spočítá konfigurátor.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Potřebuju stavební povolení?</span></summary>
-        <div class="dotazy__odp"><p>Záleží na&nbsp;velikosti a&nbsp;na&nbsp;tom, k&nbsp;čemu dům bude sloužit. Závazné slovo má jedině váš stavební úřad, takže první krok vede tam. Papíry si vyřizujete sami, my je nezajišťujeme.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Co musím mít připravené na pozemku?</span></summary>
-        <div class="dotazy__odp"><p>Rovnou plochu a&nbsp;příjezd pro nákladní auto s&nbsp;jeřábem. Dům stojí na&nbsp;betonových patkách, klasické základy nepotřebuje. Vodu, elektřinu a&nbsp;odpad je potřeba dovést k&nbsp;místu usazení.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Dá se v něm bydlet celoročně?</span></summary>
-        <div class="dotazy__odp"><p>Ano. Zateplení Rockwool 75 mm je v&nbsp;základní ceně, k&nbsp;tomu klimatizace, která topí i&nbsp;chladí. V&nbsp;takové sestavě dům obstojí i&nbsp;v&nbsp;zimě.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Jak dlouho trvá dodání?</span></summary>
-        <div class="dotazy__odp"><p>Kancelářský kontejner máme skladem a&nbsp;odjíždí během několika dní. Rozkládací dům se&nbsp;staví podle vaší sestavy, konkrétní termín potvrdíme v&nbsp;nabídce, kterou posíláme do&nbsp;24 hodin.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Jakou má dům životnost a záruku?</span></summary>
-        <div class="dotazy__odp"><p>Životnost je při běžné údržbě minimálně 25 let, záruka dva roky. Požární odolnost doložit umíme, stavební povolení ale řeší váš stavební úřad.</p></div>
-      </details>
-      <details class="dotazy__kus">
-        <summary><span>Jaký je rozdíl mezi modulárním a kontejnerovým domem?</span></summary>
-        <div class="dotazy__odp"><p>V&nbsp;běžné řeči se&nbsp;to používá zaměnitelně. Naše domy jsou obojí: vznikají v&nbsp;hale jako moduly v&nbsp;kontejnerovém rozměru, aby se&nbsp;daly převézt po&nbsp;silnici a&nbsp;usadit jeřábem.</p></div>
-      </details>
-    </div>
-    <p class="dotazy__vic">Zbytek najdete na&nbsp;stránce <a class="link" href="/caste-dotazy">časté dotazy</a>.</p>
-  </div>
-</section>
 </div>
 
 
@@ -551,57 +653,51 @@
 
 
 
-<section class="zaver" aria-label="Zbývá říct, kam má přijet">
-  <img class="zaver__foto" src="img/zaver/obyvak-1400w.webp" width="1400" height="1045" loading="lazy" decoding="async"
-       alt="Obývací prostor rozkládacího domu Flexi House s pohovkou a dvěma rohovými okny"
-       srcset="img/zaver/obyvak-640w.webp 640w, img/zaver/obyvak-960w.webp 960w, img/zaver/obyvak-1400w.webp 1400w, img/zaver/obyvak-2000w.webp 2000w, img/zaver/obyvak-2600w.webp 2600w"
-       sizes="100vw">
-  <div class="zaver__text"><p>Zbývá říct, kam má přijet.</p></div>
-</section>
 <section class="poptat" id="kontakt" aria-labelledby="poptat-h">
   <div class="wrap">
-    <div class="poptat__hlava">
-      <h2 id="poptat-h">Chcete cenu na váš pozemek?</h2>
-      <p>Napište obec a na co dům potřebujete. Nabídku pošleme do 24 hodin.</p>
+    <div class="poptat__hlava fh-rv">
+      <h2 id="poptat-h">Pošleme vám cenu</h2>
+      <p>Pár otázek a máte to za sebou.</p>
     </div>
 
-    <div class="poptat__in">
+    <div class="poptat__in fh-rv">
     <div class="karta karta--form">
-      <form class="rui" id="lead" novalidate>
-        <div class="rui__blok">
-          <div class="rui__r">
-            <label for="name">Jméno <span>*</span></label>
-            <input id="name" name="name" type="text" placeholder="jméno a příjmení" autocomplete="name" required>
+      <form class="pruv" id="lead" novalidate>
+        <div class="pruv__hlava"><span class="pruv__stav">Krok <b>1</b> z 4</span><span class="pruv__pas" aria-hidden="true"><i></i></span></div>
+        <div class="pruv__k" data-k="1">
+          <p class="pruv__ot">Který dům vás zaujal?</p>
+          <div class="vol__mriz">
+            <button type="button" class="vol" data-q="dum" data-v="Modulový dům Vista" aria-pressed="false"><img src="img/katalog/karta-vista-480w.webp" width="480" height="360" alt="" loading="lazy"><span>Vista</span></button>
+            <button type="button" class="vol" data-q="dum" data-v="Modulový dům Tenuta" aria-pressed="false"><img src="img/katalog/karta-tenuta-480w.webp" width="480" height="360" alt="" loading="lazy"><span>Tenuta</span></button>
+            <button type="button" class="vol" data-q="dum" data-v="Rozkládací dům Flexi House" aria-pressed="false"><img src="img/katalog/karta-dum-480w.webp" width="480" height="360" alt="" loading="lazy"><span>Rozkládací dům</span></button>
+            <button type="button" class="vol" data-q="dum" data-v="Flexi Office" aria-pressed="false"><img src="img/katalog/karta-office-480w.webp" width="480" height="360" alt="" loading="lazy"><span>Kancelář</span></button>
+            <button type="button" class="vol" data-q="dum" data-v="Dům na míru" aria-pressed="false"><img src="img/katalog/karta-namiru-480w.webp" width="480" height="360" alt="" loading="lazy"><span>Na míru</span></button>
           </div>
-          <div class="rui__r">
-            <label for="phone">Telefon <span>*</span></label>
-            <input id="phone" name="phone" type="tel" placeholder="+420" autocomplete="tel" required>
-          </div>
-          <div class="rui__r">
-            <label for="email">E-mail <span>*</span></label>
-            <input id="email" name="email" type="email" placeholder="vas@email.cz" autocomplete="email" required>
-          </div>
-          <div class="rui__r">
-            <label for="model">Zájem</label>
-            <select id="model" name="model">
-              <option>Nevím / poradíte</option>
-              <option>Rozkládací dům Flexi House</option>
-              <option>Flexi Office</option>
-              <option>Dům na míru</option>
-            </select>
-          </div>
-          <div class="rui__r rui__r--zprava">
-            <label for="message">Kam má dům přijet</label>
-            <textarea id="message" name="message" rows="3" placeholder="Obec nebo kraj, do kdy dům potřebujete, na co se chcete zeptat."></textarea>
-          </div>
+          <button type="button" class="pruv__nevim" data-q="dum" data-v="Nevím / poradíte" aria-pressed="false">Ještě nevím, poraďte mi</button>
         </div>
-        <div class="hp" aria-hidden="true">
-          <label for="website">Nevyplňujte</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        <div class="pruv__k" data-k="2" hidden>
+          <p class="pruv__ot">Kdy by měl dům stát?</p>
+          <div class="pruv__volby"><button type="button" class="pruv__vol" data-q="termin" data-v="Do 3 měsíců" aria-pressed="false">Do 3 měsíců</button><button type="button" class="pruv__vol" data-q="termin" data-v="Do půl roku" aria-pressed="false">Do půl roku</button><button type="button" class="pruv__vol" data-q="termin" data-v="Do roka" aria-pressed="false">Do roka</button><button type="button" class="pruv__vol" data-q="termin" data-v="Zatím se rozhlížím" aria-pressed="false">Zatím se rozhlížím</button></div>
         </div>
-        <p class="rui__pod rui__pod--nad">Nezávazně a bez placení předem. Ozveme se do 24 hodin.</p>
-        <button class="btn rui__send" type="submit" id="send">Odeslat poptávku</button>
-        <p class="rui__pod">Víc o tom, jak nakládáme s údaji, v <a href="/zasady-ochrany-soukromi">zásadách ochrany soukromí</a>.</p>
+        <div class="pruv__k" data-k="3" hidden>
+          <label class="pruv__ot" for="kam">Kam má dům přijet?</label>
+          <input class="pruv__in" id="kam" type="text" placeholder="obec nebo kraj" autocomplete="address-level2">
+          <button type="button" class="btn pruv__dal">Pokračovat</button>
+        </div>
+        <div class="pruv__k" data-k="4" hidden>
+          <p class="pruv__ot">Kam vám pošleme nabídku?</p>
+          <div class="pruv__pole">
+            <label for="name">Jméno</label><input class="pruv__in" id="name" name="name" type="text" autocomplete="name" required>
+            <label for="phone">Telefon</label><input class="pruv__in" id="phone" name="phone" type="tel" autocomplete="tel" required>
+            <label for="email">E-mail</label><input class="pruv__in" id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <button class="btn pruv__dal" type="submit" id="send">Odeslat poptávku</button>
+          <p class="pruv__pod">Nabídku pošleme do 24 hodin. Jak nakládáme s údaji, najdete v <a href="/zasady-ochrany-soukromi">zásadách ochrany soukromí</a>.</p>
+        </div>
+        <input type="hidden" name="model" id="f-model" value="Nevím / poradíte">
+        <input type="hidden" name="message" id="f-message" value="">
+        <div class="hp" aria-hidden="true"><label for="website">Nevyplňujte</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button type="button" class="pruv__zpet" hidden>Zpět</button>
         <p class="form__status" id="status" hidden></p>
       </form>
     </div>
@@ -610,16 +706,15 @@
       <svg class="kontblok__znak" viewBox="9 14 46 34" aria-hidden="true"><path d="M 41 25.5 L 53 19.5 L 44 15 L 32 21 Z"/><path d="M 41 35.5 L 53 29.5 L 53 19.5 L 41 25.5 Z"/><path d="M 32 27 L 41 22.5 L 32 18 L 23 22.5 Z"/><path d="M 32 40 L 41 35.5 L 41 22.5 L 32 27 Z"/><path d="M 32 30 L 32 27 L 23 22.5 L 23 25.5 Z"/><path d="M 20 36 L 32 30 L 23 25.5 L 11 31.5 Z"/><path d="M 20 46 L 11 41.5 L 11 31.5 L 20 36 Z"/><path d="M 20 46 L 32 40 L 32 30 L 20 36 Z"/></svg>
       <div class="kontblok__in">
         <p class="kontblok__h">Radši zavolat?</p>
-        <p class="kontblok__lead">Když se nedovoláte, ozveme se zpátky.</p>
         <dl class="kont2">
           <div>
             <span class="kont2__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v2.6a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6 19.6 19.6 0 0 1-3-8.6A2 2 0 0 1 3.3 2h2.6a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L7 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
-            <dt>Dan Prokeš</dt>
+            <dt>Dan Prokeš, prodej a nabídky</dt>
             <dd><a href="tel:+420607321543">607 321 543</a></dd>
           </div>
           <div>
             <span class="kont2__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.9v2.6a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6 19.6 19.6 0 0 1-3-8.6A2 2 0 0 1 3.3 2h2.6a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L7 9.8a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
-            <dt>Jan Prokeš</dt>
+            <dt>Jan Prokeš, doprava a montáž</dt>
             <dd><a href="tel:+420730171909">730 171 909</a></dd>
           </div>
           <div>
@@ -628,10 +723,6 @@
             <dd><a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a></dd>
           </div>
         </dl>
-        <div class="kontblok__pata">
-          <span class="hvezdy" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.6 2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg></span>
-          <span>Hodnocení na Googlu, sídlíme v Litomyšli.</span>
-        </div>
       </div>
     </div>
     </div>
@@ -665,41 +756,28 @@
       <div>
         <h3>Domy</h3>
         <ul>
+          <li><a href="/#domy">Modulový dům Vista</a></li>
+          <li><a href="/#domy">Modulový dům Tenuta</a></li>
           <li><a href="/rozkladaci-dum">Rozkládací dům</a></li>
-          <li><a href="/flexi-office">Flexi Office</a></li>
+          <li><a href="/flexi-office">Kancelářský kontejner</a></li>
           <li><a href="/dum-na-miru">Dům na míru</a></li>
-          <li><a href="/glamping">Glamping</a></li>
-          <li><a href="/katalog">Katalog</a></li>
-          <li><a href="/konfigurator">Konfigurátor</a></li>
         </ul>
       </div>
       <div>
-        <h3>Společnost</h3>
+        <h3>Informace</h3>
         <ul>
-          <li><a href="/poptavka">Poptávka</a></li>
           <li><a href="/cena">Ceník</a></li>
           <li><a href="/jak-to-probiha">Jak to probíhá</a></li>
           <li><a href="/doprava-a-montaz">Doprava a montáž</a></li>
           <li><a href="/caste-dotazy">Časté dotazy</a></li>
-          <li><a href="/stavebni-povoleni">Stavební povolení</a></li>
-          <li><a href="/celorocni-bydleni">Celoroční bydlení</a>
-            <a href="/obytny-kontejner">Obytný kontejner</a></li>
         </ul>
       </div>
       <div>
-        <h3>Ke stažení</h3>
-        <ul class="foot__stah">
-          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Technický list rozkládacího domu</span></span></li>
-          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Katalog fasád a vybavení</span></span></li>
-          <li><span class="stah"><span class="stah__ik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg></span><span class="stah__t">Příprava pozemku a přípojek</span></span></li>
-        </ul>
-        <p class="stah__pozn">Připravujeme</p>
-      </div>
-      <div>
-        <h3>Sociální sítě</h3>
+        <h3>Kontakt</h3>
         <ul>
-          <li><a href="https://www.facebook.com/profile.php?id=61593950803170" target="_blank" rel="noopener">Facebook</a></li>
-          <li><a href="https://www.instagram.com/flexihouse.cz/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="tel:+420607321543">607 321 543</a></li>
+          <li><a href="mailto:info@flexihouse.cz">info@flexihouse.cz</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61593950803170" target="_blank" rel="noopener">Facebook</a> a <a href="https://www.instagram.com/flexihouse.cz/" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -954,6 +1032,80 @@ var pas = document.getElementById('pasfoto-pas');
     }
     b.disabled = false;
   });
+})();
+</script>
+<script>
+(function () {
+  var video = document.querySelector('.rd-hero__video');
+  var pauza = document.querySelector('.rd-pauza') || document.createElement('button');
+  var zastaveno = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var svisle = matchMedia('(max-width: 700px) and (orientation: portrait)');
+  var hevc = video.canPlayType('video/mp4; codecs="hvc1"') !== '';
+  var zdroj = function () {
+    if (svisle.matches) return hevc ? 'video/hero-svisle-hevc.mp4' : 'video/hero-svisle.mp4';
+    return hevc ? 'video/hero-2560-hevc.mp4' : 'video/hero-1920.mp4';
+  };
+  var nacti = function () {
+    var novy = zdroj();
+    if (video.getAttribute('src') === novy) return;
+    video.src = novy;
+    if (!zastaveno) video.play().catch(function () {});
+  };
+  var prepni = function (zastavit) {
+    zastaveno = zastavit;
+    if (zastavit) video.pause(); else { nacti(); video.play().catch(function () {}); }
+    pauza.setAttribute('aria-pressed', String(zastavit));
+    pauza.setAttribute('aria-label', zastavit ? 'Přehrát video' : 'Pozastavit video');
+  };
+  if (zastaveno) prepni(true); else nacti();
+  svisle.addEventListener('change', function () { if (!zastaveno) nacti(); });
+  pauza.addEventListener('click', function () { prepni(!video.paused); });
+})();
+</script>
+<script>
+(function () {
+  var f = document.getElementById('lead');
+  if (!f) return;
+  var kroky = [].slice.call(f.querySelectorAll('.pruv__k'));
+  var stav = f.querySelector('.pruv__stav b');
+  var pas = f.querySelector('.pruv__pas i');
+  var zpet = f.querySelector('.pruv__zpet');
+  var kam = document.getElementById('kam');
+  var odp = {};
+  var akt = 1;
+  try { odp = JSON.parse(localStorage.getItem('fh-pruvodce2') || '{}'); } catch (e) {}
+  var uloz = function () {
+    try { localStorage.setItem('fh-pruvodce2', JSON.stringify(odp)); } catch (e) {}
+    document.getElementById('f-model').value = odp.dum || 'Nevím / poradíte';
+    var r = function (t, k) { return t + ': ' + (odp[k] || 'neuvedeno'); };
+    document.getElementById('f-message').value = [r('Termín', 'termin'), r('Kam', 'kam')].join('\n');
+  };
+  var ukaz = function (n) {
+    akt = n;
+    kroky.forEach(function (k) { k.hidden = +k.dataset.k !== n; });
+    stav.textContent = n;
+    pas.style.width = (n / kroky.length * 100) + '%';
+    zpet.hidden = n === 1;
+    var prvni = kroky[n - 1].querySelector('input:not([type=hidden])');
+    if (prvni && n > 1) prvni.focus({ preventScroll: true });
+  };
+  f.querySelectorAll('[data-q]').forEach(function (b) {
+    if (odp[b.dataset.q] === b.dataset.v) b.setAttribute('aria-pressed', 'true');
+    b.addEventListener('click', function () {
+      odp[b.dataset.q] = b.dataset.v;
+      f.querySelectorAll('[data-q="' + b.dataset.q + '"]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      uloz();
+      setTimeout(function () { ukaz(akt + 1); }, 160);
+    });
+  });
+  if (odp.kam) kam.value = odp.kam;
+  kam.addEventListener('input', function () { odp.kam = kam.value.trim(); uloz(); });
+  kam.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ukaz(4); } });
+  f.querySelector('[data-k="3"] .pruv__dal').addEventListener('click', function () { ukaz(4); });
+  zpet.addEventListener('click', function () { if (akt > 1) ukaz(akt - 1); });
+  uloz();
+  ukaz(1);
+
 })();
 </script>
 </body>
