@@ -308,7 +308,7 @@ Náhled `_navrh-home-W.html`, nenasazený. Když se Tomáš zeptá „co máme d
 **Druhé kolo 31. 10. (v náhledu)**
 - Hero má jen CTA „Nezávazná poptávka“, telefon tam Tomáš nechce („nech to clean“).
 - Karty domů ve stejné vizuální velikosti (`img/katalog/karta-*.webp`, plátno 4 : 3, plocha domu srovnaná), zpátky ceny: rozkládací od 399 000 bez DPH, kancelář od 100 000 bez DPH, na míru individuálně, Vista „cena na poptávku“.
-- Karty jsou mřížka, ne posuvná řada (Tomáš nevěří, že lidi budou swipovat). Desktop 3 v řadě (5 domů = 3 + 2 na střed), mobil 2 vedle sebe.
+- Karty jsou mřížka, ne posuvná řada (Tomáš nevěří, že lidi budou swipovat). Desktop 4 v řadě, mobil 2 vedle sebe. Dům na míru z karet i průvodce pryč (Tomáš 31. 10.: „ať jsou 4 vedle sebe“), odkaz na `/dum-na-miru` zůstal v megamenu a patičce.
 - Poptávka je průvodce ve čtyřech krocích: dům, kdy má stát, obec, kontakt (účel a pozemek vyhozené, Tomáš v nich neviděl smysl). Odpovědi jdou do `message`, dům do `model`, rozepsané se drží v `localStorage`.
 - Patička zkrácená na Domy, Informace a Kontakt. Z odkazů zmizely Glamping, Katalog, Konfigurátor, Stavební povolení, Celoroční bydlení, Obytný kontejner a Ke stažení. SEO stránky zůstávají v sitemapě, jen na ně neodkazuje homepage.
 
