@@ -26,14 +26,15 @@
 <link rel="stylesheet" href="assets/flexi.css?v=53">
 <link rel="stylesheet" href="assets/domov.css?v=56">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
-<link rel="stylesheet" href="assets/dum.css?v=1">
+<link rel="stylesheet" href="assets/dum.css?v=7">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Flexi House", "item": "https://flexihouse.cz/"}, {"@type": "ListItem", "position": 2, "name": "Katalog", "item": "https://flexihouse.cz/katalog"}, {"@type": "ListItem", "position": 3, "name": "Modulový dům Tenuta", "item": "https://flexihouse.cz/tenuta"}]}</script>
 <link rel="preload" href="fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/domy/tenuta-otocka-l/00.webp" imagesrcset="img/domy/tenuta-otocka/00.webp 1200w, img/domy/tenuta-otocka-l/00.webp 1920w" imagesizes="(max-width:700px) 125vw, 1180px">
 </head>
 <body>
 
-<header class="top">
+<header class="top top--nad top--nad-tmava">
   <div class="wrap top__in">
     <a class="brand" href="/">
       <svg viewBox="9 16 46 33" aria-hidden="true">
@@ -128,146 +129,102 @@
 
 
 <main>
-<section class="dh-hero" aria-labelledby="dh-h1">
-  <div class="wrap dh-hero__in">
-    <div class="dh-hero__text">
-      <nav class="dh-kde" aria-label="Drobečková navigace"><a href="/">Domů</a><span aria-hidden="true">/</span><a href="/katalog">Domy</a><span aria-hidden="true">/</span><span aria-current="page">Modulový dům Tenuta</span></nav>
-      <h1 id="dh-h1">Modulový dům Tenuta</h1>
-      <p class="dh-perex">Bungalov 5+kk pro velkou rodinu, s pracovnou a terasou 38 m².</p>
-      <p class="dh-cena">Cena na poptávku</p>
-      <div class="dh-akce">
-        <a class="rd-tl rd-tl--tmave" href="#kontakt">Nezávazná poptávka<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+<section class="pd-hero pd-hero--360" aria-labelledby="dh-h1">
+  <h1 class="pd-hero__nazev" id="dh-h1">Modulový dům Tenuta <span class="pd-jed">120&nbsp;m²</span></h1>
+  <div class="pd-360" data-pocet="120" data-cesta-s="img/domy/tenuta-otocka/" data-cesta-l="img/domy/tenuta-otocka-l/">
+    <img class="pd-360__obr" src="img/domy/tenuta-otocka-l/00.webp" srcset="img/domy/tenuta-otocka/00.webp 1200w, img/domy/tenuta-otocka-l/00.webp 1920w" sizes="(max-width:700px) 125vw, 1180px" width="1920" height="1080" alt="" fetchpriority="high" draggable="false">
+    <canvas class="pd-360__obr pd-360__platno" width="1920" height="1080" role="img" aria-label="Modulový dům Tenuta ve studiu: bungalov do tvaru L s terasou ve vnitřním rohu, otáčí se posuvníkem"></canvas>
+  </div>
+  <label class="pd-otocka__posuvnik pd-360__posuvnik"><span class="vh">Otočit dům</span><input type="range" min="0" max="119" value="0" step="1"></label>
+  <span class="hero__hlidac" aria-hidden="true"></span>
+</section>
+<section class="pd-dvoj" aria-labelledby="uvod-h">
+  <div class="wrap">
+    <nav class="dh-kde" aria-label="Drobečková navigace"><a href="/">Domů</a><span aria-hidden="true">/</span><a href="/katalog">Domy</a><span aria-hidden="true">/</span><span aria-current="page">Modulový dům Tenuta</span></nav>
+    <div class="pd-dvoj__in">
+      <figure class="pd-dvoj__plan fh-rv">
+        <a href="img/pudorys/tenuta-render-1600w.webp" target="_blank" rel="noopener" class="dh-plan__zvetsit"><img src="img/pudorys/tenuta-render-1200w.webp" srcset="img/pudorys/tenuta-render-800w.webp 800w, img/pudorys/tenuta-render-1200w.webp 1200w, img/pudorys/tenuta-render-1600w.webp 1600w" sizes="(max-width:900px) 100vw, 780px" width="1600" height="1039" loading="lazy" decoding="async" alt="Zařízený půdorys domu Tenuta shora: vlevo ložnice s koupelnou a šatnou, dva pokoje a koupelna, vpravo zádveří, obývák s kuchyní a pracovna, v rohu terasa"></a>
+      </figure>
+      <div class="pd-dvoj__text fh-rv">
+        <h2 class="rd-h2" id="uvod-h">Modulový dům Tenuta</h2>
+        <p class="dh-text">Osm modulů do tvaru L. Noční část se třemi pokoji a&nbsp;dvěma koupelnami, denní část s&nbsp;obývákem, kuchyní a&nbsp;pracovnou. Terasa leží ve vnitřním rohu, chráněná ze dvou stran.</p><p class="dh-text">Dům vznikne v&nbsp;hale a&nbsp;na&nbsp;pozemek přijede hotový. Dispozici, fasádu i&nbsp;vybavení doladíme podle vás.</p>
+        <dl class="pd-fakta pd-fakta--vlevo"><div><dd>5+kk</dd><dt>dispozice</dt></div><div><dd>106 m²</dd><dt>užitná plocha</dt></div><div><dd>38 m²</dd><dt>terasa</dt></div><div><dd>16 × 10 m</dd><dt>rozměr</dt></div></dl>
+        <div class="dh-akce">
+          <a class="rd-tl rd-tl--tmave" href="#kontakt">Mám zájem<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          <button type="button" class="dh-odkaz pd-otevri-galerii">Prohlédnout celou galerii</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="pd-nahled" aria-labelledby="gal-h">
+  <div class="wrap">
+    <h2 class="vh" id="gal-h">Galerie</h2>
+    <div class="pd-nahled__rada fh-rv">
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/domy/tenuta-ze-vzduchu-2800w.webp" aria-label="Zvětšit: Tenuta z ptačí perspektivy, dům do tvaru L s terasou v rohu"><img src="img/domy/tenuta-ze-vzduchu-1200w.webp" srcset="img/domy/tenuta-ze-vzduchu-1200w.webp 1200w, img/domy/tenuta-ze-vzduchu-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Tenuta z ptačí perspektivy, dům do tvaru L s terasou v rohu"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/domy/tenuta-exterier-2800w.webp" aria-label="Zvětšit: Tenuta na zahradě, pohled přes trávník na celý dům"><img src="img/domy/tenuta-exterier-1200w.webp" srcset="img/domy/tenuta-exterier-1200w.webp 1200w, img/domy/tenuta-exterier-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Tenuta na zahradě, pohled přes trávník na celý dům"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/domy/tenuta-terasa-2800w.webp" aria-label="Zvětšit: Terasa ve vnitřním rohu domu"><img src="img/domy/tenuta-terasa-1200w.webp" srcset="img/domy/tenuta-terasa-1200w.webp 1200w, img/domy/tenuta-terasa-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Terasa ve vnitřním rohu domu"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/domy/tenuta-obyvak-2800w.webp" aria-label="Zvětšit: Obývák s kuchyní a jídelním stolem"><img src="img/domy/tenuta-obyvak-1200w.webp" srcset="img/domy/tenuta-obyvak-1200w.webp 1200w, img/domy/tenuta-obyvak-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Obývák s kuchyní a jídelním stolem"><span class="pd-nahled__vic">+5 fotek</span></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/domy/tenuta-jidelna-2800w.webp" aria-label="Zvětšit: Jídelní stůl u kuchyně s vysokými skříněmi"><img src="img/domy/tenuta-jidelna-1200w.webp" srcset="img/domy/tenuta-jidelna-1200w.webp 1200w, img/domy/tenuta-jidelna-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Jídelní stůl u kuchyně s vysokými skříněmi"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/domy/tenuta-pracovna-2800w.webp" aria-label="Zvětšit: Pracovna s psacím stolem pod oknem"><img src="img/domy/tenuta-pracovna-1200w.webp" srcset="img/domy/tenuta-pracovna-1200w.webp 1200w, img/domy/tenuta-pracovna-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Pracovna s psacím stolem pod oknem"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/domy/tenuta-loznice-2800w.webp" aria-label="Zvětšit: Rodičovská ložnice s velkým oknem a vestavěnými skříněmi"><img src="img/domy/tenuta-loznice-1200w.webp" srcset="img/domy/tenuta-loznice-1200w.webp 1200w, img/domy/tenuta-loznice-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Rodičovská ložnice s velkým oknem a vestavěnými skříněmi"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/domy/tenuta-pokoj-2800w.webp" aria-label="Zvětšit: Pokoj s psacím stolem a postelí"><img src="img/domy/tenuta-pokoj-1200w.webp" srcset="img/domy/tenuta-pokoj-1200w.webp 1200w, img/domy/tenuta-pokoj-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Pokoj s psacím stolem a postelí"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/domy/tenuta-koupelna-2800w.webp" aria-label="Zvětšit: Koupelna se sprchovým koutem"><img src="img/domy/tenuta-koupelna-1200w.webp" srcset="img/domy/tenuta-koupelna-1200w.webp 1200w, img/domy/tenuta-koupelna-2000w.webp 2000w" sizes="(max-width:700px) 50vw, 330px" width="1200" height="675" loading="lazy" decoding="async" alt="Koupelna se sprchovým koutem"></button>
+    </div>
+  </div>
+  <dialog class="pd-lb" aria-label="Galerie">
+    <img class="pd-lb__img" alt="">
+    <p class="pd-lb__popis"></p>
+    <button type="button" class="pd-lb__zavrit" aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button type="button" class="pd-lb__sip pd-lb__sip--l" data-smer="-1" aria-label="Předchozí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+    <button type="button" class="pd-lb__sip pd-lb__sip--p" data-smer="1" aria-label="Další"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+  </dialog>
+</section>
+<section class="pd-cenik" aria-labelledby="cenik-h">
+  <div class="wrap">
+    <div class="pd-cenik__karta fh-rv">
+      <div class="pd-cenik__hlava">
+        <p class="pd-cenik__co">Ceník</p>
+        <h2 id="cenik-h">Modulový dům Tenuta 120 m²</h2>
+        <a class="rd-tl rd-tl--tmave" href="#kontakt">Mám zájem<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+      </div>
+      <div class="pd-cenik__telo">
+        <p class="pd-cenik__hlavni"><span>Dům</span><b>na poptávku</b></p>
+        <dl class="pd-cenik__radky">
+        <div><dt>Doprava a usazení</dt><dd>podle místa</dd></div>
+        <div><dt>Patky a montáž</dt><dd>podle pozemku</dd></div>
+        </dl>
+        <p class="pd-cenik__pozn">Ceník Tenuty připravujeme. Nabídku na&nbsp;váš pozemek pošleme do&nbsp;24 hodin.</p>
         
       </div>
     </div>
-    <div class="dh-obraz">
-      <img src="img/katalog/karta-tenuta-1200w.webp" width="1200" height="900" alt="Modulový dům Tenuta, osm modulů do tvaru L s terasou" fetchpriority="high"
-           srcset="img/katalog/karta-tenuta-800w.webp 800w, img/katalog/karta-tenuta-1200w.webp 1200w" sizes="(max-width:900px) 100vw, 680px">
-    </div>
   </div>
 </section>
-<section class="dh-blok dh-blok--ton" id="pudorys" aria-labelledby="pud-h">
-  <div class="wrap dh-dva">
-    <figure class="dh-plan fh-rv">
-      <a class="dh-plan__zvetsit" href="img/pudorys/tenuta-1600w.webp" target="_blank" rel="noopener"><img src="img/pudorys/tenuta-1200w.webp" width="1200" height="827" loading="lazy" decoding="async" alt="Půdorys domu Tenuta: vlevo ložnice s koupelnou a šatnou, dva pokoje a koupelna, vpravo zádveří, obývací pokoj s kuchyní a pracovna, v rohu terasa"
-           srcset="img/pudorys/tenuta-800w.webp 800w, img/pudorys/tenuta-1200w.webp 1200w, img/pudorys/tenuta-1600w.webp 1600w" sizes="(max-width:900px) 100vw, 760px"></a>
-      <figcaption>Půdorys je návrh. Dispozici doladíme podle vás, nábytek ukazuje měřítko. <a href="img/pudorys/tenuta-1600w.webp" target="_blank" rel="noopener">Zvětšit půdorys</a></figcaption>
-    </figure>
-    <div class="dh-boky fh-rv">
-      <h2 class="rd-h2" id="pud-h">Půdorys a rozměry</h2>
-      <p class="dh-text">Noční část se třemi pokoji a dvěma koupelnami, denní část s obývákem, kuchyní a pracovnou. Rodičovská ložnice má vlastní koupelnu a šatnu.</p>
-      <dl class="dh-spec">
-        <div><dt>Dispozice</dt><dd>5+kk</dd></div>
-        <div><dt>Užitná plocha</dt><dd>105,76 m²</dd></div>
-        <div><dt>Terasa</dt><dd>38 m²</dd></div>
-        <div><dt>Zastavěná plocha</dt><dd>120 m²</dd></div>
-        <div><dt>Rozměr</dt><dd>16 × 10 m</dd></div>
-        <div><dt>Počet modulů</dt><dd>8</dd></div>
-      </dl>
-      
-    </div>
-  </div>
-</section>
-<section class="dh-blok" aria-labelledby="sir-h">
+<section class="pd-vybava pd-vybava--ton" aria-labelledby="vybava-h">
   <div class="wrap">
     <div class="dh-hlava fh-rv">
-      <h2 class="rd-h2" id="sir-h">Pohled z terasy</h2>
-      <p>Terasa leží ve vnitřním rohu domu, chráněná ze dvou stran.</p>
+      <h2 class="rd-h2" id="vybava-h">Co dům má</h2>
+      <p>Podle návrhu dispozice. Co přesně bude v&nbsp;ceně, potvrdíme v&nbsp;nabídce.</p>
     </div>
-    <div class="dh-siroky fh-rv"><img src="img/domy/tenuta-celni-1600w.webp" srcset="img/domy/tenuta-celni-800w.webp 800w, img/domy/tenuta-celni-1600w.webp 1600w, img/domy/tenuta-celni-2400w.webp 2400w" sizes="(max-width:1280px) 100vw, 1200px" width="1600" height="425" loading="lazy" decoding="async" alt="Modulový dům Tenuta zepředu, terasa ve vnitřním rohu domu"></div>
+    <div class="pd-vybava__in fh-rv"><div class="pd-vybava__sl"><h3>Denní část</h3><ul><li><span>Obývák s kuchyní 31,84 m² a posuvnými stěnami na terasu</span></li><li><span>Pracovna 8,11 m²</span></li><li><span>Zádveří, samostatné WC a spíž</span></li></ul></div><div class="pd-vybava__sl"><h3>Noční část</h3><ul><li><span>Ložnice 14,67 m² s vlastní koupelnou a šatnou</span></li><li><span>Dva pokoje po 8,3 m²</span></li><li><span>Koupelna se sprchovým koutem, pračkou a sušičkou</span></li><li><span>Technická místnost s bojlerem 200 l</span></li></ul></div></div>
+    
   </div>
 </section>
-<section class="cesta" aria-labelledby="cesta-h">
+<section class="pd-namiru" aria-labelledby="nm-h">
   <div class="wrap">
-    <h2 class="fh-rv" id="cesta-h">Pět kroků, než u vás bude stát</h2>
-    <ol class="cesta__rada fh-rv">
-      <svg class="cesta__oblouk cesta__oblouk--nad" viewBox="0 0 100 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
-        <path d="M13 12 C16.5 0.6 23.5 0.6 27 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-        <path d="M53 12 C56.5 0.6 63.5 0.6 67 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-      </svg>
-      <svg class="cesta__oblouk cesta__oblouk--pod" viewBox="0 0 100 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
-        <path d="M33 0 C36.5 11.4 43.5 11.4 47 0" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-        <path d="M73 0 C76.5 11.4 83.5 11.4 87 0" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-      </svg>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">1</span>
-        <span class="cesta__nazev">Napíšete nám</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">2</span>
-        <span class="cesta__nazev">Vyberete si dům</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">3</span>
-        <span class="cesta__nazev">Pošleme nabídku</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">4</span>
-        <span class="cesta__nazev">Připravíme patky</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">5</span>
-        <span class="cesta__nazev">Přivezeme a usadíme</span>
-      </li>
-    </ol>
-  </div>
-</section>
-<section class="wrap vyber dh-dalsi" aria-labelledby="dalsi-h">
-  <h2 class="fh-rv" id="dalsi-h">Další domy</h2>
-  <div class="vyber__obal">
-  <div class="vyber__rada">
-    <a class="dum fh-rv" href="/vista">
-      <img src="img/katalog/karta-vista-800w.webp" width="800" height="600" alt="Modulový dům Vista, tři moduly do tvaru L s terasou" loading="lazy"
-           srcset="img/katalog/karta-vista-480w.webp 480w, img/katalog/karta-vista-800w.webp 800w, img/katalog/karta-vista-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Modulový dům Vista</h3>
-      <span class="dum__co">Dům do tvaru L s terasou</span>
-      <span class="dum__cena">cena na poptávku</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/rozkladaci-dum">
-      <img src="img/katalog/karta-dum-800w.webp" width="800" height="600" alt="Rozkládací modulární dům s krytou terasou" loading="lazy"
-           srcset="img/katalog/karta-dum-480w.webp 480w, img/katalog/karta-dum-800w.webp 800w, img/katalog/karta-dum-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Rozkládací dům</h3>
-      <span class="dum__co">Přijede složený, rozloží se na místě</span>
-      <span class="dum__cena">od 399 000 Kč bez DPH</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/flexi-office">
-      <img src="img/katalog/karta-office-800w.webp" width="800" height="600" alt="Kancelářský kontejner, bílý kvádr s tmavým rámem" loading="lazy"
-           srcset="img/katalog/karta-office-480w.webp 480w, img/katalog/karta-office-800w.webp 800w, img/katalog/karta-office-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Kancelářský kontejner</h3>
-      <span class="dum__co">Skladem, odjíždí za pár dní</span>
-      <span class="dum__cena">od 100 000 Kč bez DPH</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/katalog#kontakt">
-      <img src="img/katalog/karta-bistro-800w.webp" width="800" height="600" alt="Bistro kontejner s výklopným výdejním okénkem" loading="lazy"
-           srcset="img/katalog/karta-bistro-480w.webp 480w, img/katalog/karta-bistro-800w.webp 800w, img/katalog/karta-bistro-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Bistro kontejner</h3>
-      <span class="dum__co">Výdejní okénko a pult, zbytek podle vás</span>
-      <span class="dum__cena">cena podle zadání</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/dum-na-miru">
-      <img src="img/katalog/karta-namiru-800w.webp" width="800" height="600" alt="Dvoupodlažní sestava kontejnerů s venkovním schodištěm" loading="lazy"
-           srcset="img/katalog/karta-namiru-480w.webp 480w, img/katalog/karta-namiru-800w.webp 800w, img/katalog/karta-namiru-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Dům na míru</h3>
-      <span class="dum__co">Sestavíme podle vašeho zadání</span>
-      <span class="dum__cena">cena individuálně</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-  </div>
+    <div class="pd-namiru__karta fh-rv">
+      <div>
+        <h2 id="nm-h">Nevybrali jste si?</h2>
+        <p>Jinou dispozici, víc modulů nebo vlastní zadání spočítáme jako dům na&nbsp;míru.</p>
+      </div>
+      <a class="rd-tl rd-tl--mala" href="/dum-na-miru">Dům na míru<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+    </div>
   </div>
 </section>
 <section class="poptat" id="kontakt" aria-labelledby="poptat-h">
   <div class="wrap">
     <div class="poptat__hlava fh-rv">
-      <h2 id="poptat-h">Chcete cenu Tenuty?</h2>
+      <h2 id="poptat-h">Mám zájem o Tenutu</h2>
       <p>Pár otázek a připravíme nabídku na váš pozemek.</p>
     </div>
 
@@ -693,6 +650,63 @@ var pas = document.getElementById('pasfoto-pas');
   uloz();
   ukaz(f.dataset.dum ? 2 : 1);
 
+})();
+</script>
+<script>
+(function () {
+  var ot = document.querySelector('.pd-360');
+  if (ot) {
+    var n = +ot.dataset.pocet, obr = ot.querySelector('img'), rozsah = document.querySelector('.pd-360__posuvnik input');
+    var cesta = matchMedia('(max-width:900px)').matches ? ot.dataset.cestaS : ot.dataset.cestaL;
+    var snimky = [], akt = 0, cil = 0;
+    var jmeno = function (i) { return cesta + (i < 10 ? '0' : '') + i + '.webp'; };
+    var platno = ot.querySelector('canvas'), ctx = platno.getContext('2d');
+    akt = -1;
+    var kresli = function () {
+      var im = snimky[cil];
+      if (cil === akt || !im || !im.complete || !im.naturalWidth) return;
+      if (platno.width !== im.naturalWidth) { platno.width = im.naturalWidth; platno.height = im.naturalHeight; }
+      ctx.drawImage(im, 0, 0);
+      akt = cil; ot.classList.add('je-platno');
+    };
+    var ukaz360 = function (i) { cil = ((i % n) + n) % n; rozsah.value = cil; kresli(); };
+    var nacti = function () {
+      for (var i = 0; i < n; i++) {
+        (function (j) { var im = new Image(); im.decoding = 'async'; im.onload = function () { if (j === cil) kresli(); }; im.src = jmeno(j); snimky.push(im); })(i);
+      }
+    };
+    nacti();
+    rozsah.addEventListener('input', function () { ukaz360(+rozsah.value); });
+    var start = null, odkud = 0;
+    ot.addEventListener('pointerdown', function (e) { start = e.clientX; odkud = cil; ot.setPointerCapture(e.pointerId); ot.classList.add('je-tazeno'); });
+    ot.addEventListener('pointermove', function (e) { if (start === null) return; ukaz360(odkud - Math.round((e.clientX - start) / (ot.offsetWidth / n * 1.6))); });
+    var konec = function () { start = null; ot.classList.remove('je-tazeno'); };
+    ot.addEventListener('pointerup', konec);
+    ot.addEventListener('pointercancel', konec);
+  }
+  var tl = document.querySelectorAll('.pd-prepinac button');
+  tl.forEach(function (b) {
+    b.addEventListener('click', function () {
+      tl.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('.pd-scena__dum').forEach(function (i) { i.hidden = i.dataset.pohled !== b.dataset.pohled; });
+    });
+  });
+  var lb = document.querySelector('.pd-lb');
+  if (!lb || !lb.showModal) return;
+  var kusy = [].slice.call(document.querySelectorAll('.pd-galerie__kus'));
+  var obr = lb.querySelector('.pd-lb__img'), popis = lb.querySelector('.pd-lb__popis'), akt = 0;
+  var ukaz = function (i) {
+    akt = (i + kusy.length) % kusy.length;
+    var m = kusy[akt].querySelector('img');
+    obr.src = kusy[akt].dataset.velka; obr.alt = m.alt;
+    popis.textContent = m.alt + '  ' + (akt + 1) + ' / ' + kusy.length;
+  };
+  kusy.forEach(function (k, i) { k.addEventListener('click', function () { ukaz(i); lb.showModal(); }); });
+  document.querySelectorAll('.pd-otevri-galerii').forEach(function (b) { b.addEventListener('click', function () { ukaz(0); lb.showModal(); }); });
+  lb.querySelectorAll('.pd-lb__sip').forEach(function (b) { b.addEventListener('click', function () { ukaz(akt + +b.dataset.smer); }); });
+  lb.querySelector('.pd-lb__zavrit').addEventListener('click', function () { lb.close(); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') ukaz(akt + 1); if (e.key === 'ArrowLeft') ukaz(akt - 1); });
 })();
 </script>
 </body>

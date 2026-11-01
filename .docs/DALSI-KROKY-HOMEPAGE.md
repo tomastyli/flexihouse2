@@ -343,3 +343,26 @@ Tomáš: „přidat do katalogu všechny domy a subpages domů sjednotit“. V k
 - Homepage: karty Vista a Tenuta, megamenu a patička odkazují na nové stránky. Sitemap má `/vista` a `/tenuta`.
 - Předchozí nasazená verze je zálohovaná: git tag `zaloha-pred-strankami-domu` (commit fb6c6dc) a kopie souborů s návodem v `_zaloha/2026-10-31-pred-strankami-domu/`.
 - **Zbývá:** Megamenu „Domy“ má pořád čtyři dlaždice. Bistro nemá vlastní stránku, karta vede na poptávku v katalogu.
+
+## Produktové stránky ve vysoké kvalitě (31. 10. 2026, náhled Visty, NENASAZENO)
+
+Tomáš: stránky domů „chtějí ještě moc práce, prostě nějaký product page, hlavně to má hrozně malou kvalitu“. Vzor Modulos (velký model na studiovém pozadí, renderovaný půdorys, galerie, cena po položkách, výbava). Tomáš vybral vzhled **Unreal, tmavá fasáda a dřevo** místo bílého Blenderu.
+- Tomáš: „ať se to podobá tomu Modulosu, render full bleed ve studiu“. Hero je teď tmavé studio přes celou šířku, název verzálkami nahoře uprostřed, velký model a přepínač pohledů; pod ním `pd-uvod` s popisem, „Mám zájem“ a boxem ceny a parametrů (jako ceník u Modulosu).
+- Pilot na `/vista`: `pd-hero` s fotorealistickým modelem z Unrealu (stín vytažený z průchodů `4-stiny`, poměr stín/zem), přepínač Z terasy / Zepředu, parametry, galerie 8 renderů ve 4K s prohlížečem (`dialog`), půdorys, tmavý pás s renderem `vyzva-luxury`. Zdroj renderů `flexihouse-rodinny-dum/rendery-unreal/`, web `img/domy/vista-*`.
+- Karta Visty (homepage, katalog, průvodce, megamenu) přepnutá na Unreal model. Zatím jen lokálně.
+- Pozor: Unreal interiéry a renderovaný půdorys jsou ze STARÉ dispozice Luxury, nový půdorys Visty (`dispozice.py`) PC v Unrealu ještě nepřestavělo (`Flexi rada/luxury-uprava/ZADANI-PRO-PC.md`). Na webu je proto půdorys z `dispozice.py` a interiéry jako „vizualizace“.
+- **Tenuta nemá Unreal rendery.** Zadání pro PC je na Drivu `Flexi rada/tenuta-120/`, výstupy tam zatím nejsou. Dokud nebudou, Tenuta zůstává na bílém Blenderu.
+- **Další krok:** stejnou produktovou kostru pro rozkládací dům (má otočku `img/hero-otocka-l/`, reálné fotky), kancelář (`kf-office` rendery) a dům na míru; pak nasadit se zálohou živé verze.
+
+**Kolo 3 (31. 10. noc):** Tomáš: kvalita pořád špatná, „musíme renderovat znovu tyhle snímky“, „možná i tu smyčku“, „podle těch Modulos týpků, jak ty sekce jdou po sobě“.
+- Zadání pro PC na nové rendery Visty: `Flexi rada/vista-web/ZADANI-PRO-PC.md` (otočka 72 snímků ve studiu, studiové fotky, zařízený půdorys nové dispozice, interiéry a exteriéry bez hor). Až PC dodá, převést do `img/domy/vista-otocka/` a Vistu přepnout na `pd_hero_otocka(..., cislic=3)`.
+- Rozkládací dům a Vista přestavěné na produktovou kostru podle Modulosu (`.docs/PRESET-PRODUKT.md`, poslední oddíl). Rozkládací dům má otočku ze studia (`img/hero-otocka-l/`, 36 snímků).
+- **Pozor na otočku:** `img/hero-otocka-l/` má v pracovní kopii přerenderované snímky, které nejsou v gitu ani na webu (stará volba z nenasazené dávky). Při nasazení je NEstageovat bez rozhodnutí Tomáše, web pak ukáže verzi z gitu.
+- Nenasazeno.
+
+## Produktové stránky NASAZENÉ (1. 11. 2026)
+
+- `/vista` a `/tenuta`: hero je 360° otočka ze studia (posuvník a tažení, snímky se kreslí do `canvas`, 120 snímků `img/domy/{vista45,tenuta}-otocka(-l)/`), průhledná hlavička nad herem, zařízený půdorys z Unrealu, galerie 9 renderů, ceník na poptávku, výbava. Rozkládací dům má statické studiové foto `img/rozkladaci-hero-*` (kopie přerenderovaného snímku 00, aby se nemusely nasazovat snímky otočky, které používá i konfigurátor). Generátor `_gen/domy.py` (není v gitu).
+- Karta Visty v katalogu a megamenu zůstala prosklený model z Blenderu, Tomáš chtěl ten místo Unreal renderu s nábytkem.
+- Záloha: tag `zaloha-pred-produktovymi-strankami` (bfe8d25) a `_zaloha/2026-11-01-pred-produktovymi-strankami/`.
+- **Zbývá:** ostré snímky otočky z PC (zadání `ZADANI-PRO-PC-360.md` na hasci Drive, 72 snímků 3200 × 1800), exteriéry mají v pozadí Alpy, karta Visty je ze staré dispozice.

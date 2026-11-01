@@ -27,7 +27,7 @@ Stránky: `vista.html`, `tenuta.html`, `rozkladaci-dum.html`, `flexi-office.html
 
 | # | Sekce | Co v ní je |
 |---|---|---|
-| 1 | `dh-hero` | drobečky, H1, jedna věta, cena, tlačítko „Nezávazná poptávka“, nejvýš jeden textový odkaz (konfigurátor), render domu na světlé ploše |
+| 1 | `pd-hero` nebo `dh-hero` | `pd-hero` (produktová, od 31. 10. pilot na Vistě): velký fotorealistický model domu na studiovém pozadí, přepínač pohledů, pod ním řada parametrů `pd-fakta` a galerie `pd-galerie` s prohlížečem. `dh-hero`: drobečky, H1, jedna věta, cena, tlačítko „Nezávazná poptávka“, nejvýš jeden textový odkaz (konfigurátor), render domu na světlé ploše |
 | 2 | `dh-blok` půdorys | půdorys s odkazem na zvětšení, krátký text, tabulka parametrů `dh-spec` |
 | 3 | `dh-blok` podle domu | pohled z terasy, mozaika fotek nebo vizualizací, co je v ceně, ceník, fasády |
 | 4 | `rd-vyzva` | tmavý pás s konfigurátorem, jen kde konfigurátor dům počítá |
@@ -44,3 +44,15 @@ Stránky: `vista.html`, `tenuta.html`, `rozkladaci-dum.html`, `flexi-office.html
   `klid`, `zaver`, `kcta`, `pl`.
 - „Co umíme / Co neděláme“ vedle sebe (srovnávací šablona). Co neděláme se
   píše jednou větou pod ceník.
+
+## Produktová kostra podle Modulosu (od 31. 10. 2026)
+
+Tomáš: „udělej to podle těch Modulos týpků, jak ty sekce jdou po sobě“. Stránky `rozkladaci-dum` a `vista` jedou na ní, ostatní zatím na šabloně výše. Pořadí (hlídá audit):
+
+1. `pd-hero`: tmavé nebo světlé studio přes celou šířku, název verzálkami nahoře uprostřed. **Bez scroll animace** (Tomáš 1. 11. 2026). Vista a Tenuta: otočka 360° ve studiu na posuvník a tažení myší nebo prstem (`pc_360`, snímky `img/domy/<dům>-otocka(-l)/`). Ostřejší snímky (path tracer 3200 px, 72 kusů) zadané PC v `ZADANI-PRO-PC-360.md`. Navigace je nad herem průhledná (`top--nad`, u tmavého hera `top--nad-tmava`), přepíná ji `.hero__hlidac` na konci hera. Rozkládací dům: statická studiová fotka přes celou šířku (`pd_hero_foto`). Snímky otáček z videa (1920 px, Lumen) jsou na hero moc měkké.
+2. `pd-dvoj`: zařízený půdorys vlevo, vpravo název, popis, parametry, „Mám zájem“ a „Prohlédnout celou galerii“.
+3. `pd-nahled`: čtyři náhledy galerie, na posledním „+N fotek“, prohlížeč přes celou obrazovku.
+4. `pd-cenik`: tmavá karta, hlavní cena a řádky doprava, patky, montáž.
+5. `pd-vybava`: co je v ceně, u domů s ceníkem i „Můžete přikoupit“ s cenami.
+6. `pd-namiru`: „Nevybrali jste si?“ s odkazem na dům na míru.
+7. `dotazy` jen kde stránka dotazy měla, pak `poptat`.

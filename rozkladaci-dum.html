@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="assets/flexi.css?v=53">
 <link rel="stylesheet" href="assets/domov.css?v=56">
 <link rel="stylesheet" href="assets/flexi-poradce.css?v=11">
-<link rel="stylesheet" href="assets/dum.css?v=1">
+<link rel="stylesheet" href="assets/dum.css?v=7">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","@id":"https://flexihouse.cz/rozkladaci-dum#faq","mainEntity":[{"@type":"Question","name":"Kolik to stojí?","acceptedAnswer":{"@type":"Answer","text":"Rozkládací dům začíná na 399 000 Kč bez DPH. Je v tom hrubá stavba i elektroinstalace, tedy okna, dveře, obklad a zateplení 75 mm, zásuvky, světla a jištění. K výsledné ceně patří ještě doprava, patky a usazení. Přesnou částku spočítá konfigurátor."}},{"@type":"Question","name":"Potřebuju stavební povolení?","acceptedAnswer":{"@type":"Answer","text":"Záleží na velikosti a na tom, k čemu dům bude sloužit. Závazné slovo má jedině váš stavební úřad, takže první krok vede tam. Papíry si vyřizujete sami, my je nezajišťujeme."}},{"@type":"Question","name":"Co musím mít připravené na pozemku?","acceptedAnswer":{"@type":"Answer","text":"Rovnou plochu a příjezd pro nákladní auto s jeřábem. Dům stojí na betonových patkách, klasické základy nepotřebuje. Vodu, elektřinu a odpad je potřeba dovést k místu usazení."}},{"@type":"Question","name":"Dá se v něm bydlet celoročně?","acceptedAnswer":{"@type":"Answer","text":"Ano. Zateplení Rockwool 75 mm je v základní ceně, k tomu klimatizace, která topí i chladí. V takové sestavě dům obstojí i v zimě."}},{"@type":"Question","name":"Jak dlouho trvá dodání?","acceptedAnswer":{"@type":"Answer","text":"Kancelářský kontejner máme skladem a odjíždí během několika dní. Rozkládací dům se staví podle vaší sestavy, konkrétní termín potvrdíme v nabídce, kterou posíláme do 24 hodin."}},{"@type":"Question","name":"Jakou má dům životnost a záruku?","acceptedAnswer":{"@type":"Answer","text":"Životnost je při běžné údržbě minimálně 25 let, záruka dva roky. Požární odolnost doložit umíme, stavební povolení ale řeší váš stavební úřad."}},{"@type":"Question","name":"Jaký je rozdíl mezi modulárním a kontejnerovým domem?","acceptedAnswer":{"@type":"Answer","text":"V běžné řeči se to používá zaměnitelně. Naše domy jsou obojí: vznikají v hale jako moduly v kontejnerovém rozměru, aby se daly převézt po silnici a usadit jeřábem."}}]}
 </script>
@@ -35,10 +35,11 @@
 </script>
 <link rel="preload" href="fonts/satoshi-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/satoshi-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/rozkladaci-hero-3000w.webp" imagesrcset="img/rozkladaci-hero-1200w.webp 1200w, img/rozkladaci-hero-3000w.webp 3000w" imagesizes="100vw">
 </head>
 <body>
 
-<header class="top">
+<header class="top top--nad">
   <div class="wrap top__in">
     <a class="brand" href="/">
       <svg viewBox="9 16 46 33" aria-hidden="true">
@@ -133,134 +134,106 @@
 
 
 <main>
-<section class="dh-hero" aria-labelledby="dh-h1">
-  <div class="wrap dh-hero__in">
-    <div class="dh-hero__text">
-      <nav class="dh-kde" aria-label="Drobečková navigace"><a href="/">Domů</a><span aria-hidden="true">/</span><a href="/katalog">Domy</a><span aria-hidden="true">/</span><span aria-current="page">Rozkládací dům</span></nav>
-      <h1 id="dh-h1">Rozkládací dům</h1>
-      <p class="dh-perex">Přijede složený na šířku návěsu a na místě se rozloží na 30&nbsp;m².</p>
-      <p class="dh-cena">Od 399&nbsp;000&nbsp;Kč bez&nbsp;DPH</p>
-      <div class="dh-akce">
-        <a class="rd-tl rd-tl--tmave" href="#kontakt">Nezávazná poptávka<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
-        <a class="dh-odkaz" href="/konfigurator">Sestavit v konfigurátoru</a>
-      </div>
-    </div>
-    <div class="dh-obraz">
-      <img src="img/katalog/karta-dum-1200w.webp" width="1200" height="900" alt="Rozkládací modulární dům s krytou terasou" fetchpriority="high"
-           srcset="img/katalog/karta-dum-800w.webp 800w, img/katalog/karta-dum-1200w.webp 1200w" sizes="(max-width:900px) 100vw, 680px">
-    </div>
+<section class="pd-hero pd-hero--otocka pd-hero--foto" aria-labelledby="dh-h1" style="--pd-pozadi:linear-gradient(180deg,#aac1cc 0,#a6bdc8 55%,#3c5d6b 100%)">
+  <div class="pd-otocka__lepidlo">
+    <h1 class="pd-hero__nazev" id="dh-h1">Rozkládací dům <span class="pd-jed">30&nbsp;m²</span></h1>
+    <img class="pd-otocka__prvni" src="img/rozkladaci-hero-3000w.webp" srcset="img/rozkladaci-hero-1200w.webp 1200w, img/rozkladaci-hero-3000w.webp 3000w" sizes="100vw" width="3000" height="1688" alt="Rozkládací dům s dřevěnou fasádou, sedlovou střechou a krytou terasou" fetchpriority="high">
   </div>
+  <span class="hero__hlidac" aria-hidden="true"></span>
 </section>
-<section class="dh-blok dh-blok--ton" id="pudorys" aria-labelledby="pud-h">
-  <div class="wrap dh-dva">
-    <figure class="dh-plan fh-rv">
-      <a class="dh-plan__zvetsit" href="img/pudorys/rozkladaci-1600w.webp" target="_blank" rel="noopener"><img src="img/pudorys/rozkladaci-1200w.webp" width="2000" height="1869" loading="lazy" decoding="async" alt="Půdorys rozloženého domu: vlevo obývací prostor s kuchyňskou linkou, jídelním stolem a pohovkou, uprostřed koupelna se sprchovým koutem a WC, vpravo dvě ložnice s postelemi"
-           srcset="img/pudorys/rozkladaci-800w.webp 800w, img/pudorys/rozkladaci-1200w.webp 1200w, img/pudorys/rozkladaci-1600w.webp 1600w" sizes="(max-width:900px) 100vw, 760px"></a>
-      <figcaption>Nábytek ukazuje měřítko, v&nbsp;dodávce není. <a href="img/pudorys/rozkladaci-1600w.webp" target="_blank" rel="noopener">Zvětšit půdorys</a></figcaption>
-    </figure>
-    <div class="dh-boky fh-rv">
-      <h2 class="rd-h2" id="pud-h">Půdorys a rozměry</h2>
-      <p class="dh-text">Dvě ložnice, obývák s&nbsp;kuchyní a&nbsp;koupelna. Dispozice je jedna, jinou spočítáme jako <a href="/dum-na-miru">dům na&nbsp;míru</a>.</p>
-      <dl class="dh-spec">
-        <div><dt>Rozložený</dt><dd>6,32 × 5,90 m</dd></div>
-        <div><dt>Složený na silnici</dt><dd>2,20 m</dd></div>
-        <div><dt>Plocha</dt><dd>30 m²</dd></div>
-        <div><dt>Světlá výška</dt><dd>2,48 m</dd></div>
-        <div><dt>Dispozice</dt><dd>dvě ložnice, obývák s kuchyní, koupelna</dd></div>
-        <div><dt>Sestavení</dt><dd>1 až 7 dní</dd></div>
-      </dl>
-      <p class="dh-text dh-text--male">Pro&nbsp;úřad se&nbsp;počítá zastavěná plocha včetně terasy, viz <a href="/stavebni-povoleni">stavební povolení</a>.</p>
-    </div>
-  </div>
-</section>
-<section class="dh-blok" aria-labelledby="moz-h">
+<section class="pd-dvoj" aria-labelledby="uvod-h">
   <div class="wrap">
-    <div class="dh-hlava fh-rv">
-      <h2 class="rd-h2" id="moz-h">Jak to vypadá uvnitř</h2>
-      <p>Fotky z&nbsp;našeho domu v&nbsp;Litomyšli, s&nbsp;vybavením za&nbsp;příplatek.</p>
-    </div>
-    <div class="rd-mozaika fh-rv">
-      <div class="rd-mozaika__levy">
-        <img class="rd-mozaika__vysoka" src="img/realne/obyvak-840h.webp" srcset="img/realne/obyvak-560h.webp 560w, img/realne/obyvak-840h.webp 1260w" sizes="(max-width:1080px) 100vw, 480px" width="1260" height="840" loading="lazy" decoding="async" alt="Obývací část domu s pohovkou a konferenčním stolkem">
-      </div>
-      <div class="rd-mozaika__pravy">
-        <img class="rd-mozaika__siroka" src="img/realne/obyvak-linka-840h.webp" srcset="img/realne/obyvak-linka-560h.webp 560w, img/realne/obyvak-linka-840h.webp 1260w" sizes="(max-width:1080px) 100vw, 700px" width="1260" height="840" loading="lazy" decoding="async" alt="Obytný prostor domu s kuchyňskou linkou a dvěma okny">
-        <div class="rd-mozaika__dvojice">
-          <img class="" src="img/realne/kuchyne-840h.webp" srcset="img/realne/kuchyne-560h.webp 560w, img/realne/kuchyne-840h.webp 1260w" sizes="(max-width:1080px) 50vw, 340px" width="1260" height="840" loading="lazy" decoding="async" alt="Kuchyňská linka s dřezem a pracovní deskou">
-          <img class="" src="img/realne/sprchovy-kout-840h.webp" srcset="img/realne/sprchovy-kout-560h.webp 560w, img/realne/sprchovy-kout-840h.webp 1260w" sizes="(max-width:1080px) 50vw, 340px" width="1260" height="840" loading="lazy" decoding="async" alt="Sprchová souprava s dešťovou hlavicí a okno v koupelně">
+    <nav class="dh-kde" aria-label="Drobečková navigace"><a href="/">Domů</a><span aria-hidden="true">/</span><a href="/katalog">Domy</a><span aria-hidden="true">/</span><span aria-current="page">Rozkládací dům</span></nav>
+    <div class="pd-dvoj__in">
+      <figure class="pd-dvoj__plan fh-rv">
+        <a href="img/pudorys/rozkladaci-1600w.webp" target="_blank" rel="noopener" class="dh-plan__zvetsit"><img src="img/pudorys/rozkladaci-1200w.webp" srcset="img/pudorys/rozkladaci-800w.webp 800w, img/pudorys/rozkladaci-1200w.webp 1200w, img/pudorys/rozkladaci-1600w.webp 1600w" sizes="(max-width:900px) 100vw, 780px" width="2000" height="1869" loading="lazy" decoding="async" alt="Půdorys rozloženého domu: vlevo obývací prostor s kuchyňskou linkou, jídelním stolem a pohovkou, uprostřed koupelna se sprchovým koutem a WC, vpravo dvě ložnice s postelemi"></a>
+      </figure>
+      <div class="pd-dvoj__text fh-rv">
+        <h2 class="rd-h2" id="uvod-h">Rozkládací dům</h2>
+        <p class="dh-text">Přijede složený na&nbsp;šířku návěsu a&nbsp;na&nbsp;místě se&nbsp;rozloží na&nbsp;30&nbsp;m². Dvě ložnice, obývák s&nbsp;kuchyní a&nbsp;koupelna.</p><p class="dh-text">Sestavení trvá 1 až 7 dní podle sestavy. Jinou dispozici spočítáme jako <a href="/dum-na-miru">dům na&nbsp;míru</a>.</p>
+        <dl class="pd-fakta pd-fakta--vlevo"><div><dd>30 m²</dd><dt>plocha</dt></div><div><dd>6,32 × 5,90 m</dd><dt>rozložený</dt></div><div><dd>2,20 m</dd><dt>složený</dt></div><div><dd>2,48 m</dd><dt>světlá výška</dt></div></dl>
+        <div class="dh-akce">
+          <a class="rd-tl rd-tl--tmave" href="#kontakt">Mám zájem<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          <button type="button" class="dh-odkaz pd-otevri-galerii">Prohlédnout celou galerii</button>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section class="dh-blok dh-blok--ton" aria-labelledby="cena-h">
+<section class="pd-nahled" aria-labelledby="gal-h">
   <div class="wrap">
-    <div class="dh-hlava fh-rv">
-      <h2 class="rd-h2" id="cena-h">Co je v ceně</h2>
-      <p>Za&nbsp;399&nbsp;000&nbsp;Kč bez&nbsp;DPH je dům hotový zvenku a&nbsp;prázdný uvnitř, s&nbsp;elektroinstalací. Kuchyň, koupelnu, podlahu, topení, terasu, dopravu ani usazení si vybíráte zvlášť.</p>
+    <h2 class="vh" id="gal-h">Galerie</h2>
+    <div class="pd-nahled__rada fh-rv">
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/realne/dum-zepredu-840h.webp" aria-label="Zvětšit: Rozkládací dům zepředu s krytou terasou"><img src="img/realne/dum-zepredu-840h.webp" srcset="img/realne/dum-zepredu-560h.webp 840w, img/realne/dum-zepredu-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Rozkládací dům zepředu s krytou terasou"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/realne/obyvak-840h.webp" aria-label="Zvětšit: Obývací část domu s pohovkou a konferenčním stolkem"><img src="img/realne/obyvak-840h.webp" srcset="img/realne/obyvak-560h.webp 840w, img/realne/obyvak-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Obývací část domu s pohovkou a konferenčním stolkem"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/realne/kuchyne-840h.webp" aria-label="Zvětšit: Kuchyňská linka s dřezem a pracovní deskou"><img src="img/realne/kuchyne-840h.webp" srcset="img/realne/kuchyne-560h.webp 840w, img/realne/kuchyne-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Kuchyňská linka s dřezem a pracovní deskou"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" data-velka="img/realne/koupelna-840h.webp" aria-label="Zvětšit: Koupelna se sprchovým koutem, umyvadlem a toaletou"><img src="img/realne/koupelna-840h.webp" srcset="img/realne/koupelna-560h.webp 419w, img/realne/koupelna-840h.webp 629w" sizes="(max-width:700px) 50vw, 330px" width="629" height="840" loading="lazy" decoding="async" alt="Koupelna se sprchovým koutem, umyvadlem a toaletou"><span class="pd-nahled__vic">+6 fotek</span></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/terasa-840h.webp" aria-label="Zvětšit: Krytá terasa u domu"><img src="img/realne/terasa-840h.webp" srcset="img/realne/terasa-560h.webp 840w, img/realne/terasa-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Krytá terasa u domu"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/roh-840h.webp" aria-label="Zvětšit: Roh domu s dřevěným obkladem"><img src="img/realne/roh-840h.webp" srcset="img/realne/roh-560h.webp 373w, img/realne/roh-840h.webp 560w" sizes="(max-width:700px) 50vw, 330px" width="560" height="840" loading="lazy" decoding="async" alt="Roh domu s dřevěným obkladem"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/obyvak-linka-840h.webp" aria-label="Zvětšit: Obytný prostor domu s kuchyňskou linkou a dvěma okny"><img src="img/realne/obyvak-linka-840h.webp" srcset="img/realne/obyvak-linka-560h.webp 840w, img/realne/obyvak-linka-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Obytný prostor domu s kuchyňskou linkou a dvěma okny"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/sprchovy-kout-840h.webp" aria-label="Zvětšit: Sprchová souprava s dešťovou hlavicí a okno v koupelně"><img src="img/realne/sprchovy-kout-840h.webp" srcset="img/realne/sprchovy-kout-560h.webp 840w, img/realne/sprchovy-kout-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Sprchová souprava s dešťovou hlavicí a okno v koupelně"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/terasa-pod-840h.webp" aria-label="Zvětšit: Pohled podél kryté terasy pod přesahem střechy"><img src="img/realne/terasa-pod-840h.webp" srcset="img/realne/terasa-pod-560h.webp 840w, img/realne/terasa-pod-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Pohled podél kryté terasy pod přesahem střechy"></button>
+      <button type="button" class="pd-galerie__kus pd-nahled__kus" hidden data-velka="img/realne/shora-840h.webp" aria-label="Zvětšit: Dům shora"><img src="img/realne/shora-840h.webp" srcset="img/realne/shora-560h.webp 840w, img/realne/shora-840h.webp 1260w" sizes="(max-width:700px) 50vw, 330px" width="1260" height="840" loading="lazy" decoding="async" alt="Dům shora"></button>
     </div>
-    <ul class="dh-ceny fh-rv">
-        <li class="dh-cena-k">
-          <img src="img/interier-kuchyne-800w.webp" srcset="img/interier-kuchyne-480w.webp 480w, img/interier-kuchyne-800w.webp 800w" sizes="(max-width:700px) 90vw, 380px" width="800" height="450" loading="lazy" decoding="async" alt="Kuchyňská linka v rozkládacím domě">
-          <b>Kuchyňská linka</b><span>25 000 Kč</span>
-        </li>
-        <li class="dh-cena-k">
-          <img src="img/interier-koupelna-800w.webp" srcset="img/interier-koupelna-480w.webp 480w, img/interier-koupelna-800w.webp 800w" sizes="(max-width:700px) 90vw, 380px" width="800" height="450" loading="lazy" decoding="async" alt="Dřevěná podlaha v rozkládacím domě">
-          <b>Podlaha</b><span>25 000 Kč</span>
-        </li>
-        <li class="dh-cena-k">
-          <img src="img/terasa-detail-800w.webp" srcset="img/terasa-detail-480w.webp 480w, img/terasa-detail-800w.webp 800w" sizes="(max-width:700px) 90vw, 380px" width="800" height="450" loading="lazy" decoding="async" alt="Krytá terasa u rozkládacího domu">
-          <b>Terasa</b><span>40 000 Kč</span>
-        </li>
-    </ul>
-    <p class="dh-text dh-pod">Celou sestavu spočítá <a href="/konfigurator">konfigurátor</a>, ceny položek jsou v&nbsp;<a href="/cena">ceníku</a>.</p>
   </div>
+  <dialog class="pd-lb" aria-label="Galerie">
+    <img class="pd-lb__img" alt="">
+    <p class="pd-lb__popis"></p>
+    <button type="button" class="pd-lb__zavrit" aria-label="Zavřít"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button type="button" class="pd-lb__sip pd-lb__sip--l" data-smer="-1" aria-label="Předchozí"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+    <button type="button" class="pd-lb__sip pd-lb__sip--p" data-smer="1" aria-label="Další"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+  </dialog>
 </section>
-<section class="rd-vyzva dh-vyzva" aria-labelledby="vyz-h">
+<section class="pd-cenik" aria-labelledby="cenik-h">
   <div class="wrap">
-    <div class="rd-vyzva__karta fh-rv">
-      <img class="rd-vyzva__dum" src="img/katalog/karta-dum-1200w.webp" width="1200" height="900" loading="lazy" decoding="async" alt="">
-      <div class="rd-vyzva__text">
-        <h2 id="vyz-h">Poskládejte si ho a uvidíte cenu</h2>
-        <p>Střecha, fasáda, terasa i&nbsp;vybavení. Bez registrace.</p>
-        <a class="rd-tl rd-tl--mala" href="/konfigurator">Sestavit si vlastní<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+    <div class="pd-cenik__karta fh-rv">
+      <div class="pd-cenik__hlava">
+        <p class="pd-cenik__co">Ceník</p>
+        <h2 id="cenik-h">Rozkládací dům 30 m²</h2>
+        <a class="rd-tl rd-tl--tmave" href="#kontakt">Mám zájem<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+      </div>
+      <div class="pd-cenik__telo">
+        <p class="pd-cenik__hlavni"><span>Hrubá stavba s elektroinstalací</span><b>399 000 Kč</b></p>
+        <dl class="pd-cenik__radky">
+        <div><dt>Doprava a usazení</dt><dd>20 000 Kč a 100 Kč za km</dd></div>
+        <div><dt>Betonové patky</dt><dd>50 000 až 90 000 Kč</dd></div>
+        <div><dt>Montáž</dt><dd>30 000 až 80 000 Kč</dd></div>
+        </dl>
+        <p class="pd-cenik__pozn">Ceny jsou bez DPH. Celou sestavu s&nbsp;vybavením spočítá konfigurátor.</p>
+        <a class="dh-odkaz" href="/konfigurator">Spočítat v konfigurátoru</a>
       </div>
     </div>
   </div>
 </section>
-<section class="cesta" aria-labelledby="cesta-h">
+<section class="pd-vybava" aria-labelledby="vybava-h">
   <div class="wrap">
-    <h2 class="fh-rv" id="cesta-h">Pět kroků, než u vás bude stát</h2>
-    <ol class="cesta__rada fh-rv">
-      <svg class="cesta__oblouk cesta__oblouk--nad" viewBox="0 0 100 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
-        <path d="M13 12 C16.5 0.6 23.5 0.6 27 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-        <path d="M53 12 C56.5 0.6 63.5 0.6 67 12" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-      </svg>
-      <svg class="cesta__oblouk cesta__oblouk--pod" viewBox="0 0 100 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
-        <path d="M33 0 C36.5 11.4 43.5 11.4 47 0" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-        <path d="M73 0 C76.5 11.4 83.5 11.4 87 0" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="9 11" vector-effect="non-scaling-stroke"/>
-      </svg>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">1</span>
-        <span class="cesta__nazev">Napíšete nám</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">2</span>
-        <span class="cesta__nazev">Vyberete si dům</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">3</span>
-        <span class="cesta__nazev">Pošleme nabídku</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">4</span>
-        <span class="cesta__nazev">Připravíme patky</span>
-      </li>
-      <li class="cesta__krok">
-        <span class="cesta__cislo">5</span>
-        <span class="cesta__nazev">Přivezeme a usadíme</span>
-      </li>
-    </ol>
+    <div class="dh-hlava fh-rv">
+      <h2 class="rd-h2" id="vybava-h">V základní ceně</h2>
+      
+    </div>
+    <div class="pd-vybava__in fh-rv"><div class="pd-vybava__sl"><h3>Konstrukce a obal</h3><ul><li><span>Nosná ocelová konstrukce</span></li><li><span>Hliníková okna s izolačními dvojskly</span></li><li><span>Vstupní dveře</span></li><li><span>Zateplení Rockwool 75 mm</span></li></ul></div><div class="pd-vybava__sl"><h3>Fasáda, střecha a elektro</h3><ul><li><span>Fasádní obklad ve třech základních dekorech</span></li><li><span>Plochá střecha</span></li><li><span>Elektroinstalace: zásuvky, světla a jištění</span></li></ul></div></div>
+    
+  </div>
+</section>
+<section class="pd-vybava pd-vybava--ton" aria-labelledby="prikoupit-h">
+  <div class="wrap">
+    <div class="dh-hlava fh-rv">
+      <h2 class="rd-h2" id="prikoupit-h">Můžete přikoupit</h2>
+      <p>Ceny bez DPH, vybíráte si v&nbsp;<a href="/konfigurator">konfigurátoru</a>.</p>
+    </div>
+    <div class="pd-vybava__in fh-rv"><div class="pd-vybava__sl"><h3>Exteriér</h3><ul><li><span>Sedlová střecha</span><b>90 000</b></li><li><span>Dekor fasády místo základního obkladu</span><b>23 600</b></li><li><span>Terasa</span><b>40 000</b></li><li><span>Vstupní schody</span><b>23 000</b></li></ul></div><div class="pd-vybava__sl"><h3>Interiér</h3><ul><li><span>Koupelna</span><b>30 000</b></li><li><span>Kuchyňská linka</span><b>25 000</b></li><li><span>Podlaha</span><b>25 000</b></li><li><span>Klimatizace, topí i chladí</span><b>29 000</b></li><li><span>Závěsy a záclony</span><b>20 000</b></li></ul></div></div>
+    
+  </div>
+</section>
+<section class="pd-namiru" aria-labelledby="nm-h">
+  <div class="wrap">
+    <div class="pd-namiru__karta fh-rv">
+      <div>
+        <h2 id="nm-h">Nevybrali jste si?</h2>
+        <p>Jinou dispozici, víc modulů nebo vlastní zadání spočítáme jako dům na&nbsp;míru.</p>
+      </div>
+      <a class="rd-tl rd-tl--mala" href="/dum-na-miru">Dům na míru<span class="rd-tl__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+    </div>
   </div>
 </section>
 <section class="dotazy dh-dotazy" aria-labelledby="dotazy-h">
@@ -299,62 +272,10 @@
     <p class="dotazy__vic">Zbytek najdete na&nbsp;stránce <a class="link" href="/caste-dotazy">časté dotazy</a>.</p>
   </div>
 </section>
-<section class="wrap vyber dh-dalsi" aria-labelledby="dalsi-h">
-  <h2 class="fh-rv" id="dalsi-h">Další domy</h2>
-  <div class="vyber__obal">
-  <div class="vyber__rada">
-    <a class="dum fh-rv" href="/vista">
-      <img src="img/katalog/karta-vista-800w.webp" width="800" height="600" alt="Modulový dům Vista, tři moduly do tvaru L s terasou" loading="lazy"
-           srcset="img/katalog/karta-vista-480w.webp 480w, img/katalog/karta-vista-800w.webp 800w, img/katalog/karta-vista-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Modulový dům Vista</h3>
-      <span class="dum__co">Dům do tvaru L s terasou</span>
-      <span class="dum__cena">cena na poptávku</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/tenuta">
-      <img src="img/katalog/karta-tenuta-800w.webp" width="800" height="600" alt="Modulový dům Tenuta, osm modulů do tvaru L s terasou" loading="lazy"
-           srcset="img/katalog/karta-tenuta-480w.webp 480w, img/katalog/karta-tenuta-800w.webp 800w, img/katalog/karta-tenuta-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Modulový dům Tenuta</h3>
-      <span class="dum__co">Velký bungalov 5+kk s terasou</span>
-      <span class="dum__cena">cena na poptávku</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/flexi-office">
-      <img src="img/katalog/karta-office-800w.webp" width="800" height="600" alt="Kancelářský kontejner, bílý kvádr s tmavým rámem" loading="lazy"
-           srcset="img/katalog/karta-office-480w.webp 480w, img/katalog/karta-office-800w.webp 800w, img/katalog/karta-office-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Kancelářský kontejner</h3>
-      <span class="dum__co">Skladem, odjíždí za pár dní</span>
-      <span class="dum__cena">od 100 000 Kč bez DPH</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/katalog#kontakt">
-      <img src="img/katalog/karta-bistro-800w.webp" width="800" height="600" alt="Bistro kontejner s výklopným výdejním okénkem" loading="lazy"
-           srcset="img/katalog/karta-bistro-480w.webp 480w, img/katalog/karta-bistro-800w.webp 800w, img/katalog/karta-bistro-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Bistro kontejner</h3>
-      <span class="dum__co">Výdejní okénko a pult, zbytek podle vás</span>
-      <span class="dum__cena">cena podle zadání</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-    <a class="dum fh-rv" href="/dum-na-miru">
-      <img src="img/katalog/karta-namiru-800w.webp" width="800" height="600" alt="Dvoupodlažní sestava kontejnerů s venkovním schodištěm" loading="lazy"
-           srcset="img/katalog/karta-namiru-480w.webp 480w, img/katalog/karta-namiru-800w.webp 800w, img/katalog/karta-namiru-1200w.webp 1200w"
-           sizes="(max-width:700px) 46vw, 230px">
-      <h3>Dům na míru</h3>
-      <span class="dum__co">Sestavíme podle vašeho zadání</span>
-      <span class="dum__cena">cena individuálně</span>
-      <span class="dum__sip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></span>
-    </a>
-  </div>
-  </div>
-</section>
 <section class="poptat" id="kontakt" aria-labelledby="poptat-h">
   <div class="wrap">
     <div class="poptat__hlava fh-rv">
-      <h2 id="poptat-h">Chcete cenu na váš pozemek?</h2>
+      <h2 id="poptat-h">Mám zájem o rozkládací dům</h2>
       <p>Pár otázek a nabídku pošleme do 24 hodin.</p>
     </div>
 
@@ -780,6 +701,63 @@ var pas = document.getElementById('pasfoto-pas');
   uloz();
   ukaz(f.dataset.dum ? 2 : 1);
 
+})();
+</script>
+<script>
+(function () {
+  var ot = document.querySelector('.pd-360');
+  if (ot) {
+    var n = +ot.dataset.pocet, obr = ot.querySelector('img'), rozsah = document.querySelector('.pd-360__posuvnik input');
+    var cesta = matchMedia('(max-width:900px)').matches ? ot.dataset.cestaS : ot.dataset.cestaL;
+    var snimky = [], akt = 0, cil = 0;
+    var jmeno = function (i) { return cesta + (i < 10 ? '0' : '') + i + '.webp'; };
+    var platno = ot.querySelector('canvas'), ctx = platno.getContext('2d');
+    akt = -1;
+    var kresli = function () {
+      var im = snimky[cil];
+      if (cil === akt || !im || !im.complete || !im.naturalWidth) return;
+      if (platno.width !== im.naturalWidth) { platno.width = im.naturalWidth; platno.height = im.naturalHeight; }
+      ctx.drawImage(im, 0, 0);
+      akt = cil; ot.classList.add('je-platno');
+    };
+    var ukaz360 = function (i) { cil = ((i % n) + n) % n; rozsah.value = cil; kresli(); };
+    var nacti = function () {
+      for (var i = 0; i < n; i++) {
+        (function (j) { var im = new Image(); im.decoding = 'async'; im.onload = function () { if (j === cil) kresli(); }; im.src = jmeno(j); snimky.push(im); })(i);
+      }
+    };
+    nacti();
+    rozsah.addEventListener('input', function () { ukaz360(+rozsah.value); });
+    var start = null, odkud = 0;
+    ot.addEventListener('pointerdown', function (e) { start = e.clientX; odkud = cil; ot.setPointerCapture(e.pointerId); ot.classList.add('je-tazeno'); });
+    ot.addEventListener('pointermove', function (e) { if (start === null) return; ukaz360(odkud - Math.round((e.clientX - start) / (ot.offsetWidth / n * 1.6))); });
+    var konec = function () { start = null; ot.classList.remove('je-tazeno'); };
+    ot.addEventListener('pointerup', konec);
+    ot.addEventListener('pointercancel', konec);
+  }
+  var tl = document.querySelectorAll('.pd-prepinac button');
+  tl.forEach(function (b) {
+    b.addEventListener('click', function () {
+      tl.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('.pd-scena__dum').forEach(function (i) { i.hidden = i.dataset.pohled !== b.dataset.pohled; });
+    });
+  });
+  var lb = document.querySelector('.pd-lb');
+  if (!lb || !lb.showModal) return;
+  var kusy = [].slice.call(document.querySelectorAll('.pd-galerie__kus'));
+  var obr = lb.querySelector('.pd-lb__img'), popis = lb.querySelector('.pd-lb__popis'), akt = 0;
+  var ukaz = function (i) {
+    akt = (i + kusy.length) % kusy.length;
+    var m = kusy[akt].querySelector('img');
+    obr.src = kusy[akt].dataset.velka; obr.alt = m.alt;
+    popis.textContent = m.alt + '  ' + (akt + 1) + ' / ' + kusy.length;
+  };
+  kusy.forEach(function (k, i) { k.addEventListener('click', function () { ukaz(i); lb.showModal(); }); });
+  document.querySelectorAll('.pd-otevri-galerii').forEach(function (b) { b.addEventListener('click', function () { ukaz(0); lb.showModal(); }); });
+  lb.querySelectorAll('.pd-lb__sip').forEach(function (b) { b.addEventListener('click', function () { ukaz(akt + +b.dataset.smer); }); });
+  lb.querySelector('.pd-lb__zavrit').addEventListener('click', function () { lb.close(); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+  lb.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') ukaz(akt + 1); if (e.key === 'ArrowLeft') ukaz(akt - 1); });
 })();
 </script>
 </body>
